@@ -1,0 +1,31 @@
+{
+	"users":[
+		{
+			"username":"admin",
+			"password":"123123",
+			"id":"0","role":"ADMIN",
+			"avatar":"https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"username":"user",
+			"password":"123",
+			"id":"1",
+			"role":"USER",
+			"avatar":"https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"username":"newUser",
+			"password":"123",
+			"id":"413e9dae-8c70-4ce7-835d-4b4c69097aca",
+			"role":"USER",
+			"avatar":"https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"username":"newUser1",
+			"password":"123123",
+			"id":"d9c80b35-5dcd-4473-af20-9c65b14c7282",
+			"role":"USER",
+			"avatar":"https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		}
+	]
+}
