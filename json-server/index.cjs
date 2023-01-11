@@ -37,7 +37,7 @@ server.post('/login', (req, res) => {
 		);
 
 		if (userFromBd) {
-			return res.json(userFromBd);
+			return res.json({...userFromBd, password: undefined});
 		}
 
 		if (wrongPass) {
@@ -87,7 +87,7 @@ server.post('/register', (req, res) => {
 			},
 		);
 
-		return res.json(userFromBd);
+		return res.json({...userFromBd, password: undefined});
 	} catch (e) {
 		console.log(e);
 		return res.status(500).json({ message: e.message });
