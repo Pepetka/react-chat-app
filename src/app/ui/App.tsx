@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { AppRouter } from '../provider/Router/ui/AppRouter';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -7,6 +7,8 @@ import {
 	getProfilePagePath,
 } from '@/shared/const/router';
 import styled from 'styled-components';
+import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
+import { userActions } from '@/entities/User';
 
 const NavBar = styled.div`
 	display: flex;
@@ -15,6 +17,11 @@ const NavBar = styled.div`
 
 export const App = memo(() => {
 	const location = useLocation();
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(userActions.initUser());
+	}, [dispatch]);
 
 	return (
 		<div data-testid="App">

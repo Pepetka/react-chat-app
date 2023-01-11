@@ -13,9 +13,7 @@ import { authByUsernameActions } from '@/features/AuthByUsername/model/slice/aut
 import { useAuthUserMutation } from '@/features/AuthByUsername/api/authByUsernameApi';
 import { userActions } from '@/entities/User';
 
-interface ILoginFormProps {}
-
-export const LoginForm = memo((props: ILoginFormProps) => {
+export const LoginForm = memo(() => {
 	const { username, password } = useSelector(authByUsernameState);
 	const [onSendLoginData, { data: userData, isLoading, error }] =
 		useAuthUserMutation();

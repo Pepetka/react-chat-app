@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { LoginForm } from '@/features/AuthByUsername';
+import { authByUsernameReducer, LoginForm } from '@/features/AuthByUsername';
+import { DynamicModuleLoader } from '@/shared/components';
+import { memo } from 'react';
 
 const LoginPageStyled = styled.div`
 	color: red;
@@ -7,11 +9,16 @@ const LoginPageStyled = styled.div`
 	text-align: center;
 `;
 
-export const LoginPage = () => {
+export const LoginPage = memo(() => {
 	return (
-		<LoginPageStyled>
-			<h1>LoginPage</h1>
-			<LoginForm />
-		</LoginPageStyled>
+		<DynamicModuleLoader
+			reducerKey="authByUsername"
+			reducer={authByUsernameReducer}
+		>
+			<LoginPageStyled>
+				<h1>LoginPage</h1>
+				<LoginForm />
+			</LoginPageStyled>
+		</DynamicModuleLoader>
 	);
-};
+});
