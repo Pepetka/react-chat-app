@@ -16,6 +16,10 @@ export const authByUsernameSlice = createSlice({
 		setUsername: (state, { payload }: PayloadAction<string>) => {
 			state.username = payload;
 		},
+		clear: (state) => {
+			state.username = '';
+			state.password = '';
+		},
 	},
 });
 

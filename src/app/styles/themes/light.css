@@ -1,0 +1,8 @@
+.light_theme {
+	--bg-color: rgb(206 210 213);
+	--invert-bg-color: rgb(7 9 113);
+	--primary-color: rgb(7 4 93);
+	--invert-primary-color: rgb(10 194 29);
+	--secondary-color: rgb(10 62 194);
+	--invert-secondary-color: rgb(19 93 4);
+}

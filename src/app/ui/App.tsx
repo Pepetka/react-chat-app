@@ -1,22 +1,11 @@
 import { memo, useEffect } from 'react';
 import { AppRouter } from '../provider/Router/ui/AppRouter';
-import { NavLink, useLocation } from 'react-router-dom';
-import {
-	getLoginPagePath,
-	getMainPagePath,
-	getProfilePagePath,
-} from '@/shared/const/router';
-import styled from 'styled-components';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { userActions } from '@/entities/User';
-
-const NavBar = styled.div`
-	display: flex;
-	gap: 16px;
-`;
+import { useTheme } from '@/shared/hooks/useTheme';
 
 export const App = memo(() => {
-	const location = useLocation();
+	const { theme, changeTheme } = useTheme();
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -24,18 +13,8 @@ export const App = memo(() => {
 	}, [dispatch]);
 
 	return (
-		<div data-testid="App">
-			<NavBar>
-				{location.pathname !== getProfilePagePath('1') && (
-					<NavLink to={getProfilePagePath('1')}>to Profile page</NavLink>
-				)}
-				{location.pathname !== getMainPagePath() && (
-					<NavLink to={getMainPagePath()}>to Main page</NavLink>
-				)}
-				{location.pathname !== getLoginPagePath() && (
-					<NavLink to={getLoginPagePath()}>to Login page</NavLink>
-				)}
-			</NavBar>
+		<div data-testid="App" className={`App ${theme}`}>
+			<button onClick={changeTheme}>Theme</button>
 			<AppRouter />
 		</div>
 	);
