@@ -10,15 +10,15 @@ const Template: StoryFn<typeof Input> = (args) => <Input {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-	children: 'Some text',
 	width: '300px',
 	label: 'Some label',
+	onChange: () => {},
 };
 
 export const Inverted = Template.bind({});
 Inverted.args = {
-	children: 'Some text',
 	width: '300px',
 	label: 'Some label',
 	theme: 'invert',
+	onChange: () => {},
 };

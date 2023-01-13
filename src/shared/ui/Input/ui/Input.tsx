@@ -1,8 +1,8 @@
 import {
-	InputHTMLAttributes,
+	ChangeEvent,
+	HTMLInputTypeAttribute,
 	useCallback,
 	useMemo,
-	useRef,
 	useState,
 } from 'react';
 import styled from 'styled-components';
@@ -17,10 +17,13 @@ interface ILabelControls {
 	theme: 'primary' | 'invert';
 }
 
-interface IInputProps
-	extends Omit<InputHTMLAttributes<HTMLInputElement>, 'width' | 'height'>,
-		IInputControls {
+interface IInputProps extends IInputControls {
 	label: string;
+	value: string;
+	onChange: (value: string) => void;
+	name: string;
+	type?: HTMLInputTypeAttribute;
+	required?: boolean;
 }
 
 const StyledInput = styled.input<IInputControls>`
@@ -45,7 +48,7 @@ const StyledInput = styled.input<IInputControls>`
 const StyledLabel = styled.div<ILabelControls>`
 	font: var(--font-m);
 	position: absolute;
-	padding-inline: 5px;
+	padding-inline: 10px;
 	top: ${(props) => (props.focused ? '0' : '20px')};
 	left: ${(props) => (props.focused ? '5px' : '10px')};
 	background: ${(props) =>
@@ -55,6 +58,7 @@ const StyledLabel = styled.div<ILabelControls>`
 			? 'var(--primary-color)'
 			: 'var(--invert-primary-color)'};
 	transition: all linear 0.2s;
+	pointer-events: none;
 `;
 
 const StyledWrapper = styled.div`
@@ -63,9 +67,16 @@ const StyledWrapper = styled.div`
 `;
 
 export const Input = (props: IInputProps) => {
-	const { width, label, theme = 'primary' } = props;
+	const {
+		width,
+		label,
+		onChange,
+		theme = 'primary',
+		name,
+		required = false,
+		type = 'text',
+	} = props;
 	const [focused, setFocused] = useState(false);
-	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	const { onFocus, onBlur } = useMemo(
 		() => ({
@@ -75,20 +86,26 @@ export const Input = (props: IInputProps) => {
 		[],
 	);
 
-	const onLabelClick = useCallback(() => {
-		inputRef.current?.focus();
-	}, []);
+	const onHandleChange = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => {
+			onChange(event.target.value);
+		},
+		[onChange],
+	);
 
 	return (
 		<StyledWrapper>
 			<StyledInput
+				name={name}
+				type={type}
+				required={required}
 				theme={theme}
 				width={width}
 				onFocus={onFocus}
 				onBlur={onBlur}
-				ref={inputRef}
+				onChange={onHandleChange}
 			/>
-			<StyledLabel theme={theme} onClick={onLabelClick} focused={focused}>
+			<StyledLabel theme={theme} focused={focused}>
 				{label}
 			</StyledLabel>
 		</StyledWrapper>

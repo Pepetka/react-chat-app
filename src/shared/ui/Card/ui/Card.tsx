@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface ICardControls {
 	width?: string;
 	height?: string;
+	border?: boolean;
 }
 
 interface ICardProps extends ICardControls {
@@ -12,7 +13,8 @@ interface ICardProps extends ICardControls {
 
 const StyledDiv = styled.div<ICardControls>`
 	border-radius: 15px;
-	border: var(--invert-primary-color) solid 2px;
+	border: ${(props) =>
+		props.border ? 'var(--invert-primary-color) solid 2px' : 'none'};
 	color: var(--invert-primary-color);
 	background: var(--invert-bg-color);
 	padding: 20px;
@@ -24,10 +26,10 @@ const StyledDiv = styled.div<ICardControls>`
 `;
 
 export const Card = (props: ICardProps) => {
-	const { children, height, width } = props;
+	const { children, height, width, border = false } = props;
 
 	return (
-		<StyledDiv width={width} height={height}>
+		<StyledDiv width={width} height={height} border={border}>
 			{children}
 		</StyledDiv>
 	);

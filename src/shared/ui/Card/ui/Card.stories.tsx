@@ -8,9 +8,17 @@ export default {
 
 const Template: StoryFn<typeof Card> = (args) => <Card {...args} />;
 
-export const Normal = Template.bind({});
-Normal.args = {
+export const WithBorder = Template.bind({});
+WithBorder.args = {
 	children: 'Some text',
-	width: '100px',
-	height: '150px',
+	width: '150px',
+	height: '200px',
+	border: true,
+};
+
+export const WithoutBorder = Template.bind({});
+WithoutBorder.args = {
+	children: 'Some text',
+	width: '150px',
+	height: '200px',
 };
