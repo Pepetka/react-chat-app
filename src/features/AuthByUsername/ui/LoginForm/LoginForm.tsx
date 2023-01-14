@@ -1,5 +1,4 @@
 import {
-	ChangeEvent,
 	FormEvent,
 	memo,
 	useCallback,
@@ -8,10 +7,10 @@ import {
 	useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { authByUsernameState } from '@/features/AuthByUsername/model/selectors/authByUsernameSelectors';
+import { authByUsernameState } from '../../model/selectors/authByUsernameSelectors';
+import { authByUsernameActions } from '../../model/slice/authByUserNameSlice';
+import { useAuthUserMutation } from '../../api/authByUsernameApi';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
-import { authByUsernameActions } from '@/features/AuthByUsername/model/slice/authByUserNameSlice';
-import { useAuthUserMutation } from '@/features/AuthByUsername/api/authByUsernameApi';
 import { userActions } from '@/entities/User';
 import { Card } from '@/shared/ui/Card';
 import { Text } from '@/shared/ui/Text';
@@ -74,35 +73,41 @@ export const LoginForm = memo(() => {
 	);
 
 	return (
-		<Card width="570px" height="600px">
-			<Flex direction="column" align="center" gap="24">
-				<Text title="Login" titleAlign="center" />
-				<form onSubmit={onLogin}>
-					<Flex direction="column" align="center" gap="40">
-						<Input
-							theme="invert"
-							label="Enter username..."
-							value={username}
-							onChange={onChangeUsername}
-							width="500px"
-							name="username"
-							type="text"
-							required
-						/>
-						<Input
-							theme="invert"
-							label="Enter password..."
-							width="500px"
-							value={password}
-							onChange={onChangePassword}
-							name="password"
-							type="password"
-							required
-						/>
-					</Flex>
-				</form>
+		<Card border width="570px" height="600px">
+			<Flex height="380px" direction="column" align="center" gap="24">
+				<Text title="Login" titleAlign="center" theme="invert" size="xl" />
+				<Flex
+					FlexTag="form"
+					onSubmit={onLogin}
+					direction="column"
+					align="center"
+					gap="40"
+				>
+					<Input
+						theme="invert"
+						label="Enter username..."
+						value={username}
+						onChange={onChangeUsername}
+						width="500px"
+						name="username"
+						type="text"
+						required
+					/>
+					<Input
+						theme="invert"
+						label="Enter password..."
+						width="500px"
+						value={password}
+						onChange={onChangePassword}
+						name="password"
+						type="password"
+						required
+					/>
+				</Flex>
 				<Flex justify="space-between" align="center" width="500px">
-					<a href="hjh">Forgot your password?</a>
+					<a href="hjh">
+						<Text text="Forgot your password?" theme="invert" />
+					</a>
 					<Button
 						width="180px"
 						height="50px"
@@ -111,10 +116,24 @@ export const LoginForm = memo(() => {
 						onClick={onHandleClick}
 						invert
 					>
-						{isLoading ? 'Loading...' : 'Login'}
+						<Text
+							text={isLoading ? 'Loading...' : 'Login'}
+							textAlign="center"
+							size="l"
+						/>
 					</Button>
 				</Flex>
-				{hasError && <div>{(loginError as LoginErrorType).data.message}</div>}
+				{hasError && (
+					<Text
+						text={
+							(loginError as LoginErrorType)?.data
+								? (loginError as LoginErrorType).data.message
+								: 'Something went wrong'
+						}
+						textAlign="center"
+						theme="error"
+					/>
+				)}
 			</Flex>
 		</Card>
 	);

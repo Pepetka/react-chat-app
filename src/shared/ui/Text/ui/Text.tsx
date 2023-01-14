@@ -1,10 +1,24 @@
 import styled from 'styled-components';
 
-interface ITitleControls {
+interface IThemeProp {
+	theme?: 'primary' | 'invert' | 'error';
+}
+
+interface ISizeProp {
+	size?: 'm' | 'l' | 'xl';
+}
+
+const sizeTextTitle: Record<NonNullable<ISizeProp['size']>, string> = {
+	m: 'l',
+	l: 'xl',
+	xl: 'xxl',
+};
+
+interface ITitleControls extends IThemeProp, ISizeProp {
 	titleAlign?: 'left' | 'right' | 'center';
 }
 
-interface ITextControls {
+interface ITextControls extends IThemeProp, ISizeProp {
 	textAlign?: 'left' | 'right' | 'center';
 }
 
@@ -14,6 +28,16 @@ interface ITextProps extends ITitleControls, ITextControls {
 	TitleTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
+const getTextColor = (props: ITitleControls) => {
+	if (props.theme === 'error') {
+		return 'var(--primary-error-color)';
+	}
+
+	return props.theme === 'primary'
+		? 'var(--primary-color)'
+		: 'var(--invert-primary-color)';
+};
+
 const TextWrapper = styled.div`
 	width: 100%;
 	display: flex;
@@ -22,14 +46,14 @@ const TextWrapper = styled.div`
 `;
 
 const StyledTitle = styled.h1<ITitleControls>`
-	font: var(--font-l);
-	color: var(--primary-color);
+	font: ${(props) => `var(--font-${sizeTextTitle[props.size!]})`};
+	color: ${getTextColor};
 	text-align: ${(props) => props.titleAlign};
 `;
 
 const StyledText = styled.p<ITextControls>`
-	font: var(--font-m);
-	color: var(--secondary-color);
+	font: ${(props) => `var(--font-${props.size})`};
+	color: ${getTextColor};
 	text-align: ${(props) => props.textAlign};
 `;
 
@@ -40,16 +64,27 @@ export const Text = (props: ITextProps) => {
 		TitleTag = 'h1',
 		textAlign = 'left',
 		titleAlign = 'left',
+		theme = 'primary',
+		size = 'm',
 	} = props;
 
 	return (
 		<TextWrapper>
 			{title && (
-				<StyledTitle titleAlign={titleAlign} as={TitleTag}>
+				<StyledTitle
+					size={size}
+					theme={theme}
+					titleAlign={titleAlign}
+					as={TitleTag}
+				>
 					{title}
 				</StyledTitle>
 			)}
-			{text && <StyledText textAlign={textAlign}>{text}</StyledText>}
+			{text && (
+				<StyledText size={size} theme={theme} textAlign={textAlign}>
+					{text}
+				</StyledText>
+			)}
 		</TextWrapper>
 	);
 };

@@ -13,7 +13,7 @@ interface IInputControls {
 }
 
 interface ILabelControls {
-	focused: boolean;
+	opened: boolean;
 	theme: 'primary' | 'invert';
 }
 
@@ -26,37 +26,45 @@ interface IInputProps extends IInputControls {
 	required?: boolean;
 }
 
+const getBgColor = (props: IInputControls | ILabelControls) =>
+	props.theme === 'primary' ? 'var(--bg-color)' : 'var(--invert-bg-color)';
+
+const getTextColor = (props: IInputControls | ILabelControls) =>
+	props.theme === 'primary'
+		? 'var(--primary-color)'
+		: 'var(--invert-primary-color)';
+
 const StyledInput = styled.input<IInputControls>`
 	font: var(--font-m);
 	height: auto;
 	padding: 10px;
 	width: ${(props) => props.width};
-	border-radius: 5px;
+	border-radius: 8px;
 	border: ${(props) =>
 		props.theme === 'primary'
-			? '1px solid var(--primary-color)'
-			: '1px solid var(--invert-primary-color)'};
-	background: ${(props) =>
-		props.theme === 'primary' ? 'var(--bg-color)' : 'var(--invert-bg-color)'};
-	color: ${(props) =>
-		props.theme === 'primary'
-			? 'var(--primary-color)'
-			: 'var(--invert-primary-color)'};
+			? '4px solid var(--primary-color)'
+			: '4px solid var(--invert-primary-color)'};
+	background: ${getBgColor};
+	color: ${getTextColor};
 	outline: none;
+
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus {
+		-webkit-text-fill-color: ${getTextColor};
+		-webkit-box-shadow: 0 0 0 1000px ${getBgColor} inset;
+		transition: background-color 5000s ease-in-out 0s;
+	}
 `;
 
 const StyledLabel = styled.div<ILabelControls>`
 	font: var(--font-m);
 	position: absolute;
 	padding-inline: 10px;
-	top: ${(props) => (props.focused ? '0' : '20px')};
-	left: ${(props) => (props.focused ? '5px' : '10px')};
-	background: ${(props) =>
-		props.theme === 'primary' ? 'var(--bg-color)' : 'var(--invert-bg-color)'};
-	color: ${(props) =>
-		props.theme === 'primary'
-			? 'var(--primary-color)'
-			: 'var(--invert-primary-color)'};
+	top: ${(props) => (props.opened ? '0' : '24px')};
+	left: 10px;
+	background: ${getBgColor};
+	color: ${getTextColor};
 	transition: all linear 0.2s;
 	pointer-events: none;
 `;
@@ -75,16 +83,19 @@ export const Input = (props: IInputProps) => {
 		name,
 		required = false,
 		type = 'text',
+		value,
 	} = props;
-	const [focused, setFocused] = useState(false);
+	const [opened, setOpened] = useState(false);
 
-	const { onFocus, onBlur } = useMemo(
-		() => ({
-			onFocus: () => setFocused(true),
-			onBlur: () => setFocused(false),
-		}),
-		[],
-	);
+	const onFocus = useCallback(() => {
+		setOpened(true);
+	}, []);
+
+	const onBlur = useCallback(() => {
+		if (!value) {
+			setOpened(false);
+		}
+	}, [value]);
 
 	const onHandleChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
@@ -104,8 +115,9 @@ export const Input = (props: IInputProps) => {
 				onFocus={onFocus}
 				onBlur={onBlur}
 				onChange={onHandleChange}
+				value={value}
 			/>
-			<StyledLabel theme={theme} focused={focused}>
+			<StyledLabel theme={theme} opened={opened}>
 				{label}
 			</StyledLabel>
 		</StyledWrapper>

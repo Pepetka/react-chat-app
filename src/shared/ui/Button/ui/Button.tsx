@@ -20,7 +20,7 @@ interface IButtonProps extends IButtonControls {
 const StyledButton = styled.button<IButtonControls>`
 	font: var(--font-m);
 	cursor: pointer;
-	border-radius: 5px;
+	border-radius: 8px;
 	background: ${(props) => {
 		if (props.theme === 'primary') {
 			return props.invert ? 'var(--bg-color)' : 'var(--invert-bg-color)';
@@ -42,8 +42,8 @@ const StyledButton = styled.button<IButtonControls>`
 	border: ${(props) => {
 		if (props.theme === 'outline') {
 			return props.invert
-				? '1px solid var(--invert-primary-color)'
-				: '1px solid var(--primary-color)';
+				? '4px solid var(--invert-primary-color)'
+				: '4px solid var(--primary-color)';
 		} else {
 			return 'none';
 		}
@@ -52,6 +52,13 @@ const StyledButton = styled.button<IButtonControls>`
 	height: ${(props) => props.height ?? 'auto'};
 	box-shadow: ${(props) =>
 		props.theme === 'primary' ? '0px 3px 3px rgba(0,0,0,0.7)' : 'none'};
+
+	@media (min-width: 768px) {
+		&:hover {
+			transform: scale(0.95);
+			transition: transform 0.1s linear;
+		}
+	}
 `;
 
 export const Button = (props: IButtonProps) => {

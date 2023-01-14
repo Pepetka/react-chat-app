@@ -12,9 +12,9 @@ interface ICardProps extends ICardControls {
 }
 
 const StyledDiv = styled.div<ICardControls>`
-	border-radius: 15px;
+	border-radius: 25px;
 	border: ${(props) =>
-		props.border ? 'var(--invert-primary-color) solid 2px' : 'none'};
+		props.border ? 'var(--invert-primary-color) solid 4px' : 'none'};
 	color: var(--invert-primary-color);
 	background: var(--invert-bg-color);
 	padding: 20px;

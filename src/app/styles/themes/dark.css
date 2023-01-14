@@ -5,4 +5,7 @@
 	--invert-primary-color: rgb(7 4 93);
 	--secondary-color: rgb(22 143 3);
 	--invert-secondary-color: rgb(10 62 194);
+
+	--primary-error-color: #ff0000;
+	--secondary-error-color: #dc1818;
 }
