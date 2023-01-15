@@ -9,6 +9,7 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint', 'react-hooks'],
 	rules: {
+		'multiline-ternary': 'off',
 		'prefer-template': 'error',
 		'@typescript-eslint/no-empty-function': 'off',
 		'@typescript-eslint/ban-ts-comment': 'warn',

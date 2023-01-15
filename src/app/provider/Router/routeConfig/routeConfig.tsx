@@ -15,7 +15,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
 		path: getMainPagePath(),
 		element: <MainPage />,
-		authOnly: false,
 	},
 	[AppRoutes.PROFILE]: {
 		path: getProfilePagePath(':id'),

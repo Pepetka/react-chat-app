@@ -5,13 +5,14 @@ import { getMainPagePath } from '@/shared/const/router';
 
 interface RequireAuthProps {
 	children: JSX.Element;
+	authOnly: boolean;
 }
 
-export const RequireAuth = ({ children }: RequireAuthProps) => {
+export const RequireAuth = ({ children, authOnly }: RequireAuthProps) => {
 	const auth = useSelector(getUserAuthData);
 	const location = useLocation();
 
-	if (!auth) {
+	if ((!auth && authOnly) || (auth && !authOnly)) {
 		return (
 			<Navigate to={getMainPagePath()} state={{ from: location }} replace />
 		);

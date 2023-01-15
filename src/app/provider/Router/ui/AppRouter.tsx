@@ -16,7 +16,11 @@ export const AppRouter = memo(() => {
 					key={path}
 					path={path}
 					element={
-						authOnly ? <RequireAuth>{routeElement}</RequireAuth> : routeElement
+						authOnly !== undefined ? (
+							<RequireAuth authOnly={authOnly}>{routeElement}</RequireAuth>
+						) : (
+							routeElement
+						)
 					}
 				/>
 			);
