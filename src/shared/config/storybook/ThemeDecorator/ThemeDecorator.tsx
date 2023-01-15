@@ -1,8 +1,12 @@
-import { StoryFn } from '@storybook/react';
+import { Decorator } from '@storybook/react';
 import '@/app/styles/index.css';
 
-export const ThemeDecorator = (StoryComponent: StoryFn) => (
-	<div className="App">
-		<StoryComponent />
-	</div>
-);
+export const ThemeDecorator: Decorator = (StoryComponent, { globals }) => {
+	const { globalTheme } = globals;
+
+	return (
+		<div className={`App ${globalTheme}`}>
+			<StoryComponent />
+		</div>
+	);
+};

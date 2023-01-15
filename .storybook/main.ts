@@ -7,7 +7,6 @@ const config: StorybookConfig = {
 		'@storybook/addon-links',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
-		'storybook-addon-themes',
 	],
 	framework: {
 		name: '@storybook/react-vite',
@@ -15,9 +14,6 @@ const config: StorybookConfig = {
 	},
 	features: {
 		storyStoreV7: true,
-	},
-	docs: {
-		autodocs: true,
 	},
 	async viteFinal(config) {
 		config.plugins = [

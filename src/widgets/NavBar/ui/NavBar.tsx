@@ -53,7 +53,7 @@ export const NavBar = memo((props: INavBarProps) => {
 					<Button
 						onClick={onLogout}
 						theme={'outline'}
-						width="120px"
+						width="140px"
 						height="70px"
 						invert
 					>
