@@ -1,20 +1,24 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { LoginForm } from './LoginForm';
+import { RegisterForm } from './RegisterForm';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
 import { DeepPartial } from 'redux';
 
 export default {
-	title: 'features/LoginForm',
-	component: LoginForm,
-} as Meta<typeof LoginForm>;
+	title: 'features/RegisterForm',
+	component: RegisterForm,
+} as Meta<typeof RegisterForm>;
 
-const Template: StoryFn<typeof LoginForm> = (args) => <LoginForm />;
+const Template: StoryFn<typeof RegisterForm> = (args) => <RegisterForm />;
 
 const state: DeepPartial<StateSchema> = {
-	authByUsername: {
-		password: 'password',
-		username: 'User',
+	registerByUsername: {
+		lastname: '',
+		firstname: '',
+		email: '',
+		age: 0,
+		password: '',
+		username: '',
 	},
 };
 

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const jsonServer = require('json-server');
 const path = require('path');
+const crypto = require('node:crypto')
 
 const server = jsonServer.create();
 
@@ -53,7 +54,7 @@ server.post('/login', (req, res) => {
 
 server.post('/register', (req, res) => {
 	try {
-		const { username, password } = req.body;
+		const { username, password, firstname, lastname, age, email } = req.body;
 		const db = JSON.parse(
 			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
 		);
@@ -66,15 +67,21 @@ server.post('/register', (req, res) => {
 		);
 
 		if (existedUser) {
-			return res.status(403).json({ message: 'User with this login already exists' });
+			return res.status(403).json({ message: 'User with this username already exists' });
 		}
+
+		const date = new Date().toLocaleDateString();
 
 		const newUsers = [...users, {
 			"username": username,
 			"password": password,
 			"id": crypto.randomUUID(),
-			"role": "USER",
-			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+			"firstname": firstname,
+			"lastname": lastname,
+			"email": email,
+			"age": age,
+			"createdAt": date,
+			"avatar":"https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
 		}]
 
 		const newDb = JSON.stringify({...db, users: newUsers})

@@ -1,22 +1,24 @@
-import { authByUsernameReducer, LoginForm } from '@/features/AuthByUsername';
 import { DynamicModuleLoader } from '@/shared/components';
-import { memo } from 'react';
+import {
+	registerByUsernameReducer,
+	RegisterForm,
+} from '@/features/RegisterByUsername';
 import { Flex } from '@/shared/ui/Flex';
 import { Page } from '@/shared/ui/Page';
 
-const LoginPage = memo(() => {
+const RegisterPage = () => {
 	return (
 		<Page>
 			<DynamicModuleLoader
-				reducerKey="authByUsername"
-				reducer={authByUsernameReducer}
+				reducerKey="registerByUsername"
+				reducer={registerByUsernameReducer}
 			>
 				<Flex justify="center" align="center" width="100%" height="100%">
-					<LoginForm />
+					<RegisterForm />
 				</Flex>
 			</DynamicModuleLoader>
 		</Page>
 	);
-});
+};
 
-export default LoginPage;
+export default RegisterPage;

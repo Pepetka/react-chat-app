@@ -12,11 +12,11 @@ interface IFlexControls {
 
 interface IFlexProps extends IFlexControls {
 	children: ReactNode;
-	FlexTag?: 'div' | 'form';
+	FlexTag?: 'div' | 'form' | 'label';
 }
 
 interface IFlexDiv extends IFlexProps {
-	FlexTag?: 'div';
+	FlexTag?: 'div' | 'label';
 	onSubmit?: never;
 }
 

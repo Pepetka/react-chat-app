@@ -2,6 +2,7 @@ export enum AppRoutes {
 	MAIN = 'Main',
 	PROFILE = 'Profile',
 	LOGIN = 'Login',
+	REGISTER = 'Register',
 }
 
 export const getMainPagePath = () => {
@@ -12,4 +13,7 @@ export const getProfilePagePath = (id: string) => {
 };
 export const getLoginPagePath = () => {
 	return '/login';
+};
+export const getRegisterPagePath = () => {
+	return '/register';
 };

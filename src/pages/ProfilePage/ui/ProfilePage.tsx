@@ -7,7 +7,7 @@ const ProfilePageStyled = styled.div`
 	text-align: center;
 `;
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
 	const params = useParams<{ id: string }>();
 
 	return (
@@ -16,3 +16,5 @@ export const ProfilePage = () => {
 		</ProfilePageStyled>
 	);
 };
+
+export default ProfilePage;

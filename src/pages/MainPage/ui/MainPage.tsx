@@ -6,10 +6,12 @@ const MainPageStyled = styled.div`
 	text-align: center;
 `;
 
-export const MainPage = () => {
+const MainPage = () => {
 	return (
 		<MainPageStyled>
 			<h1>MainPage</h1>
 		</MainPageStyled>
 	);
 };
+
+export default MainPage;

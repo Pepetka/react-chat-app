@@ -8,10 +8,12 @@ import {
 	Reducer,
 	ReducersMapObject,
 } from '@reduxjs/toolkit';
+import { RegisterByUsernameSchema } from '@/features/RegisterByUsername';
 
 export interface StateSchema {
 	user: UserSchema;
 	authByUsername?: AuthByUsernameSchema;
+	registerByUsername?: RegisterByUsernameSchema;
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 }
 
