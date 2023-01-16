@@ -26,6 +26,7 @@ interface IFlexForm extends IFlexProps {
 }
 
 const StyledFlex = styled.div<IFlexControls>`
+	position: relative;
 	display: flex;
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};

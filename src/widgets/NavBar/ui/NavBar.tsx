@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import LogoSvg from '@/shared/assets/logo.svg';
+import SearchSvg from '@/shared/assets/search.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { Text } from '@/shared/ui/Text';
 import { getUserAuthData, userActions } from '@/entities/User';
@@ -33,6 +34,24 @@ const LogoName = styled.div`
 	color: var(--invert-primary-color);
 `;
 
+const StyledSearch = styled.input`
+	width: 370px;
+	height: 45px;
+	border-radius: 73px;
+	outline: none;
+	padding-right: 50px;
+	padding-left: 15px;
+	font: var(--font-m);
+	color: var(--primary-color);
+	border: none;
+`;
+
+const StyledSearchButton = styled.div`
+	position: absolute;
+	top: 4px;
+	right: 8px;
+`;
+
 export const NavBar = memo((props: INavBarProps) => {
 	const { currentPagePath, onLogin, onRegister } = props;
 	const authData = useSelector(getUserAuthData);
@@ -45,9 +64,21 @@ export const NavBar = memo((props: INavBarProps) => {
 	return (
 		<StyledNavBar>
 			<Flex justify="space-between" width="80%">
-				<Flex align="center">
-					<Icon SvgIcon={LogoSvg} invert />
-					<LogoName>ICE</LogoName>
+				<Flex align="center" justify="space-between" width="600px">
+					<Flex align="center" width="auto">
+						<Icon SvgIcon={LogoSvg} invert />
+						<LogoName>ICE</LogoName>
+					</Flex>
+					{authData && (
+						<Flex width="auto" align="center">
+							<StyledSearch />
+							<StyledSearchButton>
+								<Button theme="clear">
+									<Icon SvgIcon={SearchSvg} />
+								</Button>
+							</StyledSearchButton>
+						</Flex>
+					)}
 				</Flex>
 				{authData ? (
 					<Button

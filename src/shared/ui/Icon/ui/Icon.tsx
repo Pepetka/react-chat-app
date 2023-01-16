@@ -12,6 +12,9 @@ interface IIconProps extends IIconControls {
 const Logo = styled.div<IIconControls>`
 	color: ${(props) =>
 		props.invert ? 'var(--invert-primary-color)' : 'var(--primary-color)'};
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const Icon = memo((props: IIconProps) => {

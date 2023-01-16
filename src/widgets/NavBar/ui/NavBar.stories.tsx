@@ -3,7 +3,6 @@ import { NavBar } from './NavBar';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
 import { DeepPartial } from 'redux';
-import { ReducersMapObject } from '@reduxjs/toolkit';
 
 export default {
 	title: 'widgets/NavBar',

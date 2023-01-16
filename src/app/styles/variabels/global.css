@@ -17,4 +17,5 @@
 	--font-xxl: var(--font-size-xxl) / var(--font-line-xxl) var(--font-family-main);
 
 	--navbar-height: 90px;
+	--sidebar-width: 160px;
 }

@@ -1,17 +1,7 @@
-import styled from 'styled-components';
-
-const MainPageStyled = styled.div`
-	color: red;
-	width: 100vw;
-	text-align: center;
-`;
+import { Page } from '@/shared/ui/Page';
 
 const MainPage = () => {
-	return (
-		<MainPageStyled>
-			<h1>MainPage</h1>
-		</MainPageStyled>
-	);
+	return <h1>MainPage</h1>;
 };
 
 export default MainPage;

@@ -4,21 +4,26 @@ import {
 	RegisterForm,
 } from '@/features/RegisterByUsername';
 import { Flex } from '@/shared/ui/Flex';
-import { Page } from '@/shared/ui/Page';
+import styled from 'styled-components';
+import { memo } from 'react';
 
-const RegisterPage = () => {
+const StyledRegisterPage = styled.div`
+	padding-top: 50px;
+`;
+
+const RegisterPage = memo(() => {
 	return (
-		<Page>
-			<DynamicModuleLoader
-				reducerKey="registerByUsername"
-				reducer={registerByUsernameReducer}
-			>
-				<Flex justify="center" align="center" width="100%" height="100%">
+		<DynamicModuleLoader
+			reducerKey="registerByUsername"
+			reducer={registerByUsernameReducer}
+		>
+			<Flex justify="center" align="center" width="100%">
+				<StyledRegisterPage>
 					<RegisterForm />
-				</Flex>
-			</DynamicModuleLoader>
-		</Page>
+				</StyledRegisterPage>
+			</Flex>
+		</DynamicModuleLoader>
 	);
-};
+});
 
 export default RegisterPage;

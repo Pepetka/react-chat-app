@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getUserAuthData } from '@/entities/User';
-import { getMainPagePath } from '@/shared/const/router';
+import { getLoginPagePath, getProfilePagePath } from '@/shared/const/router';
 
 interface RequireAuthProps {
 	children: JSX.Element;
@@ -12,9 +12,19 @@ export const RequireAuth = ({ children, authOnly }: RequireAuthProps) => {
 	const auth = useSelector(getUserAuthData);
 	const location = useLocation();
 
-	if ((!auth && authOnly) || (auth && !authOnly)) {
+	if (!auth && authOnly) {
 		return (
-			<Navigate to={getMainPagePath()} state={{ from: location }} replace />
+			<Navigate to={getLoginPagePath()} state={{ from: location }} replace />
+		);
+	}
+
+	if (auth && !authOnly) {
+		return (
+			<Navigate
+				to={getProfilePagePath(auth.id)}
+				state={{ from: location }}
+				replace
+			/>
 		);
 	}
 

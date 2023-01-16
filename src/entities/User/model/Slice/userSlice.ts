@@ -16,18 +16,17 @@ export const userSlice = createSlice({
 
 			if (userData) {
 				state.authData = JSON.parse(userData);
-				state._inited = true;
 			}
+
+			state._inited = true;
 		},
 		setUser: (state, { payload }: PayloadAction<User>) => {
 			state.authData = payload;
-			state._inited = true;
 
 			localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, JSON.stringify(payload));
 		},
 		removeUser: (state) => {
 			state.authData = undefined;
-			state._inited = false;
 
 			localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
 		},
