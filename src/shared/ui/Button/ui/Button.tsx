@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 import styled from 'styled-components';
 
 type ButtonThemeType = 'primary' | 'outline' | 'clear';
@@ -61,7 +61,7 @@ const StyledButton = styled.button<IButtonControls>`
 	}
 `;
 
-export const Button = (props: IButtonProps) => {
+export const Button = memo((props: IButtonProps) => {
 	const {
 		children,
 		theme = 'primary',
@@ -86,4 +86,4 @@ export const Button = (props: IButtonProps) => {
 			{children}
 		</StyledButton>
 	);
-};
+});

@@ -1,6 +1,7 @@
 import {
 	ChangeEvent,
 	HTMLInputTypeAttribute,
+	memo,
 	useCallback,
 	useMemo,
 	useState,
@@ -74,7 +75,7 @@ const StyledWrapper = styled.div`
 	padding-top: 10px;
 `;
 
-export const Input = (props: IInputProps) => {
+export const Input = memo((props: IInputProps) => {
 	const {
 		width,
 		label,
@@ -122,4 +123,4 @@ export const Input = (props: IInputProps) => {
 			</StyledLabel>
 		</StyledWrapper>
 	);
-};
+});

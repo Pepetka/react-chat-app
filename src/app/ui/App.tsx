@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
 
 export const App = memo(() => {
-	const { theme, changeTheme } = useTheme();
+	const { theme } = useTheme();
 	const location = useLocation();
 	const navigation = useNavigate();
 	const dispatch = useAppDispatch();
@@ -32,8 +32,9 @@ export const App = memo(() => {
 				onRegister={onRegister}
 				currentPagePath={location.pathname}
 			/>
-			<button onClick={changeTheme}>Theme</button>
-			<AppRouter />
+			<div className="wrapper">
+				<AppRouter />
+			</div>
 		</div>
 	);
 });

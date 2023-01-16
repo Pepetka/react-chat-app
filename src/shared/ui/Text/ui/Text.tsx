@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { memo } from 'react';
 
 interface IThemeProp {
 	theme?: 'primary' | 'invert' | 'error';
@@ -57,7 +58,7 @@ const StyledText = styled.p<ITextControls>`
 	text-align: ${(props) => props.textAlign};
 `;
 
-export const Text = (props: ITextProps) => {
+export const Text = memo((props: ITextProps) => {
 	const {
 		text,
 		title,
@@ -87,4 +88,4 @@ export const Text = (props: ITextProps) => {
 			)}
 		</TextWrapper>
 	);
-};
+});
