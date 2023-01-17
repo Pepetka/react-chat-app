@@ -22,3 +22,11 @@ WithoutBorder.args = {
 	width: '150px',
 	height: '200px',
 };
+
+export const WithCorner = Template.bind({});
+WithCorner.args = {
+	children: 'Some text',
+	width: '150px',
+	height: '200px',
+	borderRadius: false,
+};

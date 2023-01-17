@@ -4,7 +4,7 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:promise/recommended',
-		'plugin:react-hooks/recommended'
+		'plugin:react-hooks/recommended',
 	],
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint', 'react-hooks'],

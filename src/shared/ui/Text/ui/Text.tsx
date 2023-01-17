@@ -2,7 +2,12 @@ import styled from 'styled-components';
 import { memo } from 'react';
 
 interface IThemeProp {
-	theme?: 'primary' | 'invert' | 'error';
+	theme?:
+		| 'primary'
+		| 'primary-invert'
+		| 'error'
+		| 'secondary'
+		| 'secondary-invert';
 }
 
 interface ISizeProp {
@@ -32,6 +37,14 @@ interface ITextProps extends ITitleControls, ITextControls {
 const getTextColor = (props: ITitleControls) => {
 	if (props.theme === 'error') {
 		return 'var(--primary-error-color)';
+	}
+
+	if (props.theme === 'secondary') {
+		return 'var(--secondary-color)';
+	}
+
+	if (props.theme === 'secondary-invert') {
+		return 'var(--invert-secondary-color)';
 	}
 
 	return props.theme === 'primary'

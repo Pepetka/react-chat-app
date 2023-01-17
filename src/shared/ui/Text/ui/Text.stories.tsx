@@ -14,11 +14,25 @@ Primary.args = {
 	text: 'Some Text',
 };
 
-export const Invert = Template.bind({});
-Invert.args = {
+export const PrimaryInvert = Template.bind({});
+PrimaryInvert.args = {
 	title: 'Some Title',
 	text: 'Some Text',
-	theme: 'invert',
+	theme: 'primary-invert',
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+	title: 'Some Title',
+	text: 'Some Text',
+	theme: 'secondary',
+};
+
+export const SecondaryInvert = Template.bind({});
+SecondaryInvert.args = {
+	title: 'Some Title',
+	text: 'Some Text',
+	theme: 'secondary-invert',
 };
 
 export const Error = Template.bind({});

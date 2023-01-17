@@ -1,36 +1,40 @@
 {
-	"users":[
+	"users": [
 		{
-			"id":"0",
-			"username":"admin",
-			"password":"123",
-			"email":"admin@mail.ru",
-			"firstname":"Vlad",
-			"lastname":"Kuznetsov",
-			"age":22,"createdAt":"05.06.2022",
-			"avatar":"https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+			"id": "6cbdb793",
+			"username": "admin",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря, ничего в этой жизни не бывает даром",
+			"email": "admin@mail.ru",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"age": 22,
+			"createdAt": "05.06.2022",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
 		},
 		{
-			"id":"1",
-			"username":"user",
-			"password":"123",
-			"email":"user@mail.ru",
-			"firstname":"Vlad",
-			"lastname":"Kuznetsov",
-			"age":22,
-			"createdAt":"05.0.2023",
-			"avatar":"https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+			"id": "6cbdb794",
+			"username": "user",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря, ничего в этой жизни не бывает даром",
+			"email": "user@mail.ru",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"age": 22,
+			"createdAt": "05.0.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
 		},
 		{
-			"username":"user1",
-			"password":"123",
-			"id":"6cbdb795-22b7-4a7b-a6c5-8d39d5cf5e47",
-			"firstname":"Vlad",
-			"lastname":"Kuznetsov",
-			"email":"vlad.kznetsov@gmail.com",
-			"age":22,
-			"createdAt":"15.01.2023",
-			"avatar":"https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+			"id": "6cbdb795",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря, ничего в этой жизни не бывает даром",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
 		}
 	]
 }

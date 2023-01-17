@@ -7,6 +7,7 @@ export interface User {
 	age: number;
 	createdAt: string;
 	avatar: string;
+	status?: string;
 }
 
 export interface UserSchema {

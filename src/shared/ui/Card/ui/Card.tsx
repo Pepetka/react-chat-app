@@ -5,6 +5,7 @@ interface ICardControls {
 	width?: string;
 	height?: string;
 	border?: boolean;
+	borderRadius?: boolean;
 }
 
 interface ICardProps extends ICardControls {
@@ -12,7 +13,7 @@ interface ICardProps extends ICardControls {
 }
 
 const StyledDiv = styled.div<ICardControls>`
-	border-radius: 25px;
+	border-radius: ${(props) => (props.borderRadius ? '25px' : '0 0 25px 25px')};
 	border: ${(props) =>
 		props.border ? 'var(--invert-primary-color) solid 4px' : 'none'};
 	color: var(--invert-primary-color);
@@ -26,10 +27,21 @@ const StyledDiv = styled.div<ICardControls>`
 `;
 
 export const Card = (props: ICardProps) => {
-	const { children, height, width, border = false } = props;
+	const {
+		children,
+		height,
+		width,
+		border = false,
+		borderRadius = true,
+	} = props;
 
 	return (
-		<StyledDiv width={width} height={height} border={border}>
+		<StyledDiv
+			width={width}
+			height={height}
+			border={border}
+			borderRadius={borderRadius}
+		>
 			{children}
 		</StyledDiv>
 	);
