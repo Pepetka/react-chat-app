@@ -1,0 +1,11 @@
+.dark_theme {
+	--bg-color: rgb(7 9 113);
+	--invert-bg-color: rgb(236 241 244);
+	--primary-color: rgb(23 208 42);
+	--invert-primary-color: rgb(7 4 93);
+	--secondary-color: rgb(22 143 3);
+	--invert-secondary-color: rgb(10 62 194);
+
+	--primary-error-color: #ff0000;
+	--secondary-error-color: #dc1818;
+}

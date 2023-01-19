@@ -1,18 +1,11 @@
-import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { ProfileCard } from '@/features/ProfileCard';
+import { memo } from 'react';
 
-const ProfilePageStyled = styled.div`
-	color: red;
-	width: 100vw;
-	text-align: center;
-`;
-
-export const ProfilePage = () => {
+const ProfilePage = memo(() => {
 	const params = useParams<{ id: string }>();
 
-	return (
-		<ProfilePageStyled>
-			<h1>Profile - {params.id}</h1>
-		</ProfilePageStyled>
-	);
-};
+	return <ProfileCard userId={params?.id ?? ''} />;
+});
+
+export default ProfilePage;

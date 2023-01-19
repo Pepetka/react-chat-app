@@ -1,13 +1,19 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from '@/app/ui/App';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
+import { App } from '@/app/ui/App';
+import { StoreProvider } from '@/app/provider/Store';
+import { ThemeProvider } from '@/app/provider/Theme';
+import './app/styles/index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
+	<StrictMode>
 		<BrowserRouter>
-			<App />
+			<StoreProvider>
+				<ThemeProvider>
+					<App />
+				</ThemeProvider>
+			</StoreProvider>
 		</BrowserRouter>
-	</React.StrictMode>,
+	</StrictMode>,
 );

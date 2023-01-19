@@ -3,12 +3,13 @@ import { Route, Routes } from 'react-router-dom';
 import { routeConfig } from '../routeConfig/routeConfig';
 import { AppRoutesProps } from '@/shared/types/router';
 import { RequireAuth } from './RequireAuth';
+import { PageLoader } from '@/shared/ui/PageLoader';
 
 export const AppRouter = memo(() => {
 	const renderWithWrapper = useCallback(
 		({ path, element, authOnly }: AppRoutesProps) => {
 			const routeElement = (
-				<Suspense fallback={<div>Loading...</div>}>{element}</Suspense>
+				<Suspense fallback={<PageLoader />}>{element}</Suspense>
 			);
 
 			return (
@@ -16,7 +17,11 @@ export const AppRouter = memo(() => {
 					key={path}
 					path={path}
 					element={
-						authOnly ? <RequireAuth>{routeElement}</RequireAuth> : routeElement
+						authOnly !== undefined ? (
+							<RequireAuth authOnly={authOnly}>{routeElement}</RequireAuth>
+						) : (
+							routeElement
+						)
 					}
 				/>
 			);

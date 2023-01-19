@@ -1,17 +1,32 @@
-// import { useSelector } from 'react-redux';
-// import { Navigate, useLocation } from 'react-router-dom';
-// import { getAuthData } from '@/entities/User';
-// import { getMainPagePath } from '@/shared/const/router';
+import { useSelector } from 'react-redux';
+import { Navigate, useLocation } from 'react-router-dom';
+import { getUserAuthData } from '@/entities/User';
+import { getLoginPagePath, getProfilePagePath } from '@/shared/const/router';
 
 interface RequireAuthProps {
 	children: JSX.Element;
+	authOnly: boolean;
 }
 
-export const RequireAuth = ({ children }: RequireAuthProps) => {
-	// const auth = useSelector(getAuthData);
-	// const location = useLocation();
+export const RequireAuth = ({ children, authOnly }: RequireAuthProps) => {
+	const auth = useSelector(getUserAuthData);
+	const location = useLocation();
 
-	// if (!auth) return <Navigate to={getMainPagePath()} state={{ from: location }} replace />;
+	if (!auth && authOnly) {
+		return (
+			<Navigate to={getLoginPagePath()} state={{ from: location }} replace />
+		);
+	}
+
+	if (auth && !authOnly) {
+		return (
+			<Navigate
+				to={getProfilePagePath(auth.id)}
+				state={{ from: location }}
+				replace
+			/>
+		);
+	}
 
 	return children;
 };
