@@ -31,7 +31,7 @@ export const App = memo(() => {
 	}, [navigation]);
 
 	return (
-		<div className={`App ${theme}`}>
+		<div className={`App ${theme}`} data-testid="App">
 			<NavBar
 				onLogin={onLogin}
 				onRegister={onRegister}
