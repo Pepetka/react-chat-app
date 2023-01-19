@@ -72,7 +72,7 @@ jobs:
 #        uses: actions/deploy-pages@v1
 
   building:
-    needs: building
+    needs: testing
     runs-on: ubuntu-latest
     strategy:
       matrix:
