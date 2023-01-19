@@ -113,7 +113,12 @@ export const RegisterForm = memo(() => {
 	return (
 		<Card border width="570px" height="1000px">
 			<Flex height="800px" direction="column" align="center" gap="24">
-				<Text title="Sign Up" titleAlign="center" theme="invert" size="xl" />
+				<Text
+					title="Sign Up"
+					titleAlign="center"
+					theme="primary-invert"
+					size="xl"
+				/>
 				<Flex
 					FlexTag="form"
 					onSubmit={onLogin}
@@ -189,7 +194,7 @@ export const RegisterForm = memo(() => {
 								onChange={onAgree}
 								required
 							/>
-							<Text text="I agree with terms" theme="invert" />
+							<Text text="I agree with terms" theme="primary-invert" />
 						</Flex>
 						<Button
 							width="180px"

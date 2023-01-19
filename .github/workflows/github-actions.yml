@@ -1,9 +1,9 @@
 name: linting, testing, building
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 permissions:
   contents: write
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 18.x ]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -34,13 +34,13 @@ jobs:
   testing:
     needs: linting
     runs-on: ubuntu-latest
-#    concurrency: ci-${{ github.ref }}
-#    environment:
-#      name: github-pages
-#      url: ${{ steps.deployment.outputs.page_url }}
+    #    concurrency: ci-${{ github.ref }}
+    #    environment:
+    #      name: github-pages
+    #      url: ${{ steps.deployment.outputs.page_url }}
     strategy:
       matrix:
-        node-version: [ 18.x ]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -55,28 +55,28 @@ jobs:
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: "build:storybook"
+          buildScriptName: 'storybook:build'
       - name: unit testing
         run: npm run test:unit
         if: always()
-#      - name: Setup Pages
-#        uses: actions/configure-pages@v2
-#        if: always()
-#      - name: Upload artifact
-#        uses: actions/upload-pages-artifact@v1
-#        with:
-#          path: 'reports'
-#      - name: Deploy to GitHub Pages
-#        id: deployment
-#        if: always()
-#        uses: actions/deploy-pages@v1
+  #      - name: Setup Pages
+  #        uses: actions/configure-pages@v2
+  #        if: always()
+  #      - name: Upload artifact
+  #        uses: actions/upload-pages-artifact@v1
+  #        with:
+  #          path: 'reports'
+  #      - name: Deploy to GitHub Pages
+  #        id: deployment
+  #        if: always()
+  #        uses: actions/deploy-pages@v1
 
   building:
     needs: testing
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 18.x ]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}

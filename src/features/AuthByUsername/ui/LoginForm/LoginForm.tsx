@@ -75,7 +75,12 @@ export const LoginForm = memo(() => {
 	return (
 		<Card border width="570px" height="600px">
 			<Flex height="380px" direction="column" align="center" gap="24">
-				<Text title="Log In" titleAlign="center" theme="invert" size="xl" />
+				<Text
+					title="Log In"
+					titleAlign="center"
+					theme="primary-invert"
+					size="xl"
+				/>
 				<Flex
 					FlexTag="form"
 					onSubmit={onLogin}
@@ -105,7 +110,7 @@ export const LoginForm = memo(() => {
 					/>
 					<Flex justify="space-between" align="center" width="500px">
 						<a href="#">
-							<Text text="Forgot your password?" theme="invert" />
+							<Text text="Forgot your password?" theme="primary-invert" />
 						</a>
 						<Button
 							width="180px"

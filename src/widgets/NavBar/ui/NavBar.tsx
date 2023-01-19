@@ -88,7 +88,12 @@ export const NavBar = memo((props: INavBarProps) => {
 						height="70px"
 						invert
 					>
-						<Text text="Log Out" theme="invert" textAlign="center" size="l" />
+						<Text
+							text="Log Out"
+							theme="primary-invert"
+							textAlign="center"
+							size="l"
+						/>
 					</Button>
 				) : (
 					<Flex width="auto">
@@ -99,7 +104,12 @@ export const NavBar = memo((props: INavBarProps) => {
 							height="70px"
 							invert
 						>
-							<Text text="Log In" theme="invert" textAlign="center" size="l" />
+							<Text
+								text="Log In"
+								theme="primary-invert"
+								textAlign="center"
+								size="l"
+							/>
 						</Button>
 						<Button
 							onClick={onRegister}
@@ -108,7 +118,12 @@ export const NavBar = memo((props: INavBarProps) => {
 							height="70px"
 							invert
 						>
-							<Text text="Sign Up" theme="invert" textAlign="center" size="l" />
+							<Text
+								text="Sign Up"
+								theme="primary-invert"
+								textAlign="center"
+								size="l"
+							/>
 						</Button>
 					</Flex>
 				)}
