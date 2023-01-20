@@ -6,12 +6,14 @@ import { Avatar } from '@/shared/ui/Avatar';
 import { Button } from '@/shared/ui/Button';
 import { useFetchProfileDataQuery } from '../api/profileCardApi';
 import { Spinner } from '@/shared/ui/Spinner';
+import { useTranslation } from 'react-i18next';
 
 interface IProfileCardProps {
 	userId: string;
 }
 
 export const ProfileCard = memo((props: IProfileCardProps) => {
+	const { t } = useTranslation('profile');
 	const { userId } = props;
 	const {
 		data: profileData,
@@ -33,7 +35,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		<Card width="100%" height="400px" borderRadius={false}>
 			<Flex height="100%" gap="8">
 				<Flex width="20%">
-					<Text theme="secondary-invert" text="online" />
+					<Text theme="secondary-invert" text={t('online')} />
 				</Flex>
 				<Flex direction="column" justify="space-between">
 					<Flex direction="column" gap="8">
@@ -58,10 +60,10 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 					</Flex>
 					<Flex justify="end" gap="24">
 						<Button width="180px" height="50px" invert>
-							<Text textAlign="center" size="l" text="Add friend" />
+							<Text textAlign="center" size="l" text={t('Add friend')} />
 						</Button>
 						<Button width="180px" height="50px" invert>
-							<Text textAlign="center" size="l" text="Send mess" />
+							<Text textAlign="center" size="l" text={t('Send mess')} />
 						</Button>
 					</Flex>
 				</Flex>

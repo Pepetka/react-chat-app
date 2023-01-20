@@ -7,9 +7,8 @@ import { NavBar } from '@/widgets/NavBar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
 import { useSelector } from 'react-redux';
-import { Flex } from '@/shared/ui/Flex';
-import { SideBar } from '@/widgets/SideBar';
-import { Page } from '@/shared/ui/Page';
+import { Page } from '@/widgets/Page';
+import { ControlPanel } from '@/widgets/ControlPanel';
 
 export const App = memo(() => {
 	const inited = useSelector(getUserInited);
@@ -42,6 +41,7 @@ export const App = memo(() => {
 					<AppRouter />
 				</Page>
 			)}
+			<ControlPanel />
 		</div>
 	);
 });

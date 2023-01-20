@@ -8,6 +8,7 @@ interface IButtonControls {
 	width?: string;
 	height?: string;
 	invert?: boolean;
+	circle?: boolean;
 }
 
 interface IButtonProps extends IButtonControls {
@@ -20,7 +21,7 @@ interface IButtonProps extends IButtonControls {
 const StyledButton = styled.button<IButtonControls>`
 	font: var(--font-m);
 	cursor: pointer;
-	border-radius: 8px;
+	border-radius: ${(props) => (props.circle ? '50%' : '8px')};
 	background: ${(props) => {
 		if (props.theme === 'primary') {
 			return props.invert ? 'var(--bg-color)' : 'var(--invert-bg-color)';
@@ -71,6 +72,7 @@ export const Button = memo((props: IButtonProps) => {
 		height,
 		width,
 		invert = false,
+		circle = false,
 	} = props;
 
 	return (
@@ -82,6 +84,7 @@ export const Button = memo((props: IButtonProps) => {
 			height={height}
 			disabled={disabled}
 			invert={invert}
+			circle={circle}
 		>
 			{children}
 		</StyledButton>

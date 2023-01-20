@@ -9,6 +9,7 @@ import { Text } from '@/shared/ui/Text';
 import { getUserAuthData, userActions } from '@/entities/User';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
+import { useTranslation } from 'react-i18next';
 
 interface INavBarProps {
 	currentPagePath: string;
@@ -44,6 +45,7 @@ const StyledSearch = styled.input`
 	font: var(--font-m);
 	color: var(--primary-color);
 	border: none;
+	background: var(--bg-color);
 `;
 
 const StyledSearchButton = styled.div`
@@ -53,6 +55,7 @@ const StyledSearchButton = styled.div`
 `;
 
 export const NavBar = memo((props: INavBarProps) => {
+	const { t } = useTranslation();
 	const { currentPagePath, onLogin, onRegister } = props;
 	const authData = useSelector(getUserAuthData);
 	const dispatch = useAppDispatch();
@@ -89,7 +92,7 @@ export const NavBar = memo((props: INavBarProps) => {
 						invert
 					>
 						<Text
-							text="Log Out"
+							text={t('Log Out')}
 							theme="primary-invert"
 							textAlign="center"
 							size="l"
@@ -105,7 +108,7 @@ export const NavBar = memo((props: INavBarProps) => {
 							invert
 						>
 							<Text
-								text="Log In"
+								text={t('Log In')}
 								theme="primary-invert"
 								textAlign="center"
 								size="l"
@@ -119,7 +122,7 @@ export const NavBar = memo((props: INavBarProps) => {
 							invert
 						>
 							<Text
-								text="Sign Up"
+								text={t('Sign Up')}
 								theme="primary-invert"
 								textAlign="center"
 								size="l"

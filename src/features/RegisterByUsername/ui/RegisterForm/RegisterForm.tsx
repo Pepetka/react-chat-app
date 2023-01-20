@@ -17,10 +17,12 @@ import { Text } from '@/shared/ui/Text';
 import { Flex } from '@/shared/ui/Flex';
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 type RegisterErrorType = { data: { message: string } };
 
 export const RegisterForm = memo(() => {
+	const { t } = useTranslation('auth');
 	const [hasError, setHasError] = useState(false);
 	const [agree, setAgree] = useState(false);
 	const { username, password, age, email, firstname, lastname } = useSelector(
@@ -114,7 +116,7 @@ export const RegisterForm = memo(() => {
 		<Card border width="570px" height="1000px">
 			<Flex height="800px" direction="column" align="center" gap="24">
 				<Text
-					title="Sign Up"
+					title={t('Sign Up')}
 					titleAlign="center"
 					theme="primary-invert"
 					size="xl"
@@ -128,7 +130,7 @@ export const RegisterForm = memo(() => {
 				>
 					<Input
 						theme="invert"
-						label="Enter username..."
+						label={t('Enter username')}
 						value={username}
 						onChange={onChangeUsername}
 						width="500px"
@@ -138,7 +140,7 @@ export const RegisterForm = memo(() => {
 					/>
 					<Input
 						theme="invert"
-						label="Enter password..."
+						label={t('Enter password')}
 						width="500px"
 						value={password}
 						onChange={onChangePassword}
@@ -148,7 +150,7 @@ export const RegisterForm = memo(() => {
 					/>
 					<Input
 						theme="invert"
-						label="Enter your age..."
+						label={t('Enter your age')}
 						width="500px"
 						value={String(age)}
 						onChange={onChangeAge}
@@ -158,7 +160,7 @@ export const RegisterForm = memo(() => {
 					/>
 					<Input
 						theme="invert"
-						label="Enter email..."
+						label={t('Enter email')}
 						width="500px"
 						value={email}
 						onChange={onChangeEmail}
@@ -168,7 +170,7 @@ export const RegisterForm = memo(() => {
 					/>
 					<Input
 						theme="invert"
-						label="Enter your name..."
+						label={t('Enter your name')}
 						width="500px"
 						value={firstname}
 						onChange={onChangeFirstname}
@@ -178,7 +180,7 @@ export const RegisterForm = memo(() => {
 					/>
 					<Input
 						theme="invert"
-						label="Enter surname..."
+						label={t('Enter surname')}
 						width="500px"
 						value={lastname}
 						onChange={onChangeLastname}
@@ -194,7 +196,7 @@ export const RegisterForm = memo(() => {
 								onChange={onAgree}
 								required
 							/>
-							<Text text="I agree with terms" theme="primary-invert" />
+							<Text text={t('I agree with terms')} theme="primary-invert" />
 						</Flex>
 						<Button
 							width="180px"
@@ -205,7 +207,7 @@ export const RegisterForm = memo(() => {
 							invert
 						>
 							<Text
-								text={isLoading ? 'Loading...' : 'Sign up'}
+								text={isLoading ? t('Loading') : t('Sign up')}
 								textAlign="center"
 								size="l"
 							/>
@@ -217,7 +219,7 @@ export const RegisterForm = memo(() => {
 						text={
 							(registerError as RegisterErrorType)?.data
 								? (registerError as RegisterErrorType).data.message
-								: 'Something went wrong'
+								: t('Something went wrong')
 						}
 						textAlign="center"
 						theme="error"
