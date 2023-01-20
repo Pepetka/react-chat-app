@@ -9,12 +9,14 @@
 		"start:dev": "concurrently \"npm run dev\" \"npm run start:dev:server\"",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
-		"test:unit": "jest",
+		"test:unit": "jest --config=./test/config/jest.config.ts",
 		"test:ui": "npx chromatic --project-token=b8feaa236f57 --build-script-name=storybook:build",
 		"storybook": "storybook dev -p 6006",
 		"storybook:build": "storybook build",
 		"lint:ts": "eslint \"**/*.{ts,tsx}\"",
 		"lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
+		"prettier": "prettier .",
+		"prettier:fix": "prettier --write .",
 		"prepare": "husky install"
 	},
 	"dependencies": {

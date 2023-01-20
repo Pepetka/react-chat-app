@@ -6,7 +6,7 @@ export default {
 	moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node'],
 	testMatch: ['<rootDir>src/**/*(*.)@(spec|test).[tj]s?(x)'],
 	modulePaths: ['<rootDir>src'],
-	rootDir: './',
+	rootDir: '../../',
 	transform: {
 		'^.+\\.tsx?$': 'ts-jest',
 	},
@@ -16,7 +16,7 @@ export default {
 		'\\.svg$': '<rootDir>/test/__mocks__/jestEmptyComponent.tsx',
 		'^@/(.*)$': '<rootDir>/src/$1',
 	},
-	setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+	setupFilesAfterEnv: ['<rootDir>/test/config/jest.setup.ts'],
 	reporters: [
 		'default',
 		[
