@@ -17,7 +17,7 @@ const ContentWrapper = styled.div`
 	width: 80%;
 	min-height: calc(100vh - var(--navbar-height));
 	margin-inline: auto;
-	padding-bottom: 50px;
+	padding-bottom: var(--page-padding);
 	display: flex;
 	gap: 8px;
 `;

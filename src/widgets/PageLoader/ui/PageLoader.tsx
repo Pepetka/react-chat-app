@@ -6,7 +6,7 @@ export const PageLoader = memo(() => {
 	return (
 		<Flex
 			width="100%"
-			height="calc(100vh - var(--navbar-height))"
+			height="calc(100vh - var(--navbar-height) - var(--page-padding))"
 			justify="center"
 			align="center"
 		>

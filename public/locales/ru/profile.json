@@ -1,5 +1,10 @@
 {
 	"online": "онлайн",
 	"Add friend": "В друзья",
-	"Send mess": "Сообщение"
+	"Send mess": "Сообщение",
+	"Followers": "Подписаны",
+	"Following": "Подписки",
+	"Groups": "Группы",
+	"Friends": "Друзья",
+	"Something went wrong": "Что-то пошло не так"
 }

@@ -1,5 +1,10 @@
 {
 	"online": "online",
 	"Add friend": "Add friend",
-	"Send mess": "Send mess"
+	"Send mess": "Send mess",
+	"Followers": "Followers",
+	"Following": "Following",
+	"Groups": "Groups",
+	"Friends": "Friends",
+	"Something went wrong": "Something went wrong"
 }

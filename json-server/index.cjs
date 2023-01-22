@@ -101,6 +101,102 @@ server.post('/register', (req, res) => {
 	}
 });
 
+server.get('/social', (req, res) => {
+	try {
+		const { userId } = req.query;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { followers = [], 'group-members': groupMembers = [] } = db;
+
+		const followersFromBd = followers.filter((follower) => {
+			return follower.userId === userId;
+		});
+
+		const followingFromBd = followers.filter((follower) => {
+			return follower.followerId === userId;
+		});
+
+		const groupsFromBd = groupMembers.filter((group) => {
+			return group.userId === userId;
+		});
+
+		return res.json({
+			followersNum: String(followersFromBd.length),
+			followingNum: String(followingFromBd.length),
+			groupsNum: String(groupsFromBd.length),
+		});
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.get('/friends', (req, res) => {
+	try {
+		const { userId } = req.query;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { friends = [], users = [] } = db;
+
+		const friendsFromBd = friends
+			.filter((friend) => {
+				return friend.userId === userId || friend.friendId === userId;
+			})
+			.map((friend) => {
+				return users.find((user) =>
+					userId === friend.friendId
+						? user.id === friend.userId
+						: user.id === friend.friendId,
+				);
+			});
+
+		return res.json(friendsFromBd);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.post('/friends', (req, res) => {
+	try {
+		const { userId, friendId } = req.body;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { friends = [], followers = [] } = db;
+
+		const friendsFromBd = friends.filter((friend) => {
+			return friend.userId === userId || friend.friendId === userId;
+		});
+
+		if (
+			friendsFromBd.find(
+				(friend) => friend.userId === friendId || friend.friendId === friendId,
+			)
+		) {
+			return res.status(403).json({ message: 'Already friends' });
+		}
+
+		const followersFromBd = followers.filter((follower) => {
+			return follower.userId === userId;
+		});
+
+		if (followersFromBd.find((follower) => follower.followerId === friendId)) {
+			return res.status(403).json({ message: 'Now friends' });
+		}
+
+		return res.status(403).json({ message: 'Now following' });
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
 server.use((req, res, next) => {
 	if (!req.headers.authorization) {
 		return res.status(403).json({ message: 'AUTH ERROR' });

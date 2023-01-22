@@ -24,6 +24,8 @@ module.exports = {
 					'align',
 					'textAlign',
 					'titleAlign',
+					'TitleTag',
+					'img',
 				],
 				ignore: ['ICE'],
 			},

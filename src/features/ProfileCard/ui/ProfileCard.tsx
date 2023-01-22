@@ -7,14 +7,17 @@ import { Button } from '@/shared/ui/Button';
 import { useFetchProfileDataQuery } from '../api/profileCardApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { getUserAuthData } from '@/entities/User';
 
 interface IProfileCardProps {
 	userId: string;
 }
 
 export const ProfileCard = memo((props: IProfileCardProps) => {
-	const { t } = useTranslation('profile');
 	const { userId } = props;
+	const { t } = useTranslation('profile');
+	const authData = useSelector(getUserAuthData);
 	const {
 		data: profileData,
 		isLoading,
@@ -26,6 +29,20 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 			<Card width="100%" height="400px" borderRadius={false}>
 				<Flex height="100%" justify="center" align="center">
 					<Spinner theme="invert" />
+				</Flex>
+			</Card>
+		);
+	}
+
+	if (error) {
+		return (
+			<Card width="100%" height="400px" borderRadius={false}>
+				<Flex height="100%" justify="center" align="center">
+					<Text
+						title={t('Something went wrong')}
+						TitleTag="p"
+						titleAlign="center"
+					/>
 				</Flex>
 			</Card>
 		);
@@ -58,14 +75,16 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 							size="l"
 						/>
 					</Flex>
-					<Flex justify="end" gap="24">
-						<Button width="180px" height="50px" invert>
-							<Text textAlign="center" size="l" text={t('Add friend')} />
-						</Button>
-						<Button width="180px" height="50px" invert>
-							<Text textAlign="center" size="l" text={t('Send mess')} />
-						</Button>
-					</Flex>
+					{authData?.id !== userId && (
+						<Flex justify="end" gap="24">
+							<Button width="180px" height="50px" invert>
+								<Text textAlign="center" size="l" text={t('Add friend')} />
+							</Button>
+							<Button width="180px" height="50px" invert>
+								<Text textAlign="center" size="l" text={t('Send mess')} />
+							</Button>
+						</Flex>
+					)}
 				</Flex>
 				<Avatar img={profileData?.[0]?.avatar ?? ''} size="xl" />
 			</Flex>
