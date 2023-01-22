@@ -1,5 +1,6 @@
 import { User } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
+import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
 
 interface IProfileCardApiProps {
 	userId: string;
@@ -19,6 +20,15 @@ const profileCardApi = rtkApi.injectEndpoints({
 				},
 			}),
 		}),
+		fetchRelationsData: build.query<Relations, IProfileCardApiProps>({
+			query: ({ userId, friendId }) => ({
+				url: '/relations',
+				params: {
+					userId,
+					friendId,
+				},
+			}),
+		}),
 		addFriend: build.mutation<User, IProfileCardApiProps>({
 			query: ({ userId, friendId }) => ({
 				method: 'POST',
@@ -32,5 +42,8 @@ const profileCardApi = rtkApi.injectEndpoints({
 	}),
 });
 
-export const { useFetchProfileDataQuery, useAddFriendMutation } =
-	profileCardApi;
+export const {
+	useFetchProfileDataQuery,
+	useAddFriendMutation,
+	useFetchRelationsDataQuery,
+} = profileCardApi;

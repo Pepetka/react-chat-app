@@ -10,6 +10,7 @@ import {
 	useFetchSocialDataQuery,
 } from '@/features/SocialCard/api/socialCardApi';
 import { Spinner } from '@/shared/ui/Spinner';
+import { getProfilePagePath } from '@/shared/const/router';
 
 interface ISocialCardProps {
 	userId: string;
@@ -125,14 +126,16 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 						friendsData.map((friend, i) => {
 							if (i < 3) {
 								return (
-									<Flex key={friend.id} gap="8" align="center">
-										<Avatar circle img={friend.avatar} />
-										<Text
-											text={`${friend.firstname} ${friend.lastname}`}
-											theme="primary-invert"
-											size="l"
-										/>
-									</Flex>
+									<a href={getProfilePagePath(friend.id)} target="_blank">
+										<Flex key={friend.id} gap="8" align="center">
+											<Avatar circle img={friend.avatar} />
+											<Text
+												text={`${friend.firstname} ${friend.lastname}`}
+												theme="primary-invert"
+												size="l"
+											/>
+										</Flex>
+									</a>
 								);
 							}
 							return null;

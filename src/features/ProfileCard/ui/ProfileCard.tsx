@@ -1,14 +1,18 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Button } from '@/shared/ui/Button';
-import { useFetchProfileDataQuery } from '../api/profileCardApi';
+import {
+	useFetchProfileDataQuery,
+	useFetchRelationsDataQuery,
+} from '../api/profileCardApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
+import { Relations } from '../model/types/profileCardSchema';
 
 interface IProfileCardProps {
 	userId: string;
@@ -20,11 +24,26 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	const authData = useSelector(getUserAuthData);
 	const {
 		data: profileData,
-		isLoading,
-		error,
+		isLoading: profileLoading,
+		error: profileError,
 	} = useFetchProfileDataQuery({ userId });
+	const {
+		data: relationsData,
+		isLoading: relationsLoading,
+		error: relationsError,
+	} = useFetchRelationsDataQuery({ userId, friendId: authData?.id ?? '' });
 
-	if (isLoading) {
+	const friendBtnText: Record<Relations, string> = useMemo(
+		() => ({
+			follower: 'Add friend',
+			following: 'Unfollow',
+			friend: 'Unfriend',
+			nobody: 'Follow',
+		}),
+		[],
+	);
+
+	if (profileLoading || relationsLoading) {
 		return (
 			<Card width="100%" height="400px" borderRadius={false}>
 				<Flex height="100%" justify="center" align="center">
@@ -34,7 +53,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		);
 	}
 
-	if (error) {
+	if (profileError || relationsError) {
 		return (
 			<Card width="100%" height="400px" borderRadius={false}>
 				<Flex height="100%" justify="center" align="center">
@@ -78,7 +97,11 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 					{authData?.id !== userId && (
 						<Flex justify="end" gap="24">
 							<Button width="180px" height="50px" invert>
-								<Text textAlign="center" size="l" text={t('Add friend')} />
+								<Text
+									textAlign="center"
+									size="l"
+									text={t(friendBtnText[relationsData ?? 'nobody'])}
+								/>
 							</Button>
 							<Button width="180px" height="50px" invert>
 								<Text textAlign="center" size="l" text={t('Send mess')} />
