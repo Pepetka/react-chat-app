@@ -28,7 +28,7 @@ export const ThemeSwitcher = memo((props: ILangSwitcherProps) => {
 		>
 			<Text
 				textAlign="center"
-				text={appTheme === Theme.LIGHT ? 'Dark' : 'Light'}
+				text={appTheme === Theme.LIGHT ? 'Light' : 'Dark'}
 				size="m"
 				theme={invert ? 'primary' : 'primary-invert'}
 			/>
