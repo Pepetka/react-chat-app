@@ -102,6 +102,10 @@ server.post('/register', (req, res) => {
 });
 
 server.get('/social', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
 	try {
 		const { userId } = req.query;
 
@@ -134,6 +138,10 @@ server.get('/social', (req, res) => {
 });
 
 server.get('/friends', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
 	try {
 		const { userId } = req.query;
 
@@ -162,6 +170,10 @@ server.get('/friends', (req, res) => {
 });
 
 server.post('/friends', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
 	try {
 		const { userId, friendId } = req.body;
 
@@ -179,7 +191,24 @@ server.post('/friends', (req, res) => {
 				(friend) => friend.userId === friendId || friend.friendId === friendId,
 			)
 		) {
-			return res.status(403).json({ message: 'Already friends' });
+			const newDb = JSON.stringify({
+				...db,
+				friends: friends.filter(
+					(friend) =>
+						friend.userId !== friendId && friend.friendId !== friendId,
+				),
+				followers: [
+					...followers,
+					{
+						userId: userId,
+						followerId: friendId,
+						createdAt: new Date().toLocaleDateString(),
+					},
+				],
+			});
+			fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+			return res.status(200).json({ message: 'Now unfriend' });
 		}
 
 		const followersFromBd = followers.filter((follower) => {
@@ -187,10 +216,53 @@ server.post('/friends', (req, res) => {
 		});
 
 		if (followersFromBd.find((follower) => follower.followerId === friendId)) {
-			return res.status(403).json({ message: 'Now friends' });
+			const newDb = JSON.stringify({
+				...db,
+				friends: [
+					...friends,
+					{
+						userId,
+						friendId,
+						createdAt: new Date().toLocaleDateString(),
+					},
+				],
+				followers: followers.filter(
+					(follower) => follower.followerId !== friendId,
+				),
+			});
+			fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+			return res.status(200).json({ message: 'Now friends' });
 		}
 
-		return res.status(403).json({ message: 'Now following' });
+		const followingFromBd = followers.filter((follower) => {
+			return follower.followerId === userId;
+		});
+
+		if (followingFromBd.find((follower) => follower.userId === friendId)) {
+			const newDb = JSON.stringify({
+				...db,
+				followers: followers.filter((follower) => follower.userId !== friendId),
+			});
+			fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+			return res.status(200).json({ message: 'Now nobody' });
+		}
+
+		const newDb = JSON.stringify({
+			...db,
+			followers: [
+				...followers,
+				{
+					userId: friendId,
+					followerId: userId,
+					createdAt: new Date().toLocaleDateString(),
+				},
+			],
+		});
+		fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+		return res.status(200).json({ message: 'Now following' });
 	} catch (e) {
 		console.log(e);
 		return res.status(500).json({ message: e.message });
@@ -198,6 +270,10 @@ server.post('/friends', (req, res) => {
 });
 
 server.get('/relations', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
 	try {
 		const { userId, friendId } = req.query;
 

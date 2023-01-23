@@ -28,6 +28,7 @@ const profileCardApi = rtkApi.injectEndpoints({
 					friendId,
 				},
 			}),
+			providesTags: (result) => ['social'],
 		}),
 		addFriend: build.mutation<User, IProfileCardApiProps>({
 			query: ({ userId, friendId }) => ({
@@ -38,6 +39,7 @@ const profileCardApi = rtkApi.injectEndpoints({
 					friendId,
 				},
 			}),
+			invalidatesTags: ['social'],
 		}),
 	}),
 });

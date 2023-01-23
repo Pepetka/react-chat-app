@@ -37,18 +37,17 @@
 			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
 		}
 	],
-	"friends": [
-		{
-			"userId": "6cbdb793",
-			"friendId": "6cbdb794",
-			"createdAt": "05.06.2022"
-		}
-	],
+	"friends": [],
 	"followers": [
 		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb793",
+			"createdAt": "23.01.2023"
+		},
+		{
 			"userId": "6cbdb793",
-			"followerId": "6cbdb795",
-			"createdAt": "05.06.2022"
+			"followerId": "6cbdb794",
+			"createdAt": "23.01.2023"
 		}
 	],
 	"groups": [],

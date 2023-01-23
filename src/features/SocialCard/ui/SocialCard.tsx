@@ -64,7 +64,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 		<Card width="100%" height="282px">
 			<Flex height="100%" align="center" justify="space-between">
 				<Flex width="60%" align="center" justify="space-around">
-					<Card width="180px" height="200px" border>
+					<Card padding="0" width="180px" height="200px" border>
 						<Flex direction="column" gap="8">
 							<Text
 								theme="primary-invert"
@@ -80,7 +80,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 							/>
 						</Flex>
 					</Card>
-					<Card width="170px" height="200px" border>
+					<Card padding="0" width="180px" height="200px" border>
 						<Flex direction="column" gap="8">
 							<Text
 								theme="primary-invert"
@@ -96,7 +96,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 							/>
 						</Flex>
 					</Card>
-					<Card width="170px" height="200px" border>
+					<Card padding="0" width="180px" height="200px" border>
 						<Flex direction="column" gap="8">
 							<Text
 								theme="primary-invert"
@@ -126,8 +126,12 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 						friendsData.map((friend, i) => {
 							if (i < 3) {
 								return (
-									<a href={getProfilePagePath(friend.id)} target="_blank">
-										<Flex key={friend.id} gap="8" align="center">
+									<a
+										key={friend.id}
+										href={getProfilePagePath(friend.id)}
+										target="_blank"
+									>
+										<Flex gap="8" align="center">
 											<Avatar circle img={friend.avatar} />
 											<Text
 												text={`${friend.firstname} ${friend.lastname}`}

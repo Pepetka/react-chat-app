@@ -1,10 +1,11 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Button } from '@/shared/ui/Button';
 import {
+	useAddFriendMutation,
 	useFetchProfileDataQuery,
 	useFetchRelationsDataQuery,
 } from '../api/profileCardApi';
@@ -31,7 +32,14 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		data: relationsData,
 		isLoading: relationsLoading,
 		error: relationsError,
-	} = useFetchRelationsDataQuery({ userId, friendId: authData?.id ?? '' });
+	} = useFetchRelationsDataQuery({
+		userId: authData?.id ?? '',
+		friendId: userId,
+	});
+	const [
+		onAddFriend,
+		{ data: addFriendData, isLoading: addFriendLoading, error: addFriendError },
+	] = useAddFriendMutation();
 
 	const friendBtnText: Record<Relations, string> = useMemo(
 		() => ({
@@ -43,7 +51,11 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		[],
 	);
 
-	if (profileLoading || relationsLoading) {
+	const onAddFriendHandle = useCallback(() => {
+		onAddFriend({ userId: authData?.id ?? '', friendId: userId });
+	}, [authData?.id, onAddFriend, userId]);
+
+	if (profileLoading || relationsLoading || addFriendLoading) {
 		return (
 			<Card width="100%" height="400px" borderRadius={false}>
 				<Flex height="100%" justify="center" align="center">
@@ -53,7 +65,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		);
 	}
 
-	if (profileError || relationsError) {
+	if (profileError || relationsError || addFriendError) {
 		return (
 			<Card width="100%" height="400px" borderRadius={false}>
 				<Flex height="100%" justify="center" align="center">
@@ -96,7 +108,12 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 					</Flex>
 					{authData?.id !== userId && (
 						<Flex justify="end" gap="24">
-							<Button width="180px" height="50px" invert>
+							<Button
+								onClick={onAddFriendHandle}
+								width="180px"
+								height="50px"
+								invert
+							>
 								<Text
 									textAlign="center"
 									size="l"

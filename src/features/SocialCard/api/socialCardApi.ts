@@ -15,6 +15,7 @@ const socialCardApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			providesTags: (result) => ['social'],
 		}),
 		fetchFriendsData: build.query<Array<User>, ISocialCardApiProps>({
 			query: ({ userId }) => ({
@@ -23,6 +24,7 @@ const socialCardApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			providesTags: (result) => ['social'],
 		}),
 	}),
 });
