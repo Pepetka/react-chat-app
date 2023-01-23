@@ -28,7 +28,11 @@ interface ITextControls extends IThemeProp, ISizeProp {
 	textAlign?: 'left' | 'right' | 'center';
 }
 
-interface ITextProps extends ITitleControls, ITextControls {
+interface IWrapperControls {
+	width?: string;
+}
+
+interface ITextProps extends ITitleControls, ITextControls, IWrapperControls {
 	title?: string;
 	text?: string;
 	TitleTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
@@ -52,8 +56,8 @@ const getTextColor = (props: ITitleControls) => {
 		: 'var(--invert-primary-color)';
 };
 
-const TextWrapper = styled.div`
-	width: 100%;
+const TextWrapper = styled.div<IWrapperControls>`
+	width: ${(props) => props.width ?? 'auto'};
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
@@ -80,10 +84,11 @@ export const Text = memo((props: ITextProps) => {
 		titleAlign = 'left',
 		theme = 'primary',
 		size = 'm',
+		width = '100%',
 	} = props;
 
 	return (
-		<TextWrapper>
+		<TextWrapper width={width}>
 			{title && (
 				<StyledTitle
 					size={size}
