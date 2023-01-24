@@ -6,7 +6,7 @@ import { getUserAuthData } from '@/entities/User';
 import {
 	useDeletePostMutation,
 	useFetchPostsDataQuery,
-} from '@/entities/Post/api/postApi';
+} from '../../api/postApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Text } from '@/shared/ui/Text';
@@ -14,20 +14,24 @@ import { Card } from '@/shared/ui/Card';
 
 interface IPostListProps {
 	userId: string;
+	profileId: string;
 }
 
 export const PostList = memo((props: IPostListProps) => {
-	const { userId } = props;
+	const { userId, profileId } = props;
 	const { t } = useTranslation('profile');
-	const authData = useSelector(getUserAuthData);
-	const { data: posts, isLoading, error } = useFetchPostsDataQuery({ userId });
+	const {
+		data: posts,
+		isLoading,
+		error,
+	} = useFetchPostsDataQuery({ profileId });
 	const [onDeletePost] = useDeletePostMutation();
 
 	const onDeletePostHandle = useCallback(
 		(postId: string) => {
-			onDeletePost({ postId });
+			onDeletePost({ postId, userId });
 		},
-		[onDeletePost],
+		[onDeletePost, userId],
 	);
 
 	if (isLoading) {
@@ -58,7 +62,7 @@ export const PostList = memo((props: IPostListProps) => {
 				<PostCard
 					onDeletePost={onDeletePostHandle}
 					key={post.id}
-					user={authData!}
+					admin={userId === profileId}
 					post={post}
 				/>
 			))}

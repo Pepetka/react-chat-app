@@ -1,93 +1,119 @@
 {
-  "users": [
-    {
-      "id": "6cbdb793",
-      "username": "admin",
-      "password": "123",
-      "status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
-      "email": "admin@mail.ru",
-      "firstname": "Vlad",
-      "lastname": "Kuznetsov",
-      "age": 22,
-      "createdAt": "05.06.2022",
-      "avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
-    },
-    {
-      "id": "6cbdb794",
-      "username": "user",
-      "password": "123",
-      "status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
-      "email": "user@mail.ru",
-      "firstname": "Vlad",
-      "lastname": "Kuznetsov",
-      "age": 22,
-      "createdAt": "05.0.2023",
-      "avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
-    },
-    {
-      "id": "6cbdb795",
-      "username": "user1",
-      "password": "123",
-      "status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
-      "firstname": "Vlad",
-      "lastname": "Kuznetsov",
-      "email": "vlad.kznetsov@gmail.com",
-      "age": 22,
-      "createdAt": "15.01.2023",
-      "avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
-    }
-  ],
-  "friends": [
-    {
-      "userId": "6cbdb793",
-      "friendId": "6cbdb794",
-      "createdAt": "23.01.2023"
-    }
-  ],
-  "followers": [
-    {
-      "userId": "6cbdb795",
-      "followerId": "6cbdb793",
-      "createdAt": "23.01.2023"
-    }
-  ],
-  "posts": [
-    {
-      "id": "0",
-      "authorId": "6cbdb793",
-      "text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-      "img": "http://getdrawings.com/images/pools-drawing-44.jpg",
-      "createdAt": "22:16 14.01.2021"
-    },
-    {
-      "id": "1",
-      "authorId": "6cbdb793",
-      "text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-      "img": "http://getdrawings.com/images/pools-drawing-44.jpg",
-      "createdAt": "12:20 20.10.2020"
-    },
-    {
-      "id": "2",
-      "authorId": "6cbdb794",
-      "text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-      "img": "http://getdrawings.com/images/pools-drawing-44.jpg",
-      "createdAt": "15:00 14.01.2020"
-    },
-    {
-      "authorId": "6cbdb793",
-      "text": "Some news",
-      "img": "http://getdrawings.com/images/pools-drawing-44.jpg",
-      "createdAt": "12:54 24.01.2023",
-      "id": "GmSpvBG"
-    }
-  ],
-  "post-likes": [],
-  "post-dislikes": [],
-  "post-comments": [],
-  "groups": [],
-  "group-members": [],
-  "comments": [],
-  "chats": [],
-  "messages": [],
-  "chat-members": []
+	"users": [
+		{
+			"id": "6cbdb793",
+			"username": "admin",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"email": "admin@mail.ru",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"age": 22,
+			"createdAt": "05.06.2022",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb794",
+			"username": "user",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"email": "user@mail.ru",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"age": 22,
+			"createdAt": "05.0.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb795",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		}
+	],
+	"friends": [
+		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "24.01.2023" }
+	],
+	"followers": [
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb793",
+			"createdAt": "23.01.2023"
+		}
+	],
+	"posts": [
+		{
+			"authorId": "6cbdb793",
+			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
+			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"createdAt": "22:16 14.01.2021",
+			"id": "0"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
+			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"createdAt": "12:20 20.10.2020",
+			"id": "1"
+		},
+		{
+			"authorId": "6cbdb794",
+			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
+			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"createdAt": "15:00 14.01.2020",
+			"id": "2"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
+			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"createdAt": "15:24 14.01.2020",
+			"id": "3"
+		},
+		{
+			"authorId": "6cbdb794",
+			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
+			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"createdAt": "15:24 14.01.2020",
+			"id": "4"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Some news",
+			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"createdAt": "12:54 24.01.2023",
+			"id": "GmSpvBG"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "New post",
+			"img": "",
+			"createdAt": "14:24 24.01.2023",
+			"id": "d57e44cf-a9dd-4957-a56c-67910dea1e5c"
+		}
+	],
+	"user-posts": [
+		{ "userId": "6cbdb793", "postId": "0" },
+		{ "userId": "6cbdb793", "postId": "1" },
+		{ "userId": "6cbdb793", "postId": "GmSpvBG" },
+		{ "userId": "6cbdb793", "postId": "4" },
+		{ "userId": "6cbdb794", "postId": "2" },
+		{ "userId": "6cbdb794", "postId": "3" },
+		{ "userId": "6cbdb794", "postId": "d57e44cf-a9dd-4957-a56c-67910dea1e5c" }
+	],
+	"post-likes": [],
+	"post-dislikes": [],
+	"post-comments": [],
+	"groups": [],
+	"group-members": [],
+	"comments": [],
+	"chats": [],
+	"messages": [],
+	"chat-members": []
 }

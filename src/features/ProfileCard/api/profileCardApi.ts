@@ -3,24 +3,28 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
 
 interface IProfileCardApiProps {
-	userId: string;
+	profileId: string;
 	friendId: string;
+	userId: string;
 }
 
 const profileCardApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchProfileData: build.query<
 			Array<User>,
-			Omit<IProfileCardApiProps, 'friendId'>
+			Omit<IProfileCardApiProps, 'friendId' | 'userId'>
 		>({
-			query: ({ userId }) => ({
+			query: ({ profileId }) => ({
 				url: '/users',
 				params: {
-					id: userId,
+					id: profileId,
 				},
 			}),
 		}),
-		fetchRelationsData: build.query<Relations, IProfileCardApiProps>({
+		fetchRelationsData: build.query<
+			Relations,
+			Omit<IProfileCardApiProps, 'profileId'>
+		>({
 			query: ({ userId, friendId }) => ({
 				url: '/relations',
 				params: {
@@ -30,7 +34,7 @@ const profileCardApi = rtkApi.injectEndpoints({
 			}),
 			providesTags: (result) => ['social'],
 		}),
-		addFriend: build.mutation<User, IProfileCardApiProps>({
+		addFriend: build.mutation<User, Omit<IProfileCardApiProps, 'profileId'>>({
 			query: ({ userId, friendId }) => ({
 				method: 'POST',
 				url: '/friends',

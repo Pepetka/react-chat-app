@@ -8,12 +8,13 @@ import { Avatar } from '@/shared/ui/Avatar';
 import {
 	useFetchFriendsDataQuery,
 	useFetchSocialDataQuery,
-} from '@/features/SocialCard/api/socialCardApi';
+} from '../api/socialCardApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { getProfilePagePath } from '@/shared/const/router';
 
 interface ISocialCardProps {
 	userId: string;
+	profileId: string;
 }
 
 const StyledLine = styled.div`
@@ -23,17 +24,17 @@ const StyledLine = styled.div`
 `;
 
 export const SocialCard = memo((props: ISocialCardProps) => {
-	const { userId } = props;
+	const { userId, profileId } = props;
 	const {
 		data: socialData,
 		isLoading: socialLoading,
 		error: socialError,
-	} = useFetchSocialDataQuery({ userId });
+	} = useFetchSocialDataQuery({ profileId });
 	const {
 		data: friendsData,
 		isLoading: friendsLoading,
 		error: friendsError,
-	} = useFetchFriendsDataQuery({ userId });
+	} = useFetchFriendsDataQuery({ profileId });
 	const { t } = useTranslation('profile');
 
 	if (socialLoading || friendsLoading) {

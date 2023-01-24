@@ -17,24 +17,24 @@ import { Relations } from '../model/types/profileCardSchema';
 
 interface IProfileCardProps {
 	userId: string;
+	profileId: string;
 }
 
 export const ProfileCard = memo((props: IProfileCardProps) => {
-	const { userId } = props;
+	const { userId, profileId } = props;
 	const { t } = useTranslation('profile');
-	const authData = useSelector(getUserAuthData);
 	const {
 		data: profileData,
 		isLoading: profileLoading,
 		error: profileError,
-	} = useFetchProfileDataQuery({ userId });
+	} = useFetchProfileDataQuery({ profileId });
 	const {
 		data: relationsData,
 		isLoading: relationsLoading,
 		error: relationsError,
 	} = useFetchRelationsDataQuery({
-		userId: authData?.id ?? '',
-		friendId: userId,
+		userId,
+		friendId: profileId,
 	});
 	const [
 		onAddFriend,
@@ -52,8 +52,8 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	);
 
 	const onAddFriendHandle = useCallback(() => {
-		onAddFriend({ userId: authData?.id ?? '', friendId: userId });
-	}, [authData?.id, onAddFriend, userId]);
+		onAddFriend({ userId, friendId: profileId });
+	}, [onAddFriend, profileId, userId]);
 
 	if (profileLoading || relationsLoading || addFriendLoading) {
 		return (
@@ -106,7 +106,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 							size="l"
 						/>
 					</Flex>
-					{authData?.id !== userId && (
+					{profileId !== userId && (
 						<Flex justify="end" gap="24">
 							<Button
 								onClick={onAddFriendHandle}

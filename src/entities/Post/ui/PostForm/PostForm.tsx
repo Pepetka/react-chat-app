@@ -7,11 +7,15 @@ import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { postActions, postReducer } from '../../model/slice/postSlice';
 import { getPostState } from '../../model/selectors/postSelectors';
 import { useAddPostMutation } from '../../api/postApi';
-import { getUserAuthData } from '@/entities/User';
 
-export const PostForm = memo(() => {
+interface IPostFormProps {
+	userId: string;
+	profileId: string;
+}
+
+export const PostForm = memo((props: IPostFormProps) => {
+	const { userId, profileId } = props;
 	const { img, text } = useSelector(getPostState);
-	const authData = useSelector(getUserAuthData);
 	const dispatch = useAppDispatch();
 	const [onAddPost, { isLoading }] = useAddPostMutation();
 	const { t } = useTranslation('profile');
@@ -29,9 +33,9 @@ export const PostForm = memo(() => {
 	);
 
 	const onSubmit = useCallback(() => {
-		onAddPost({ text, img, authorId: authData?.id ?? '' });
+		onAddPost({ text, img, authorId: userId, profileId });
 		dispatch(postActions.clear());
-	}, [authData?.id, dispatch, img, onAddPost, text]);
+	}, [onAddPost, text, img, userId, profileId, dispatch]);
 
 	return (
 		<DynamicModuleLoader reducerKey="post" reducer={postReducer}>

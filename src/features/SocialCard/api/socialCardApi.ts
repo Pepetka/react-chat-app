@@ -3,25 +3,25 @@ import { Social } from '../model/types/socialCardSchema';
 import { User } from '@/entities/User';
 
 interface ISocialCardApiProps {
-	userId: string;
+	profileId: string;
 }
 
 const socialCardApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchSocialData: build.query<Social, ISocialCardApiProps>({
-			query: ({ userId }) => ({
+			query: ({ profileId }) => ({
 				url: '/social',
 				params: {
-					userId,
+					userId: profileId,
 				},
 			}),
 			providesTags: (result) => ['social'],
 		}),
 		fetchFriendsData: build.query<Array<User>, ISocialCardApiProps>({
-			query: ({ userId }) => ({
+			query: ({ profileId }) => ({
 				url: '/friends',
 				params: {
-					userId,
+					userId: profileId,
 				},
 			}),
 			providesTags: (result) => ['social'],

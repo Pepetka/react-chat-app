@@ -1,6 +1,8 @@
+import { User } from '@/entities/User';
+
 export interface Post {
 	id: string;
-	authorId: string;
+	author: User;
 	text: string;
 	img: string;
 	createdAt: string;

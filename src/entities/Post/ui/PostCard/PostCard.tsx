@@ -15,11 +15,12 @@ import { Post } from '../../model/types/postSchema';
 import { useTranslation } from 'react-i18next';
 import { AppImg } from '@/shared/ui/AppImg';
 import { Spinner } from '@/shared/ui/Spinner';
+import { getProfilePagePath } from '@/shared/const/router';
 
 interface IPostCardProps {
-	user: User;
 	post: Post;
 	onDeletePost?: (postId: string) => void;
+	admin: boolean;
 }
 
 const StyledMoreMenu = styled.div<{ openMore: boolean }>`
@@ -37,7 +38,7 @@ const StyledMoreMenu = styled.div<{ openMore: boolean }>`
 `;
 
 export const PostCard = memo((props: IPostCardProps) => {
-	const { user, post, onDeletePost } = props;
+	const { post, onDeletePost, admin } = props;
 	const [openMore, setOpenMore] = useState(false);
 	const { t } = useTranslation('profile');
 
@@ -53,34 +54,38 @@ export const PostCard = memo((props: IPostCardProps) => {
 		<Card width="100%">
 			<Flex direction="column" gap="16">
 				<Flex justify="space-between">
-					<Flex align="center" gap="8" width="auto">
-						<Avatar size="m" img={user.avatar} />
-						<Text
-							text={`${user.firstname} ${user.lastname}`}
-							size="l"
-							theme="primary-invert"
-						/>
-					</Flex>
-					<Flex width="auto" height="auto">
-						<Button
-							onClick={onToggleMore}
-							theme="clear"
-							width="64px"
-							height="64px"
-						>
-							<Icon SvgIcon={MoreIcon} invert />
-						</Button>
-						<StyledMoreMenu openMore={openMore}>
+					<a href={getProfilePagePath(post.author.id)} target="_blank">
+						<Flex align="center" gap="8" width="auto">
+							<Avatar circle img={post.author.avatar} />
+							<Text
+								text={`${post.author.firstname} ${post.author.lastname}`}
+								size="l"
+								theme="primary-invert"
+							/>
+						</Flex>
+					</a>
+					{admin && (
+						<Flex width="auto" height="auto">
 							<Button
-								onClick={onDeletePostHandle}
+								onClick={onToggleMore}
 								theme="clear"
-								width="100%"
-								height="100%"
+								width="64px"
+								height="64px"
 							>
-								{t('Delete')}
+								<Icon SvgIcon={MoreIcon} invert />
 							</Button>
-						</StyledMoreMenu>
-					</Flex>
+							<StyledMoreMenu openMore={openMore}>
+								<Button
+									onClick={onDeletePostHandle}
+									theme="clear"
+									width="100%"
+									height="100%"
+								>
+									{t('Delete')}
+								</Button>
+							</StyledMoreMenu>
+						</Flex>
+					)}
 				</Flex>
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
