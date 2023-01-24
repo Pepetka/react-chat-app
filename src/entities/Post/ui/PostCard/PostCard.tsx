@@ -11,6 +11,9 @@ import SpeakerIcon from '@/shared/assets/speaker.svg';
 import MoreIcon from '@/shared/assets/more.svg';
 import { User } from '@/entities/User';
 import { Post } from '../../model/types/postSchema';
+import { useTranslation } from 'react-i18next';
+import { AppImg } from '@/shared/ui/AppImg';
+import { Spinner } from '@/shared/ui/Spinner';
 
 interface IPostCardProps {
 	user: User;
@@ -19,6 +22,7 @@ interface IPostCardProps {
 
 export const PostCard = memo((props: IPostCardProps) => {
 	const { user, post } = props;
+	const { t } = useTranslation('profile');
 
 	return (
 		<Card width="100%">
@@ -38,7 +42,20 @@ export const PostCard = memo((props: IPostCardProps) => {
 				</Flex>
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
-					<img width="385px" height="385px" src={post.img} />
+					<AppImg
+						width="385px"
+						height="385px"
+						src={post.img}
+						alt={t('Post image')}
+						fallback={<Spinner />}
+						errorFallback={
+							<Text
+								text={t('Something went wrong')}
+								size="l"
+								textAlign="center"
+							/>
+						}
+					/>
 				</Flex>
 				<Flex align="flex-end" justify="space-between">
 					<Text text={post.createdAt} theme="secondary-invert" />

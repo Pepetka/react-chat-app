@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { PostCard } from '@/entities/Post';
-import { Post } from '@/entities/Post/model/types/postSchema';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
 import { useFetchPostsDataQuery } from '@/entities/Post/api/postApi';
@@ -44,8 +43,8 @@ export const PostList = memo((props: IPostListProps) => {
 
 	return (
 		<Flex direction="column" gap="40">
-			{posts!.map((post) => (
-				<PostCard user={authData!} post={post} />
+			{posts?.map((post) => (
+				<PostCard key={post.id} user={authData!} post={post} />
 			))}
 		</Flex>
 	);
