@@ -1,4 +1,5 @@
-import { memo } from 'react';
+import { memo, useCallback, useState } from 'react';
+import styled from 'styled-components';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Avatar } from '@/shared/ui/Avatar';
@@ -18,11 +19,35 @@ import { Spinner } from '@/shared/ui/Spinner';
 interface IPostCardProps {
 	user: User;
 	post: Post;
+	onDeletePost?: (postId: string) => void;
 }
 
+const StyledMoreMenu = styled.div<{ openMore: boolean }>`
+	display: ${(props) => (props.openMore ? 'flex' : 'none')};
+	justify-content: center;
+	align-items: center;
+	width: 140px;
+	height: 64px;
+	position: absolute;
+	top: 0;
+	left: -140px;
+	background: var(--bg-color);
+	border-radius: 5px;
+	border: 2px solid var(--primary-color);
+`;
+
 export const PostCard = memo((props: IPostCardProps) => {
-	const { user, post } = props;
+	const { user, post, onDeletePost } = props;
+	const [openMore, setOpenMore] = useState(false);
 	const { t } = useTranslation('profile');
+
+	const onToggleMore = useCallback(() => {
+		setOpenMore((prev) => !prev);
+	}, []);
+
+	const onDeletePostHandle = useCallback(() => {
+		onDeletePost?.(post.id);
+	}, [onDeletePost, post.id]);
 
 	return (
 		<Card width="100%">
@@ -36,9 +61,26 @@ export const PostCard = memo((props: IPostCardProps) => {
 							theme="primary-invert"
 						/>
 					</Flex>
-					<Button theme="clear" width="64px" height="64px">
-						<Icon SvgIcon={MoreIcon} invert />
-					</Button>
+					<Flex width="auto" height="auto">
+						<Button
+							onClick={onToggleMore}
+							theme="clear"
+							width="64px"
+							height="64px"
+						>
+							<Icon SvgIcon={MoreIcon} invert />
+						</Button>
+						<StyledMoreMenu openMore={openMore}>
+							<Button
+								onClick={onDeletePostHandle}
+								theme="clear"
+								width="100%"
+								height="100%"
+							>
+								{t('Delete')}
+							</Button>
+						</StyledMoreMenu>
+					</Flex>
 				</Flex>
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />

@@ -1,9 +1,12 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { PostCard } from '@/entities/Post';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
-import { useFetchPostsDataQuery } from '@/entities/Post/api/postApi';
+import {
+	useDeletePostMutation,
+	useFetchPostsDataQuery,
+} from '@/entities/Post/api/postApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Text } from '@/shared/ui/Text';
@@ -18,6 +21,14 @@ export const PostList = memo((props: IPostListProps) => {
 	const { t } = useTranslation('profile');
 	const authData = useSelector(getUserAuthData);
 	const { data: posts, isLoading, error } = useFetchPostsDataQuery({ userId });
+	const [onDeletePost] = useDeletePostMutation();
+
+	const onDeletePostHandle = useCallback(
+		(postId: string) => {
+			onDeletePost({ postId });
+		},
+		[onDeletePost],
+	);
 
 	if (isLoading) {
 		return (
@@ -44,7 +55,12 @@ export const PostList = memo((props: IPostListProps) => {
 	return (
 		<Flex direction="column" gap="40">
 			{posts?.map((post) => (
-				<PostCard key={post.id} user={authData!} post={post} />
+				<PostCard
+					onDeletePost={onDeletePostHandle}
+					key={post.id}
+					user={authData!}
+					post={post}
+				/>
 			))}
 		</Flex>
 	);

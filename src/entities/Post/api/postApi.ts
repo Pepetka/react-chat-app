@@ -26,7 +26,18 @@ const postApi = rtkApi.injectEndpoints({
 			}),
 			invalidatesTags: ['post'],
 		}),
+		deletePost: build.mutation<Post, { postId: string }>({
+			query: ({ postId }) => ({
+				url: `/posts/${postId}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['post'],
+		}),
 	}),
 });
 
-export const { useFetchPostsDataQuery, useAddPostMutation } = postApi;
+export const {
+	useFetchPostsDataQuery,
+	useAddPostMutation,
+	useDeletePostMutation,
+} = postApi;

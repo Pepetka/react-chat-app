@@ -26,6 +26,7 @@ module.exports = {
 					'titleAlign',
 					'TitleTag',
 					'img',
+					'reducerKey',
 				],
 				ignore: ['ICE'],
 			},
@@ -44,4 +45,13 @@ module.exports = {
 		'space-before-function-paren': 'off',
 		'comma-dangle': 'off',
 	},
+	overrides: [
+		{
+			files: ['**/src/**/*.{test,stories}.{ts,tsx}'],
+			rules: {
+				'i18next/no-literal-string': 'off',
+				'max-len': 'off',
+			},
+		},
+	],
 };

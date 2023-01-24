@@ -38,7 +38,11 @@
 		}
 	],
 	"friends": [
-		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "23.01.2023" }
+		{
+			"userId": "6cbdb793",
+			"friendId": "6cbdb794",
+			"createdAt": "23.01.2023"
+		}
 	],
 	"followers": [
 		{
@@ -47,8 +51,6 @@
 			"createdAt": "23.01.2023"
 		}
 	],
-	"groups": [],
-	"group-members": [],
 	"posts": [
 		{
 			"id": "0",
@@ -75,10 +77,10 @@
 	"post-likes": [],
 	"post-dislikes": [],
 	"post-comments": [],
+	"groups": [],
+	"group-members": [],
 	"comments": [],
 	"chats": [],
 	"messages": [],
-	"chat-members": [],
-	"user-posts": [],
-	"group-posts": []
+	"chat-members": []
 }
