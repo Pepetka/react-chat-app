@@ -16,12 +16,15 @@ const postApi = rtkApi.injectEndpoints({
 			}),
 			providesTags: (result) => ['post'],
 		}),
-		addPost: build.mutation<Post, IPostApiProps>({
-			query: ({ userId }) => ({
+		addPost: build.mutation<Post, Omit<Post, 'createdAt' | 'id'>>({
+			query: ({ authorId, img, text }) => ({
 				url: '/posts',
 				method: 'POST',
 				body: {
-					userId,
+					authorId,
+					text,
+					img,
+					createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
 				},
 			}),
 			invalidatesTags: ['post'],

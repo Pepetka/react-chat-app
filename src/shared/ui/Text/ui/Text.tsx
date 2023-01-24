@@ -99,11 +99,17 @@ export const Text = memo((props: ITextProps) => {
 					{title}
 				</StyledTitle>
 			)}
-			{text && (
-				<StyledText size={size} theme={theme} textAlign={textAlign}>
-					{text}
-				</StyledText>
-			)}
+			{text &&
+				text.split('\n').map((line, index) => (
+					<StyledText
+						key={index}
+						size={size}
+						theme={theme}
+						textAlign={textAlign}
+					>
+						{line}
+					</StyledText>
+				))}
 		</TextWrapper>
 	);
 });

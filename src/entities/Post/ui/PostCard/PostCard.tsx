@@ -84,20 +84,22 @@ export const PostCard = memo((props: IPostCardProps) => {
 				</Flex>
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
-					<AppImg
-						width="385px"
-						height="385px"
-						src={post.img}
-						alt={t('Post image')}
-						fallback={<Spinner />}
-						errorFallback={
-							<Text
-								text={t('Something went wrong')}
-								size="l"
-								textAlign="center"
-							/>
-						}
-					/>
+					{post.img && (
+						<AppImg
+							width="385px"
+							height="385px"
+							src={post.img}
+							alt={t('Post image')}
+							fallback={<Spinner />}
+							errorFallback={
+								<Text
+									text={t('Something went wrong')}
+									size="l"
+									textAlign="center"
+								/>
+							}
+						/>
+					)}
 				</Flex>
 				<Flex align="flex-end" justify="space-between">
 					<Text text={post.createdAt} theme="secondary-invert" />

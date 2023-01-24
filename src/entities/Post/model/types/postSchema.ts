@@ -5,3 +5,8 @@ export interface Post {
 	img: string;
 	createdAt: string;
 }
+
+export interface PostSchema {
+	text: string;
+	img: string;
+}
