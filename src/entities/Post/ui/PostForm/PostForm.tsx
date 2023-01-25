@@ -17,7 +17,7 @@ export const PostForm = memo((props: IPostFormProps) => {
 	const { userId, profileId } = props;
 	const { img, text } = useSelector(getPostState);
 	const dispatch = useAppDispatch();
-	const [onAddPost, { isLoading }] = useAddPostMutation();
+	const [onAddPost, { isLoading, isSuccess }] = useAddPostMutation();
 	const { t } = useTranslation('profile');
 
 	const { onChangeText, onChangeImg } = useMemo(
@@ -47,6 +47,7 @@ export const PostForm = memo((props: IPostFormProps) => {
 				textValue={text}
 				onChangeText={onChangeText}
 				isLoading={isLoading}
+				isSuccess={isSuccess}
 				onSubmit={onSubmit}
 			/>
 		</DynamicModuleLoader>

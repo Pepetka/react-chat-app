@@ -8,6 +8,11 @@ export interface Post {
 	createdAt: string;
 }
 
+export interface UserPost {
+	userId: string;
+	postId: string;
+}
+
 export interface PostSchema {
 	text: string;
 	img: string;

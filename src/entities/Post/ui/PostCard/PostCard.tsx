@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
@@ -6,20 +6,31 @@ import { Avatar } from '@/shared/ui/Avatar';
 import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
-import LikeIcon from '@/shared/assets/like.svg';
+import LikeIcon from '@/shared/assets/like2.svg';
+import DislikeIcon from '@/shared/assets/dislike.svg';
 import CommentIcon from '@/shared/assets/comment.svg';
 import SpeakerIcon from '@/shared/assets/speaker.svg';
+import SuccessIcon from '@/shared/assets/check.svg';
 import MoreIcon from '@/shared/assets/more.svg';
-import { User } from '@/entities/User';
 import { Post } from '../../model/types/postSchema';
 import { useTranslation } from 'react-i18next';
 import { AppImg } from '@/shared/ui/AppImg';
 import { Spinner } from '@/shared/ui/Spinner';
 import { getProfilePagePath } from '@/shared/const/router';
 import { AppLink } from '@/shared/ui/AppLink';
+import { useFetchPostStatsQuery } from '../../api/postApi';
 
 interface IPostCardProps {
 	post: Post;
+	userId: string;
+	deleteLoading?: boolean;
+	shareLoading?: boolean;
+	shareSuccess?: boolean;
+	onSharePost?: (postId: string) => void;
+	likeLoading?: boolean;
+	onLikePost?: (postId: string) => void;
+	dislikeLoading?: boolean;
+	onDislikePost?: (postId: string) => void;
 	onDeletePost?: (postId: string) => void;
 	admin: boolean;
 }
@@ -39,9 +50,42 @@ const StyledMoreMenu = styled.div<{ openMore: boolean }>`
 `;
 
 export const PostCard = memo((props: IPostCardProps) => {
-	const { post, onDeletePost, admin } = props;
+	const {
+		post,
+		onDeletePost,
+		admin,
+		onSharePost,
+		deleteLoading,
+		shareLoading,
+		shareSuccess,
+		userId,
+		dislikeLoading,
+		likeLoading,
+		onDislikePost,
+		onLikePost,
+	} = props;
 	const [openMore, setOpenMore] = useState(false);
+	const [success, setSuccess] = useState(false);
 	const { t } = useTranslation('profile');
+	const { data: postStats } = useFetchPostStatsQuery({
+		postId: post.id,
+		userId,
+	});
+
+	useEffect(() => {
+		let timerId: ReturnType<typeof setTimeout>;
+
+		if (shareSuccess) {
+			setSuccess(true);
+			timerId = setTimeout(() => {
+				setSuccess(false);
+			}, 1000);
+		}
+
+		return () => {
+			clearTimeout(timerId);
+		};
+	}, [shareSuccess]);
 
 	const onToggleMore = useCallback(() => {
 		setOpenMore((prev) => !prev);
@@ -50,6 +94,18 @@ export const PostCard = memo((props: IPostCardProps) => {
 	const onDeletePostHandle = useCallback(() => {
 		onDeletePost?.(post.id);
 	}, [onDeletePost, post.id]);
+
+	const onSharePostHandle = useCallback(() => {
+		onSharePost?.(post.id);
+	}, [onSharePost, post.id]);
+
+	const onLikePostHandle = useCallback(() => {
+		onLikePost?.(post.id);
+	}, [onLikePost, post.id]);
+
+	const onDislikePostHandle = useCallback(() => {
+		onDislikePost?.(post.id);
+	}, [onDislikePost, post.id]);
 
 	return (
 		<Card width="100%">
@@ -82,7 +138,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 									width="100%"
 									height="100%"
 								>
-									{t('Delete')}
+									{deleteLoading ? '...' : t('Delete')}
 								</Button>
 							</StyledMoreMenu>
 						</Flex>
@@ -113,37 +169,78 @@ export const PostCard = memo((props: IPostCardProps) => {
 						<Flex gap="8" align="center" width="auto">
 							<Text
 								width="auto"
-								text="7"
+								text={postStats?.comments ?? '0'}
 								textAlign="right"
 								theme="primary-invert"
 								size="l"
 							/>
-							<Button invert width="64px" height="64px">
-								<Icon SvgIcon={CommentIcon} />
+							<Button invert={!postStats?.comments} width="64px" height="64px">
+								<Icon SvgIcon={CommentIcon} invert={!!postStats?.comments} />
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
 							<Text
 								width="auto"
-								text="7"
+								text={postStats?.likes ?? '0'}
 								textAlign="right"
 								theme="primary-invert"
 								size="l"
 							/>
-							<Button invert width="64px" height="64px">
-								<Icon SvgIcon={LikeIcon} />
+							<Button
+								onClick={onLikePostHandle}
+								invert={postStats?.isLiked}
+								width="64px"
+								height="64px"
+							>
+								{likeLoading ? (
+									'...'
+								) : (
+									<Icon SvgIcon={LikeIcon} invert={!postStats?.isLiked} />
+								)}
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
 							<Text
 								width="auto"
-								text="7"
+								text={postStats?.dislikes ?? '0'}
 								textAlign="right"
 								theme="primary-invert"
 								size="l"
 							/>
-							<Button invert width="64px" height="64px">
-								<Icon SvgIcon={SpeakerIcon} />
+							<Button
+								onClick={onDislikePostHandle}
+								invert={postStats?.isDisliked}
+								width="64px"
+								height="64px"
+							>
+								{dislikeLoading ? (
+									'...'
+								) : (
+									<Icon SvgIcon={DislikeIcon} invert={!postStats?.isDisliked} />
+								)}
+							</Button>
+						</Flex>
+						<Flex gap="8" align="center" width="auto">
+							<Text
+								width="auto"
+								text={postStats?.shared ?? '0'}
+								textAlign="right"
+								theme="primary-invert"
+								size="l"
+							/>
+							<Button
+								onClick={!admin ? onSharePostHandle : undefined}
+								invert={postStats?.isShared}
+								width="64px"
+								height="64px"
+							>
+								{shareLoading ? (
+									'...'
+								) : success ? (
+									<Icon SvgIcon={SuccessIcon} invert={!postStats?.isShared} />
+								) : (
+									<Icon SvgIcon={SpeakerIcon} invert={!postStats?.isShared} />
+								)}
 							</Button>
 						</Flex>
 					</Flex>

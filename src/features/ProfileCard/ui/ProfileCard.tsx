@@ -11,8 +11,6 @@ import {
 } from '../api/profileCardApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { getUserAuthData } from '@/entities/User';
 import { Relations } from '../model/types/profileCardSchema';
 
 interface IProfileCardProps {
@@ -25,21 +23,22 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	const { t } = useTranslation('profile');
 	const {
 		data: profileData,
-		isLoading: profileLoading,
+		isFetching: profileLoading,
 		error: profileError,
-	} = useFetchProfileDataQuery({ profileId });
+	} = useFetchProfileDataQuery(
+		{ profileId },
+		{ refetchOnMountOrArgChange: true },
+	);
 	const {
 		data: relationsData,
-		isLoading: relationsLoading,
+		isFetching: relationsLoading,
 		error: relationsError,
 	} = useFetchRelationsDataQuery({
 		userId,
 		friendId: profileId,
 	});
-	const [
-		onAddFriend,
-		{ data: addFriendData, isLoading: addFriendLoading, error: addFriendError },
-	] = useAddFriendMutation();
+	const [onAddFriend, { isLoading: addFriendLoading, error: addFriendError }] =
+		useAddFriendMutation();
 
 	const friendBtnText: Record<Relations, string> = useMemo(
 		() => ({

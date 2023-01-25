@@ -1,11 +1,12 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { PostCard } from '@/entities/Post';
-import { useSelector } from 'react-redux';
-import { getUserAuthData } from '@/entities/User';
 import {
 	useDeletePostMutation,
+	useDislikePostMutation,
 	useFetchPostsDataQuery,
+	useLikePostMutation,
+	useSharePostMutation,
 } from '../../api/postApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { useTranslation } from 'react-i18next';
@@ -19,13 +20,22 @@ interface IPostListProps {
 
 export const PostList = memo((props: IPostListProps) => {
 	const { userId, profileId } = props;
+	const [postId, setPostId] = useState('');
 	const { t } = useTranslation('profile');
 	const {
 		data: posts,
-		isLoading,
+		isFetching: isLoading,
 		error,
-	} = useFetchPostsDataQuery({ profileId });
-	const [onDeletePost] = useDeletePostMutation();
+	} = useFetchPostsDataQuery(
+		{ profileId },
+		{ refetchOnMountOrArgChange: true },
+	);
+	const [onDeletePost, { isLoading: deleteLoading }] = useDeletePostMutation();
+	const [onSharePost, { isLoading: shareLoading, isSuccess: shareSuccess }] =
+		useSharePostMutation();
+	const [onLikePost, { isLoading: likeLoading }] = useLikePostMutation();
+	const [onDislikePost, { isLoading: dislikeLoading }] =
+		useDislikePostMutation();
 
 	const onDeletePostHandle = useCallback(
 		(postId: string) => {
@@ -34,23 +44,55 @@ export const PostList = memo((props: IPostListProps) => {
 		[onDeletePost, userId],
 	);
 
+	const onSharePostHandle = useCallback(
+		(postId: string) => {
+			onSharePost({ postId, userId });
+			setPostId(postId);
+		},
+		[onSharePost, userId],
+	);
+
+	const onLikePostHandle = useCallback(
+		(postId: string) => {
+			onLikePost({ postId, userId });
+			setPostId(postId);
+		},
+		[onLikePost, userId],
+	);
+
+	const onDislikePostHandle = useCallback(
+		(postId: string) => {
+			onDislikePost({ postId, userId });
+			setPostId(postId);
+		},
+		[onDislikePost, userId],
+	);
+
 	if (isLoading) {
 		return (
-			<Flex
-				direction="column"
-				gap="40"
-				justify="center"
-				align="center"
-				height="300px"
-			>
-				<Spinner />
+			<Flex direction="column" gap="40">
+				<Card width="100%" height="300px">
+					<Flex width="100%" height="100%" justify="center" align="center">
+						<Spinner theme="invert" />
+					</Flex>
+				</Card>
+				<Card width="100%" height="300px">
+					<Flex width="100%" height="100%" justify="center" align="center">
+						<Spinner theme="invert" />
+					</Flex>
+				</Card>
+				<Card width="100%" height="300px">
+					<Flex width="100%" height="100%" justify="center" align="center">
+						<Spinner theme="invert" />
+					</Flex>
+				</Card>
 			</Flex>
 		);
 	}
 
 	if (error) {
 		return (
-			<Card width="100%">
+			<Card width="100%" height="300px">
 				<Text text={t('Something went wrong')} textAlign="center" size="xl" />
 			</Card>
 		);
@@ -60,9 +102,18 @@ export const PostList = memo((props: IPostListProps) => {
 		<Flex direction="column" gap="40">
 			{posts?.map((post) => (
 				<PostCard
+					deleteLoading={postId === post.id && deleteLoading}
+					shareLoading={postId === post.id && shareLoading}
+					shareSuccess={postId === post.id && shareSuccess}
+					onSharePost={onSharePostHandle}
+					likeLoading={postId === post.id && likeLoading}
+					onLikePost={onLikePostHandle}
+					dislikeLoading={postId === post.id && dislikeLoading}
+					onDislikePost={onDislikePostHandle}
 					onDeletePost={onDeletePostHandle}
 					key={post.id}
 					admin={userId === profileId}
+					userId={userId}
 					post={post}
 				/>
 			))}

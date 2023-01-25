@@ -18,8 +18,8 @@
 			"password": "123",
 			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
 			"email": "user@mail.ru",
-			"firstname": "Vlad",
-			"lastname": "Kuznetsov",
+			"firstname": "Ivan",
+			"lastname": "Ivanov",
 			"age": 22,
 			"createdAt": "05.0.2023",
 			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
@@ -96,6 +96,13 @@
 			"img": "",
 			"createdAt": "14:24 24.01.2023",
 			"id": "d57e44cf-a9dd-4957-a56c-67910dea1e5c"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Post",
+			"img": "",
+			"createdAt": "13:41 25.01.2023",
+			"id": "ea740bc5-9213-4b2f-a58b-5436e2272e44"
 		}
 	],
 	"user-posts": [
@@ -105,9 +112,15 @@
 		{ "userId": "6cbdb793", "postId": "4" },
 		{ "userId": "6cbdb794", "postId": "2" },
 		{ "userId": "6cbdb794", "postId": "3" },
-		{ "userId": "6cbdb794", "postId": "d57e44cf-a9dd-4957-a56c-67910dea1e5c" }
+		{ "userId": "6cbdb794", "postId": "d57e44cf-a9dd-4957-a56c-67910dea1e5c" },
+		{ "userId": "6cbdb794", "postId": "1" },
+		{ "userId": "6cbdb794", "postId": "0" },
+		{ "userId": "6cbdb794", "postId": "GmSpvBG" },
+		{ "userId": "6cbdb794", "postId": "4" },
+		{ "userId": "6cbdb793", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" },
+		{ "userId": "6cbdb794", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" }
 	],
-	"post-likes": [],
+	"post-likes": [{ "postId": 2, "userId": "6cbdb793" }],
 	"post-dislikes": [],
 	"post-comments": [],
 	"groups": [],

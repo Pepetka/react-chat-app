@@ -1,13 +1,20 @@
-import { ChangeEvent, FormEvent, memo, useCallback, useState } from 'react';
+import {
+	ChangeEvent,
+	FormEvent,
+	memo,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react';
 import styled from 'styled-components';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import SendIcon from '@/shared/assets/send.svg';
 import PaperclipIcon from '@/shared/assets/paperclip.svg';
+import SuccessIcon from '@/shared/assets/check.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { AppImg } from '@/shared/ui/AppImg';
-import { Spinner } from '@/shared/ui/Spinner';
 
 interface ISendWithImgFormProps {
 	textValue?: string;
@@ -18,6 +25,7 @@ interface ISendWithImgFormProps {
 	imgPlaceholder?: string;
 	onSubmit?: () => void;
 	isLoading?: boolean;
+	isSuccess?: boolean;
 }
 
 const StyledForm = styled.form`
@@ -89,8 +97,25 @@ export const SendWithImgForm = memo((props: ISendWithImgFormProps) => {
 		imgPlaceholder = '',
 		isLoading = false,
 		onSubmit,
+		isSuccess,
 	} = props;
 	const [previewImg, setPreviewImg] = useState(false);
+	const [success, setSuccess] = useState(false);
+
+	useEffect(() => {
+		let timerId: ReturnType<typeof setTimeout>;
+
+		if (isSuccess) {
+			setSuccess(true);
+			timerId = setTimeout(() => {
+				setSuccess(false);
+			}, 1000);
+		}
+
+		return () => {
+			clearTimeout(timerId);
+		};
+	}, [isSuccess]);
 
 	const onPreviewImg = useCallback(() => {
 		setPreviewImg((prev) => !prev);
@@ -156,7 +181,13 @@ export const SendWithImgForm = memo((props: ISendWithImgFormProps) => {
 								type="submit"
 								disabled={isLoading}
 							>
-								{isLoading ? <Spinner /> : <Icon SvgIcon={SendIcon} />}
+								{isLoading ? (
+									'...'
+								) : success ? (
+									<Icon SvgIcon={SuccessIcon} />
+								) : (
+									<Icon SvgIcon={SendIcon} />
+								)}
 							</Button>
 						</StyledBtns>
 					</Flex>

@@ -442,6 +442,191 @@ server.post('/posts', (req, res) => {
 	}
 });
 
+server.get('/postStats', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
+	try {
+		const { postId, userId } = req.query;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const {
+			'user-posts': userPosts = [],
+			posts = [],
+			'post-likes': postLikes = [],
+			'post-dislikes': postDislikes = [],
+			'post-comments': postComments = [],
+		} = db;
+
+		const postLikesFromDb = postLikes.filter((like) => {
+			return like.postId === String(postId);
+		});
+
+		const postDislikesFromDb = postDislikes.filter((dislike) => {
+			return dislike.postId === String(postId);
+		});
+
+		const postCommentsFromDb = postComments.filter((comment) => {
+			return comment.postId === String(postId);
+		});
+
+		const postFromDb = posts.find((post) => post.id === String(postId));
+
+		const postSharedFromDb = userPosts.filter((post) => {
+			return (
+				post.postId === String(postId) && postFromDb.authorId !== post.userId
+			);
+		});
+
+		const response = {
+			likes: String(postLikesFromDb.length),
+			isLiked: Boolean(postLikesFromDb.find((like) => like.userId === userId)),
+			dislikes: String(postDislikesFromDb.length),
+			isDisliked: Boolean(
+				postDislikesFromDb.find((dislike) => dislike.userId === userId),
+			),
+			comments: String(postCommentsFromDb.length),
+			shared: String(postSharedFromDb.length),
+			isShared: Boolean(
+				postSharedFromDb.find((shared) => shared.userId === userId),
+			),
+		};
+
+		return res.json(response);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.post('/share', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
+	try {
+		const { postId, userId } = req.body;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { 'user-posts': userPosts = [] } = db;
+
+		const userPostFromDb = userPosts.find((post) => {
+			return post.userId === userId && post.postId === String(postId);
+		});
+
+		const newUserPost = {
+			userId,
+			postId: postId,
+		};
+
+		const newDb = JSON.stringify({
+			...db,
+			'user-posts': userPostFromDb
+				? [...userPosts]
+				: [...userPosts, newUserPost],
+		});
+		fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+		return res.json(newUserPost);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.post('/like', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
+	try {
+		const { postId, userId } = req.body;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { 'post-likes': postLikes = [], 'post-dislikes': postDislikes = [] } =
+			db;
+
+		const newPostLikes = {
+			userId,
+			postId: postId,
+		};
+
+		const postLikesFromDb = postLikes.filter((like) => {
+			return !(like.userId === userId && like.postId === String(postId));
+		});
+
+		const postDislikesFromDb = postDislikes.filter((dislike) => {
+			return dislike.postId !== String(postId) && dislike.userId !== userId;
+		});
+
+		const newDb = JSON.stringify({
+			...db,
+			'post-likes':
+				postLikesFromDb.length < postLikes.length
+					? [...postLikesFromDb]
+					: [...postLikes, newPostLikes],
+			'post-dislikes': [...postDislikesFromDb],
+		});
+		fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+		return res.json(newPostLikes);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.post('/dislike', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
+	try {
+		const { postId, userId } = req.body;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { 'post-likes': postLikes = [], 'post-dislikes': postDislikes = [] } =
+			db;
+
+		const newPostDislikes = {
+			userId,
+			postId: postId,
+		};
+
+		const postDislikesFromDb = postDislikes.filter((dislike) => {
+			return !(dislike.userId === userId && dislike.postId === String(postId));
+		});
+
+		const postLikesFromDb = postLikes.filter((like) => {
+			return like.postId !== String(postId) && like.userId !== userId;
+		});
+
+		const newDb = JSON.stringify({
+			...db,
+			'post-likes': [...postLikesFromDb],
+			'post-dislikes':
+				postDislikesFromDb.length < postDislikes.length
+					? [...postDislikesFromDb]
+					: [...postDislikes, newPostDislikes],
+		});
+		fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+		return res.json(newPostDislikes);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
 server.use((req, res, next) => {
 	if (!req.headers.authorization) {
 		return res.status(403).json({ message: 'AUTH ERROR' });

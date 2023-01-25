@@ -25,15 +25,18 @@ const StyledLine = styled.div`
 `;
 
 export const SocialCard = memo((props: ISocialCardProps) => {
-	const { userId, profileId } = props;
+	const { profileId } = props;
 	const {
 		data: socialData,
-		isLoading: socialLoading,
+		isFetching: socialLoading,
 		error: socialError,
-	} = useFetchSocialDataQuery({ profileId });
+	} = useFetchSocialDataQuery(
+		{ profileId },
+		{ refetchOnMountOrArgChange: true },
+	);
 	const {
 		data: friendsData,
-		isLoading: friendsLoading,
+		isFetching: friendsLoading,
 		error: friendsError,
 	} = useFetchFriendsDataQuery({ profileId });
 	const { t } = useTranslation('profile');

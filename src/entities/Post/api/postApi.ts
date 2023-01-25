@@ -1,5 +1,5 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Post } from '../model/types/postSchema';
+import { Post, UserPost } from '../model/types/postSchema';
 
 interface IPostApiProps {
 	profileId: string;
@@ -18,7 +18,7 @@ const postApi = rtkApi.injectEndpoints({
 			providesTags: (result) => ['post'],
 		}),
 		addPost: build.mutation<
-			Post,
+			Omit<Post, 'author'> & { authorId: string },
 			{ authorId: string; img: string; text: string; profileId: string }
 		>({
 			query: ({ authorId, img, text, profileId }) => ({
@@ -33,7 +33,10 @@ const postApi = rtkApi.injectEndpoints({
 			}),
 			invalidatesTags: ['post'],
 		}),
-		deletePost: build.mutation<Post, { postId: string; userId: string }>({
+		deletePost: build.mutation<
+			Omit<Post, 'author'> & { authorId: string },
+			{ postId: string; userId: string }
+		>({
 			query: ({ postId, userId }) => ({
 				url: '/posts',
 				method: 'PUT',
@@ -44,6 +47,66 @@ const postApi = rtkApi.injectEndpoints({
 			}),
 			invalidatesTags: ['post'],
 		}),
+		sharePost: build.mutation<UserPost, { postId: string; userId: string }>({
+			query: ({ postId, userId }) => ({
+				url: '/share',
+				method: 'POST',
+				body: {
+					postId,
+					userId,
+				},
+			}),
+			invalidatesTags: ['postStats'],
+		}),
+		fetchPostStats: build.query<
+			{
+				likes: string;
+				dislikes: string;
+				comments: string;
+				shared: string;
+				isLiked: boolean;
+				isDisliked: boolean;
+				isShared: boolean;
+			},
+			{ postId: string; userId: string }
+		>({
+			query: ({ postId, userId }) => ({
+				url: '/postStats',
+				params: {
+					postId,
+					userId,
+				},
+			}),
+			providesTags: (result) => ['post', 'postStats'],
+		}),
+		likePost: build.mutation<
+			{ postId: string; userId: string },
+			{ postId: string; userId: string }
+		>({
+			query: ({ postId, userId }) => ({
+				url: '/like',
+				method: 'POST',
+				body: {
+					postId,
+					userId,
+				},
+			}),
+			invalidatesTags: ['postStats'],
+		}),
+		dislikePost: build.mutation<
+			{ postId: string; userId: string },
+			{ postId: string; userId: string }
+		>({
+			query: ({ postId, userId }) => ({
+				url: '/dislike',
+				method: 'POST',
+				body: {
+					postId,
+					userId,
+				},
+			}),
+			invalidatesTags: ['postStats'],
+		}),
 	}),
 });
 
@@ -51,4 +114,8 @@ export const {
 	useFetchPostsDataQuery,
 	useAddPostMutation,
 	useDeletePostMutation,
+	useSharePostMutation,
+	useFetchPostStatsQuery,
+	useDislikePostMutation,
+	useLikePostMutation,
 } = postApi;
