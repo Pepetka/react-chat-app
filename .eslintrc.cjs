@@ -27,6 +27,7 @@ module.exports = {
 					'TitleTag',
 					'img',
 					'reducerKey',
+					'target',
 				],
 				ignore: ['ICE'],
 			},

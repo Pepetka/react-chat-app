@@ -11,6 +11,7 @@ import {
 } from '../api/socialCardApi';
 import { Spinner } from '@/shared/ui/Spinner';
 import { getProfilePagePath } from '@/shared/const/router';
+import { AppLink } from '@/shared/ui/AppLink';
 
 interface ISocialCardProps {
 	userId: string;
@@ -127,11 +128,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 						friendsData.map((friend, i) => {
 							if (i < 3) {
 								return (
-									<a
-										key={friend.id}
-										href={getProfilePagePath(friend.id)}
-										target="_blank"
-									>
+									<AppLink key={friend.id} href={getProfilePagePath(friend.id)}>
 										<Flex gap="8" align="center">
 											<Avatar circle img={friend.avatar} />
 											<Text
@@ -140,7 +137,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 												size="l"
 											/>
 										</Flex>
-									</a>
+									</AppLink>
 								);
 							}
 							return null;

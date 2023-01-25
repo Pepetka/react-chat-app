@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { AppImg } from '@/shared/ui/AppImg';
 import { Spinner } from '@/shared/ui/Spinner';
 import { getProfilePagePath } from '@/shared/const/router';
+import { AppLink } from '@/shared/ui/AppLink';
 
 interface IPostCardProps {
 	post: Post;
@@ -54,7 +55,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 		<Card width="100%">
 			<Flex direction="column" gap="16">
 				<Flex justify="space-between">
-					<a href={getProfilePagePath(post.author.id)} target="_blank">
+					<AppLink href={getProfilePagePath(post.author.id)}>
 						<Flex align="center" gap="8" width="auto">
 							<Avatar circle img={post.author.avatar} />
 							<Text
@@ -63,7 +64,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 								theme="primary-invert"
 							/>
 						</Flex>
-					</a>
+					</AppLink>
 					{admin && (
 						<Flex width="auto" height="auto">
 							<Button
