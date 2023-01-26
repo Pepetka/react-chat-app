@@ -7,7 +7,6 @@ import {
 	useState,
 } from 'react';
 import styled from 'styled-components';
-import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import SendIcon from '@/shared/assets/send.svg';
@@ -16,30 +15,50 @@ import SuccessIcon from '@/shared/assets/check.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { AppImg } from '@/shared/ui/AppImg';
 
-interface ISendWithImgFormProps {
+interface ISendWithImgFormControls {
+	withImg?: boolean;
+}
+
+interface ISendWithImgFormBase extends ISendWithImgFormControls {
 	textValue?: string;
-	imgValue?: string;
 	onChangeText?: (text: string) => void;
-	onChangeImg?: (img: string) => void;
 	textPlaceholder?: string;
-	imgPlaceholder?: string;
 	onSubmit?: () => void;
 	isLoading?: boolean;
 	isSuccess?: boolean;
 }
 
+interface ISendWithImgFormWithImg extends ISendWithImgFormBase {
+	withImg: true;
+	imgValue?: string;
+	onChangeImg?: (img: string) => void;
+	imgPlaceholder?: string;
+}
+
+interface ISendWithImgFormWithoutImg extends ISendWithImgFormBase {
+	withImg: false;
+	imgValue?: never;
+	onChangeImg?: never;
+	imgPlaceholder?: never;
+}
+
+type SendWithImgFormPropsType =
+	| ISendWithImgFormWithImg
+	| ISendWithImgFormWithoutImg;
+
 const StyledForm = styled.form`
 	width: 100%;
-	position: relative;
 `;
 
-const StyledTextArea = styled.textarea`
+const StyledTextArea = styled.textarea<ISendWithImgFormControls>`
 	border: 3px solid var(--invert-primary-color);
-	border-radius: 10px;
+	border-bottom: ${(props) => (!props.withImg ? undefined : 'none')};
+	border-radius: ${(props) => (!props.withImg ? '10px' : '10px 10px 0 0')};
 	width: 100%;
 	font: var(--font-m);
-	min-height: 200px;
-	padding: 10px;
+	height: 200px;
+	padding: ${(props) =>
+		!props.withImg ? '10px 96px 10px 10px' : '10px 176px 10px 10px'};
 	background: var(--invert-bg-color);
 	color: var(--invert-primary-color);
 	outline: none;
@@ -51,13 +70,13 @@ const StyledTextArea = styled.textarea`
 	}
 `;
 
-const StyledImgArea = styled.textarea`
+const StyledImgArea = styled.textarea<ISendWithImgFormControls>`
 	font: var(--font-m);
-	width: calc(100% - 154px);
-	height: 64px;
+	width: 100%;
+	height: 96px;
 	border: 3px solid var(--invert-primary-color);
-	border-radius: 10px;
-	padding: 16px 10px;
+	border-radius: ${(props) => (!props.withImg ? '10px' : '0 0 10px 10px')};
+	padding: 10px;
 	background: var(--invert-bg-color);
 	color: var(--invert-primary-color);
 	outline: none;
@@ -73,21 +92,20 @@ const StyledBtns = styled.div`
 	display: flex;
 	gap: 16px;
 	position: absolute;
-	top: 0;
-	right: 0;
+	bottom: 16px;
+	right: 16px;
 `;
 
 const StyledImgWrapper = styled.div`
-	width: calc(100% - 154px);
-	height: 64px;
-	border-left: 3px solid var(--invert-primary-color);
-	border-right: 3px solid var(--invert-primary-color);
-	border-radius: 10px;
+	width: 100%;
+	height: 96px;
+	border: 3px solid var(--invert-primary-color);
+	border-radius: 0 0 10px 10px;
 	padding-inline: 10px;
 	background: var(--invert-bg-color);
 `;
 
-export const SendWithImgForm = memo((props: ISendWithImgFormProps) => {
+export const SendWithImgForm = memo((props: SendWithImgFormPropsType) => {
 	const {
 		imgValue = '',
 		textValue = '',
@@ -98,6 +116,7 @@ export const SendWithImgForm = memo((props: ISendWithImgFormProps) => {
 		isLoading = false,
 		onSubmit,
 		isSuccess,
+		withImg = false,
 	} = props;
 	const [previewImg, setPreviewImg] = useState(false);
 	const [success, setSuccess] = useState(false);
@@ -144,55 +163,65 @@ export const SendWithImgForm = memo((props: ISendWithImgFormProps) => {
 		[onSubmit],
 	);
 
+	const imgForm = useCallback(() => {
+		return (
+			<>
+				{!previewImg || !imgValue ? (
+					<StyledImgArea
+						withImg={withImg}
+						placeholder={imgPlaceholder}
+						value={imgValue}
+						onChange={onChangeImgHandle}
+					/>
+				) : (
+					<StyledImgWrapper>
+						<Flex width="100%" height="100%" gap="16" align="center">
+							{imgValue.split('\n').map((img, index) => (
+								<AppImg key={index} src={img} height="80px" />
+							))}
+						</Flex>
+					</StyledImgWrapper>
+				)}
+			</>
+		);
+	}, [imgPlaceholder, imgValue, onChangeImgHandle, previewImg]);
+
 	return (
-		<Card width="100%">
-			<StyledForm onSubmit={onSubmitHandle}>
-				<Flex direction="column" gap="16">
+		<StyledForm onSubmit={onSubmitHandle}>
+			<Flex direction="column">
+				<Flex>
 					<StyledTextArea
+						withImg={withImg}
 						placeholder={textPlaceholder}
 						value={textValue}
 						onChange={onChangeTextHandle}
 						required
 					/>
-					<Flex justify="space-between" align="center">
-						{!previewImg || !imgValue ? (
-							<StyledImgArea
-								placeholder={imgPlaceholder}
-								value={imgValue}
-								onChange={onChangeImgHandle}
-							/>
-						) : (
-							<StyledImgWrapper>
-								<Flex width="100%" height="100%" gap="16">
-									{imgValue.split('\n').map((img, index) => (
-										<AppImg key={index} src={img} height="64px" />
-									))}
-								</Flex>
-							</StyledImgWrapper>
-						)}
-						<StyledBtns>
+					<StyledBtns>
+						{withImg && (
 							<Button onClick={onPreviewImg} invert width="64px" height="64px">
 								<Icon SvgIcon={PaperclipIcon} />
 							</Button>
-							<Button
-								invert
-								width="64px"
-								height="64px"
-								type="submit"
-								disabled={isLoading}
-							>
-								{isLoading ? (
-									'...'
-								) : success ? (
-									<Icon SvgIcon={SuccessIcon} />
-								) : (
-									<Icon SvgIcon={SendIcon} />
-								)}
-							</Button>
-						</StyledBtns>
-					</Flex>
+						)}
+						<Button
+							invert
+							width="64px"
+							height="64px"
+							type="submit"
+							disabled={isLoading}
+						>
+							{isLoading ? (
+								'...'
+							) : success ? (
+								<Icon SvgIcon={SuccessIcon} />
+							) : (
+								<Icon SvgIcon={SendIcon} />
+							)}
+						</Button>
+					</StyledBtns>
 				</Flex>
-			</StyledForm>
-		</Card>
+				{withImg && imgForm()}
+			</Flex>
+		</StyledForm>
 	);
 });

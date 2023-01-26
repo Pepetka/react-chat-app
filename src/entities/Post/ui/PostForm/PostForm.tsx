@@ -7,6 +7,7 @@ import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { postActions, postReducer } from '../../model/slice/postSlice';
 import { getPostState } from '../../model/selectors/postSelectors';
 import { useAddPostMutation } from '../../api/postApi';
+import { Card } from '@/shared/ui/Card';
 
 interface IPostFormProps {
 	userId: string;
@@ -39,17 +40,20 @@ export const PostForm = memo((props: IPostFormProps) => {
 
 	return (
 		<DynamicModuleLoader reducerKey="post" reducer={postReducer}>
-			<SendWithImgForm
-				textPlaceholder={t('Share your news')}
-				imgPlaceholder={t('Add image')}
-				imgValue={img}
-				onChangeImg={onChangeImg}
-				textValue={text}
-				onChangeText={onChangeText}
-				isLoading={isLoading}
-				isSuccess={isSuccess}
-				onSubmit={onSubmit}
-			/>
+			<Card width="100%">
+				<SendWithImgForm
+					withImg={true}
+					textPlaceholder={t('Share your news')}
+					imgPlaceholder={t('Add images')}
+					imgValue={img}
+					onChangeImg={onChangeImg}
+					textValue={text}
+					onChangeText={onChangeText}
+					isLoading={isLoading}
+					isSuccess={isSuccess}
+					onSubmit={onSubmit}
+				/>
+			</Card>
 		</DynamicModuleLoader>
 	);
 });

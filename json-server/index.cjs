@@ -458,7 +458,7 @@ server.get('/postStats', (req, res) => {
 			posts = [],
 			'post-likes': postLikes = [],
 			'post-dislikes': postDislikes = [],
-			'post-comments': postComments = [],
+			comments = [],
 		} = db;
 
 		const postLikesFromDb = postLikes.filter((like) => {
@@ -469,7 +469,7 @@ server.get('/postStats', (req, res) => {
 			return dislike.postId === String(postId);
 		});
 
-		const postCommentsFromDb = postComments.filter((comment) => {
+		const postCommentsFromDb = comments.filter((comment) => {
 			return comment.postId === String(postId);
 		});
 
@@ -621,6 +621,108 @@ server.post('/dislike', (req, res) => {
 		fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
 
 		return res.json(newPostDislikes);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.get('/comments', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
+	try {
+		const { postId } = req.query;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { comments = [], users = [] } = db;
+
+		const commentsFromDb = comments
+			.filter((comment) => {
+				return comment.postId === String(postId);
+			})
+			.map((comment) => {
+				const author = users.find((user) => user.id === comment.authorId);
+
+				return {
+					...comment,
+					authorId: undefined,
+					author,
+				};
+			});
+
+		return res.json(commentsFromDb);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.put('/comments', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
+	try {
+		const { commentId } = req.query;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { comments = [] } = db;
+
+		const deleteComment = comments.find((comment) => {
+			return comment.id === commentId;
+		});
+
+		const newComments = comments.filter((comment) => {
+			return comment.id !== commentId;
+		});
+
+		const newDb = JSON.stringify({
+			...db,
+			comments: newComments,
+		});
+		fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+		return res.json(deleteComment);
+	} catch (e) {
+		console.log(e);
+		return res.status(500).json({ message: e.message });
+	}
+});
+
+server.post('/comments', (req, res) => {
+	if (!req.headers.authorization) {
+		return res.status(403).json({ message: 'AUTH ERROR' });
+	}
+
+	try {
+		const { authorId, text, postId } = req.body;
+
+		const db = JSON.parse(
+			fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+		);
+		const { comments = [] } = db;
+
+		const newComment = {
+			id: crypto.randomUUID(),
+			text,
+			authorId,
+			postId,
+			createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+		};
+
+		const newDb = JSON.stringify({
+			...db,
+			comments: [...comments, newComment],
+		});
+		fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
+
+		return res.json(newComment);
 	} catch (e) {
 		console.log(e);
 		return res.status(500).json({ message: e.message });

@@ -19,6 +19,8 @@ import { Spinner } from '@/shared/ui/Spinner';
 import { getProfilePagePath } from '@/shared/const/router';
 import { AppLink } from '@/shared/ui/AppLink';
 import { useFetchPostStatsQuery } from '../../api/postApi';
+import { CommentForm, CommentList } from '@/entities/Comment';
+import { Menu } from '@/shared/ui/Menu';
 
 interface IPostCardProps {
 	post: Post;
@@ -35,20 +37,6 @@ interface IPostCardProps {
 	admin: boolean;
 }
 
-const StyledMoreMenu = styled.div<{ openMore: boolean }>`
-	display: ${(props) => (props.openMore ? 'flex' : 'none')};
-	justify-content: center;
-	align-items: center;
-	width: 140px;
-	height: 64px;
-	position: absolute;
-	top: 0;
-	left: -140px;
-	background: var(--bg-color);
-	border-radius: 5px;
-	border: 2px solid var(--primary-color);
-`;
-
 export const PostCard = memo((props: IPostCardProps) => {
 	const {
 		post,
@@ -64,8 +52,8 @@ export const PostCard = memo((props: IPostCardProps) => {
 		onDislikePost,
 		onLikePost,
 	} = props;
-	const [openMore, setOpenMore] = useState(false);
 	const [success, setSuccess] = useState(false);
+	const [openComments, setOpenComments] = useState(false);
 	const { t } = useTranslation('profile');
 	const { data: postStats } = useFetchPostStatsQuery({
 		postId: post.id,
@@ -87,8 +75,8 @@ export const PostCard = memo((props: IPostCardProps) => {
 		};
 	}, [shareSuccess]);
 
-	const onToggleMore = useCallback(() => {
-		setOpenMore((prev) => !prev);
+	const onToggleComments = useCallback(() => {
+		setOpenComments((prev) => !prev);
 	}, []);
 
 	const onDeletePostHandle = useCallback(() => {
@@ -113,7 +101,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 				<Flex justify="space-between">
 					<AppLink href={getProfilePagePath(post.author.id)}>
 						<Flex align="center" gap="8" width="auto">
-							<Avatar circle img={post.author.avatar} />
+							<Avatar size="m" circle img={post.author.avatar} />
 							<Text
 								text={`${post.author.firstname} ${post.author.lastname}`}
 								size="l"
@@ -122,26 +110,20 @@ export const PostCard = memo((props: IPostCardProps) => {
 						</Flex>
 					</AppLink>
 					{admin && (
-						<Flex width="auto" height="auto">
+						<Menu
+							width="64px"
+							height="64px"
+							trigger={<Icon SvgIcon={MoreIcon} invert />}
+						>
 							<Button
-								onClick={onToggleMore}
+								onClick={onDeletePostHandle}
 								theme="clear"
-								width="64px"
-								height="64px"
+								width="100%"
+								height="100%"
 							>
-								<Icon SvgIcon={MoreIcon} invert />
+								{deleteLoading ? '...' : t('Delete')}
 							</Button>
-							<StyledMoreMenu openMore={openMore}>
-								<Button
-									onClick={onDeletePostHandle}
-									theme="clear"
-									width="100%"
-									height="100%"
-								>
-									{deleteLoading ? '...' : t('Delete')}
-								</Button>
-							</StyledMoreMenu>
-						</Flex>
+						</Menu>
 					)}
 				</Flex>
 				<Flex justify="space-between">
@@ -174,8 +156,13 @@ export const PostCard = memo((props: IPostCardProps) => {
 								theme="primary-invert"
 								size="l"
 							/>
-							<Button invert={!postStats?.comments} width="64px" height="64px">
-								<Icon SvgIcon={CommentIcon} invert={!!postStats?.comments} />
+							<Button
+								onClick={onToggleComments}
+								invert={openComments}
+								width="64px"
+								height="64px"
+							>
+								<Icon SvgIcon={CommentIcon} invert={!openComments} />
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
@@ -245,6 +232,13 @@ export const PostCard = memo((props: IPostCardProps) => {
 						</Flex>
 					</Flex>
 				</Flex>
+				{openComments && (
+					<>
+						<Text title={t('Comments')} theme="primary-invert" size="l" />
+						<CommentForm postId={post.id} userId={userId} />
+						<CommentList postId={post.id} userId={userId} />
+					</>
+				)}
 			</Flex>
 		</Card>
 	);
