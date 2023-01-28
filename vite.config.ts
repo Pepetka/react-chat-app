@@ -19,4 +19,7 @@ export default defineConfig({
 			'@': path.resolve(__dirname, 'src'),
 		},
 	},
+	define: {
+		__API__: JSON.stringify('http://localhost:8000/'),
+	},
 });

@@ -55,4 +55,7 @@ module.exports = {
 			},
 		},
 	],
+	globals: {
+		__API__: true,
+	},
 };

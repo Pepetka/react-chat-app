@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import { SendWithImgForm } from '@/widgets/SendWithImgForm';
+import { FormWithImg } from '@/shared/ui/FormWithImg';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getCommentState } from '../../model/selectors/commentSelectors';
@@ -36,7 +36,7 @@ export const CommentForm = memo((props: ICommentFormProps) => {
 
 	return (
 		<DynamicModuleLoader reducerKey="comment" reducer={commentReducer}>
-			<SendWithImgForm
+			<FormWithImg
 				withImg={false}
 				textPlaceholder={t('Write your comment')}
 				textValue={text}

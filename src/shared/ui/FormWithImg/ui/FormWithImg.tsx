@@ -33,13 +33,15 @@ interface ISendWithImgFormWithImg extends ISendWithImgFormBase {
 	imgValue?: string;
 	onChangeImg?: (img: string) => void;
 	imgPlaceholder?: string;
+	previewImgDefault?: boolean;
 }
 
 interface ISendWithImgFormWithoutImg extends ISendWithImgFormBase {
-	withImg: false;
+	withImg?: false;
 	imgValue?: never;
 	onChangeImg?: never;
 	imgPlaceholder?: never;
+	previewImgDefault?: never;
 }
 
 type SendWithImgFormPropsType =
@@ -105,7 +107,7 @@ const StyledImgWrapper = styled.div`
 	background: var(--invert-bg-color);
 `;
 
-export const SendWithImgForm = memo((props: SendWithImgFormPropsType) => {
+export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	const {
 		imgValue = '',
 		textValue = '',
@@ -117,8 +119,9 @@ export const SendWithImgForm = memo((props: SendWithImgFormPropsType) => {
 		onSubmit,
 		isSuccess,
 		withImg = false,
+		previewImgDefault = false,
 	} = props;
-	const [previewImg, setPreviewImg] = useState(false);
+	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
 	const [success, setSuccess] = useState(false);
 
 	useEffect(() => {

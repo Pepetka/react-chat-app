@@ -56,6 +56,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 			<Card width="100%" height="282px">
 				<Flex height="100%" justify="center" align="center">
 					<Text
+						theme="error"
 						title={t('Something went wrong')}
 						TitleTag="p"
 						titleAlign="center"

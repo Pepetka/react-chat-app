@@ -16,6 +16,9 @@ export default {
 		'\\.svg$': '<rootDir>/test/__mocks__/jestEmptyComponent.tsx',
 		'^@/(.*)$': '<rootDir>/src/$1',
 	},
+	globals: {
+		__API__: JSON.stringify('http://api/'),
+	},
 	setupFilesAfterEnv: ['<rootDir>/test/config/jest.setup.ts'],
 	reporters: [
 		'default',

@@ -5,7 +5,7 @@ import { StateSchema } from '@/app/provider/Store';
 import { DeepPartial } from 'redux';
 
 export default {
-	title: 'features/RegisterForm',
+	title: 'features/RegisterByUsername/RegisterForm',
 	component: RegisterForm,
 } as Meta<typeof RegisterForm>;
 

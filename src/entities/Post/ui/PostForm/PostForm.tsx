@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { SendWithImgForm } from '@/widgets/SendWithImgForm';
+import { FormWithImg } from '@/shared/ui/FormWithImg';
 import { DynamicModuleLoader } from '@/shared/components';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { postActions, postReducer } from '../../model/slice/postSlice';
@@ -41,7 +41,7 @@ export const PostForm = memo((props: IPostFormProps) => {
 	return (
 		<DynamicModuleLoader reducerKey="post" reducer={postReducer}>
 			<Card width="100%">
-				<SendWithImgForm
+				<FormWithImg
 					withImg={true}
 					textPlaceholder={t('Share your news')}
 					imgPlaceholder={t('Add images')}

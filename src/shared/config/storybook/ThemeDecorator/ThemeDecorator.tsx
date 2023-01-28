@@ -5,7 +5,10 @@ export const ThemeDecorator: Decorator = (StoryComponent, { globals }) => {
 	const { globalTheme } = globals;
 
 	return (
-		<div className={`App ${globalTheme}`}>
+		<div
+			className={`App ${globalTheme}`}
+			style={{ height: 'auto', minHeight: '100vh' }}
+		>
 			<StoryComponent />
 		</div>
 	);

@@ -1,14 +1,18 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Post, UserPost } from '../model/types/postSchema';
+import { Post, PostStats, UserPost } from '../model/types/postSchema';
 
 interface IPostApiProps {
 	profileId: string;
 	userId: string;
+	postId: string;
 }
 
 const postApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchPostsData: build.query<Array<Post>, Omit<IPostApiProps, 'userId'>>({
+		fetchPostsData: build.query<
+			Array<Post>,
+			Omit<IPostApiProps, 'userId' | 'postId'>
+		>({
 			query: ({ profileId }) => ({
 				url: '/posts',
 				params: {
@@ -35,7 +39,7 @@ const postApi = rtkApi.injectEndpoints({
 		}),
 		deletePost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
-			{ postId: string; userId: string }
+			Omit<IPostApiProps, 'profileId'>
 		>({
 			query: ({ postId, userId }) => ({
 				url: '/posts',
@@ -47,7 +51,7 @@ const postApi = rtkApi.injectEndpoints({
 			}),
 			invalidatesTags: ['post'],
 		}),
-		sharePost: build.mutation<UserPost, { postId: string; userId: string }>({
+		sharePost: build.mutation<UserPost, Omit<IPostApiProps, 'profileId'>>({
 			query: ({ postId, userId }) => ({
 				url: '/share',
 				method: 'POST',
@@ -58,18 +62,7 @@ const postApi = rtkApi.injectEndpoints({
 			}),
 			invalidatesTags: ['postStats'],
 		}),
-		fetchPostStats: build.query<
-			{
-				likes: string;
-				dislikes: string;
-				comments: string;
-				shared: string;
-				isLiked: boolean;
-				isDisliked: boolean;
-				isShared: boolean;
-			},
-			{ postId: string; userId: string }
-		>({
+		fetchPostStats: build.query<PostStats, Omit<IPostApiProps, 'profileId'>>({
 			query: ({ postId, userId }) => ({
 				url: '/postStats',
 				params: {
@@ -80,8 +73,8 @@ const postApi = rtkApi.injectEndpoints({
 			providesTags: (result) => ['post', 'postStats'],
 		}),
 		likePost: build.mutation<
-			{ postId: string; userId: string },
-			{ postId: string; userId: string }
+			Omit<IPostApiProps, 'profileId'>,
+			Omit<IPostApiProps, 'profileId'>
 		>({
 			query: ({ postId, userId }) => ({
 				url: '/like',
@@ -94,8 +87,8 @@ const postApi = rtkApi.injectEndpoints({
 			invalidatesTags: ['postStats'],
 		}),
 		dislikePost: build.mutation<
-			{ postId: string; userId: string },
-			{ postId: string; userId: string }
+			Omit<IPostApiProps, 'profileId'>,
+			Omit<IPostApiProps, 'profileId'>
 		>({
 			query: ({ postId, userId }) => ({
 				url: '/dislike',

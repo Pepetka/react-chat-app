@@ -69,6 +69,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 			<Card width="100%" height="400px" borderRadius={false}>
 				<Flex height="100%" justify="center" align="center">
 					<Text
+						theme="error"
 						title={t('Something went wrong')}
 						TitleTag="p"
 						titleAlign="center"

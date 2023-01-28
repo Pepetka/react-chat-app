@@ -35,6 +35,7 @@ interface IPostCardProps {
 	onDislikePost?: (postId: string) => void;
 	onDeletePost?: (postId: string) => void;
 	admin: boolean;
+	openCommentsDefault?: boolean;
 }
 
 export const PostCard = memo((props: IPostCardProps) => {
@@ -51,9 +52,10 @@ export const PostCard = memo((props: IPostCardProps) => {
 		likeLoading,
 		onDislikePost,
 		onLikePost,
+		openCommentsDefault = false,
 	} = props;
 	const [success, setSuccess] = useState(false);
-	const [openComments, setOpenComments] = useState(false);
+	const [openComments, setOpenComments] = useState(openCommentsDefault);
 	const { t } = useTranslation('profile');
 	const { data: postStats } = useFetchPostStatsQuery({
 		postId: post.id,

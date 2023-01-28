@@ -43,7 +43,12 @@ export const CommentList = memo((props: ICommentListProps) => {
 	if (error) {
 		return (
 			<Flex width="100%" height="100px" justify="center" align="center">
-				<Text text={t('Something went wrong')} textAlign="center" size="xl" />
+				<Text
+					theme="error"
+					text={t('Something went wrong')}
+					textAlign="center"
+					size="l"
+				/>
 			</Flex>
 		);
 	}

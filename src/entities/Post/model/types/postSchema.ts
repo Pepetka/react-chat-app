@@ -17,3 +17,13 @@ export interface PostSchema {
 	text: string;
 	img: string;
 }
+
+export interface PostStats {
+	likes: string;
+	dislikes: string;
+	comments: string;
+	shared: string;
+	isLiked: boolean;
+	isDisliked: boolean;
+	isShared: boolean;
+}
