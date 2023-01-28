@@ -25,7 +25,7 @@ const config: StorybookConfig = {
 				}),
 			],
 			define: {
-				__API__: JSON.stringify('http://api/'),
+				__API__: JSON.stringify('https://api/'),
 			},
 		});
 	},

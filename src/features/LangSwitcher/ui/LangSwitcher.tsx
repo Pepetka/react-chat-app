@@ -1,8 +1,8 @@
 import { Button } from '@/shared/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { memo, useCallback } from 'react';
-import { Lang } from '@/shared/config/i18next/i18n';
 import { Text } from '@/shared/ui/Text';
+import { Lang } from '@/shared/const/locales';
 
 interface ILangSwitcherProps {
 	theme?: 'primary' | 'outline';

@@ -2,19 +2,15 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
-export enum Lang {
-	EN = 'en',
-	RU = 'ru',
-}
+import { Lang } from '@/shared/const/locales';
 
 i18n
 	.use(Backend)
 	.use(LanguageDetector)
 	.use(initReactI18next)
 	.init({
-		fallbackLng: 'en',
-		supportedLngs: ['en', 'ru'],
+		fallbackLng: Lang.EN,
+		supportedLngs: [Lang.EN, Lang.RU],
 		debug: false,
 
 		interpolation: {

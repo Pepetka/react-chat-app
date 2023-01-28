@@ -4,7 +4,7 @@ import { LocalesDecorator } from '../src/shared/config/storybook/LocalesDecorato
 import { StoreDecorator } from '../src/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { Theme } from '../src/shared/const/theme';
 
-initialize();
+initialize({ onUnhandledRequest: 'bypass' });
 
 export const parameters = {
 	actions: { argTypesRegex: '^on[A-Z].*' },
