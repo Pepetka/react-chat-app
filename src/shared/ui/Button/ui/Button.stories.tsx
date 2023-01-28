@@ -62,3 +62,11 @@ ClearInvert.args = {
 	height: '50px',
 	invert: true,
 };
+
+export const Circle = Template.bind({});
+Circle.args = {
+	children: 'Button',
+	width: '100px',
+	height: '100px',
+	circle: true,
+};

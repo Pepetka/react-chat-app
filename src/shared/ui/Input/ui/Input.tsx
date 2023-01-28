@@ -3,7 +3,6 @@ import {
 	HTMLInputTypeAttribute,
 	memo,
 	useCallback,
-	useMemo,
 	useState,
 } from 'react';
 import styled from 'styled-components';

@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 interface IAvatarControls {
 	size?: 's' | 'm' | 'l' | 'xl';
@@ -51,6 +52,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 		border = false,
 		theme = 'primary',
 	} = props;
+	const { t } = useTranslation();
 
 	return (
 		<StyledAvatar
@@ -59,7 +61,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 			size={size}
 			circle={circle}
 			src={img}
-			alt="Avatar"
+			alt={t('Avatar')}
 		/>
 	);
 });

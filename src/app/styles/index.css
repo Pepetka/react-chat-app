@@ -10,3 +10,23 @@
 	height: 100vh;
 	overflow: hidden;
 }
+
+* {
+	scrollbar-width: 10px;
+	scrollbar-color: var(--invert-primary-color) var(--invert-bg-color);
+}
+
+*::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+	background: var(--invert-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--invert-primary-color);
+	border-radius: 5px;
+	border: 1px solid var(--primary-color);
+}

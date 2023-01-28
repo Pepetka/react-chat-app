@@ -6,6 +6,7 @@ interface ICardControls {
 	height?: string;
 	border?: boolean;
 	borderRadius?: boolean;
+	padding?: string;
 }
 
 interface ICardProps extends ICardControls {
@@ -18,7 +19,7 @@ const StyledDiv = styled.div<ICardControls>`
 		props.border ? 'var(--invert-primary-color) solid 4px' : 'none'};
 	color: var(--invert-primary-color);
 	background: var(--invert-bg-color);
-	padding: 20px;
+	padding: ${(props) => props.padding ?? '0'};
 	width: ${(props) => props.width ?? 'auto'};
 	height: ${(props) => props.height ?? 'auto'};
 	display: flex;
@@ -33,6 +34,7 @@ export const Card = (props: ICardProps) => {
 		width,
 		border = false,
 		borderRadius = true,
+		padding = '20px',
 	} = props;
 
 	return (
@@ -41,6 +43,7 @@ export const Card = (props: ICardProps) => {
 			height={height}
 			border={border}
 			borderRadius={borderRadius}
+			padding={padding}
 		>
 			{children}
 		</StyledDiv>

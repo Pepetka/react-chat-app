@@ -5,10 +5,33 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:promise/recommended',
 		'plugin:react-hooks/recommended',
+		'plugin:i18next/recommended',
 	],
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'react-hooks'],
+	plugins: ['@typescript-eslint', 'react-hooks', 'i18next'],
 	rules: {
+		'i18next/no-literal-string': [
+			'error',
+			{
+				markupOnly: true,
+				ignoreAttribute: [
+					'direction',
+					'theme',
+					'size',
+					'FlexTag',
+					'name',
+					'justify',
+					'align',
+					'textAlign',
+					'titleAlign',
+					'TitleTag',
+					'img',
+					'reducerKey',
+					'target',
+				],
+				ignore: ['ICE'],
+			},
+		],
 		'multiline-ternary': 'off',
 		'prefer-template': 'error',
 		'@typescript-eslint/no-empty-function': 'off',
@@ -22,5 +45,17 @@ module.exports = {
 		indent: ['error', 'tab'],
 		'space-before-function-paren': 'off',
 		'comma-dangle': 'off',
+	},
+	overrides: [
+		{
+			files: ['**/src/**/*.{test,stories}.{ts,tsx}'],
+			rules: {
+				'i18next/no-literal-string': 'off',
+				'max-len': 'off',
+			},
+		},
+	],
+	globals: {
+		__API__: true,
 	},
 };

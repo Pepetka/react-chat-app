@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { LOCAL_STORAGE_AUTH_KEY } from '@/shared/const/localstorage';
-import { __API__ } from '@/shared/const/api';
 
 export const rtkApi = createApi({
 	reducerPath: 'rtkApi',
@@ -18,4 +17,5 @@ export const rtkApi = createApi({
 		},
 	}),
 	endpoints: () => ({}),
+	tagTypes: ['social', 'post', 'postStats', 'comment'],
 });

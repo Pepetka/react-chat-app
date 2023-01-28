@@ -17,10 +17,12 @@ import { Text } from '@/shared/ui/Text';
 import { Flex } from '@/shared/ui/Flex';
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 type LoginErrorType = { data: { message: string } };
 
 export const LoginForm = memo(() => {
+	const { t } = useTranslation('auth');
 	const [hasError, setHasError] = useState(false);
 	const { username, password } = useSelector(authByUsernameState);
 	const [
@@ -76,7 +78,7 @@ export const LoginForm = memo(() => {
 		<Card border width="570px" height="600px">
 			<Flex height="380px" direction="column" align="center" gap="24">
 				<Text
-					title="Log In"
+					title={t('Log In')}
 					titleAlign="center"
 					theme="primary-invert"
 					size="xl"
@@ -90,7 +92,7 @@ export const LoginForm = memo(() => {
 				>
 					<Input
 						theme="invert"
-						label="Enter username..."
+						label={t('Enter username')}
 						value={username}
 						onChange={onChangeUsername}
 						width="500px"
@@ -100,7 +102,7 @@ export const LoginForm = memo(() => {
 					/>
 					<Input
 						theme="invert"
-						label="Enter password..."
+						label={t('Enter password')}
 						width="500px"
 						value={password}
 						onChange={onChangePassword}
@@ -110,7 +112,7 @@ export const LoginForm = memo(() => {
 					/>
 					<Flex justify="space-between" align="center" width="500px">
 						<a href="#">
-							<Text text="Forgot your password?" theme="primary-invert" />
+							<Text text={t('Forgot your password?')} theme="primary-invert" />
 						</a>
 						<Button
 							width="180px"
@@ -121,7 +123,7 @@ export const LoginForm = memo(() => {
 							invert
 						>
 							<Text
-								text={isLoading ? 'Loading...' : 'Log in'}
+								text={isLoading ? t('Loading') : t('Log in')}
 								textAlign="center"
 								size="l"
 							/>
@@ -133,7 +135,7 @@ export const LoginForm = memo(() => {
 						text={
 							(loginError as LoginErrorType)?.data
 								? (loginError as LoginErrorType).data.message
-								: 'Something went wrong'
+								: t('Something went wrong')
 						}
 						textAlign="center"
 						theme="error"

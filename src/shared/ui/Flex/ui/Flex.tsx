@@ -8,6 +8,7 @@ interface IFlexControls {
 	gap?: '4' | '8' | '16' | '24' | '32' | '40';
 	width?: string;
 	height?: string;
+	relative?: boolean;
 }
 
 interface IFlexProps extends IFlexControls {
@@ -26,7 +27,7 @@ interface IFlexForm extends IFlexProps {
 }
 
 const StyledFlex = styled.div<IFlexControls>`
-	position: relative;
+	position: ${(props) => (props.relative ? 'relative' : undefined)};
 	display: flex;
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
@@ -47,6 +48,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 		width = '100%',
 		height = 'auto',
 		onSubmit,
+		relative = true,
 	} = props;
 
 	return (
@@ -59,6 +61,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 			width={width}
 			height={height}
 			onSubmit={onSubmit}
+			relative={relative}
 		>
 			{children}
 		</StyledFlex>

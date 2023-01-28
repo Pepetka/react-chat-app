@@ -5,7 +5,7 @@ import { StateSchema } from '@/app/provider/Store';
 import { DeepPartial } from 'redux';
 
 export default {
-	title: 'features/LoginForm',
+	title: 'features/AuthByUsername/LoginForm',
 	component: LoginForm,
 } as Meta<typeof LoginForm>;
 
