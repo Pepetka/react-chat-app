@@ -185,14 +185,11 @@ export const PostCard = memo((props: IPostCardProps) => {
 							<Button
 								onClick={onLikePostHandle}
 								invert={postStats?.isLiked}
+								disabled={likeLoading}
 								width="64px"
 								height="64px"
 							>
-								{likeLoading ? (
-									'...'
-								) : (
-									<Icon SvgIcon={LikeIcon} invert={!postStats?.isLiked} />
-								)}
+								<Icon SvgIcon={LikeIcon} invert={!postStats?.isLiked} />
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
@@ -206,14 +203,11 @@ export const PostCard = memo((props: IPostCardProps) => {
 							<Button
 								onClick={onDislikePostHandle}
 								invert={postStats?.isDisliked}
+								disabled={dislikeLoading}
 								width="64px"
 								height="64px"
 							>
-								{dislikeLoading ? (
-									'...'
-								) : (
-									<Icon SvgIcon={DislikeIcon} invert={!postStats?.isDisliked} />
-								)}
+								<Icon SvgIcon={DislikeIcon} invert={!postStats?.isDisliked} />
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
@@ -227,6 +221,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 							<Button
 								onClick={!admin ? onSharePostHandle : undefined}
 								invert={postStats?.isShared}
+								disabled={shareLoading}
 								width="64px"
 								height="64px"
 							>

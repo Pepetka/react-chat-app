@@ -43,6 +43,32 @@ const profileCardApi = rtkApi.injectEndpoints({
 					friendId,
 				},
 			}),
+			async onQueryStarted({ userId, friendId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					profileCardApi.util.updateQueryData(
+						'fetchRelationsData',
+						{ userId, friendId },
+						(draft) => {
+							const relationsObj: Record<
+								Relations['relations'],
+								Relations['relations']
+							> = {
+								nobody: 'following',
+								friend: 'follower',
+								following: 'nobody',
+								follower: 'friend',
+							};
+
+							draft.relations = relationsObj[draft.relations];
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 			invalidatesTags: ['social'],
 		}),
 	}),

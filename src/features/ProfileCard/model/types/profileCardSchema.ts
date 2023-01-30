@@ -1,1 +1,3 @@
-export type Relations = 'friend' | 'follower' | 'following' | 'nobody';
+export interface Relations {
+	relations: 'friend' | 'follower' | 'following' | 'nobody';
+}

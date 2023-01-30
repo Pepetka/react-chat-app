@@ -60,6 +60,27 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId },
+						(draft) => {
+							if (!draft.isShared) {
+								Object.assign(draft, {
+									shared: String(Number(draft.shared) + 1),
+									isShared: true,
+								});
+							}
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 			invalidatesTags: ['postStats'],
 		}),
 		fetchPostStats: build.query<PostStats, Omit<IPostApiProps, 'profileId'>>({
@@ -84,6 +105,39 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId },
+						(draft) => {
+							if (draft.isLiked) {
+								Object.assign(draft, {
+									likes: String(Number(draft.likes) - 1),
+									isLiked: false,
+								});
+							} else if (draft.isDisliked) {
+								Object.assign(draft, {
+									likes: String(Number(draft.likes) + 1),
+									isLiked: true,
+									dislikes: String(Number(draft.dislikes) - 1),
+									isDisliked: false,
+								});
+							} else {
+								Object.assign(draft, {
+									likes: String(Number(draft.likes) + 1),
+									isLiked: true,
+								});
+							}
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 			invalidatesTags: ['postStats'],
 		}),
 		dislikePost: build.mutation<
@@ -98,6 +152,39 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId },
+						(draft) => {
+							if (draft.isDisliked) {
+								Object.assign(draft, {
+									dislikes: String(Number(draft.dislikes) - 1),
+									isDisliked: false,
+								});
+							} else if (draft.isLiked) {
+								Object.assign(draft, {
+									dislikes: String(Number(draft.dislikes) + 1),
+									isDisliked: true,
+									likes: String(Number(draft.likes) - 1),
+									isLiked: false,
+								});
+							} else {
+								Object.assign(draft, {
+									dislikes: String(Number(draft.dislikes) + 1),
+									isDisliked: true,
+								});
+							}
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 			invalidatesTags: ['postStats'],
 		}),
 	}),

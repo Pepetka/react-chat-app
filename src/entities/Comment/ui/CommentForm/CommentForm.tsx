@@ -32,7 +32,8 @@ export const CommentForm = memo((props: ICommentFormProps) => {
 
 	const onSubmit = useCallback(() => {
 		onAddComment({ postId, authorId: userId, text });
-	}, [onAddComment, postId, text, userId]);
+		dispatch(commentActions.clear());
+	}, [dispatch, onAddComment, postId, text, userId]);
 
 	return (
 		<DynamicModuleLoader reducerKey="comment" reducer={commentReducer}>

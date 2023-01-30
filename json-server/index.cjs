@@ -278,7 +278,7 @@ server.get('/relations', (req, res) => {
 		const { userId, friendId } = req.query;
 
 		if (userId === friendId) {
-			return res.json('nobody');
+			return res.json({ relations: 'nobody' });
 		}
 
 		const db = JSON.parse(
@@ -295,7 +295,7 @@ server.get('/relations', (req, res) => {
 				(friend) => friend.userId === friendId || friend.friendId === friendId,
 			)
 		) {
-			return res.json('friend');
+			return res.json({ relations: 'friend' });
 		}
 
 		const followersFromBd = followers.filter((follower) => {
@@ -303,14 +303,14 @@ server.get('/relations', (req, res) => {
 		});
 
 		if (followersFromBd.find((follower) => follower.followerId === friendId)) {
-			return res.json('follower');
+			return res.json({ relations: 'follower' });
 		}
 
 		if (followersFromBd.find((follower) => follower.userId === friendId)) {
-			return res.json('following');
+			return res.json({ relations: 'following' });
 		}
 
-		return res.json('nobody');
+		return res.json({ relations: 'nobody' });
 	} catch (e) {
 		console.log(e);
 		return res.status(500).json({ message: e.message });

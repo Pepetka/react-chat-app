@@ -1,5 +1,6 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Comment } from '../model/types/commentSchema';
+import { User } from '@/entities/User';
 
 interface ICommentApiProps {
 	postId: string;

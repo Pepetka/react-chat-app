@@ -31,16 +31,18 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	);
 	const {
 		data: relationsData,
-		isFetching: relationsLoading,
+		isLoading: relationsLoading,
 		error: relationsError,
-	} = useFetchRelationsDataQuery({
-		userId,
-		friendId: profileId,
-	});
-	const [onAddFriend, { isLoading: addFriendLoading, error: addFriendError }] =
-		useAddFriendMutation();
+	} = useFetchRelationsDataQuery(
+		{
+			userId,
+			friendId: profileId,
+		},
+		{ refetchOnMountOrArgChange: true },
+	);
+	const [onAddFriend, { error: addFriendError }] = useAddFriendMutation();
 
-	const friendBtnText: Record<Relations, string> = useMemo(
+	const friendBtnText: Record<Relations['relations'], string> = useMemo(
 		() => ({
 			follower: 'Add friend',
 			following: 'Unfollow',
@@ -54,7 +56,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		onAddFriend({ userId, friendId: profileId });
 	}, [onAddFriend, profileId, userId]);
 
-	if (profileLoading || relationsLoading || addFriendLoading) {
+	if (profileLoading || relationsLoading) {
 		return (
 			<Card width="100%" height="400px" borderRadius={false}>
 				<Flex height="100%" justify="center" align="center">
@@ -117,7 +119,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 								<Text
 									textAlign="center"
 									size="l"
-									text={t(friendBtnText[relationsData ?? 'nobody'])}
+									text={t(friendBtnText[relationsData?.relations ?? 'nobody'])}
 								/>
 							</Button>
 							<Button width="180px" height="50px" invert>
