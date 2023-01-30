@@ -4,7 +4,7 @@ export interface Post {
 	id: string;
 	author: User;
 	text: string;
-	img: string;
+	img?: Array<string>;
 	createdAt: string;
 }
 

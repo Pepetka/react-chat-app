@@ -1,5 +1,4 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Avatar } from '@/shared/ui/Avatar';
@@ -21,6 +20,7 @@ import { AppLink } from '@/shared/ui/AppLink';
 import { useFetchPostStatsQuery } from '../../api/postApi';
 import { CommentForm, CommentList } from '@/entities/Comment';
 import { Menu } from '@/shared/ui/Menu';
+import { Carousel } from '@/widgets/Carousel';
 
 interface IPostCardProps {
 	post: Post;
@@ -131,20 +131,27 @@ export const PostCard = memo((props: IPostCardProps) => {
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
 					{post.img && (
-						<AppImg
-							width="385px"
-							height="385px"
-							src={post.img}
-							alt={t('Post image')}
-							fallback={<Spinner />}
-							errorFallback={
-								<Text
-									text={t('Something went wrong')}
-									size="l"
-									textAlign="center"
-								/>
-							}
-						/>
+						<Flex width="385px">
+							<Carousel>
+								{post.img.map((src, index) => (
+									<AppImg
+										key={index}
+										width="385px"
+										height="385px"
+										src={src}
+										alt={t('Post image')}
+										fallback={<Spinner />}
+										errorFallback={
+											<Text
+												text={t('Something went wrong')}
+												size="l"
+												textAlign="center"
+											/>
+										}
+									/>
+								))}
+							</Carousel>
+						</Flex>
 					)}
 				</Flex>
 				<Flex align="flex-end" justify="space-between">

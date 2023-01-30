@@ -23,7 +23,7 @@ const postApi = rtkApi.injectEndpoints({
 		}),
 		addPost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
-			{ authorId: string; img: string; text: string; profileId: string }
+			{ authorId: string; img?: Array<string>; text: string; profileId: string }
 		>({
 			query: ({ authorId, img, text, profileId }) => ({
 				url: '/posts',
