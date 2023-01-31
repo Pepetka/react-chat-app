@@ -8,10 +8,10 @@ import {
 	useAddFriendMutation,
 	useFetchProfileDataQuery,
 	useFetchRelationsDataQuery,
-} from '../api/profileCardApi';
-import { Spinner } from '@/shared/ui/Spinner';
+} from '../../api/profileCardApi';
 import { useTranslation } from 'react-i18next';
-import { Relations } from '../model/types/profileCardSchema';
+import { Relations } from '../../model/types/profileCardSchema';
+import { ProfileCardSkeleton } from '../ProfileCardSkeleton/ProfileCardSkeleton';
 
 interface IProfileCardProps {
 	userId: string;
@@ -57,13 +57,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	}, [onAddFriend, profileId, userId]);
 
 	if (profileLoading || relationsLoading) {
-		return (
-			<Card width="100%" height="400px" borderRadius={false}>
-				<Flex height="100%" justify="center" align="center">
-					<Spinner theme="invert" />
-				</Flex>
-			</Card>
-		);
+		return <ProfileCardSkeleton showBtns={profileId !== userId} />;
 	}
 
 	if (profileError || relationsError || addFriendError) {
@@ -128,7 +122,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 						</Flex>
 					)}
 				</Flex>
-				<Avatar img={profileData?.[0]?.avatar ?? ''} size="xl" />
+				<Avatar src={profileData?.[0]?.avatar ?? ''} size="xl" />
 			</Flex>
 		</Card>
 	);

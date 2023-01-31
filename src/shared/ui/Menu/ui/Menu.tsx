@@ -31,6 +31,7 @@ const StyledMenu = styled.div<IMenuControls & { openMenu: boolean }>`
 	background: var(--bg-color);
 	border-radius: 5px;
 	border: 2px solid var(--primary-color);
+	z-index: 1;
 `;
 
 export const Menu = memo((props: IMenuProps) => {

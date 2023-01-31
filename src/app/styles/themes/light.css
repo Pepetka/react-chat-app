@@ -1,10 +1,14 @@
 .light_theme {
 	--bg-color: rgb(236 241 244);
+	--bg-color-rgb: 236, 241, 244;
 	--invert-bg-color: rgb(7 9 113);
+	--invert-bg-color-rgb: 7, 9, 113;
 	--primary-color: rgb(7 4 93);
 	--invert-primary-color: rgb(23 208 42);
 	--secondary-color: rgb(10 62 194);
 	--invert-secondary-color: rgb(22 143 3);
+	--skeleton-bg-color: rgb(183, 183, 185);
+	--invert-skeleton-bg-color: rgb(42, 44, 176);
 
 	--primary-error-color: #ff0000;
 	--secondary-error-color: #dc1818;

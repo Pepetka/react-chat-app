@@ -194,6 +194,13 @@
 			"authorId": "6cbdb794",
 			"postId": "0",
 			"createdAt": "13:48 30.01.2023"
+		},
+		{
+			"id": "283ecd52-4a62-4027-a168-bd2b6fb72777",
+			"text": "Comment",
+			"authorId": "6cbdb793",
+			"postId": "2",
+			"createdAt": "14:42 31.01.2023"
 		}
 	],
 	"groups": [],

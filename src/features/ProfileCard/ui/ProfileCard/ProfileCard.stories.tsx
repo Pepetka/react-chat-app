@@ -3,10 +3,10 @@ import { rest } from 'msw';
 import { ProfileCard } from './ProfileCard';
 import { User } from '@/entities/User';
 import image from '@/shared/assets/images/image.jpg';
-import { Relations } from '../model/types/profileCardSchema';
+import { Relations } from '../../model/types/profileCardSchema';
 
 export default {
-	title: 'features/ProfileCard',
+	title: 'features/ProfileCard/ProfileCard',
 	component: ProfileCard,
 } as Meta<typeof ProfileCard>;
 
@@ -38,7 +38,9 @@ UserProfile.parameters = {
 		rest.get(
 			`${__API__}relations?userId=6cbdb793&friendId=6cbdb793`,
 			(_req, res, ctx) => {
-				const relations: Relations = 'nobody';
+				const relations: Relations = {
+					relations: 'nobody',
+				};
 
 				return res(ctx.json(relations));
 			},
@@ -59,7 +61,9 @@ FriendProfile.parameters = {
 		rest.get(
 			`${__API__}relations?userId=6cbdb794&friendId=6cbdb793`,
 			(_req, res, ctx) => {
-				const relations: Relations = 'friend';
+				const relations: Relations = {
+					relations: 'friend',
+				};
 
 				return res(ctx.json(relations));
 			},
@@ -80,7 +84,9 @@ FollowerProfile.parameters = {
 		rest.get(
 			`${__API__}relations?userId=6cbdb794&friendId=6cbdb793`,
 			(_req, res, ctx) => {
-				const relations: Relations = 'follower';
+				const relations: Relations = {
+					relations: 'follower',
+				};
 
 				return res(ctx.json(relations));
 			},
@@ -101,7 +107,9 @@ FollowingProfile.parameters = {
 		rest.get(
 			`${__API__}relations?userId=6cbdb794&friendId=6cbdb793`,
 			(_req, res, ctx) => {
-				const relations: Relations = 'following';
+				const relations: Relations = {
+					relations: 'following',
+				};
 
 				return res(ctx.json(relations));
 			},

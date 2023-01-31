@@ -103,7 +103,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 				<Flex justify="space-between">
 					<AppLink href={getProfilePagePath(post.author.id)}>
 						<Flex align="center" gap="8" width="auto">
-							<Avatar size="m" circle img={post.author.avatar} />
+							<Avatar size="m" circle src={post.author.avatar} />
 							<Text
 								text={`${post.author.firstname} ${post.author.lastname}`}
 								size="l"
@@ -120,8 +120,8 @@ export const PostCard = memo((props: IPostCardProps) => {
 							<Button
 								onClick={onDeletePostHandle}
 								theme="clear"
-								width="100%"
-								height="100%"
+								width="120px"
+								height="48px"
 							>
 								{deleteLoading ? '...' : t('Delete')}
 							</Button>
@@ -131,27 +131,23 @@ export const PostCard = memo((props: IPostCardProps) => {
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
 					{post.img && (
-						<Flex width="385px">
-							<Carousel>
-								{post.img.map((src, index) => (
-									<AppImg
-										key={index}
-										width="385px"
-										height="385px"
-										src={src}
-										alt={t('Post image')}
-										fallback={<Spinner />}
-										errorFallback={
-											<Text
-												text={t('Something went wrong')}
-												size="l"
-												textAlign="center"
-											/>
-										}
-									/>
-								))}
-							</Carousel>
-						</Flex>
+						<Carousel carouselWidth="385px">
+							{post.img.map((src, index) => (
+								<AppImg
+									key={index}
+									width="385px"
+									src={src}
+									alt={t('Post image')}
+									errorFallback={
+										<Text
+											text={t('Something went wrong')}
+											size="l"
+											textAlign="center"
+										/>
+									}
+								/>
+							))}
+						</Carousel>
 					)}
 				</Flex>
 				<Flex align="flex-end" justify="space-between">
@@ -159,7 +155,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 					<Flex gap="24" align="center" width="auto">
 						<Flex gap="8" align="center" width="auto">
 							<Text
-								width="auto"
+								width="50px"
 								text={postStats?.comments ?? '0'}
 								textAlign="right"
 								theme="primary-invert"
@@ -176,7 +172,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
 							<Text
-								width="auto"
+								width="50px"
 								text={postStats?.likes ?? '0'}
 								textAlign="right"
 								theme="primary-invert"
@@ -194,7 +190,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
 							<Text
-								width="auto"
+								width="50px"
 								text={postStats?.dislikes ?? '0'}
 								textAlign="right"
 								theme="primary-invert"
@@ -212,7 +208,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
 							<Text
-								width="auto"
+								width="50px"
 								text={postStats?.shared ?? '0'}
 								textAlign="right"
 								theme="primary-invert"

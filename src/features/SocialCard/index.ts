@@ -1,1 +1,1 @@
-export { SocialCard } from './ui/SocialCard';
+export { SocialCard } from './ui/SocialCard/SocialCard';

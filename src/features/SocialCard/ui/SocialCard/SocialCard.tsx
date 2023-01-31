@@ -8,17 +8,17 @@ import { Avatar } from '@/shared/ui/Avatar';
 import {
 	useFetchFriendsDataQuery,
 	useFetchSocialDataQuery,
-} from '../api/socialCardApi';
-import { Spinner } from '@/shared/ui/Spinner';
+} from '../../api/socialCardApi';
 import { getProfilePagePath } from '@/shared/const/router';
 import { AppLink } from '@/shared/ui/AppLink';
+import { SocialCardSkeleton } from '../SocialCardSkeleton/SocialCardSkeleton';
 
 interface ISocialCardProps {
 	userId: string;
 	profileId: string;
 }
 
-const StyledLine = styled.div`
+export const StyledLine = styled.div`
 	height: 100%;
 	width: 2px;
 	background: var(--invert-secondary-color);
@@ -42,13 +42,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 	const { t } = useTranslation('profile');
 
 	if (socialLoading || friendsLoading) {
-		return (
-			<Card width="100%" height="282px">
-				<Flex height="100%" justify="center" align="center">
-					<Spinner theme="invert" />
-				</Flex>
-			</Card>
-		);
+		return <SocialCardSkeleton />;
 	}
 
 	if (socialError || friendsError) {
@@ -134,7 +128,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 								return (
 									<AppLink key={friend.id} href={getProfilePagePath(friend.id)}>
 										<Flex gap="8" align="center">
-											<Avatar circle img={friend.avatar} />
+											<Avatar circle src={friend.avatar} />
 											<Text
 												text={`${friend.firstname} ${friend.lastname}`}
 												theme="primary-invert"

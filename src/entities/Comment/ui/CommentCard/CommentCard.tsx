@@ -31,7 +31,7 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 			<Flex justify="space-between">
 				<AppLink href={getProfilePagePath('6cbdb793')}>
 					<Flex align="center" gap="8" width="auto">
-						<Avatar size="s" circle img={comment.author.avatar} />
+						<Avatar size="s" circle src={comment.author.avatar} />
 						<Text
 							text={`${comment.author.firstname} ${comment.author.lastname}`}
 							size="m"

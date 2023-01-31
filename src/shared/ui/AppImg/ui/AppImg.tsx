@@ -1,6 +1,7 @@
 import { memo, ReactElement, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
+import { Skeleton } from '@/shared/ui/Skeleton';
 
 interface IAppImgControls {
 	width?: string;
@@ -10,7 +11,6 @@ interface IAppImgControls {
 interface IAppImgProps extends IAppImgControls {
 	src?: string;
 	alt?: string;
-	fallback?: ReactElement;
 	errorFallback?: ReactElement;
 }
 
@@ -25,7 +25,6 @@ export const AppImg = memo((props: IAppImgProps) => {
 		height = 'auto',
 		width = 'auto',
 		errorFallback,
-		fallback,
 		alt = 'App image',
 	} = props;
 	const [isLoading, setIsLoading] = useState(true);
@@ -42,10 +41,10 @@ export const AppImg = memo((props: IAppImgProps) => {
 		};
 	}, [src]);
 
-	if (isLoading && fallback) {
+	if (isLoading) {
 		return (
-			<Flex width={width} height={height} justify="center" align="center">
-				{fallback}
+			<Flex width={width} height={height}>
+				<Skeleton height={height} width={width} />
 			</Flex>
 		);
 	}

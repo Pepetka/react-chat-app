@@ -11,42 +11,42 @@ const Template: StoryFn<typeof Avatar> = (args) => <Avatar {...args} />;
 
 export const CircleS = Template.bind({});
 CircleS.args = {
-	img: image,
+	src: image,
 	size: 's',
 	circle: true,
 };
 
 export const CircleM = Template.bind({});
 CircleM.args = {
-	img: image,
+	src: image,
 	size: 'm',
 	circle: true,
 };
 
 export const CircleL = Template.bind({});
 CircleL.args = {
-	img: image,
+	src: image,
 	size: 'l',
 	circle: true,
 };
 
 export const CircleXL = Template.bind({});
 CircleXL.args = {
-	img: image,
+	src: image,
 	size: 'xl',
 	circle: true,
 };
 
 export const CircleBorderPrimary = Template.bind({});
 CircleBorderPrimary.args = {
-	img: image,
+	src: image,
 	circle: true,
 	border: true,
 };
 
 export const CircleBorderInvert = Template.bind({});
 CircleBorderInvert.args = {
-	img: image,
+	src: image,
 	circle: true,
 	border: true,
 	theme: 'invert',
@@ -54,37 +54,37 @@ CircleBorderInvert.args = {
 
 export const SquareS = Template.bind({});
 SquareS.args = {
-	img: image,
+	src: image,
 	size: 's',
 };
 
 export const SquareM = Template.bind({});
 SquareM.args = {
-	img: image,
+	src: image,
 	size: 'm',
 };
 
 export const SquareL = Template.bind({});
 SquareL.args = {
-	img: image,
+	src: image,
 	size: 'l',
 };
 
 export const SquareXL = Template.bind({});
 SquareXL.args = {
-	img: image,
+	src: image,
 	size: 'xl',
 };
 
 export const SquareBorderPrimary = Template.bind({});
 SquareBorderPrimary.args = {
-	img: image,
+	src: image,
 	border: true,
 };
 
 export const SquareBorderInvert = Template.bind({});
 SquareBorderInvert.args = {
-	img: image,
+	src: image,
 	border: true,
 	theme: 'invert',
 };

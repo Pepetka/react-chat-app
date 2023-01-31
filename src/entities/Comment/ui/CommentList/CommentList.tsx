@@ -5,9 +5,9 @@ import {
 	useDeleteCommentMutation,
 	useFetchCommentsQuery,
 } from '../../api/commentApi';
-import { Spinner } from '@/shared/ui/Spinner';
 import { Text } from '@/shared/ui/Text';
 import { useTranslation } from 'react-i18next';
+import { CommentCardSkeleton } from '../CommentCardSkeleton/CommentCardSkeleton';
 
 interface ICommentListProps {
 	postId: string;
@@ -34,8 +34,10 @@ export const CommentList = memo((props: ICommentListProps) => {
 
 	if (isLoading) {
 		return (
-			<Flex width="100%" height="100px" justify="center" align="center">
-				<Spinner theme="invert" />
+			<Flex direction="column" gap="16">
+				<CommentCardSkeleton admin={false} />
+				<CommentCardSkeleton admin={false} />
+				<CommentCardSkeleton admin={false} />
 			</Flex>
 		);
 	}

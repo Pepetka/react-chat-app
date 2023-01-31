@@ -35,6 +35,7 @@ const StyledFlex = styled.div<IFlexControls>`
 	gap: ${(props) => (props.gap ? `${props.gap}px` : '0')};
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
+	flex: 0 1 auto;
 `;
 
 export const Flex = (props: IFlexDiv | IFlexForm) => {
