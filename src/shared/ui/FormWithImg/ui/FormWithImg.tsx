@@ -123,6 +123,45 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	} = props;
 	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
 	const [success, setSuccess] = useState(false);
+	const [isFocus, setIsFocus] = useState(false);
+	const [shiftPressed, setShiftPressed] = useState(false);
+
+	const onFocus = useCallback(() => {
+		setIsFocus(true);
+	}, []);
+
+	const onBlur = useCallback(() => {
+		setIsFocus(false);
+	}, []);
+	const onKeyDown = useCallback(
+		(event: KeyboardEvent) => {
+			if (event.key === 'Shift' && isFocus) {
+				setShiftPressed(true);
+			}
+
+			if (event.key === 'Enter' && shiftPressed && isFocus) {
+				event.preventDefault();
+				onSubmit?.();
+			}
+		},
+		[isFocus, onSubmit, shiftPressed],
+	);
+
+	const onKeyUp = useCallback((event: KeyboardEvent) => {
+		if (event.key === 'Shift') {
+			setShiftPressed(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		window.addEventListener('keydown', onKeyDown);
+		window.addEventListener('keyup', onKeyUp);
+
+		return () => {
+			window.removeEventListener('keydown', onKeyDown);
+			window.removeEventListener('keyup', onKeyUp);
+		};
+	}, [onKeyDown, onKeyUp]);
 
 	useEffect(() => {
 		let timerId: ReturnType<typeof setTimeout>;
@@ -187,13 +226,15 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 				)}
 			</>
 		);
-	}, [imgPlaceholder, imgValue, onChangeImgHandle, previewImg]);
+	}, [imgPlaceholder, imgValue, onChangeImgHandle, previewImg, withImg]);
 
 	return (
 		<StyledForm onSubmit={onSubmitHandle}>
 			<Flex direction="column">
 				<Flex>
 					<StyledTextArea
+						onFocus={onFocus}
+						onBlur={onBlur}
 						withImg={withImg}
 						placeholder={textPlaceholder}
 						value={textValue}
