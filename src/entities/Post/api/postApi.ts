@@ -1,5 +1,7 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Post, PostStats, UserPost } from '../model/types/postSchema';
+import { getUserAuthData, User } from '@/entities/User';
+import { StateSchema } from '@/app/provider/Store';
 
 interface IPostApiProps {
 	profileId: string;
@@ -35,7 +37,31 @@ const postApi = rtkApi.injectEndpoints({
 					userId: profileId,
 				},
 			}),
-			invalidatesTags: ['post'],
+			async onQueryStarted(
+				{ img, text, profileId },
+				{ dispatch, queryFulfilled, getState },
+			) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostsData',
+						{ profileId },
+						(draft) => {
+							draft.push({
+								id: String(Math.random()),
+								author: getUserAuthData(getState() as StateSchema)!,
+								img,
+								text,
+								createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+							});
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 		}),
 		deletePost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
@@ -49,7 +75,23 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
-			invalidatesTags: ['post'],
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostsData',
+						{ profileId: userId },
+						(draft) => {
+							const index = draft.findIndex((post) => post.id === postId);
+							draft.splice(index, 1);
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 		}),
 		sharePost: build.mutation<UserPost, Omit<IPostApiProps, 'profileId'>>({
 			query: ({ postId, userId }) => ({

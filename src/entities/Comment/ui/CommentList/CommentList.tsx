@@ -27,9 +27,9 @@ export const CommentList = memo((props: ICommentListProps) => {
 
 	const onDeleteCommentHandle = useCallback(
 		(commentId: string) => {
-			onDeleteComment({ commentId });
+			onDeleteComment({ commentId, postId });
 		},
-		[onDeleteComment],
+		[onDeleteComment, postId],
 	);
 
 	if (isLoading) {

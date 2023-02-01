@@ -38,7 +38,7 @@
 		}
 	],
 	"friends": [
-		{ "userId": "6cbdb794", "friendId": "6cbdb793", "createdAt": "30.01.2023" }
+		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "01.02.2023" }
 	],
 	"followers": [],
 	"posts": [
@@ -121,6 +121,18 @@
 			"text": "New post",
 			"createdAt": "12:36 30.01.2023",
 			"id": "cb59c390-e3dd-4bb3-a376-cdaf5f099564"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Post",
+			"createdAt": "14:26 01.02.2023",
+			"id": "a148c118-3d45-4c69-ad3c-03f95acb1f1b"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "New post",
+			"createdAt": "14:27 01.02.2023",
+			"id": "116ce548-466e-4886-923d-02769c120100"
 		}
 	],
 	"user-posts": [
@@ -135,10 +147,11 @@
 		{ "userId": "6cbdb794", "postId": "0" },
 		{ "userId": "6cbdb794", "postId": "GmSpvBG" },
 		{ "userId": "6cbdb794", "postId": "4" },
-		{ "userId": "6cbdb793", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" },
 		{ "userId": "6cbdb794", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" },
 		{ "userId": "6cbdb794", "postId": "e8a183d9-5b1f-4c09-bf21-cfba6b063a75" },
-		{ "userId": "6cbdb794", "postId": "cb59c390-e3dd-4bb3-a376-cdaf5f099564" }
+		{ "userId": "6cbdb794", "postId": "cb59c390-e3dd-4bb3-a376-cdaf5f099564" },
+		{ "userId": "6cbdb793", "postId": "a148c118-3d45-4c69-ad3c-03f95acb1f1b" },
+		{ "userId": "6cbdb793", "postId": "116ce548-466e-4886-923d-02769c120100" }
 	],
 	"post-likes": [
 		{ "postId": 2, "userId": "6cbdb793" },
@@ -201,6 +214,13 @@
 			"authorId": "6cbdb793",
 			"postId": "2",
 			"createdAt": "14:42 31.01.2023"
+		},
+		{
+			"id": "aa40bfa0-97fd-4764-a282-92f61c1654d0",
+			"text": "Comment",
+			"authorId": "6cbdb793",
+			"postId": "0",
+			"createdAt": "14:20 01.02.2023"
 		}
 	],
 	"groups": [],
