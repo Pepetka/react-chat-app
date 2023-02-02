@@ -24,20 +24,21 @@ const StyledNavBtn = styled.button<{ name: 'prev' | 'next'; hover: boolean }>`
 	top: 0;
 	color: white;
 	cursor: pointer;
-	z-index: 1;
+	z-index: var(--popup-z);
 `;
 
 const StyledNav = styled.div`
 	width: 40px;
 	height: 40px;
 	line-height: 40px;
-	background: rgba(0, 0, 0, 0.3);
+	background: var(--overlay-color);
 	border-radius: 50%;
 `;
 
 const StyledWrapper = styled.div<ICarouselControls>`
 	width: ${(props) => props.carouselWidth};
 	height: ${(props) => props.carouselHeight};
+	background: var(--overlay-color);
 `;
 
 export const Carousel = memo((props: ICarouselProps) => {

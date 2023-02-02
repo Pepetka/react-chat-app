@@ -20,4 +20,11 @@
 	--navbar-height: 90px;
 	--sidebar-width: 170px;
 	--page-padding: 50px;
+
+	--popup-z: 1;
+	--hidden-z: -1;
+
+	--overlay-color: rgba(0, 0, 0, 0.3);
+	--primary-error-color: #ff0000;
+	--secondary-error-color: #dc1818;
 }

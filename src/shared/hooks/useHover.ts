@@ -1,13 +1,18 @@
 import { useCallback, useState } from 'react';
 
+interface IUseHoverProps {
+	initialHover?: boolean;
+}
+
 interface IUseHoverReturn {
 	hover: boolean;
 	onMouseOver: () => void;
 	onMouseOut: () => void;
 }
 
-export const useHover = (): IUseHoverReturn => {
-	const [hover, setHover] = useState(false);
+export const useHover = (props: IUseHoverProps = {}): IUseHoverReturn => {
+	const { initialHover = false } = props;
+	const [hover, setHover] = useState(initialHover);
 
 	const onMouseOver = useCallback(() => {
 		setHover(true);

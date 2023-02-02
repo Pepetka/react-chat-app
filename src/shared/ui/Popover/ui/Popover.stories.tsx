@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Menu } from './Menu';
+import { Popover } from './Popover';
 import { Flex } from '@/shared/ui/Flex';
 
 export default {
-	title: 'shared/Menu',
-	component: Menu,
+	title: 'shared/Popover',
+	component: Popover,
 	decorators: [
 		(StoryComponent) => {
 			return (
@@ -14,9 +14,9 @@ export default {
 			);
 		},
 	],
-} as Meta<typeof Menu>;
+} as Meta<typeof Popover>;
 
-const Template: StoryFn<typeof Menu> = (args) => <Menu {...args} />;
+const Template: StoryFn<typeof Popover> = (args) => <Popover {...args} />;
 
 export const BottomRight = Template.bind({});
 BottomRight.args = {

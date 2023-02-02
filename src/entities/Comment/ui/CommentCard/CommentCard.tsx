@@ -41,6 +41,7 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 				</AppLink>
 				{admin && (
 					<Menu
+						direction="bottom_center"
 						width="48px"
 						height="48px"
 						trigger={<Icon SvgIcon={MoreIcon} invert />}

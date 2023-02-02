@@ -14,6 +14,9 @@ import PaperclipIcon from '@/shared/assets/paperclip.svg';
 import SuccessIcon from '@/shared/assets/check.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { AppImg } from '@/shared/ui/AppImg';
+import { Popover } from '@/shared/ui/Popover';
+import { Text } from '@/shared/ui/Text';
+import { useTranslation } from 'react-i18next';
 
 interface ISendWithImgFormControls {
 	withImg?: boolean;
@@ -121,6 +124,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		withImg = false,
 		previewImgDefault = false,
 	} = props;
+	const { t } = useTranslation();
 	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
 	const [success, setSuccess] = useState(false);
 	const [isFocus, setIsFocus] = useState(false);
@@ -246,21 +250,28 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 								<Icon SvgIcon={PaperclipIcon} />
 							</Button>
 						)}
-						<Button
-							invert
-							width="64px"
-							height="64px"
-							type="submit"
-							disabled={isLoading}
+						<Popover
+							direction="top_center"
+							trigger={
+								<Button
+									invert
+									width="64px"
+									height="64px"
+									type="submit"
+									disabled={isLoading}
+								>
+									{isLoading ? (
+										'...'
+									) : success ? (
+										<Icon SvgIcon={SuccessIcon} />
+									) : (
+										<Icon SvgIcon={SendIcon} />
+									)}
+								</Button>
+							}
 						>
-							{isLoading ? (
-								'...'
-							) : success ? (
-								<Icon SvgIcon={SuccessIcon} />
-							) : (
-								<Icon SvgIcon={SendIcon} />
-							)}
-						</Button>
+							<Text text={t('ShiftEnter')} textAlign="center" width="150px" />
+						</Popover>
 					</StyledBtns>
 				</Flex>
 				{withImg && imgForm()}

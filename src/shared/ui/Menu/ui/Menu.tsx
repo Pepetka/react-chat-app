@@ -11,7 +11,13 @@ import { Button } from '@/shared/ui/Button';
 import { Flex } from '@/shared/ui/Flex';
 
 interface IMenuControls {
-	direction?: 'bottom_left' | 'bottom_right' | 'top_left' | 'top_right';
+	direction?:
+		| 'bottom_left'
+		| 'bottom_right'
+		| 'bottom_center'
+		| 'top_left'
+		| 'top_right'
+		| 'top_center';
 }
 
 interface IMenuProps extends IMenuControls {
@@ -22,8 +28,10 @@ interface IMenuProps extends IMenuControls {
 	openDefault?: boolean;
 }
 
-const StyledMenu = styled.div<IMenuControls & { openMenu: boolean }>`
-	display: ${(props) => (props.openMenu ? 'flex' : 'none')};
+const StyledMenu = styled.div<
+	IMenuControls & { contentWidth: number; open: boolean }
+>`
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: absolute;
@@ -32,13 +40,18 @@ const StyledMenu = styled.div<IMenuControls & { openMenu: boolean }>`
 	bottom: ${(props) =>
 		props.direction?.split('_')[0] === 'top' ? '100%' : undefined};
 	left: ${(props) =>
-		props.direction?.split('_')[1] === 'right' ? '0' : undefined};
+		props.direction?.split('_')[1] === 'right'
+			? '0'
+			: props.direction?.split('_')[1] === 'center'
+			? `calc(-${0.5 * props.contentWidth}px + 50%)`
+			: undefined};
 	right: ${(props) =>
 		props.direction?.split('_')[1] === 'left' ? '0' : undefined};
 	background: var(--bg-color);
 	border-radius: 5px;
 	border: 2px solid var(--primary-color);
-	z-index: 1;
+	z-index: ${(props) => (props.open ? 'var(--popup-z)' : 'var(--hidden-z)')};
+	pointer-events: ${(props) => (props.open ? 'auto' : 'none')};
 `;
 
 export const Menu = memo((props: IMenuProps) => {
@@ -53,6 +66,7 @@ export const Menu = memo((props: IMenuProps) => {
 	const [openMenu, setOpenMenu] = useState(openDefault);
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
 	const menuRef = useRef<HTMLDivElement | null>(null);
+	const [contentWidth, setContentWidth] = useState(0);
 
 	const onToggleMenu = useCallback(() => {
 		setOpenMenu((prev) => !prev);
@@ -92,6 +106,12 @@ export const Menu = memo((props: IMenuProps) => {
 		};
 	}, [onKeyDown, onMouseDown]);
 
+	useEffect(() => {
+		if (menuRef.current) {
+			setContentWidth(menuRef.current?.clientWidth);
+		}
+	}, []);
+
 	return (
 		<Flex width="auto" height="auto">
 			<Button
@@ -103,7 +123,12 @@ export const Menu = memo((props: IMenuProps) => {
 			>
 				{trigger}
 			</Button>
-			<StyledMenu ref={menuRef} direction={direction} openMenu={openMenu}>
+			<StyledMenu
+				contentWidth={contentWidth}
+				ref={menuRef}
+				direction={direction}
+				open={openMenu}
+			>
 				{children}
 			</StyledMenu>
 		</Flex>
