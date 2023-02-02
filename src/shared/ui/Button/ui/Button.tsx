@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { ForwardedRef, forwardRef, memo, ReactNode } from 'react';
 import styled from 'styled-components';
 
 type ButtonThemeType = 'primary' | 'outline' | 'clear';
@@ -62,31 +62,34 @@ const StyledButton = styled.button<IButtonControls>`
 	}
 `;
 
-export const Button = memo((props: IButtonProps) => {
-	const {
-		children,
-		theme = 'primary',
-		onClick,
-		type = 'button',
-		disabled = false,
-		height,
-		width,
-		invert = false,
-		circle = false,
-	} = props;
+export const Button = memo(
+	forwardRef((props: IButtonProps, ref: ForwardedRef<HTMLButtonElement>) => {
+		const {
+			children,
+			theme = 'primary',
+			onClick,
+			type = 'button',
+			disabled = false,
+			height,
+			width,
+			invert = false,
+			circle = false,
+		} = props;
 
-	return (
-		<StyledButton
-			theme={theme}
-			onClick={onClick}
-			type={type}
-			width={width}
-			height={height}
-			disabled={disabled}
-			invert={invert}
-			circle={circle}
-		>
-			{children}
-		</StyledButton>
-	);
-});
+		return (
+			<StyledButton
+				theme={theme}
+				onClick={onClick}
+				type={type}
+				width={width}
+				height={height}
+				disabled={disabled}
+				invert={invert}
+				circle={circle}
+				ref={ref}
+			>
+				{children}
+			</StyledButton>
+		);
+	}),
+);

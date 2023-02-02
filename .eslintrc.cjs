@@ -31,6 +31,7 @@ module.exports = {
 					'reducerKey',
 					'target',
 					'carouselWidth',
+					'carouselHeight',
 					'margin',
 					'borderRadius',
 				],

@@ -239,7 +239,6 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 						placeholder={textPlaceholder}
 						value={textValue}
 						onChange={onChangeTextHandle}
-						required
 					/>
 					<StyledBtns>
 						{withImg && (

@@ -31,8 +31,10 @@ export const CommentForm = memo((props: ICommentFormProps) => {
 	);
 
 	const onSubmit = useCallback(() => {
-		onAddComment({ postId, authorId: userId, text });
-		dispatch(commentActions.clear());
+		if (text.trim()) {
+			onAddComment({ postId, authorId: userId, text });
+			dispatch(commentActions.clear());
+		}
 	}, [dispatch, onAddComment, postId, text, userId]);
 
 	return (

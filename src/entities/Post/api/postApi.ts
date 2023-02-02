@@ -1,6 +1,6 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Post, PostStats, UserPost } from '../model/types/postSchema';
-import { getUserAuthData, User } from '@/entities/User';
+import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
 
 interface IPostApiProps {

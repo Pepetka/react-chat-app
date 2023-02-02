@@ -1,4 +1,11 @@
-import { memo, ReactNode, useCallback, useState } from 'react';
+import {
+	memo,
+	ReactNode,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import styled from 'styled-components';
 import { Button } from '@/shared/ui/Button';
 import { Flex } from '@/shared/ui/Flex';
@@ -44,10 +51,46 @@ export const Menu = memo((props: IMenuProps) => {
 		openDefault = false,
 	} = props;
 	const [openMenu, setOpenMenu] = useState(openDefault);
+	const triggerRef = useRef<HTMLButtonElement | null>(null);
+	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	const onToggleMenu = useCallback(() => {
 		setOpenMenu((prev) => !prev);
 	}, []);
+
+	const onKeyDown = useCallback(
+		(event: KeyboardEvent) => {
+			if (event.key === 'Escape' && openMenu) {
+				setOpenMenu(false);
+			}
+		},
+		[openMenu],
+	);
+
+	const onMouseDown = useCallback(
+		(event: MouseEvent) => {
+			if (
+				openMenu &&
+				triggerRef.current &&
+				!triggerRef.current.contains(event.target as Node) &&
+				menuRef.current &&
+				!menuRef.current.contains(event.target as Node)
+			) {
+				setOpenMenu(false);
+			}
+		},
+		[openMenu],
+	);
+
+	useEffect(() => {
+		window.addEventListener('keydown', onKeyDown);
+		window.addEventListener('mousedown', onMouseDown);
+
+		return () => {
+			window.removeEventListener('keydown', onKeyDown);
+			window.removeEventListener('mousedown', onMouseDown);
+		};
+	}, [onKeyDown, onMouseDown]);
 
 	return (
 		<Flex width="auto" height="auto">
@@ -56,10 +99,11 @@ export const Menu = memo((props: IMenuProps) => {
 				theme="clear"
 				width={width}
 				height={height}
+				ref={triggerRef}
 			>
 				{trigger}
 			</Button>
-			<StyledMenu direction={direction} openMenu={openMenu}>
+			<StyledMenu ref={menuRef} direction={direction} openMenu={openMenu}>
 				{children}
 			</StyledMenu>
 		</Flex>

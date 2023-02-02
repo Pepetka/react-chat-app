@@ -36,8 +36,10 @@ export const PostForm = memo((props: IPostFormProps) => {
 	const onSubmit = useCallback(() => {
 		const images = img === '' ? undefined : img.split('\n');
 
-		onAddPost({ text, img: images, authorId: userId, profileId });
-		dispatch(postActions.clear());
+		if (text.trim() || images?.length) {
+			onAddPost({ text, img: images, authorId: userId, profileId });
+			dispatch(postActions.clear());
+		}
 	}, [onAddPost, text, img, userId, profileId, dispatch]);
 
 	return (

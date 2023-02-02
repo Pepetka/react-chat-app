@@ -14,7 +14,6 @@ import MoreIcon from '@/shared/assets/more.svg';
 import { Post } from '../../model/types/postSchema';
 import { useTranslation } from 'react-i18next';
 import { AppImg } from '@/shared/ui/AppImg';
-import { Spinner } from '@/shared/ui/Spinner';
 import { getProfilePagePath } from '@/shared/const/router';
 import { AppLink } from '@/shared/ui/AppLink';
 import { useFetchPostStatsQuery } from '../../api/postApi';
@@ -131,21 +130,22 @@ export const PostCard = memo((props: IPostCardProps) => {
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
 					{post.img && (
-						<Carousel carouselWidth="385px">
+						<Carousel carouselWidth="385px" carouselHeight="385px">
 							{post.img.map((src, index) => (
-								<AppImg
-									key={index}
-									width="385px"
-									src={src}
-									alt={t('Post image')}
-									errorFallback={
-										<Text
-											text={t('Something went wrong')}
-											size="l"
-											textAlign="center"
-										/>
-									}
-								/>
+								<Flex key={index} height="385px" align="center">
+									<AppImg
+										width="385px"
+										src={src}
+										alt={t('Post image')}
+										errorFallback={
+											<Text
+												text={t('Something went wrong')}
+												size="l"
+												textAlign="center"
+											/>
+										}
+									/>
+								</Flex>
 							))}
 						</Carousel>
 					)}

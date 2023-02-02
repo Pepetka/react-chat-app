@@ -124,15 +124,22 @@
 		},
 		{
 			"authorId": "6cbdb793",
-			"text": "Post",
-			"createdAt": "14:26 01.02.2023",
-			"id": "a148c118-3d45-4c69-ad3c-03f95acb1f1b"
+			"text": "",
+			"img": [
+				"https://thumbs.dreamstime.com/b/person-selfie-one-line-drawing-man-taking-picture-smartphone-mobile-phone-camera-concept-narcissist-technology-166393132.jpg"
+			],
+			"createdAt": "10:33 02.02.2023",
+			"id": "cc267ae2-a7f0-49f6-b75a-38a69a1dac36"
 		},
 		{
 			"authorId": "6cbdb793",
-			"text": "New post",
-			"createdAt": "14:27 01.02.2023",
-			"id": "116ce548-466e-4886-923d-02769c120100"
+			"text": "Post",
+			"img": [
+				"https://cdn.wallpapersafari.com/70/6/cuDYdF.jpg",
+				"https://kartinkin.net/pics/uploads/posts/2022-07/1657888342_47-kartinkin-net-p-vodopad-raduzhnii-priroda-krasivo-foto-52.jpg"
+			],
+			"createdAt": "10:39 02.02.2023",
+			"id": "42e896d8-91a0-4e53-97a8-a9aeadebe42a"
 		}
 	],
 	"user-posts": [
@@ -150,8 +157,8 @@
 		{ "userId": "6cbdb794", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" },
 		{ "userId": "6cbdb794", "postId": "e8a183d9-5b1f-4c09-bf21-cfba6b063a75" },
 		{ "userId": "6cbdb794", "postId": "cb59c390-e3dd-4bb3-a376-cdaf5f099564" },
-		{ "userId": "6cbdb793", "postId": "a148c118-3d45-4c69-ad3c-03f95acb1f1b" },
-		{ "userId": "6cbdb793", "postId": "116ce548-466e-4886-923d-02769c120100" }
+		{ "userId": "6cbdb793", "postId": "cc267ae2-a7f0-49f6-b75a-38a69a1dac36" },
+		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" }
 	],
 	"post-likes": [
 		{ "postId": 2, "userId": "6cbdb793" },
