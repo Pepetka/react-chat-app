@@ -236,7 +236,11 @@ export const PostCard = memo((props: IPostCardProps) => {
 					<>
 						<Text title={t('Comments')} theme="primary-invert" size="l" />
 						<CommentForm postId={post.id} userId={userId} />
-						<CommentList postId={post.id} userId={userId} />
+						<CommentList
+							postId={post.id}
+							userId={userId}
+							skeletonNum={Number(postStats?.comments)}
+						/>
 					</>
 				)}
 			</Flex>

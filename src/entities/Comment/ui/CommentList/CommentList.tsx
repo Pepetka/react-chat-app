@@ -12,10 +12,11 @@ import { CommentCardSkeleton } from '../CommentCardSkeleton/CommentCardSkeleton'
 interface ICommentListProps {
 	postId: string;
 	userId: string;
+	skeletonNum?: number;
 }
 
 export const CommentList = memo((props: ICommentListProps) => {
-	const { postId, userId } = props;
+	const { postId, userId, skeletonNum } = props;
 	const { t } = useTranslation('profile');
 	const {
 		data: comments,
@@ -35,9 +36,9 @@ export const CommentList = memo((props: ICommentListProps) => {
 	if (isLoading) {
 		return (
 			<Flex direction="column" gap="16">
-				<CommentCardSkeleton admin={false} />
-				<CommentCardSkeleton admin={false} />
-				<CommentCardSkeleton admin={false} />
+				{new Array(skeletonNum ?? 3).fill(0).map((_, index) => (
+					<CommentCardSkeleton key={index} admin={false} />
+				))}
 			</Flex>
 		);
 	}

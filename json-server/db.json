@@ -38,7 +38,7 @@
 		}
 	],
 	"friends": [
-		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "01.02.2023" }
+		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "02.02.2023" }
 	],
 	"followers": [],
 	"posts": [
@@ -160,11 +160,8 @@
 		{ "userId": "6cbdb793", "postId": "cc267ae2-a7f0-49f6-b75a-38a69a1dac36" },
 		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" }
 	],
-	"post-likes": [
-		{ "postId": 2, "userId": "6cbdb793" },
-		{ "userId": "6cbdb794", "postId": "0" }
-	],
-	"post-dislikes": [],
+	"post-likes": [{ "userId": "6cbdb794", "postId": "0" }],
+	"post-dislikes": [{ "userId": "6cbdb793", "postId": "4" }],
 	"comments": [
 		{
 			"id": "0",
