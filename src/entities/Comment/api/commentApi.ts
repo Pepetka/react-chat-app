@@ -2,12 +2,13 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { Comment } from '../model/types/commentSchema';
 import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
+import { postApi } from '@/entities/Post';
 
 interface ICommentApiProps {
 	postId: string;
 }
 
-const postApi = rtkApi.injectEndpoints({
+const commentApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchComments: build.query<Array<Comment>, ICommentApiProps>({
 			query: ({ postId }) => ({
@@ -35,21 +36,39 @@ const postApi = rtkApi.injectEndpoints({
 				{ text, postId },
 				{ dispatch, queryFulfilled, getState },
 			) {
+				const userData = getUserAuthData(getState() as StateSchema)!;
+
 				const patchResult = dispatch(
-					postApi.util.updateQueryData('fetchComments', { postId }, (draft) => {
-						draft.push({
-							id: String(Math.random()),
-							author: getUserAuthData(getState() as StateSchema)!,
-							text,
-							postId,
-							createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
-						});
-					}),
+					commentApi.util.updateQueryData(
+						'fetchComments',
+						{ postId },
+						(draft) => {
+							draft.unshift({
+								id: String(Math.random()),
+								author: userData,
+								text,
+								postId,
+								createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+							});
+						},
+					),
+				);
+				const patchResultPost = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId: userData.id },
+						(draft) => {
+							Object.assign(draft, {
+								comments: String(Number(draft.comments) + 1),
+							});
+						},
+					),
 				);
 				try {
 					await queryFulfilled;
 				} catch {
 					patchResult.undo();
+					patchResultPost.undo();
 				}
 			},
 			invalidatesTags: ['comment', 'postStats'],
@@ -67,20 +86,38 @@ const postApi = rtkApi.injectEndpoints({
 			}),
 			async onQueryStarted(
 				{ commentId, postId },
-				{ dispatch, queryFulfilled },
+				{ dispatch, queryFulfilled, getState },
 			) {
+				const userData = getUserAuthData(getState() as StateSchema)!;
+
 				const patchResult = dispatch(
-					postApi.util.updateQueryData('fetchComments', { postId }, (draft) => {
-						const index = draft.findIndex(
-							(comment) => comment.id === commentId,
-						);
-						draft.splice(index, 1);
-					}),
+					commentApi.util.updateQueryData(
+						'fetchComments',
+						{ postId },
+						(draft) => {
+							const index = draft.findIndex(
+								(comment) => comment.id === commentId,
+							);
+							draft.splice(index, 1);
+						},
+					),
+				);
+				const patchResultPost = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId: userData.id },
+						(draft) => {
+							Object.assign(draft, {
+								comments: String(Number(draft.comments) - 1),
+							});
+						},
+					),
 				);
 				try {
 					await queryFulfilled;
 				} catch {
 					patchResult.undo();
+					patchResultPost.undo();
 				}
 			},
 			invalidatesTags: ['postStats'],
@@ -92,4 +129,4 @@ export const {
 	useAddCommentMutation,
 	useDeleteCommentMutation,
 	useFetchCommentsQuery,
-} = postApi;
+} = commentApi;

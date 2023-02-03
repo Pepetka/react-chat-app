@@ -10,6 +10,25 @@ const router = jsonServer.router(path.resolve(__dirname, 'db.json'));
 server.use(jsonServer.defaults({}));
 server.use(jsonServer.bodyParser);
 
+const sortByDate = (prevPost, nextPost) => {
+	const prevDate = new Date(
+		`${prevPost.createdAt.split(' ')[0]} ${prevPost.createdAt
+			.split(' ')[1]
+			.split('.')
+			.reverse()
+			.join('.')}`,
+	).getTime();
+	const nextDate = new Date(
+		`${nextPost.createdAt.split(' ')[0]} ${nextPost.createdAt
+			.split(' ')[1]
+			.split('.')
+			.reverse()
+			.join('.')}`,
+	).getTime();
+
+	return nextDate - prevDate;
+};
+
 server.use(async (req, res, next) => {
 	await new Promise((res) => {
 		setTimeout(res, 800);
@@ -348,7 +367,8 @@ server.get('/posts', (req, res) => {
 					authorId: undefined,
 					author,
 				};
-			});
+			})
+			.sort(sortByDate);
 
 		return res.json(postsFromBd);
 	} catch (e) {
@@ -652,7 +672,8 @@ server.get('/comments', (req, res) => {
 					authorId: undefined,
 					author,
 				};
-			});
+			})
+			.sort(sortByDate);
 
 		return res.json(commentsFromDb);
 	} catch (e) {

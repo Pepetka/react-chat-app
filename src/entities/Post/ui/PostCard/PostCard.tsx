@@ -20,6 +20,7 @@ import { useFetchPostStatsQuery } from '../../api/postApi';
 import { CommentForm, CommentList } from '@/entities/Comment';
 import { Menu } from '@/shared/ui/Menu';
 import { Carousel } from '@/widgets/Carousel';
+import { Skeleton } from '@/shared/ui/Skeleton';
 
 interface IPostCardProps {
 	post: Post;
@@ -56,7 +57,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 	const [success, setSuccess] = useState(false);
 	const [openComments, setOpenComments] = useState(openCommentsDefault);
 	const { t } = useTranslation('profile');
-	const { data: postStats } = useFetchPostStatsQuery({
+	const { data: postStats, isLoading } = useFetchPostStatsQuery({
 		postId: post.id,
 		userId,
 	});
@@ -154,13 +155,17 @@ export const PostCard = memo((props: IPostCardProps) => {
 					<Text text={post.createdAt} theme="secondary-invert" />
 					<Flex gap="24" align="center" width="auto">
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="50px"
-								text={postStats?.comments ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.comments ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={onToggleComments}
 								invert={openComments}
@@ -171,13 +176,17 @@ export const PostCard = memo((props: IPostCardProps) => {
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="50px"
-								text={postStats?.likes ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.likes ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={onLikePostHandle}
 								invert={postStats?.isLiked}
@@ -189,13 +198,17 @@ export const PostCard = memo((props: IPostCardProps) => {
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="50px"
-								text={postStats?.dislikes ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.dislikes ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={onDislikePostHandle}
 								invert={postStats?.isDisliked}
@@ -207,13 +220,17 @@ export const PostCard = memo((props: IPostCardProps) => {
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="50px"
-								text={postStats?.shared ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.shared ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={!admin ? onSharePostHandle : undefined}
 								invert={postStats?.isShared}

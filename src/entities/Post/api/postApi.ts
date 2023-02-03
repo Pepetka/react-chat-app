@@ -9,7 +9,7 @@ interface IPostApiProps {
 	postId: string;
 }
 
-const postApi = rtkApi.injectEndpoints({
+export const postApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchPostsData: build.query<
 			Array<Post>,
@@ -46,7 +46,7 @@ const postApi = rtkApi.injectEndpoints({
 						'fetchPostsData',
 						{ profileId },
 						(draft) => {
-							draft.push({
+							draft.unshift({
 								id: String(Math.random()),
 								author: getUserAuthData(getState() as StateSchema)!,
 								img,

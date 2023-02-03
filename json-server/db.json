@@ -38,7 +38,7 @@
 		}
 	],
 	"friends": [
-		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "02.02.2023" }
+		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "03.02.2023" }
 	],
 	"followers": [],
 	"posts": [
@@ -225,6 +225,27 @@
 			"authorId": "6cbdb793",
 			"postId": "0",
 			"createdAt": "14:20 01.02.2023"
+		},
+		{
+			"id": "68afec61-fe0c-45e0-a9f4-3dfe16161204",
+			"text": "2",
+			"authorId": "6cbdb793",
+			"postId": "1",
+			"createdAt": "11:44 03.02.2023"
+		},
+		{
+			"id": "74a9586f-2b20-4b92-8cd4-b0fb100d84c0",
+			"text": "3",
+			"authorId": "6cbdb793",
+			"postId": "1",
+			"createdAt": "11:45 03.02.2023"
+		},
+		{
+			"id": "ef661ee2-303e-4cef-a15c-0b4ef8b73366",
+			"text": "Hello",
+			"authorId": "6cbdb793",
+			"postId": "0",
+			"createdAt": "12:50 03.02.2023"
 		}
 	],
 	"groups": [],

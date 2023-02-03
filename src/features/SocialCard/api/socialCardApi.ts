@@ -6,7 +6,7 @@ interface ISocialCardApiProps {
 	profileId: string;
 }
 
-const socialCardApi = rtkApi.injectEndpoints({
+export const socialCardApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchSocialData: build.query<Social, ISocialCardApiProps>({
 			query: ({ profileId }) => ({
