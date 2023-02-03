@@ -43,8 +43,11 @@ export const AppImg = memo((props: IAppImgProps) => {
 
 	if (isLoading) {
 		return (
-			<Flex width={width} height={height}>
-				<Skeleton height={height} width={width} />
+			<Flex
+				width={width === 'auto' ? height : width}
+				height={height === 'auto' ? width : height}
+			>
+				<Skeleton height="100%" width="100%" />
 			</Flex>
 		);
 	}
