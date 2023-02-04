@@ -9,6 +9,7 @@ interface IAvatarControls {
 	circle?: boolean;
 	border?: boolean;
 	theme?: 'primary' | 'invert';
+	onClick?: () => void;
 }
 
 interface IAvatarProps extends IAvatarControls {
@@ -44,6 +45,7 @@ const StyledAvatar = styled.img<IAvatarControls>`
 	height: ${(props) => getSize(props.size)};
 	border: ${getBorder};
 	border-radius: ${(props) => (props.circle ? '50%' : '')};
+	cursor: ${(props) => (props.onClick ? 'pointer' : undefined)};
 `;
 
 export const Avatar = memo((props: IAvatarProps) => {
@@ -53,6 +55,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 		size = 's',
 		border = false,
 		theme = 'primary',
+		onClick,
 	} = props;
 	const { t } = useTranslation();
 	const [isLoading, setIsLoading] = useState(true);
@@ -85,6 +88,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 			circle={circle}
 			src={src}
 			alt={t('Avatar')}
+			onClick={onClick}
 		/>
 	);
 });

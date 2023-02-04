@@ -105,7 +105,7 @@ Normal.parameters = {
 		rest.get(
 			`${__API__}relations?userId=6cbdb793&friendId=6cbdb793`,
 			(_req, res, ctx) => {
-				const relations: Relations = 'nobody';
+				const relations: Relations = { relations: 'nobody' };
 
 				return res(ctx.json(relations));
 			},

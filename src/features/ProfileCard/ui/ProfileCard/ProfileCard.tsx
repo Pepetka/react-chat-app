@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
@@ -12,6 +12,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Relations } from '../../model/types/profileCardSchema';
 import { ProfileCardSkeleton } from '../ProfileCardSkeleton/ProfileCardSkeleton';
+import { Modal } from '@/shared/ui/Modal';
+import { AppImg } from '@/shared/ui/AppImg';
 
 interface IProfileCardProps {
 	userId: string;
@@ -41,6 +43,15 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		{ refetchOnMountOrArgChange: true },
 	);
 	const [onAddFriend, { error: addFriendError }] = useAddFriendMutation();
+	const [isOpen, setIsOpen] = useState(false);
+
+	const onOpenModal = useCallback(() => {
+		setIsOpen(true);
+	}, []);
+
+	const onCloseModal = useCallback(() => {
+		setIsOpen(false);
+	}, []);
 
 	const friendBtnText: Record<Relations['relations'], string> = useMemo(
 		() => ({
@@ -122,7 +133,25 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 						</Flex>
 					)}
 				</Flex>
-				<Avatar src={profileData?.[0]?.avatar ?? ''} size="xl" />
+				<Avatar
+					src={profileData?.[0]?.avatar ?? ''}
+					size="xl"
+					onClick={onOpenModal}
+				/>
+				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
+					<AppImg
+						width="700px"
+						src={profileData?.[0]?.avatar ?? ''}
+						alt={t('Avatar')}
+						errorFallback={
+							<Text
+								text={t('Something went wrong')}
+								size="l"
+								textAlign="center"
+							/>
+						}
+					/>
+				</Modal>
 			</Flex>
 		</Card>
 	);

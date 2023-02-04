@@ -1,4 +1,12 @@
-import { memo, ReactNode, useCallback, useMemo } from 'react';
+import {
+	ForwardedRef,
+	forwardRef,
+	memo,
+	ReactNode,
+	useCallback,
+	useMemo,
+	useRef,
+} from 'react';
 import Slider, { Settings } from 'react-slick';
 import styled from 'styled-components';
 import { useHover } from '@/shared/hooks/useHover';
@@ -38,61 +46,64 @@ const StyledNav = styled.div`
 const StyledWrapper = styled.div<ICarouselControls>`
 	width: ${(props) => props.carouselWidth};
 	height: ${(props) => props.carouselHeight};
-	background: var(--overlay-color);
+	margin-bottom: 10px;
 `;
 
-export const Carousel = memo((props: ICarouselProps) => {
-	const {
-		children,
-		carouselWidth = '100%',
-		carouselHeight = 'auto',
-		...sliderProps
-	} = props;
-	const { hover, onMouseOut, onMouseOver } = useHover();
+export const Carousel = memo(
+	forwardRef((props: ICarouselProps, ref: ForwardedRef<Slider>) => {
+		const {
+			children,
+			carouselWidth = '100%',
+			carouselHeight = 'auto',
+			...sliderProps
+		} = props;
+		const { hover, onMouseOut, onMouseOver } = useHover();
 
-	const NextArrow = useCallback(
-		({ onClick }: { onClick: () => void }) => (
-			<StyledNavBtn hover={hover} name="next" onClick={onClick}>
-				<StyledNav>{'>'}</StyledNav>
-			</StyledNavBtn>
-		),
-		[hover],
-	);
+		const NextArrow = useCallback(
+			({ onClick }: { onClick: () => void }) => (
+				<StyledNavBtn hover={hover} name="next" onClick={onClick}>
+					<StyledNav>{'>'}</StyledNav>
+				</StyledNavBtn>
+			),
+			[hover],
+		);
 
-	const PrevArrow = useCallback(
-		({ onClick }: { onClick: () => void }) => (
-			<StyledNavBtn hover={hover} name="prev" onClick={onClick}>
-				<StyledNav>{'<'}</StyledNav>
-			</StyledNavBtn>
-		),
-		[hover],
-	);
+		const PrevArrow = useCallback(
+			({ onClick }: { onClick: () => void }) => (
+				<StyledNavBtn hover={hover} name="prev" onClick={onClick}>
+					<StyledNav>{'<'}</StyledNav>
+				</StyledNavBtn>
+			),
+			[hover],
+		);
 
-	const settings: Settings = useMemo(
-		() => ({
-			dots: true,
-			infinite: true,
-			speed: 500,
-			slidesToShow: 1,
-			slidesToScroll: 1,
-			adaptiveHeight: false,
-			arrows: true,
-			nextArrow: <NextArrow onClick={() => {}} />,
-			prevArrow: <PrevArrow onClick={() => {}} />,
-		}),
-		[NextArrow, PrevArrow],
-	);
+		const settings: Settings = useMemo(
+			() => ({
+				dots: true,
+				infinite: true,
+				speed: 500,
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				adaptiveHeight: false,
+				fade: true,
+				arrows: true,
+				nextArrow: <NextArrow onClick={() => {}} />,
+				prevArrow: <PrevArrow onClick={() => {}} />,
+			}),
+			[NextArrow, PrevArrow],
+		);
 
-	return (
-		<StyledWrapper
-			onMouseOver={onMouseOver}
-			onMouseOut={onMouseOut}
-			carouselWidth={carouselWidth}
-			carouselHeight={carouselHeight}
-		>
-			<Slider {...settings} {...sliderProps}>
-				{children}
-			</Slider>
-		</StyledWrapper>
-	);
-});
+		return (
+			<StyledWrapper
+				onMouseOver={onMouseOver}
+				onMouseOut={onMouseOut}
+				carouselWidth={carouselWidth}
+				carouselHeight={carouselHeight}
+			>
+				<Slider ref={ref} {...settings} {...sliderProps}>
+					{children}
+				</Slider>
+			</StyledWrapper>
+		);
+	}),
+);

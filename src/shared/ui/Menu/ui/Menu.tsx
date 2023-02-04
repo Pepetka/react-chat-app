@@ -9,6 +9,7 @@ import {
 import styled from 'styled-components';
 import { Button } from '@/shared/ui/Button';
 import { Flex } from '@/shared/ui/Flex';
+import { useKeydown } from '@/shared/hooks/useKeydown';
 
 interface IMenuControls {
 	direction?:
@@ -72,15 +73,6 @@ export const Menu = memo((props: IMenuProps) => {
 		setOpenMenu((prev) => !prev);
 	}, []);
 
-	const onKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			if (event.key === 'Escape' && openMenu) {
-				setOpenMenu(false);
-			}
-		},
-		[openMenu],
-	);
-
 	const onMouseDown = useCallback(
 		(event: MouseEvent) => {
 			if (
@@ -96,15 +88,18 @@ export const Menu = memo((props: IMenuProps) => {
 		[openMenu],
 	);
 
+	useKeydown({
+		addCondition: openMenu,
+		callback: onToggleMenu,
+	});
+
 	useEffect(() => {
-		window.addEventListener('keydown', onKeyDown);
 		window.addEventListener('mousedown', onMouseDown);
 
 		return () => {
-			window.removeEventListener('keydown', onKeyDown);
 			window.removeEventListener('mousedown', onMouseDown);
 		};
-	}, [onKeyDown, onMouseDown]);
+	}, [onMouseDown]);
 
 	useEffect(() => {
 		if (menuRef.current) {

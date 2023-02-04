@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Avatar } from '@/shared/ui/Avatar';
@@ -21,6 +21,8 @@ import { CommentForm, CommentList } from '@/entities/Comment';
 import { Menu } from '@/shared/ui/Menu';
 import { Carousel } from '@/widgets/Carousel';
 import { Skeleton } from '@/shared/ui/Skeleton';
+import { Modal } from '@/shared/ui/Modal';
+import Slider from 'react-slick';
 
 interface IPostCardProps {
 	post: Post;
@@ -61,6 +63,15 @@ export const PostCard = memo((props: IPostCardProps) => {
 		postId: post.id,
 		userId,
 	});
+	const [isOpen, setIsOpen] = useState(false);
+
+	const onOpenModal = useCallback(() => {
+		setIsOpen(true);
+	}, []);
+
+	const onCloseModal = useCallback(() => {
+		setIsOpen(false);
+	}, []);
 
 	useEffect(() => {
 		let timerId: ReturnType<typeof setTimeout>;
@@ -131,24 +142,47 @@ export const PostCard = memo((props: IPostCardProps) => {
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
 					{post.img && (
-						<Carousel carouselWidth="385px" carouselHeight="385px">
-							{post.img.map((src, index) => (
-								<Flex key={index} height="385px" align="center">
-									<AppImg
-										width="385px"
-										src={src}
-										alt={t('Post image')}
-										errorFallback={
-											<Text
-												text={t('Something went wrong')}
-												size="l"
-												textAlign="center"
+						<>
+							<Carousel carouselWidth="385px" carouselHeight="385px">
+								{post.img.map((src, index) => (
+									<Flex key={index} height="385px" align="center">
+										<AppImg
+											width="385px"
+											src={src}
+											alt={t('Post image')}
+											errorFallback={
+												<Text
+													text={t('Something went wrong')}
+													size="l"
+													textAlign="center"
+												/>
+											}
+											onClick={onOpenModal}
+										/>
+									</Flex>
+								))}
+							</Carousel>
+							<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
+								<Carousel carouselWidth="700px" carouselHeight="700px">
+									{post.img.map((src, index) => (
+										<Flex key={index} height="700px" align="center">
+											<AppImg
+												width="700px"
+												src={src}
+												alt={t('Post image')}
+												errorFallback={
+													<Text
+														text={t('Something went wrong')}
+														size="l"
+														textAlign="center"
+													/>
+												}
 											/>
-										}
-									/>
-								</Flex>
-							))}
-						</Carousel>
+										</Flex>
+									))}
+								</Carousel>
+							</Modal>
+						</>
 					)}
 				</Flex>
 				<Flex align="flex-end" justify="space-between">
