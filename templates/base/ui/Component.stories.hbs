@@ -1,0 +1,14 @@
+import { Meta, StoryFn } from '@storybook/react';
+import { {{name}} } from './{{name}}';
+
+export default {
+	title: '{{layer}}/{{name}}',
+	component: {{name}},
+} as Meta<typeof {{name}}>;
+
+const Template: StoryFn<typeof {{name}}> = (args) => (
+	<{{name}} {...args} />
+);
+
+export const Normal = Template.bind({});
+Normal.args = {};

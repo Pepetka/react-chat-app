@@ -1,0 +1,52 @@
+import { rtkApi } from '@/shared/api/rtkApi';
+
+interface IPostApiProps {
+
+}
+
+export const {{camelCase name}}Api = rtkApi.injectEndpoints({
+	endpoints: (build) => ({
+		fetchData: build.query<
+			any,
+			IPostApiProps,
+		>({
+			query: ({  }) => ({
+				url: '',
+				params: {},
+			}),
+			providesTags: (result) => [''],
+		}),
+
+		addData: build.mutation<
+			any,
+			IPostApiProps,
+		>({
+			query: ({  }) => ({
+				url: '',
+				method: 'Post',
+				body: {},
+			}),
+			async onQueryStarted({  }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					{{camelCase name}}Api.util.updateQueryData(
+						'fetchData',
+						{  },
+						(draft) => {
+							Object.assign(draft, {
+
+							});
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
+			invalidatesTags: [''],
+		}),
+	}),
+});
+
+export const {} = {{camelCase name}}Api;

@@ -5,10 +5,7 @@ import { useSelector } from 'react-redux';
 import { getCommentState } from '../../model/selectors/commentSelectors';
 import { useAddCommentMutation } from '../../api/commentApi';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
-import {
-	commentActions,
-	commentReducer,
-} from '../../model/selectors/commentSlice';
+import { commentActions, commentReducer } from '../../model/slice/commentSlice';
 import { DynamicModuleLoader } from '@/shared/components';
 
 interface ICommentFormProps {
