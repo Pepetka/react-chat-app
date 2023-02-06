@@ -140,6 +140,12 @@
 			],
 			"createdAt": "10:39 02.02.2023",
 			"id": "42e896d8-91a0-4e53-97a8-a9aeadebe42a"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Post",
+			"createdAt": "10:33 06.02.2023",
+			"id": "fa999cdf-d236-4c21-b1c6-86ac327a2bdb"
 		}
 	],
 	"user-posts": [
@@ -158,7 +164,8 @@
 		{ "userId": "6cbdb794", "postId": "e8a183d9-5b1f-4c09-bf21-cfba6b063a75" },
 		{ "userId": "6cbdb794", "postId": "cb59c390-e3dd-4bb3-a376-cdaf5f099564" },
 		{ "userId": "6cbdb793", "postId": "cc267ae2-a7f0-49f6-b75a-38a69a1dac36" },
-		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" }
+		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" },
+		{ "userId": "6cbdb793", "postId": "fa999cdf-d236-4c21-b1c6-86ac327a2bdb" }
 	],
 	"post-likes": [
 		{ "userId": "6cbdb794", "postId": "0" },

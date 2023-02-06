@@ -3,7 +3,7 @@ import { Portal } from '@/shared/ui/Portal';
 import { Overlay } from '@/shared/ui/Overlay';
 import styled, { keyframes } from 'styled-components';
 import { useTheme } from '@/shared/hooks/useTheme';
-import { useKeydown } from '@/shared/hooks/useKeydown';
+import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface IModalProps {
 	isOpen: boolean;
@@ -62,7 +62,7 @@ export const Modal = (props: IModalProps) => {
 		}
 	}, [isOpen]);
 
-	useKeydown({
+	useKeyboardEvent({
 		addCondition: isOpen,
 		callback: onCloseModal,
 	});

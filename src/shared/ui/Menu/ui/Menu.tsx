@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components';
 import { Button } from '@/shared/ui/Button';
 import { Flex } from '@/shared/ui/Flex';
-import { useKeydown } from '@/shared/hooks/useKeydown';
+import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface IMenuControls {
 	direction?:
@@ -88,7 +88,7 @@ export const Menu = memo((props: IMenuProps) => {
 		[openMenu],
 	);
 
-	useKeydown({
+	useKeyboardEvent({
 		addCondition: openMenu,
 		callback: onToggleMenu,
 	});

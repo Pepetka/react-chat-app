@@ -17,6 +17,9 @@ import { AppImg } from '@/shared/ui/AppImg';
 import { Popover } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
 import { useTranslation } from 'react-i18next';
+import { Carousel } from '@/widgets/Carousel';
+import { Modal } from '@/shared/ui/Modal';
+import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface ISendWithImgFormControls {
 	withImg?: boolean;
@@ -129,6 +132,15 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	const [success, setSuccess] = useState(false);
 	const [isFocus, setIsFocus] = useState(false);
 	const [shiftPressed, setShiftPressed] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+
+	const onOpenModal = useCallback(() => {
+		setIsOpen(true);
+	}, []);
+
+	const onCloseModal = useCallback(() => {
+		setIsOpen(false);
+	}, []);
 
 	const onFocus = useCallback(() => {
 		setIsFocus(true);
@@ -137,35 +149,42 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	const onBlur = useCallback(() => {
 		setIsFocus(false);
 	}, []);
-	const onKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			if (event.key === 'Shift' && isFocus) {
-				setShiftPressed(true);
-			}
 
-			if (event.key === 'Enter' && shiftPressed && isFocus) {
-				event.preventDefault();
-				onSubmit?.();
-			}
-		},
-		[isFocus, onSubmit, shiftPressed],
-	);
-
-	const onKeyUp = useCallback((event: KeyboardEvent) => {
-		if (event.key === 'Shift') {
-			setShiftPressed(false);
-		}
+	const onKeyDownShift = useCallback(() => {
+		setShiftPressed(true);
 	}, []);
 
-	useEffect(() => {
-		window.addEventListener('keydown', onKeyDown);
-		window.addEventListener('keyup', onKeyUp);
+	const onKeyDownEnter = useCallback(
+		(event: KeyboardEvent) => {
+			event.preventDefault();
+			onSubmit?.();
+		},
+		[onSubmit],
+	);
 
-		return () => {
-			window.removeEventListener('keydown', onKeyDown);
-			window.removeEventListener('keyup', onKeyUp);
-		};
-	}, [onKeyDown, onKeyUp]);
+	const onKeyUp = useCallback(() => {
+		setShiftPressed(false);
+	}, []);
+
+	useKeyboardEvent({
+		addCondition: isFocus,
+		callback: onKeyDownShift,
+		event: 'keydown',
+		key: 'Shift',
+	});
+
+	useKeyboardEvent({
+		addCondition: shiftPressed && isFocus,
+		callback: onKeyDownEnter,
+		event: 'keydown',
+		key: 'Enter',
+	});
+
+	useKeyboardEvent({
+		callback: onKeyUp,
+		event: 'keyup',
+		key: 'Shift',
+	});
 
 	useEffect(() => {
 		let timerId: ReturnType<typeof setTimeout>;
@@ -222,15 +241,38 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 				) : (
 					<StyledImgWrapper>
 						<Flex width="100%" height="100%" gap="16" align="center">
-							{imgValue.split('\n').map((img, index) => (
-								<AppImg key={index} src={img} height="80px" />
+							{imgValue.split('\n').map((src, index) => (
+								<AppImg
+									key={index}
+									src={src}
+									height="80px"
+									onClick={onOpenModal}
+								/>
 							))}
 						</Flex>
 					</StyledImgWrapper>
 				)}
+				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
+					<Carousel carouselWidth="700px" carouselHeight="700px">
+						{imgValue.split('\n').map((src, index) => (
+							<Flex key={index} height="700px" align="center">
+								<AppImg width="700px" src={src} />
+							</Flex>
+						))}
+					</Carousel>
+				</Modal>
 			</>
 		);
-	}, [imgPlaceholder, imgValue, onChangeImgHandle, previewImg, withImg]);
+	}, [
+		imgPlaceholder,
+		imgValue,
+		isOpen,
+		onChangeImgHandle,
+		onCloseModal,
+		onOpenModal,
+		previewImg,
+		withImg,
+	]);
 
 	return (
 		<StyledForm onSubmit={onSubmitHandle}>
