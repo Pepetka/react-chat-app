@@ -106,7 +106,7 @@ export default function (plop) {
 			{
 				type: 'add',
 				path: 'src/pages/{{name}}/ui/{{name}}.lazy.ts',
-				templateFile: 'templates/pages/ui/Component.lazy.ts.hbs',
+				templateFile: 'templates/pages/ui/Component.lazy.hbs',
 			},
 			{
 				type: 'add',
