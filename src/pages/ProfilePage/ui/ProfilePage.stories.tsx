@@ -4,7 +4,7 @@ import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/Route
 import { getProfilePagePath } from '@/shared/const/router';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { rest } from 'msw';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';

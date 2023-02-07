@@ -1,4 +1,4 @@
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 
 export interface Post {
 	id: string;

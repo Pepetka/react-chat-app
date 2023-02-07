@@ -6,9 +6,6 @@ export default {
 	component: {{name}},
 } as Meta<typeof {{name}}>;
 
-const Template: StoryFn<typeof {{name}}> = (args) => (
-	<{{name}} {...args} />
-);
+const Template: StoryFn<typeof {{name}}> = (args) => <{{name}} />;
 
 export const Normal = Template.bind({});
-Normal.args = {};

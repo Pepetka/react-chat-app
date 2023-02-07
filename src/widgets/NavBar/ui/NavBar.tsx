@@ -10,6 +10,8 @@ import { getUserAuthData, userActions } from '@/entities/User';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { useTranslation } from 'react-i18next';
+import { AppLink } from '@/shared/ui/AppLink';
+import { getMainPagePath } from '@/shared/const/router';
 
 interface INavBarProps {
 	currentPagePath: string;
@@ -68,10 +70,12 @@ export const NavBar = memo((props: INavBarProps) => {
 		<StyledNavBar>
 			<Flex justify="space-between" width="80%">
 				<Flex align="center" justify="space-between" width="600px">
-					<Flex align="center" width="auto">
-						<Icon SvgIcon={LogoSvg} invert />
-						<LogoName>ICE</LogoName>
-					</Flex>
+					<AppLink href={getMainPagePath()}>
+						<Flex align="center" width="auto">
+							<Icon SvgIcon={LogoSvg} invert />
+							<LogoName>ICE</LogoName>
+						</Flex>
+					</AppLink>
 					{authData && (
 						<Flex width="auto" align="center">
 							<StyledSearch />

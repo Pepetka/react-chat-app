@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
 import { SideBar } from '@/widgets/SideBar';
+import { Flex } from '@/shared/ui/Flex';
 
 interface IPageProps {
 	children: ReactNode;
@@ -30,7 +31,7 @@ export const Page = (props: IPageProps) => {
 			<ContentWrapper>
 				{currentPagePath !== getLoginPagePath() &&
 					currentPagePath !== getRegisterPagePath() && <SideBar />}
-				{children}
+				<Flex>{children}</Flex>
 			</ContentWrapper>
 		</StyledPage>
 	);

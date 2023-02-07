@@ -1,6 +1,6 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Social } from '../model/types/socialCardSchema';
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 
 interface ISocialCardApiProps {
 	profileId: string;

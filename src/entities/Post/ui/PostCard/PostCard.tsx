@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Avatar } from '@/shared/ui/Avatar';
@@ -22,7 +22,7 @@ import { Menu } from '@/shared/ui/Menu';
 import { Carousel } from '@/widgets/Carousel';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Modal } from '@/shared/ui/Modal';
-import Slider from 'react-slick';
+import { UserCard } from '@/shared/ui/UserCard';
 
 interface IPostCardProps {
 	post: Post;
@@ -112,16 +112,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 		<Card width="100%">
 			<Flex direction="column" gap="16">
 				<Flex justify="space-between">
-					<AppLink href={getProfilePagePath(post.author.id)}>
-						<Flex align="center" gap="8" width="auto">
-							<Avatar size="m" circle src={post.author.avatar} />
-							<Text
-								text={`${post.author.firstname} ${post.author.lastname}`}
-								size="l"
-								theme="primary-invert"
-							/>
-						</Flex>
-					</AppLink>
+					<UserCard user={post.author} avatarSize="m" />
 					{admin && (
 						<Menu
 							width="64px"

@@ -31,7 +31,12 @@ const getPosts = (req, res) => {
 				return {
 					...post,
 					authorId: undefined,
-					author,
+					author: {
+						id: author.id,
+						avatar: author.avatar,
+						firstname: author.firstname,
+						lastname: author.lastname,
+					},
 				};
 			})
 			.sort(sortByDate);

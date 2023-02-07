@@ -10,6 +10,7 @@ import MoreIcon from '@/shared/assets/more.svg';
 import { useTranslation } from 'react-i18next';
 import { Menu } from '@/shared/ui/Menu';
 import { Comment } from '../../model/types/commentSchema';
+import { UserCard } from '@/shared/ui/UserCard';
 
 interface ICommentCardProps {
 	comment: Comment;
@@ -29,16 +30,7 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 	return (
 		<Flex direction="column" gap="8">
 			<Flex justify="space-between">
-				<AppLink href={getProfilePagePath('6cbdb793')}>
-					<Flex align="center" gap="8" width="auto">
-						<Avatar size="s" circle src={comment.author.avatar} />
-						<Text
-							text={`${comment.author.firstname} ${comment.author.lastname}`}
-							size="m"
-							theme="primary-invert"
-						/>
-					</Flex>
-				</AppLink>
+				<UserCard user={comment.author} avatarSize="s" textSize="m" />
 				{admin && (
 					<Menu
 						direction="bottom_center"

@@ -35,12 +35,186 @@
 			"age": 22,
 			"createdAt": "15.01.2023",
 			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb796",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Oleg",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb797",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb798",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Max",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb799",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Den",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb800",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb801",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Pasha",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb802",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Igor",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb803",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Pavel",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb804",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Oleg",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
 		}
 	],
 	"friends": [
-		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "03.02.2023" }
+		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb793", "friendId": "6cbdb795", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb793", "friendId": "6cbdb797", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb794", "friendId": "6cbdb797", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb794", "friendId": "6cbdb802", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb794", "friendId": "6cbdb801", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb794", "friendId": "6cbdb799", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb796", "friendId": "6cbdb798", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb799", "friendId": "6cbdb801", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb803", "friendId": "6cbdb795", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb803", "friendId": "6cbdb796", "createdAt": "03.02.2023" }
 	],
-	"followers": [],
+	"followers": [
+		{
+			"userId": "6cbdb793",
+			"followerId": "6cbdb799",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb793",
+			"followerId": "6cbdb796",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb793",
+			"followerId": "6cbdb801",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb796",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb797",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb798",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb799",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb796",
+			"followerId": "6cbdb802",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb800",
+			"followerId": "6cbdb793",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb802",
+			"followerId": "6cbdb793",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb804",
+			"followerId": "6cbdb793",
+			"createdAt": "03.02.2023"
+		}
+	],
 	"posts": [
 		{
 			"authorId": "6cbdb793",

@@ -14,7 +14,13 @@ export const SocialCardSkeleton = memo(() => {
 			<Flex height="100%" align="center" justify="space-between">
 				<Flex width="60%" align="center" justify="space-around">
 					<Card padding="0" width="180px" height="200px" border>
-						<Flex direction="column" gap="8" align="center">
+						<Flex
+							direction="column"
+							gap="8"
+							height="100%"
+							justify="center"
+							align="center"
+						>
 							<Text
 								theme="primary-invert"
 								text={t('Followers')}
@@ -25,7 +31,13 @@ export const SocialCardSkeleton = memo(() => {
 						</Flex>
 					</Card>
 					<Card padding="0" width="180px" height="200px" border>
-						<Flex direction="column" gap="8" align="center">
+						<Flex
+							direction="column"
+							gap="8"
+							height="100%"
+							justify="center"
+							align="center"
+						>
 							<Text
 								theme="primary-invert"
 								text={t('Following')}
@@ -36,7 +48,13 @@ export const SocialCardSkeleton = memo(() => {
 						</Flex>
 					</Card>
 					<Card padding="0" width="180px" height="200px" border>
-						<Flex direction="column" gap="8" align="center">
+						<Flex
+							direction="column"
+							gap="8"
+							height="100%"
+							justify="center"
+							align="center"
+						>
 							<Text
 								theme="primary-invert"
 								text={t('Groups')}

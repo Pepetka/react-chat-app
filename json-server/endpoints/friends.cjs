@@ -18,11 +18,18 @@ const getFriends = (req, res) => {
 				return friend.userId === userId || friend.friendId === userId;
 			})
 			.map((friend) => {
-				return users.find((user) =>
+				const user = users.find((user) =>
 					userId === friend.friendId
 						? user.id === friend.userId
 						: user.id === friend.friendId,
 				);
+
+				return {
+					id: user.id,
+					avatar: user.avatar,
+					firstname: user.firstname,
+					lastname: user.lastname,
+				};
 			});
 
 		return res.json(friendsFromBd);

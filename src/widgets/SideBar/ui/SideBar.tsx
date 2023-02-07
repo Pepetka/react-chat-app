@@ -2,7 +2,11 @@ import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
-import { getMainPagePath, getProfilePagePath } from '@/shared/const/router';
+import {
+	getFriendsPagePath,
+	getMainPagePath,
+	getProfilePagePath,
+} from '@/shared/const/router';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
 import styled from 'styled-components';
@@ -24,6 +28,9 @@ export const SideBar = memo(() => {
 				</NavLink>
 				<NavLink to={getProfilePagePath(authData?.id ?? '')}>
 					<Text text={t('My profile')} size="xl" />
+				</NavLink>
+				<NavLink to={getFriendsPagePath(authData?.id ?? '')}>
+					<Text text={t('My friends')} size="xl" />
 				</NavLink>
 			</Flex>
 		</StyledSidebar>

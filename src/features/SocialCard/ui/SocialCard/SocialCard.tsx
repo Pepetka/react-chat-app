@@ -12,6 +12,7 @@ import {
 import { getProfilePagePath } from '@/shared/const/router';
 import { AppLink } from '@/shared/ui/AppLink';
 import { SocialCardSkeleton } from '../SocialCardSkeleton/SocialCardSkeleton';
+import { UserCard } from '@/shared/ui/UserCard';
 
 interface ISocialCardProps {
 	userId: string;
@@ -65,7 +66,13 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 			<Flex height="100%" align="center" justify="space-between">
 				<Flex width="60%" align="center" justify="space-around">
 					<Card padding="0" width="180px" height="200px" border>
-						<Flex direction="column" gap="8">
+						<Flex
+							direction="column"
+							gap="8"
+							height="100%"
+							justify="center"
+							align="center"
+						>
 							<Text
 								theme="primary-invert"
 								text={t('Followers')}
@@ -81,7 +88,13 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 						</Flex>
 					</Card>
 					<Card padding="0" width="180px" height="200px" border>
-						<Flex direction="column" gap="8">
+						<Flex
+							direction="column"
+							gap="8"
+							height="100%"
+							justify="center"
+							align="center"
+						>
 							<Text
 								theme="primary-invert"
 								text={t('Following')}
@@ -97,7 +110,13 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 						</Flex>
 					</Card>
 					<Card padding="0" width="180px" height="200px" border>
-						<Flex direction="column" gap="8">
+						<Flex
+							direction="column"
+							gap="8"
+							height="100%"
+							justify="center"
+							align="center"
+						>
 							<Text
 								theme="primary-invert"
 								text={t('Groups')}
@@ -125,18 +144,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 					{!!friendsData?.length &&
 						friendsData.map((friend, i) => {
 							if (i < 3) {
-								return (
-									<AppLink key={friend.id} href={getProfilePagePath(friend.id)}>
-										<Flex gap="8" align="center">
-											<Avatar circle src={friend.avatar} />
-											<Text
-												text={`${friend.firstname} ${friend.lastname}`}
-												theme="primary-invert"
-												size="l"
-											/>
-										</Flex>
-									</AppLink>
-								);
+								return <UserCard key={friend.id} user={friend} />;
 							}
 							return null;
 						})}

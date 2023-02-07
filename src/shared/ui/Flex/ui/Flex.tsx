@@ -14,6 +14,8 @@ interface IFlexControls {
 interface IFlexProps extends IFlexControls {
 	children: ReactNode;
 	FlexTag?: 'div' | 'form' | 'label';
+	onMouseOver?: () => void;
+	onMouseOut?: () => void;
 }
 
 interface IFlexDiv extends IFlexProps {
@@ -50,6 +52,8 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 		height = 'auto',
 		onSubmit,
 		relative = true,
+		onMouseOut,
+		onMouseOver,
 	} = props;
 
 	return (
@@ -63,6 +67,8 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 			height={height}
 			onSubmit={onSubmit}
 			relative={relative}
+			onMouseOut={onMouseOut}
+			onMouseOver={onMouseOver}
 		>
 			{children}
 		</StyledFlex>

@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { PostList } from './PostList';
 import { rest } from 'msw';
 import { Post } from '../../model/types/postSchema';
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
 

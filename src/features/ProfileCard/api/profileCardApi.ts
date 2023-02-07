@@ -1,9 +1,10 @@
-import { getUserAuthData, User } from '@/entities/User';
+import { getUserAuthData } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Relations } from '../model/types/profileCardSchema';
 import { socialCardApi } from '@/features/SocialCard';
 import { getRelations } from '../model/selectors/profileCardSelectors';
 import { StateSchema } from '@/app/provider/Store';
+import { User, UserMini } from '@/shared/types/userCard';
 
 interface IProfileCardApiProps {
 	profileId: string;
@@ -37,7 +38,10 @@ export const profileCardApi = rtkApi.injectEndpoints({
 			}),
 			providesTags: (result) => ['social'],
 		}),
-		addFriend: build.mutation<User, Omit<IProfileCardApiProps, 'profileId'>>({
+		addFriend: build.mutation<
+			UserMini,
+			Omit<IProfileCardApiProps, 'profileId'>
+		>({
 			query: ({ userId, friendId }) => ({
 				method: 'POST',
 				url: '/friends',

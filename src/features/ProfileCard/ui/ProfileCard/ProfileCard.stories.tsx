@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { ProfileCard } from './ProfileCard';
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Relations } from '../../model/types/profileCardSchema';
 

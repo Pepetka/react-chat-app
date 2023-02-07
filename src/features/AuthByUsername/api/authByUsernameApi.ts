@@ -1,4 +1,4 @@
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 import { rtkApi } from '@/shared/api/rtkApi';
 
 interface IAuthByUsernameApiProps {
