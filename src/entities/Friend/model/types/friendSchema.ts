@@ -1,1 +1,3 @@
-export interface FriendSchema {}
+export interface FriendSchema {
+	search: string;
+}

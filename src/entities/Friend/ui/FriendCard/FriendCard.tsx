@@ -1,5 +1,5 @@
 import { Flex } from '@/shared/ui/Flex';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { UserCard } from '@/shared/ui/UserCard';
 import { UserMini } from '@/shared/types/userCard';
 import { Button } from '@/shared/ui/Button';
@@ -11,6 +11,7 @@ interface IFriendProps {
 	friend: UserMini;
 	btnText: string;
 	withBtn?: boolean;
+	onAddFriend?: (friendId: string) => void;
 }
 
 const StyledHr = styled.div<{ hover: boolean }>`
@@ -21,8 +22,12 @@ const StyledHr = styled.div<{ hover: boolean }>`
 `;
 
 export const FriendCard = memo((props: IFriendProps) => {
-	const { friend, btnText, withBtn = true } = props;
+	const { friend, btnText, withBtn = true, onAddFriend } = props;
 	const { hover, onMouseOut, onMouseOver } = useHover();
+
+	const onAddFriendHandle = useCallback(() => {
+		onAddFriend?.(friend.id);
+	}, [friend.id, onAddFriend]);
 
 	return (
 		<Flex direction="column" gap="4">
@@ -33,7 +38,12 @@ export const FriendCard = memo((props: IFriendProps) => {
 			>
 				<UserCard user={friend} avatarSize="s" />
 				{hover && withBtn && (
-					<Button theme="outline" invert width="140px">
+					<Button
+						onClick={onAddFriendHandle}
+						theme="outline"
+						invert
+						width="140px"
+					>
 						<Text text={btnText} theme="primary-invert" textAlign="center" />
 					</Button>
 				)}

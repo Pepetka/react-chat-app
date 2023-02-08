@@ -1,5 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const getContains = require('../helpers/getContains.cjs');
+
+const searchFilter =
+	(search) =>
+	({ firstname, lastname }) => {
+		return getContains(`${firstname} ${lastname}`, search);
+	};
 
 const getUsers = (req, res) => {
 	if (!req.headers.authorization) {
@@ -7,7 +14,7 @@ const getUsers = (req, res) => {
 	}
 
 	try {
-		const { userId } = req.query;
+		const { userId, search = '' } = req.query;
 
 		const db = JSON.parse(
 			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
@@ -26,37 +33,43 @@ const getUsers = (req, res) => {
 			return follower.followerId === userId;
 		});
 
-		const Friends = friendsFromDb.map((friend) => {
-			let currentId;
+		const Friends = friendsFromDb
+			.map((friend) => {
+				let currentId;
 
-			if (friend.userId === userId) {
-				currentId = friend.friendId;
-			} else {
-				currentId = friend.userId;
-			}
+				if (friend.userId === userId) {
+					currentId = friend.friendId;
+				} else {
+					currentId = friend.userId;
+				}
 
-			const user = users.find((user) => user.id === currentId);
+				const user = users.find((user) => user.id === currentId);
 
-			const { id, avatar, firstname, lastname } = user;
+				const { id, avatar, firstname, lastname } = user;
 
-			return { id, avatar, firstname, lastname };
-		});
+				return { id, avatar, firstname, lastname };
+			})
+			.filter(searchFilter(search));
 
-		const Followers = followersFromDb.map((follower) => {
-			const user = users.find((user) => user.id === follower.followerId);
+		const Followers = followersFromDb
+			.map((follower) => {
+				const user = users.find((user) => user.id === follower.followerId);
 
-			const { id, avatar, firstname, lastname } = user;
+				const { id, avatar, firstname, lastname } = user;
 
-			return { id, avatar, firstname, lastname };
-		});
+				return { id, avatar, firstname, lastname };
+			})
+			.filter(searchFilter(search));
 
-		const Following = followingFromDb.map((follower) => {
-			const user = users.find((user) => user.id === follower.userId);
+		const Following = followingFromDb
+			.map((follower) => {
+				const user = users.find((user) => user.id === follower.userId);
 
-			const { id, avatar, firstname, lastname } = user;
+				const { id, avatar, firstname, lastname } = user;
 
-			return { id, avatar, firstname, lastname };
-		});
+				return { id, avatar, firstname, lastname };
+			})
+			.filter(searchFilter(search));
 
 		const Others = users
 			.filter((user) => {
@@ -74,7 +87,8 @@ const getUsers = (req, res) => {
 			})
 			.map(({ id, avatar, firstname, lastname }) => {
 				return { id, avatar, firstname, lastname };
-			});
+			})
+			.filter(searchFilter(search));
 
 		const response = {
 			Followers: Followers.length === 0 ? undefined : Followers,

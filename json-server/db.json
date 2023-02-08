@@ -146,17 +146,12 @@
 		}
 	],
 	"friends": [
-		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "03.02.2023" },
 		{ "userId": "6cbdb793", "friendId": "6cbdb795", "createdAt": "03.02.2023" },
 		{ "userId": "6cbdb793", "friendId": "6cbdb797", "createdAt": "03.02.2023" },
-		{ "userId": "6cbdb794", "friendId": "6cbdb797", "createdAt": "03.02.2023" },
-		{ "userId": "6cbdb794", "friendId": "6cbdb802", "createdAt": "03.02.2023" },
-		{ "userId": "6cbdb794", "friendId": "6cbdb801", "createdAt": "03.02.2023" },
-		{ "userId": "6cbdb794", "friendId": "6cbdb799", "createdAt": "03.02.2023" },
 		{ "userId": "6cbdb796", "friendId": "6cbdb798", "createdAt": "03.02.2023" },
-		{ "userId": "6cbdb799", "friendId": "6cbdb801", "createdAt": "03.02.2023" },
 		{ "userId": "6cbdb803", "friendId": "6cbdb795", "createdAt": "03.02.2023" },
-		{ "userId": "6cbdb803", "friendId": "6cbdb796", "createdAt": "03.02.2023" }
+		{ "userId": "6cbdb803", "friendId": "6cbdb796", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "08.02.2023" }
 	],
 	"followers": [
 		{
@@ -167,11 +162,6 @@
 		{
 			"userId": "6cbdb793",
 			"followerId": "6cbdb796",
-			"createdAt": "03.02.2023"
-		},
-		{
-			"userId": "6cbdb793",
-			"followerId": "6cbdb801",
 			"createdAt": "03.02.2023"
 		},
 		{
@@ -210,9 +200,14 @@
 			"createdAt": "03.02.2023"
 		},
 		{
+			"userId": "6cbdb793",
+			"followerId": "6cbdb801",
+			"createdAt": "08.02.2023"
+		},
+		{
 			"userId": "6cbdb804",
 			"followerId": "6cbdb793",
-			"createdAt": "03.02.2023"
+			"createdAt": "08.02.2023"
 		}
 	],
 	"posts": [

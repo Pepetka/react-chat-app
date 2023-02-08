@@ -1,13 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FriendSchema } from '../types/friendSchema';
 
-const initialState: FriendSchema = {};
+const initialState: FriendSchema = {
+	search: '',
+};
 
 export const friendSlice = createSlice({
 	name: 'friend',
 	initialState,
 	reducers: {
-		example: (state, { payload }: PayloadAction<any>) => {},
+		setSearch: (state, { payload }: PayloadAction<string>) => {
+			state.search = payload;
+		},
 	},
 });
 
