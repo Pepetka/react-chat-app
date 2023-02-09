@@ -1,0 +1,18 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { {{name}}Schema } from '../types/{{camelCase name}}Schema';
+
+const initialState: {{name}}Schema = {
+
+};
+
+export const {{camelCase name}}Slice = createSlice({
+	name: '{{camelCase name}}',
+	initialState,
+	reducers: {
+		example: (state, { payload }: PayloadAction<any>) => {
+
+		},
+	},
+});
+
+export const { actions: {{camelCase name}}Actions, reducer: {{camelCase name}}Reducer } = {{camelCase name}}Slice;

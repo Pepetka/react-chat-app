@@ -1,10 +1,10 @@
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 
 export interface Post {
 	id: string;
 	author: User;
 	text: string;
-	img: string;
+	img?: Array<string>;
 	createdAt: string;
 }
 

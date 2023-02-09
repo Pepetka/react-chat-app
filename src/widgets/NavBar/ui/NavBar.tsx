@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { FormEvent, memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
@@ -10,6 +10,10 @@ import { getUserAuthData, userActions } from '@/entities/User';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { useTranslation } from 'react-i18next';
+import { AppLink } from '@/shared/ui/AppLink';
+import { getFriendsPagePath, getMainPagePath } from '@/shared/const/router';
+import { Input } from '@/shared/ui/Input';
+import { useNavigate } from 'react-router-dom';
 
 interface INavBarProps {
 	currentPagePath: string;
@@ -35,51 +39,51 @@ const LogoName = styled.div`
 	color: var(--invert-primary-color);
 `;
 
-const StyledSearch = styled.input`
-	width: 370px;
-	height: 45px;
-	border-radius: 73px;
-	outline: none;
-	padding-right: 50px;
-	padding-left: 15px;
-	font: var(--font-m);
-	color: var(--primary-color);
-	border: none;
-	background: var(--bg-color);
-`;
-
-const StyledSearchButton = styled.div`
-	position: absolute;
-	top: 4px;
-	right: 8px;
-`;
-
 export const NavBar = memo((props: INavBarProps) => {
 	const { t } = useTranslation();
 	const { currentPagePath, onLogin, onRegister } = props;
 	const authData = useSelector(getUserAuthData);
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const [search, setSearch] = useState('');
+
+	const onChange = useCallback((value: string) => {
+		setSearch(value);
+	}, []);
 
 	const onLogout = useCallback(() => {
 		dispatch(userActions.removeUser());
 	}, [dispatch]);
 
+	const onSearch = useCallback(() => {
+		navigate(getFriendsPagePath(authData!.id, search));
+		setSearch('');
+	}, [authData, navigate, search]);
+
 	return (
 		<StyledNavBar>
 			<Flex justify="space-between" width="80%">
 				<Flex align="center" justify="space-between" width="600px">
-					<Flex align="center" width="auto">
-						<Icon SvgIcon={LogoSvg} invert />
-						<LogoName>ICE</LogoName>
-					</Flex>
+					<AppLink href={getMainPagePath()}>
+						<Flex align="center" width="auto">
+							<Icon size="l" SvgIcon={LogoSvg} invert />
+							<LogoName>ICE</LogoName>
+						</Flex>
+					</AppLink>
 					{authData && (
-						<Flex width="auto" align="center">
-							<StyledSearch />
-							<StyledSearchButton>
-								<Button theme="clear">
-									<Icon SvgIcon={SearchSvg} />
-								</Button>
-							</StyledSearchButton>
+						<Flex FlexTag="form" onSubmit={onSearch} width="auto">
+							<Input
+								border={false}
+								paddingInline="20px"
+								value={search}
+								onChange={onChange}
+								width="370px"
+								height="50px"
+								name="friend"
+								borderRadius="25px"
+								SvgIcon={SearchSvg}
+								onClick={onSearch}
+							/>
 						</Flex>
 					)}
 				</Flex>

@@ -1,5 +1,7 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Post, PostStats, UserPost } from '../model/types/postSchema';
+import { getUserAuthData } from '@/entities/User';
+import { StateSchema } from '@/app/provider/Store';
 
 interface IPostApiProps {
 	profileId: string;
@@ -7,7 +9,7 @@ interface IPostApiProps {
 	postId: string;
 }
 
-const postApi = rtkApi.injectEndpoints({
+export const postApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchPostsData: build.query<
 			Array<Post>,
@@ -23,7 +25,7 @@ const postApi = rtkApi.injectEndpoints({
 		}),
 		addPost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
-			{ authorId: string; img: string; text: string; profileId: string }
+			{ authorId: string; img?: Array<string>; text: string; profileId: string }
 		>({
 			query: ({ authorId, img, text, profileId }) => ({
 				url: '/posts',
@@ -35,7 +37,31 @@ const postApi = rtkApi.injectEndpoints({
 					userId: profileId,
 				},
 			}),
-			invalidatesTags: ['post'],
+			async onQueryStarted(
+				{ img, text, profileId },
+				{ dispatch, queryFulfilled, getState },
+			) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostsData',
+						{ profileId },
+						(draft) => {
+							draft.unshift({
+								id: String(Math.random()),
+								author: getUserAuthData(getState() as StateSchema)!,
+								img,
+								text,
+								createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+							});
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 		}),
 		deletePost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
@@ -49,7 +75,23 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
-			invalidatesTags: ['post'],
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostsData',
+						{ profileId: userId },
+						(draft) => {
+							const index = draft.findIndex((post) => post.id === postId);
+							draft.splice(index, 1);
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 		}),
 		sharePost: build.mutation<UserPost, Omit<IPostApiProps, 'profileId'>>({
 			query: ({ postId, userId }) => ({
@@ -60,6 +102,27 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId },
+						(draft) => {
+							if (!draft.isShared) {
+								Object.assign(draft, {
+									shared: String(Number(draft.shared) + 1),
+									isShared: true,
+								});
+							}
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 			invalidatesTags: ['postStats'],
 		}),
 		fetchPostStats: build.query<PostStats, Omit<IPostApiProps, 'profileId'>>({
@@ -84,6 +147,39 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId },
+						(draft) => {
+							if (draft.isLiked) {
+								Object.assign(draft, {
+									likes: String(Number(draft.likes) - 1),
+									isLiked: false,
+								});
+							} else if (draft.isDisliked) {
+								Object.assign(draft, {
+									likes: String(Number(draft.likes) + 1),
+									isLiked: true,
+									dislikes: String(Number(draft.dislikes) - 1),
+									isDisliked: false,
+								});
+							} else {
+								Object.assign(draft, {
+									likes: String(Number(draft.likes) + 1),
+									isLiked: true,
+								});
+							}
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 			invalidatesTags: ['postStats'],
 		}),
 		dislikePost: build.mutation<
@@ -98,6 +194,39 @@ const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
+			async onQueryStarted({ postId, userId }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					postApi.util.updateQueryData(
+						'fetchPostStats',
+						{ postId, userId },
+						(draft) => {
+							if (draft.isDisliked) {
+								Object.assign(draft, {
+									dislikes: String(Number(draft.dislikes) - 1),
+									isDisliked: false,
+								});
+							} else if (draft.isLiked) {
+								Object.assign(draft, {
+									dislikes: String(Number(draft.dislikes) + 1),
+									isDisliked: true,
+									likes: String(Number(draft.likes) - 1),
+									isLiked: false,
+								});
+							} else {
+								Object.assign(draft, {
+									dislikes: String(Number(draft.dislikes) + 1),
+									isDisliked: true,
+								});
+							}
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 			invalidatesTags: ['postStats'],
 		}),
 	}),

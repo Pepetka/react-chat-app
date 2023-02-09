@@ -45,6 +45,20 @@ BottomLeft.args = {
 	openDefault: true,
 };
 
+export const BottomCenter = Template.bind({});
+BottomCenter.args = {
+	children: (
+		<Flex direction="column" gap="16" width="100px" align="center">
+			<span>Item 1</span>
+			<span>Item 2</span>
+			<span>Item 3</span>
+		</Flex>
+	),
+	trigger: <div>Trigger</div>,
+	direction: 'bottom_center',
+	openDefault: true,
+};
+
 export const TopRight = Template.bind({});
 TopRight.args = {
 	children: (
@@ -70,5 +84,19 @@ TopLeft.args = {
 	),
 	trigger: <div>Trigger</div>,
 	direction: 'top_left',
+	openDefault: true,
+};
+
+export const TopCenter = Template.bind({});
+TopCenter.args = {
+	children: (
+		<Flex direction="column" gap="16" width="100px" align="center">
+			<span>Item 1</span>
+			<span>Item 2</span>
+			<span>Item 3</span>
+		</Flex>
+	),
+	trigger: <div>Trigger</div>,
+	direction: 'top_center',
 	openDefault: true,
 };

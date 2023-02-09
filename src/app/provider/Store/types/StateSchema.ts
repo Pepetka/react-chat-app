@@ -11,6 +11,7 @@ import {
 import { RegisterByUsernameSchema } from '@/features/RegisterByUsername';
 import { PostSchema } from '@/entities/Post';
 import { CommentSchema } from '@/entities/Comment';
+import { FriendSchema } from '@/entities/Friend';
 
 export interface StateSchema {
 	user: UserSchema;
@@ -18,6 +19,7 @@ export interface StateSchema {
 	comment?: CommentSchema;
 	authByUsername?: AuthByUsernameSchema;
 	registerByUsername?: RegisterByUsernameSchema;
+	friend?: FriendSchema;
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 }
 

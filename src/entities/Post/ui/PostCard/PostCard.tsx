@@ -1,8 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
-import { Avatar } from '@/shared/ui/Avatar';
 import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
@@ -15,12 +13,13 @@ import MoreIcon from '@/shared/assets/more.svg';
 import { Post } from '../../model/types/postSchema';
 import { useTranslation } from 'react-i18next';
 import { AppImg } from '@/shared/ui/AppImg';
-import { Spinner } from '@/shared/ui/Spinner';
-import { getProfilePagePath } from '@/shared/const/router';
-import { AppLink } from '@/shared/ui/AppLink';
 import { useFetchPostStatsQuery } from '../../api/postApi';
-import { CommentForm, CommentList } from '@/entities/Comment';
 import { Menu } from '@/shared/ui/Menu';
+import { Carousel } from '@/widgets/Carousel';
+import { Skeleton } from '@/shared/ui/Skeleton';
+import { Modal } from '@/shared/ui/Modal';
+import { UserCard } from '@/shared/ui/UserCard';
+import { PostComments } from '@/features/PostComments';
 
 interface IPostCardProps {
 	post: Post;
@@ -57,10 +56,19 @@ export const PostCard = memo((props: IPostCardProps) => {
 	const [success, setSuccess] = useState(false);
 	const [openComments, setOpenComments] = useState(openCommentsDefault);
 	const { t } = useTranslation('profile');
-	const { data: postStats } = useFetchPostStatsQuery({
+	const { data: postStats, isLoading } = useFetchPostStatsQuery({
 		postId: post.id,
 		userId,
 	});
+	const [isOpen, setIsOpen] = useState(false);
+
+	const onOpenModal = useCallback(() => {
+		setIsOpen(true);
+	}, []);
+
+	const onCloseModal = useCallback(() => {
+		setIsOpen(false);
+	}, []);
 
 	useEffect(() => {
 		let timerId: ReturnType<typeof setTimeout>;
@@ -101,16 +109,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 		<Card width="100%">
 			<Flex direction="column" gap="16">
 				<Flex justify="space-between">
-					<AppLink href={getProfilePagePath(post.author.id)}>
-						<Flex align="center" gap="8" width="auto">
-							<Avatar size="m" circle img={post.author.avatar} />
-							<Text
-								text={`${post.author.firstname} ${post.author.lastname}`}
-								size="l"
-								theme="primary-invert"
-							/>
-						</Flex>
-					</AppLink>
+					<UserCard user={post.author} avatarSize="m" />
 					{admin && (
 						<Menu
 							width="64px"
@@ -120,8 +119,8 @@ export const PostCard = memo((props: IPostCardProps) => {
 							<Button
 								onClick={onDeletePostHandle}
 								theme="clear"
-								width="100%"
-								height="100%"
+								width="120px"
+								height="48px"
 							>
 								{deleteLoading ? '...' : t('Delete')}
 							</Button>
@@ -131,33 +130,64 @@ export const PostCard = memo((props: IPostCardProps) => {
 				<Flex justify="space-between">
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
 					{post.img && (
-						<AppImg
-							width="385px"
-							height="385px"
-							src={post.img}
-							alt={t('Post image')}
-							fallback={<Spinner />}
-							errorFallback={
-								<Text
-									text={t('Something went wrong')}
-									size="l"
-									textAlign="center"
-								/>
-							}
-						/>
+						<>
+							<Carousel carouselWidth="385px" carouselHeight="385px">
+								{post.img.map((src, index) => (
+									<Flex key={index} height="385px" align="center">
+										<AppImg
+											width="385px"
+											src={src}
+											alt={t('Post image')}
+											errorFallback={
+												<Text
+													text={t('Something went wrong')}
+													size="l"
+													textAlign="center"
+												/>
+											}
+											onClick={onOpenModal}
+										/>
+									</Flex>
+								))}
+							</Carousel>
+							<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
+								<Carousel carouselWidth="700px" carouselHeight="700px">
+									{post.img.map((src, index) => (
+										<Flex key={index} height="700px" align="center">
+											<AppImg
+												width="700px"
+												src={src}
+												alt={t('Post image')}
+												errorFallback={
+													<Text
+														text={t('Something went wrong')}
+														size="l"
+														textAlign="center"
+													/>
+												}
+											/>
+										</Flex>
+									))}
+								</Carousel>
+							</Modal>
+						</>
 					)}
 				</Flex>
 				<Flex align="flex-end" justify="space-between">
 					<Text text={post.createdAt} theme="secondary-invert" />
 					<Flex gap="24" align="center" width="auto">
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="auto"
-								text={postStats?.comments ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.comments ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={onToggleComments}
 								invert={openComments}
@@ -168,58 +198,65 @@ export const PostCard = memo((props: IPostCardProps) => {
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="auto"
-								text={postStats?.likes ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.likes ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={onLikePostHandle}
 								invert={postStats?.isLiked}
+								disabled={likeLoading}
 								width="64px"
 								height="64px"
 							>
-								{likeLoading ? (
-									'...'
-								) : (
-									<Icon SvgIcon={LikeIcon} invert={!postStats?.isLiked} />
-								)}
+								<Icon SvgIcon={LikeIcon} invert={!postStats?.isLiked} />
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="auto"
-								text={postStats?.dislikes ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.dislikes ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={onDislikePostHandle}
 								invert={postStats?.isDisliked}
+								disabled={dislikeLoading}
 								width="64px"
 								height="64px"
 							>
-								{dislikeLoading ? (
-									'...'
-								) : (
-									<Icon SvgIcon={DislikeIcon} invert={!postStats?.isDisliked} />
-								)}
+								<Icon SvgIcon={DislikeIcon} invert={!postStats?.isDisliked} />
 							</Button>
 						</Flex>
 						<Flex gap="8" align="center" width="auto">
-							<Text
-								width="auto"
-								text={postStats?.shared ?? '0'}
-								textAlign="right"
-								theme="primary-invert"
-								size="l"
-							/>
+							{isLoading ? (
+								<Skeleton height="24px" width="50px" margin="4px" />
+							) : (
+								<Text
+									width="50px"
+									text={postStats?.shared ?? '0'}
+									textAlign="right"
+									theme="primary-invert"
+									size="l"
+								/>
+							)}
 							<Button
 								onClick={!admin ? onSharePostHandle : undefined}
 								invert={postStats?.isShared}
+								disabled={shareLoading}
 								width="64px"
 								height="64px"
 							>
@@ -235,11 +272,11 @@ export const PostCard = memo((props: IPostCardProps) => {
 					</Flex>
 				</Flex>
 				{openComments && (
-					<>
-						<Text title={t('Comments')} theme="primary-invert" size="l" />
-						<CommentForm postId={post.id} userId={userId} />
-						<CommentList postId={post.id} userId={userId} />
-					</>
+					<PostComments
+						postId={post.id}
+						userId={userId}
+						commentsNum={postStats?.comments ? Number(postStats.comments) : 0}
+					/>
 				)}
 			</Flex>
 		</Card>

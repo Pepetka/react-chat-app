@@ -1,22 +1,24 @@
 import { memo, ReactElement, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
+import { Skeleton } from '@/shared/ui/Skeleton';
 
 interface IAppImgControls {
 	width?: string;
 	height?: string;
+	onClick?: () => void;
 }
 
 interface IAppImgProps extends IAppImgControls {
 	src?: string;
 	alt?: string;
-	fallback?: ReactElement;
 	errorFallback?: ReactElement;
 }
 
 const StyledImg = styled.img<IAppImgControls>`
 	width: ${(props) => props.width ?? 'auto'};
 	height: ${(props) => props.height ?? 'auto'};
+	cursor: ${(props) => (props.onClick ? 'pointer' : undefined)};
 `;
 
 export const AppImg = memo((props: IAppImgProps) => {
@@ -25,8 +27,8 @@ export const AppImg = memo((props: IAppImgProps) => {
 		height = 'auto',
 		width = 'auto',
 		errorFallback,
-		fallback,
 		alt = 'App image',
+		onClick,
 	} = props;
 	const [isLoading, setIsLoading] = useState(true);
 	const [isError, setIsError] = useState(false);
@@ -42,10 +44,13 @@ export const AppImg = memo((props: IAppImgProps) => {
 		};
 	}, [src]);
 
-	if (isLoading && fallback) {
+	if (isLoading) {
 		return (
-			<Flex width={width} height={height} justify="center" align="center">
-				{fallback}
+			<Flex
+				width={width === 'auto' ? height : width}
+				height={height === 'auto' ? width : height}
+			>
+				<Skeleton height="100%" width="100%" />
 			</Flex>
 		);
 	}
@@ -58,5 +63,13 @@ export const AppImg = memo((props: IAppImgProps) => {
 		);
 	}
 
-	return <StyledImg src={src} width={width} height={height} alt={alt} />;
+	return (
+		<StyledImg
+			onClick={onClick}
+			src={src}
+			width={width}
+			height={height}
+			alt={alt}
+		/>
+	);
 });

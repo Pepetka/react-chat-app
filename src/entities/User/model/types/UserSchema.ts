@@ -1,14 +1,4 @@
-export interface User {
-	id: string;
-	username: string;
-	email: string;
-	firstname: string;
-	lastname: string;
-	age: number;
-	createdAt: string;
-	avatar: string;
-	status?: string;
-}
+import { User } from '@/shared/types/userCard';
 
 export interface UserSchema {
 	authData?: User;

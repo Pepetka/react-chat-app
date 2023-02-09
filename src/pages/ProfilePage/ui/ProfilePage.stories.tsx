@@ -4,17 +4,16 @@ import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/Route
 import { getProfilePagePath } from '@/shared/const/router';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { rest } from 'msw';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
 import { Social } from '@/features/SocialCard/model/types/socialCardSchema';
-import { Post } from '@/entities/Post/model/types/postSchema';
+import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
 
 export default {
 	title: 'pages/ProfilePage',
 	component: ProfilePage,
-	decorators: [RouterDecorator(getProfilePagePath('6cbdb793'))],
 } as Meta<typeof ProfilePage>;
 
 const Template: StoryFn<typeof ProfilePage> = (args) => <ProfilePage />;
@@ -74,25 +73,35 @@ const posts: Array<Post> = [
 	{
 		id: '0',
 		author: author as User,
-		img: image,
+		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '1',
 		author: author as User,
-		img: image,
+		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '2',
 		author: author as User,
-		img: image,
+		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 ];
+
+const postStats: PostStats = {
+	comments: '10',
+	dislikes: '10',
+	likes: '10',
+	shared: '10',
+	isDisliked: true,
+	isLiked: true,
+	isShared: true,
+};
 
 export const Normal = Template.bind({});
 Normal.args = {};
@@ -105,7 +114,7 @@ Normal.parameters = {
 		rest.get(
 			`${__API__}relations?userId=6cbdb793&friendId=6cbdb793`,
 			(_req, res, ctx) => {
-				const relations: Relations = 'nobody';
+				const relations: Relations = { relations: 'nobody' };
 
 				return res(ctx.json(relations));
 			},
@@ -125,6 +134,12 @@ Normal.parameters = {
 		rest.get(`${__API__}posts?userId=6cbdb793`, (_req, res, ctx) => {
 			return res(ctx.json(posts));
 		}),
+		rest.get(
+			`${__API__}postStats?postId=0&userId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(postStats));
+			},
+		),
 	],
 };
 
@@ -151,5 +166,11 @@ Error.parameters = {
 		rest.get(`${__API__}posts?userId=6cbdb793`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
+		rest.get(
+			`${__API__}postStats?postId=0&userId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.status(403));
+			},
+		),
 	],
 };

@@ -1,5 +1,6 @@
 import {
 	AppRoutes,
+	getFriendsPagePath,
 	getLoginPagePath,
 	getMainPagePath,
 	getProfilePagePath,
@@ -10,6 +11,7 @@ import { MainPage } from '@/pages/MainPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
+import { FriendsPage } from '@/pages/FriendsPage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
@@ -31,5 +33,10 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 		path: getRegisterPagePath(),
 		element: <RegisterPage />,
 		authOnly: false,
+	},
+	[AppRoutes.FRIENDS]: {
+		path: getFriendsPagePath(':id'),
+		element: <FriendsPage />,
+		authOnly: true,
 	},
 };

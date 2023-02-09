@@ -1,46 +1,49 @@
 import { memo, useCallback } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { CommentCard } from '../CommentCard/CommentCard';
-import {
-	useDeleteCommentMutation,
-	useFetchCommentsQuery,
-} from '../../api/commentApi';
-import { Spinner } from '@/shared/ui/Spinner';
 import { Text } from '@/shared/ui/Text';
 import { useTranslation } from 'react-i18next';
+import { CommentCardSkeleton } from '../CommentCardSkeleton/CommentCardSkeleton';
+import { Comment } from '../../model/types/commentSchema';
 
 interface ICommentListProps {
 	postId: string;
 	userId: string;
+	skeletonNum?: number;
+	comments?: Array<Comment>;
+	isLoading: boolean;
+	isError: boolean;
+	onDeleteComment?: ({
+		commentId,
+		postId,
+	}: {
+		commentId: string;
+		postId: string;
+	}) => void;
+	deleteLoading: boolean;
 }
 
 export const CommentList = memo((props: ICommentListProps) => {
-	const { postId, userId } = props;
-	const { t } = useTranslation('profile');
 	const {
-		data: comments,
+		postId,
+		userId,
+		skeletonNum,
+		comments,
+		deleteLoading,
+		isError,
 		isLoading,
-		error,
-	} = useFetchCommentsQuery({ postId });
-	const [onDeleteComment, { isLoading: deleteLoading }] =
-		useDeleteCommentMutation();
+		onDeleteComment,
+	} = props;
+	const { t } = useTranslation('profile');
 
 	const onDeleteCommentHandle = useCallback(
 		(commentId: string) => {
-			onDeleteComment({ commentId });
+			onDeleteComment?.({ commentId, postId });
 		},
-		[onDeleteComment],
+		[onDeleteComment, postId],
 	);
 
-	if (isLoading) {
-		return (
-			<Flex width="100%" height="100px" justify="center" align="center">
-				<Spinner theme="invert" />
-			</Flex>
-		);
-	}
-
-	if (error) {
+	if (isError) {
 		return (
 			<Flex width="100%" height="100px" justify="center" align="center">
 				<Text
@@ -49,6 +52,16 @@ export const CommentList = memo((props: ICommentListProps) => {
 					textAlign="center"
 					size="l"
 				/>
+			</Flex>
+		);
+	}
+
+	if (isLoading || !comments) {
+		return (
+			<Flex direction="column" gap="16">
+				{new Array(skeletonNum ?? 3).fill(0).map((_, index) => (
+					<CommentCardSkeleton key={index} admin={false} />
+				))}
 			</Flex>
 		);
 	}

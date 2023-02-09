@@ -1,15 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { CommentCard } from './CommentCard';
-import { User } from '@/entities/User';
+import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
 
 export default {
-	title: 'entities/comment/CommentCard',
+	title: 'entities/Comment/CommentCard',
 	component: CommentCard,
 	decorators: [
-		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">

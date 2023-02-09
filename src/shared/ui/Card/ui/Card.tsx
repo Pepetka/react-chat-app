@@ -22,9 +22,6 @@ const StyledDiv = styled.div<ICardControls>`
 	padding: ${(props) => props.padding ?? '0'};
 	width: ${(props) => props.width ?? 'auto'};
 	height: ${(props) => props.height ?? 'auto'};
-	display: flex;
-	justify-content: center;
-	align-items: center;
 `;
 
 export const Card = (props: ICardProps) => {

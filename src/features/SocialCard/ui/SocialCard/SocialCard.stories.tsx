@@ -1,15 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { SocialCard } from './SocialCard';
 import { rest } from 'msw';
-import { Social } from '@/features/SocialCard/model/types/socialCardSchema';
-import { User } from '@/entities/User';
+import { Social } from '../../model/types/socialCardSchema';
+import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
 
 export default {
-	title: 'features/SocialCard',
+	title: 'features/SocialCard/SocialCard',
 	component: SocialCard,
-	decorators: [RouterDecorator()],
 } as Meta<typeof SocialCard>;
 
 const Template: StoryFn<typeof SocialCard> = (args) => <SocialCard {...args} />;

@@ -35,74 +35,286 @@
 			"age": 22,
 			"createdAt": "15.01.2023",
 			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb796",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Oleg",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb797",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb798",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Max",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb799",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Den",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb800",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Vlad",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb801",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Pasha",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb802",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Igor",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
+		},
+		{
+			"id": "6cbdb803",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Pavel",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://miro.medium.com/max/2400/1*1WCjO1iYMo7J7Upp8KMfLA@2x.jpeg"
+		},
+		{
+			"id": "6cbdb804",
+			"username": "user1",
+			"password": "123",
+			"status": "Ничего в этой жизни не бывает зря,\nничего в этой жизни не бывает даром",
+			"firstname": "Oleg",
+			"lastname": "Kuznetsov",
+			"email": "vlad.kznetsov@gmail.com",
+			"age": 22,
+			"createdAt": "15.01.2023",
+			"avatar": "https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png"
 		}
 	],
 	"friends": [
-		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "24.01.2023" }
+		{ "userId": "6cbdb793", "friendId": "6cbdb795", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb793", "friendId": "6cbdb797", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb796", "friendId": "6cbdb798", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb803", "friendId": "6cbdb795", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb803", "friendId": "6cbdb796", "createdAt": "03.02.2023" },
+		{ "userId": "6cbdb793", "friendId": "6cbdb794", "createdAt": "09.02.2023" }
 	],
 	"followers": [
 		{
+			"userId": "6cbdb793",
+			"followerId": "6cbdb799",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb793",
+			"followerId": "6cbdb796",
+			"createdAt": "03.02.2023"
+		},
+		{
 			"userId": "6cbdb795",
+			"followerId": "6cbdb796",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb797",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb798",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb795",
+			"followerId": "6cbdb799",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb796",
+			"followerId": "6cbdb802",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb800",
 			"followerId": "6cbdb793",
-			"createdAt": "23.01.2023"
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb802",
+			"followerId": "6cbdb793",
+			"createdAt": "03.02.2023"
+		},
+		{
+			"userId": "6cbdb793",
+			"followerId": "6cbdb801",
+			"createdAt": "08.02.2023"
+		},
+		{
+			"userId": "6cbdb804",
+			"followerId": "6cbdb793",
+			"createdAt": "08.02.2023"
 		}
 	],
 	"posts": [
 		{
 			"authorId": "6cbdb793",
 			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"img": [
+				"http://getdrawings.com/images/pools-drawing-44.jpg",
+				"https://s.zefirka.net/images/2015-08-20/neobychnye-bzlikie-selfi-ot-ari-fararoj/neobychnye-bzlikie-selfi-ot-ari-fararoj-7.jpg"
+			],
 			"createdAt": "22:16 14.01.2021",
 			"id": "0"
 		},
 		{
 			"authorId": "6cbdb793",
 			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"img": ["http://getdrawings.com/images/pools-drawing-44.jpg"],
 			"createdAt": "12:20 20.10.2020",
 			"id": "1"
 		},
 		{
 			"authorId": "6cbdb794",
 			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"img": ["http://getdrawings.com/images/pools-drawing-44.jpg"],
 			"createdAt": "15:00 14.01.2020",
 			"id": "2"
 		},
 		{
 			"authorId": "6cbdb793",
 			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"img": [
+				"http://getdrawings.com/images/pools-drawing-44.jpg",
+				"https://s.zefirka.net/images/2015-08-20/neobychnye-bzlikie-selfi-ot-ari-fararoj/neobychnye-bzlikie-selfi-ot-ari-fararoj-7.jpg"
+			],
 			"createdAt": "15:24 14.01.2020",
 			"id": "3"
 		},
 		{
 			"authorId": "6cbdb794",
 			"text": "Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!",
-			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"img": [
+				"https://s.zefirka.net/images/2015-08-20/neobychnye-bzlikie-selfi-ot-ari-fararoj/neobychnye-bzlikie-selfi-ot-ari-fararoj-7.jpg",
+				"http://getdrawings.com/images/pools-drawing-44.jpg"
+			],
 			"createdAt": "15:24 14.01.2020",
 			"id": "4"
 		},
 		{
 			"authorId": "6cbdb793",
 			"text": "Some news",
-			"img": "http://getdrawings.com/images/pools-drawing-44.jpg",
+			"img": ["http://getdrawings.com/images/pools-drawing-44.jpg"],
 			"createdAt": "12:54 24.01.2023",
 			"id": "GmSpvBG"
 		},
 		{
 			"authorId": "6cbdb793",
 			"text": "New post",
-			"img": "",
 			"createdAt": "14:24 24.01.2023",
 			"id": "d57e44cf-a9dd-4957-a56c-67910dea1e5c"
 		},
 		{
 			"authorId": "6cbdb793",
 			"text": "Post",
-			"img": "",
 			"createdAt": "13:41 25.01.2023",
 			"id": "ea740bc5-9213-4b2f-a58b-5436e2272e44"
+		},
+		{
+			"authorId": "6cbdb794",
+			"text": "New post",
+			"img": [
+				"http://getdrawings.com/images/pools-drawing-44.jpg",
+				"https://s.zefirka.net/images/2015-08-20/neobychnye-bzlikie-selfi-ot-ari-fararoj/neobychnye-bzlikie-selfi-ot-ari-fararoj-7.jpg",
+				"http://getdrawings.com/images/pools-drawing-44.jpg"
+			],
+			"createdAt": "12:34 30.01.2023",
+			"id": "e8a183d9-5b1f-4c09-bf21-cfba6b063a75"
+		},
+		{
+			"authorId": "6cbdb794",
+			"text": "New post",
+			"createdAt": "12:36 30.01.2023",
+			"id": "cb59c390-e3dd-4bb3-a376-cdaf5f099564"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "",
+			"img": [
+				"https://thumbs.dreamstime.com/b/person-selfie-one-line-drawing-man-taking-picture-smartphone-mobile-phone-camera-concept-narcissist-technology-166393132.jpg"
+			],
+			"createdAt": "10:33 02.02.2023",
+			"id": "cc267ae2-a7f0-49f6-b75a-38a69a1dac36"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Post",
+			"img": [
+				"https://cdn.wallpapersafari.com/70/6/cuDYdF.jpg",
+				"https://kartinkin.net/pics/uploads/posts/2022-07/1657888342_47-kartinkin-net-p-vodopad-raduzhnii-priroda-krasivo-foto-52.jpg"
+			],
+			"createdAt": "10:39 02.02.2023",
+			"id": "42e896d8-91a0-4e53-97a8-a9aeadebe42a"
+		},
+		{
+			"authorId": "6cbdb793",
+			"text": "Post",
+			"createdAt": "10:33 06.02.2023",
+			"id": "fa999cdf-d236-4c21-b1c6-86ac327a2bdb"
 		}
 	],
 	"user-posts": [
@@ -117,10 +329,17 @@
 		{ "userId": "6cbdb794", "postId": "0" },
 		{ "userId": "6cbdb794", "postId": "GmSpvBG" },
 		{ "userId": "6cbdb794", "postId": "4" },
-		{ "userId": "6cbdb793", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" },
-		{ "userId": "6cbdb794", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" }
+		{ "userId": "6cbdb794", "postId": "ea740bc5-9213-4b2f-a58b-5436e2272e44" },
+		{ "userId": "6cbdb794", "postId": "e8a183d9-5b1f-4c09-bf21-cfba6b063a75" },
+		{ "userId": "6cbdb794", "postId": "cb59c390-e3dd-4bb3-a376-cdaf5f099564" },
+		{ "userId": "6cbdb793", "postId": "cc267ae2-a7f0-49f6-b75a-38a69a1dac36" },
+		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" },
+		{ "userId": "6cbdb793", "postId": "fa999cdf-d236-4c21-b1c6-86ac327a2bdb" }
 	],
-	"post-likes": [{ "postId": 2, "userId": "6cbdb793" }],
+	"post-likes": [
+		{ "userId": "6cbdb794", "postId": "0" },
+		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" }
+	],
 	"post-dislikes": [],
 	"comments": [
 		{
@@ -150,6 +369,62 @@
 			"authorId": "6cbdb794",
 			"postId": "1",
 			"createdAt": "13:46 26.01.2023"
+		},
+		{
+			"id": "9543351a-70d4-492b-8246-7efdfbba2783",
+			"text": "Comment",
+			"authorId": "6cbdb794",
+			"postId": "3",
+			"createdAt": "13:11 30.01.2023"
+		},
+		{
+			"id": "abecde57-ac61-4cd3-afa4-275da3c02991",
+			"text": "New comment",
+			"authorId": "6cbdb794",
+			"postId": "0",
+			"createdAt": "13:46 30.01.2023"
+		},
+		{
+			"id": "ce35cdda-5576-4871-b84b-4ac8fbd7fc26",
+			"text": "Hi",
+			"authorId": "6cbdb794",
+			"postId": "0",
+			"createdAt": "13:48 30.01.2023"
+		},
+		{
+			"id": "283ecd52-4a62-4027-a168-bd2b6fb72777",
+			"text": "Comment",
+			"authorId": "6cbdb793",
+			"postId": "2",
+			"createdAt": "14:42 31.01.2023"
+		},
+		{
+			"id": "aa40bfa0-97fd-4764-a282-92f61c1654d0",
+			"text": "Comment",
+			"authorId": "6cbdb793",
+			"postId": "0",
+			"createdAt": "14:20 01.02.2023"
+		},
+		{
+			"id": "68afec61-fe0c-45e0-a9f4-3dfe16161204",
+			"text": "2",
+			"authorId": "6cbdb793",
+			"postId": "1",
+			"createdAt": "11:44 03.02.2023"
+		},
+		{
+			"id": "74a9586f-2b20-4b92-8cd4-b0fb100d84c0",
+			"text": "3",
+			"authorId": "6cbdb793",
+			"postId": "1",
+			"createdAt": "11:45 03.02.2023"
+		},
+		{
+			"id": "ef661ee2-303e-4cef-a15c-0b4ef8b73366",
+			"text": "Hello",
+			"authorId": "6cbdb793",
+			"postId": "0",
+			"createdAt": "12:50 03.02.2023"
 		}
 	],
 	"groups": [],

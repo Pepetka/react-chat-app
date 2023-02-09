@@ -1,11 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { AppLink } from './AppLink';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
 
 export default {
 	title: 'shared/AppLink',
 	component: AppLink,
-	decorators: [RouterDecorator()],
 } as Meta<typeof AppLink>;
 
 const Template: StoryFn<typeof AppLink> = (args) => <AppLink {...args} />;

@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
@@ -8,10 +8,12 @@ import {
 	useAddFriendMutation,
 	useFetchProfileDataQuery,
 	useFetchRelationsDataQuery,
-} from '../api/profileCardApi';
-import { Spinner } from '@/shared/ui/Spinner';
+} from '../../api/profileCardApi';
 import { useTranslation } from 'react-i18next';
-import { Relations } from '../model/types/profileCardSchema';
+import { Relations } from '../../model/types/profileCardSchema';
+import { ProfileCardSkeleton } from '../ProfileCardSkeleton/ProfileCardSkeleton';
+import { Modal } from '@/shared/ui/Modal';
+import { AppImg } from '@/shared/ui/AppImg';
 
 interface IProfileCardProps {
 	userId: string;
@@ -31,16 +33,27 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	);
 	const {
 		data: relationsData,
-		isFetching: relationsLoading,
+		isLoading: relationsLoading,
 		error: relationsError,
-	} = useFetchRelationsDataQuery({
-		userId,
-		friendId: profileId,
-	});
-	const [onAddFriend, { isLoading: addFriendLoading, error: addFriendError }] =
-		useAddFriendMutation();
+	} = useFetchRelationsDataQuery(
+		{
+			userId,
+			friendId: profileId,
+		},
+		{ refetchOnMountOrArgChange: true },
+	);
+	const [onAddFriend, { error: addFriendError }] = useAddFriendMutation();
+	const [isOpen, setIsOpen] = useState(false);
 
-	const friendBtnText: Record<Relations, string> = useMemo(
+	const onOpenModal = useCallback(() => {
+		setIsOpen(true);
+	}, []);
+
+	const onCloseModal = useCallback(() => {
+		setIsOpen(false);
+	}, []);
+
+	const friendBtnText: Record<Relations['relations'], string> = useMemo(
 		() => ({
 			follower: 'Add friend',
 			following: 'Unfollow',
@@ -54,14 +67,8 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		onAddFriend({ userId, friendId: profileId });
 	}, [onAddFriend, profileId, userId]);
 
-	if (profileLoading || relationsLoading || addFriendLoading) {
-		return (
-			<Card width="100%" height="400px" borderRadius={false}>
-				<Flex height="100%" justify="center" align="center">
-					<Spinner theme="invert" />
-				</Flex>
-			</Card>
-		);
+	if (profileLoading || relationsLoading) {
+		return <ProfileCardSkeleton showBtns={profileId !== userId} />;
 	}
 
 	if (profileError || relationsError || addFriendError) {
@@ -117,7 +124,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 								<Text
 									textAlign="center"
 									size="l"
-									text={t(friendBtnText[relationsData ?? 'nobody'])}
+									text={t(friendBtnText[relationsData?.relations ?? 'nobody'])}
 								/>
 							</Button>
 							<Button width="180px" height="50px" invert>
@@ -126,7 +133,25 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 						</Flex>
 					)}
 				</Flex>
-				<Avatar img={profileData?.[0]?.avatar ?? ''} size="xl" />
+				<Avatar
+					src={profileData?.[0]?.avatar ?? ''}
+					size="xl"
+					onClick={onOpenModal}
+				/>
+				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
+					<AppImg
+						width="700px"
+						src={profileData?.[0]?.avatar ?? ''}
+						alt={t('Avatar')}
+						errorFallback={
+							<Text
+								text={t('Something went wrong')}
+								size="l"
+								textAlign="center"
+							/>
+						}
+					/>
+				</Modal>
 			</Flex>
 		</Card>
 	);

@@ -1,12 +1,16 @@
 import { memo } from 'react';
-import { NavLink } from 'react-router-dom';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
-import { getMainPagePath, getProfilePagePath } from '@/shared/const/router';
+import {
+	getFriendsPagePath,
+	getMainPagePath,
+	getProfilePagePath,
+} from '@/shared/const/router';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { AppLink } from '@/shared/ui/AppLink';
 
 const StyledSidebar = styled.div`
 	flex: 0 0 var(--sidebar-width);
@@ -19,12 +23,15 @@ export const SideBar = memo(() => {
 	return (
 		<StyledSidebar>
 			<Flex direction="column" gap="8">
-				<NavLink to={getMainPagePath()}>
+				<AppLink href={getMainPagePath()}>
 					<Text text={t('Main page')} size="xl" />
-				</NavLink>
-				<NavLink to={getProfilePagePath(authData?.id ?? '')}>
+				</AppLink>
+				<AppLink href={getProfilePagePath(authData?.id ?? '')}>
 					<Text text={t('My profile')} size="xl" />
-				</NavLink>
+				</AppLink>
+				<AppLink href={getFriendsPagePath(authData?.id ?? '')}>
+					<Text text={t('My friends')} size="xl" />
+				</AppLink>
 			</Flex>
 		</StyledSidebar>
 	);

@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode } from 'react';
+import { FormEvent, ReactNode, useCallback } from 'react';
 import styled from 'styled-components';
 
 interface IFlexControls {
@@ -14,6 +14,8 @@ interface IFlexControls {
 interface IFlexProps extends IFlexControls {
 	children: ReactNode;
 	FlexTag?: 'div' | 'form' | 'label';
+	onMouseOver?: () => void;
+	onMouseOut?: () => void;
 }
 
 interface IFlexDiv extends IFlexProps {
@@ -35,6 +37,7 @@ const StyledFlex = styled.div<IFlexControls>`
 	gap: ${(props) => (props.gap ? `${props.gap}px` : '0')};
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
+	flex: 0 1 auto;
 `;
 
 export const Flex = (props: IFlexDiv | IFlexForm) => {
@@ -49,7 +52,18 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 		height = 'auto',
 		onSubmit,
 		relative = true,
+		onMouseOut,
+		onMouseOver,
 	} = props;
+
+	const onSubmitHandle = useCallback(
+		(event: FormEvent<HTMLFormElement>) => {
+			event.preventDefault();
+
+			onSubmit?.(event);
+		},
+		[onSubmit],
+	);
 
 	return (
 		<StyledFlex
@@ -60,8 +74,10 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 			gap={gap}
 			width={width}
 			height={height}
-			onSubmit={onSubmit}
+			onSubmit={onSubmit ? onSubmitHandle : undefined}
 			relative={relative}
+			onMouseOut={onMouseOut}
+			onMouseOver={onMouseOver}
 		>
 			{children}
 		</StyledFlex>

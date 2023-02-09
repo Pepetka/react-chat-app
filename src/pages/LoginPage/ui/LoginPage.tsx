@@ -1,8 +1,8 @@
 import { authByUsernameReducer, LoginForm } from '@/features/AuthByUsername';
 import { DynamicModuleLoader } from '@/shared/components';
 import { memo } from 'react';
-import { Flex } from '@/shared/ui/Flex';
 import styled from 'styled-components';
+import { Flex } from '@/shared/ui/Flex';
 
 const StyledLoginPage = styled.div`
 	padding-top: 50px;

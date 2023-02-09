@@ -8,10 +8,10 @@ import {
 	useLikePostMutation,
 	useSharePostMutation,
 } from '../../api/postApi';
-import { Spinner } from '@/shared/ui/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Text } from '@/shared/ui/Text';
 import { Card } from '@/shared/ui/Card';
+import { PostCardSkeleton } from '../PostCardSkeleton/PostCardSkeleton';
 
 interface IPostListProps {
 	userId: string;
@@ -39,9 +39,9 @@ export const PostList = memo((props: IPostListProps) => {
 
 	const onDeletePostHandle = useCallback(
 		(postId: string) => {
-			onDeletePost({ postId, userId });
+			onDeletePost({ postId, userId: profileId });
 		},
-		[onDeletePost, userId],
+		[onDeletePost, profileId],
 	);
 
 	const onSharePostHandle = useCallback(
@@ -71,21 +71,9 @@ export const PostList = memo((props: IPostListProps) => {
 	if (isLoading) {
 		return (
 			<Flex direction="column" gap="40">
-				<Card width="100%" height="300px">
-					<Flex width="100%" height="100%" justify="center" align="center">
-						<Spinner theme="invert" />
-					</Flex>
-				</Card>
-				<Card width="100%" height="300px">
-					<Flex width="100%" height="100%" justify="center" align="center">
-						<Spinner theme="invert" />
-					</Flex>
-				</Card>
-				<Card width="100%" height="300px">
-					<Flex width="100%" height="100%" justify="center" align="center">
-						<Spinner theme="invert" />
-					</Flex>
-				</Card>
+				<PostCardSkeleton admin={userId === profileId} />
+				<PostCardSkeleton admin={userId === profileId} />
+				<PostCardSkeleton admin={userId === profileId} />
 			</Flex>
 		);
 	}
@@ -117,7 +105,7 @@ export const PostList = memo((props: IPostListProps) => {
 					onDislikePost={onDislikePostHandle}
 					onDeletePost={onDeletePostHandle}
 					key={post.id}
-					admin={userId === profileId}
+					admin={userId === profileId || userId === post.author.id}
 					userId={userId}
 					post={post}
 				/>

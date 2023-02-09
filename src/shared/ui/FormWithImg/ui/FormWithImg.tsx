@@ -14,6 +14,12 @@ import PaperclipIcon from '@/shared/assets/paperclip.svg';
 import SuccessIcon from '@/shared/assets/check.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { AppImg } from '@/shared/ui/AppImg';
+import { Popover } from '@/shared/ui/Popover';
+import { Text } from '@/shared/ui/Text';
+import { useTranslation } from 'react-i18next';
+import { Carousel } from '@/widgets/Carousel';
+import { Modal } from '@/shared/ui/Modal';
+import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface ISendWithImgFormControls {
 	withImg?: boolean;
@@ -121,8 +127,64 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		withImg = false,
 		previewImgDefault = false,
 	} = props;
+	const { t } = useTranslation();
 	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
 	const [success, setSuccess] = useState(false);
+	const [isFocus, setIsFocus] = useState(false);
+	const [shiftPressed, setShiftPressed] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+
+	const onOpenModal = useCallback(() => {
+		setIsOpen(true);
+	}, []);
+
+	const onCloseModal = useCallback(() => {
+		setIsOpen(false);
+	}, []);
+
+	const onFocus = useCallback(() => {
+		setIsFocus(true);
+	}, []);
+
+	const onBlur = useCallback(() => {
+		setIsFocus(false);
+	}, []);
+
+	const onKeyDownShift = useCallback(() => {
+		setShiftPressed(true);
+	}, []);
+
+	const onKeyDownEnter = useCallback(
+		(event: KeyboardEvent) => {
+			event.preventDefault();
+			onSubmit?.();
+		},
+		[onSubmit],
+	);
+
+	const onKeyUp = useCallback(() => {
+		setShiftPressed(false);
+	}, []);
+
+	useKeyboardEvent({
+		addCondition: isFocus,
+		callback: onKeyDownShift,
+		event: 'keydown',
+		key: 'Shift',
+	});
+
+	useKeyboardEvent({
+		addCondition: shiftPressed && isFocus,
+		callback: onKeyDownEnter,
+		event: 'keydown',
+		key: 'Enter',
+	});
+
+	useKeyboardEvent({
+		callback: onKeyUp,
+		event: 'keyup',
+		key: 'Shift',
+	});
 
 	useEffect(() => {
 		let timerId: ReturnType<typeof setTimeout>;
@@ -179,26 +241,50 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 				) : (
 					<StyledImgWrapper>
 						<Flex width="100%" height="100%" gap="16" align="center">
-							{imgValue.split('\n').map((img, index) => (
-								<AppImg key={index} src={img} height="80px" />
+							{imgValue.split('\n').map((src, index) => (
+								<AppImg
+									key={index}
+									src={src}
+									height="80px"
+									onClick={onOpenModal}
+								/>
 							))}
 						</Flex>
 					</StyledImgWrapper>
 				)}
+				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
+					<Carousel carouselWidth="700px" carouselHeight="700px">
+						{imgValue.split('\n').map((src, index) => (
+							<Flex key={index} height="700px" align="center">
+								<AppImg width="700px" src={src} />
+							</Flex>
+						))}
+					</Carousel>
+				</Modal>
 			</>
 		);
-	}, [imgPlaceholder, imgValue, onChangeImgHandle, previewImg]);
+	}, [
+		imgPlaceholder,
+		imgValue,
+		isOpen,
+		onChangeImgHandle,
+		onCloseModal,
+		onOpenModal,
+		previewImg,
+		withImg,
+	]);
 
 	return (
 		<StyledForm onSubmit={onSubmitHandle}>
 			<Flex direction="column">
 				<Flex>
 					<StyledTextArea
+						onFocus={onFocus}
+						onBlur={onBlur}
 						withImg={withImg}
 						placeholder={textPlaceholder}
 						value={textValue}
 						onChange={onChangeTextHandle}
-						required
 					/>
 					<StyledBtns>
 						{withImg && (
@@ -206,21 +292,28 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 								<Icon SvgIcon={PaperclipIcon} />
 							</Button>
 						)}
-						<Button
-							invert
-							width="64px"
-							height="64px"
-							type="submit"
-							disabled={isLoading}
+						<Popover
+							direction="top_center"
+							trigger={
+								<Button
+									invert
+									width="64px"
+									height="64px"
+									type="submit"
+									disabled={isLoading}
+								>
+									{isLoading ? (
+										'...'
+									) : success ? (
+										<Icon SvgIcon={SuccessIcon} />
+									) : (
+										<Icon SvgIcon={SendIcon} />
+									)}
+								</Button>
+							}
 						>
-							{isLoading ? (
-								'...'
-							) : success ? (
-								<Icon SvgIcon={SuccessIcon} />
-							) : (
-								<Icon SvgIcon={SendIcon} />
-							)}
-						</Button>
+							<Text text={t('ShiftEnter')} textAlign="center" width="150px" />
+						</Popover>
 					</StyledBtns>
 				</Flex>
 				{withImg && imgForm()}

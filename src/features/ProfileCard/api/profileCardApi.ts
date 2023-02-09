@@ -1,6 +1,10 @@
-import { User } from '@/entities/User';
+import { getUserAuthData } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
+import { Relations } from '../model/types/profileCardSchema';
+import { socialCardApi } from '@/features/SocialCard';
+import { getRelations } from '../model/selectors/profileCardSelectors';
+import { StateSchema } from '@/app/provider/Store';
+import { User, UserMini } from '@/shared/types/userCard';
 
 interface IProfileCardApiProps {
 	profileId: string;
@@ -8,7 +12,7 @@ interface IProfileCardApiProps {
 	userId: string;
 }
 
-const profileCardApi = rtkApi.injectEndpoints({
+export const profileCardApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchProfileData: build.query<
 			Array<User>,
@@ -34,7 +38,10 @@ const profileCardApi = rtkApi.injectEndpoints({
 			}),
 			providesTags: (result) => ['social'],
 		}),
-		addFriend: build.mutation<User, Omit<IProfileCardApiProps, 'profileId'>>({
+		addFriend: build.mutation<
+			UserMini,
+			Omit<IProfileCardApiProps, 'profileId'>
+		>({
 			query: ({ userId, friendId }) => ({
 				method: 'POST',
 				url: '/friends',
@@ -43,7 +50,91 @@ const profileCardApi = rtkApi.injectEndpoints({
 					friendId,
 				},
 			}),
-			invalidatesTags: ['social'],
+			async onQueryStarted(
+				{ userId, friendId },
+				{ dispatch, queryFulfilled, getState },
+			) {
+				const patchResult = dispatch(
+					profileCardApi.util.updateQueryData(
+						'fetchRelationsData',
+						{ userId, friendId },
+						(draft) => {
+							const relationsObj: Record<
+								Relations['relations'],
+								Relations['relations']
+							> = {
+								nobody: 'following',
+								friend: 'follower',
+								following: 'nobody',
+								follower: 'friend',
+							};
+
+							draft.relations = relationsObj[draft.relations];
+						},
+					),
+				);
+
+				const patchResultSocial = dispatch(
+					socialCardApi.util.updateQueryData(
+						'fetchSocialData',
+						{ profileId: friendId },
+						(draft) => {
+							const relations = getRelations(getState() as StateSchema, {
+								userId,
+								friendId,
+							});
+
+							if (relations?.relations === 'follower') {
+								draft.followingNum = String(Number(draft.followingNum) + 1);
+							}
+
+							if (relations?.relations === 'friend') {
+								draft.followingNum = String(Number(draft.followingNum) - 1);
+							}
+
+							if (relations?.relations === 'nobody') {
+								draft.followersNum = String(Number(draft.followersNum) - 1);
+							}
+
+							if (relations?.relations === 'following') {
+								draft.followersNum = String(Number(draft.followersNum) + 1);
+							}
+						},
+					),
+				);
+
+				const patchResultFriends = dispatch(
+					socialCardApi.util.updateQueryData(
+						'fetchFriendsData',
+						{ profileId: friendId },
+						(draft) => {
+							const relations = getRelations(getState() as StateSchema, {
+								userId,
+								friendId,
+							});
+							const userData = getUserAuthData(getState() as StateSchema)!;
+
+							if (relations?.relations === 'follower') {
+								const index = draft.findIndex(
+									(user) => user.id === userData.id,
+								);
+								draft.splice(index, 1);
+							}
+
+							if (relations?.relations === 'friend') {
+								draft.push(userData);
+							}
+						},
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+					patchResultSocial.undo();
+					patchResultFriends.undo();
+				}
+			},
 		}),
 	}),
 });

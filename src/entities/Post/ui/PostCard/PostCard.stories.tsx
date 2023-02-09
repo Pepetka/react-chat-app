@@ -1,21 +1,19 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { PostCard } from './PostCard';
 import { Post, PostStats } from '../../model/types/postSchema';
-import { User } from '@/entities/User';
+import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { rest } from 'msw';
 import { Comment } from '@/entities/Comment/model/types/commentSchema';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
 
 export default {
 	title: 'entities/Post/PostCard',
 	component: PostCard,
-	decorators: [RouterDecorator()],
 } as Meta<typeof PostCard>;
 
 const Template: StoryFn<typeof PostCard> = (args) => <PostCard {...args} />;
 
-const author: DeepPartial<User> = {
+const author: UserMini = {
 	id: '6cbdb793',
 	firstname: 'Ivan',
 	lastname: 'Ivanov',
@@ -25,7 +23,7 @@ const author: DeepPartial<User> = {
 const post: Post = {
 	id: '0',
 	author: author as User,
-	img: image,
+	img: [image, image, image],
 	createdAt: '14:24 24.01.2023',
 	text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 };
@@ -45,21 +43,21 @@ const comments = (authorId: string): Array<Comment> => [
 		postId: '0',
 		text: 'Some comment text 1',
 		createdAt: '14:24 24.01.2023',
-		author: { ...author, id: authorId } as User,
+		author: { ...author, id: authorId },
 		id: '0',
 	},
 	{
 		postId: '0',
 		text: 'Some comment text 2',
 		createdAt: '14:24 24.01.2023',
-		author: { ...author, id: authorId } as User,
+		author: { ...author, id: authorId },
 		id: '1',
 	},
 	{
 		postId: '0',
 		text: 'Some comment text 3',
 		createdAt: '14:24 24.01.2023',
-		author: { ...author, id: authorId } as User,
+		author: { ...author, id: authorId },
 		id: '2',
 	},
 ];
