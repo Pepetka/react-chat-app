@@ -15,7 +15,7 @@ interface IUserCardProps {
 }
 
 export const UserCard = memo((props: IUserCardProps) => {
-	const { user, avatarSize, border, theme, textSize = 'l' } = props;
+	const { user, avatarSize, border, theme = 'invert', textSize = 'l' } = props;
 
 	return (
 		<AppLink key={user.id} href={getProfilePagePath(user.id)}>
@@ -29,7 +29,7 @@ export const UserCard = memo((props: IUserCardProps) => {
 				/>
 				<Text
 					text={`${user.firstname} ${user.lastname}`}
-					theme="primary-invert"
+					theme={`primary${theme === 'invert' ? '-invert' : ''}`}
 					size={textSize}
 				/>
 			</Flex>

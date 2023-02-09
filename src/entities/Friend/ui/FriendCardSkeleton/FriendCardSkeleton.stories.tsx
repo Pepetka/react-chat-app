@@ -1,15 +1,23 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { FriendCardSkeleton } from './FriendCardSkeleton';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
+import { Card } from '@/shared/ui/Card';
 
 export default {
-	title: 'components/FriendCardSkeleton',
+	title: 'entities/Friend/FriendCardSkeleton',
 	component: FriendCardSkeleton,
-	decorators: [RouterDecorator()],
+	decorators: [
+		(StoryComponent) => {
+			return (
+				<Card width="100%">
+					<StoryComponent />
+				</Card>
+			);
+		},
+	],
 } as Meta<typeof FriendCardSkeleton>;
 
 const Template: StoryFn<typeof FriendCardSkeleton> = (args) => (
-	<FriendCardSkeleton {...args} />
+	<FriendCardSkeleton />
 );
 
 export const Normal = Template.bind({});

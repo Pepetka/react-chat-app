@@ -1,23 +1,15 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { UserMini } from '@/shared/types/userCard';
-import { StateSchema } from '@/app/provider/Store';
-import { getUserAuthData } from '@/entities/User';
+import { UsersLists } from '@/entities/Friend';
 
 interface IPostApiProps {
 	userId: string;
 	search?: string;
 }
 
-export interface IPostApiResponse {
-	Friends?: Array<UserMini>;
-	Followers?: Array<UserMini>;
-	Following?: Array<UserMini>;
-	Others?: Array<UserMini>;
-}
-
-export const friendApi = rtkApi.injectEndpoints({
+export const searchFriendsByNameApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchFriends: build.query<IPostApiResponse, IPostApiProps>({
+		fetchFriends: build.query<UsersLists, IPostApiProps>({
 			query: ({ userId, search }) => ({
 				url: '/getUsers',
 				params: {
@@ -43,14 +35,11 @@ export const friendApi = rtkApi.injectEndpoints({
 				{ dispatch, queryFulfilled, getState },
 			) {
 				const patchResultFriends = dispatch(
-					friendApi.util.updateQueryData(
+					searchFriendsByNameApi.util.updateQueryData(
 						'fetchFriends',
 						{ userId, search },
 						(draft) => {
-							const pushObject: Record<
-								keyof IPostApiResponse,
-								keyof IPostApiResponse
-							> = {
+							const pushObject: Record<keyof UsersLists, keyof UsersLists> = {
 								Friends: 'Followers',
 								Followers: 'Friends',
 								Following: 'Others',
@@ -60,7 +49,7 @@ export const friendApi = rtkApi.injectEndpoints({
 							let isFind = false;
 
 							// @ts-ignore
-							Object.keys(draft).forEach((key: keyof IPostApiResponse) => {
+							Object.keys(draft).forEach((key: keyof UsersLists) => {
 								if (
 									draft[key]?.find((user) => user.id === friendId) &&
 									!isFind
@@ -99,4 +88,5 @@ export const friendApi = rtkApi.injectEndpoints({
 	}),
 });
 
-export const { useLazyFetchFriendsQuery, useAddFriendMutation } = friendApi;
+export const { useLazyFetchFriendsQuery, useAddFriendMutation } =
+	searchFriendsByNameApi;

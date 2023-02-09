@@ -11,6 +11,7 @@ interface IFriendProps {
 	friend: UserMini;
 	btnText: string;
 	withBtn?: boolean;
+	initialHover?: boolean;
 	onAddFriend?: (friendId: string) => void;
 }
 
@@ -22,8 +23,16 @@ const StyledHr = styled.div<{ hover: boolean }>`
 `;
 
 export const FriendCard = memo((props: IFriendProps) => {
-	const { friend, btnText, withBtn = true, onAddFriend } = props;
-	const { hover, onMouseOut, onMouseOver } = useHover();
+	const {
+		friend,
+		btnText,
+		withBtn = true,
+		onAddFriend,
+		initialHover = false,
+	} = props;
+	const { hover, onMouseOut, onMouseOver } = useHover({
+		initialHover,
+	});
 
 	const onAddFriendHandle = useCallback(() => {
 		onAddFriend?.(friend.id);

@@ -1,5 +1,5 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Comment } from '../model/types/commentSchema';
+import { Comment } from '@/entities/Comment';
 import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
 import { postApi } from '@/entities/Post';
@@ -8,7 +8,7 @@ interface ICommentApiProps {
 	postId: string;
 }
 
-const commentApi = rtkApi.injectEndpoints({
+const postCommentsApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchComments: build.query<Array<Comment>, ICommentApiProps>({
 			query: ({ postId }) => ({
@@ -39,7 +39,7 @@ const commentApi = rtkApi.injectEndpoints({
 				const userData = getUserAuthData(getState() as StateSchema)!;
 
 				const patchResult = dispatch(
-					commentApi.util.updateQueryData(
+					postCommentsApi.util.updateQueryData(
 						'fetchComments',
 						{ postId },
 						(draft) => {
@@ -91,7 +91,7 @@ const commentApi = rtkApi.injectEndpoints({
 				const userData = getUserAuthData(getState() as StateSchema)!;
 
 				const patchResult = dispatch(
-					commentApi.util.updateQueryData(
+					postCommentsApi.util.updateQueryData(
 						'fetchComments',
 						{ postId },
 						(draft) => {
@@ -129,4 +129,4 @@ export const {
 	useAddCommentMutation,
 	useDeleteCommentMutation,
 	useFetchCommentsQuery,
-} = commentApi;
+} = postCommentsApi;

@@ -1,13 +1,14 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { CommentList } from './CommentList';
-import { Comment } from '../../model/types/commentSchema';
+import { PostComments } from './PostComments';
+import { rest } from 'msw';
+import { Comment } from '@/entities/Comment';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
 
 export default {
-	title: 'entities/Comment/CommentList',
-	component: CommentList,
+	title: 'features/PostComments',
+	component: PostComments,
 	decorators: [
 		(StoryComponent) => {
 			return (
@@ -17,10 +18,10 @@ export default {
 			);
 		},
 	],
-} as Meta<typeof CommentList>;
+} as Meta<typeof PostComments>;
 
-const Template: StoryFn<typeof CommentList> = (args) => (
-	<CommentList {...args} />
+const Template: StoryFn<typeof PostComments> = (args) => (
+	<PostComments {...args} />
 );
 
 const author: UserMini = {
@@ -54,32 +55,16 @@ const comments = (authorId: string): Array<Comment> => [
 	},
 ];
 
-export const WithSettings = Template.bind({});
-WithSettings.args = {
-	userId: '6cbdb793',
-	postId: '0',
-	comments: comments('6cbdb793'),
+export const Normal = Template.bind({});
+Normal.args = {
+	commentsNum: 3,
+	userId: '1',
+	postId: '2',
 };
-
-export const WithoutSettings = Template.bind({});
-WithoutSettings.args = {
-	userId: '6cbdb793',
-	postId: '0',
-	comments: comments('6cbdb794'),
-};
-
-export const Error = Template.bind({});
-Error.args = {
-	userId: '6cbdb793',
-	postId: '0',
-	comments: comments('6cbdb793'),
-	isError: true,
-};
-
-export const Loading = Template.bind({});
-Loading.args = {
-	userId: '6cbdb793',
-	postId: '0',
-	comments: comments('6cbdb793'),
-	isLoading: true,
+Normal.parameters = {
+	msw: [
+		rest.get(`${__API__}comments?postId=2`, (_req, res, ctx) => {
+			return res(ctx.json(comments('1')));
+		}),
+	],
 };

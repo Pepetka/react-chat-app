@@ -1,14 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { SideBar } from './SideBar';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
-import { DeepPartial } from 'redux';
 import { StateSchema } from '@/app/provider/Store';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
 
 export default {
 	title: 'widgets/SideBar',
 	component: SideBar,
-	decorators: [RouterDecorator()],
 } as Meta<typeof SideBar>;
 
 const Template: StoryFn<typeof SideBar> = (args) => <SideBar />;

@@ -5,12 +5,10 @@ import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { rest } from 'msw';
 import { Comment } from '@/entities/Comment/model/types/commentSchema';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
 
 export default {
 	title: 'entities/Post/PostCard',
 	component: PostCard,
-	decorators: [RouterDecorator()],
 } as Meta<typeof PostCard>;
 
 const Template: StoryFn<typeof PostCard> = (args) => <PostCard {...args} />;
@@ -25,7 +23,7 @@ const author: UserMini = {
 const post: Post = {
 	id: '0',
 	author: author as User,
-	img: image,
+	img: [image, image, image],
 	createdAt: '14:24 24.01.2023',
 	text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 };

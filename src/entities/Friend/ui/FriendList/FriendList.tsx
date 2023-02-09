@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { FriendCard } from '../FriendCard/FriendCard';
 import { UserMini } from '@/shared/types/userCard';
 import { useSearchParams } from 'react-router-dom';
-import { IPostApiResponse, useAddFriendMutation } from '../../api/friendApi';
 import { FriendCardSkeleton } from '../FriendCardSkeleton/FriendCardSkeleton';
+import { UsersLists } from '@/entities/Friend';
 
 type BlockTitleType = 'Friends' | 'Following' | 'Followers' | 'Others';
 
@@ -21,16 +21,25 @@ interface IFriendListProps {
 		userId: string;
 		search: string;
 	}) => void;
-	usersLists?: IPostApiResponse;
+	usersLists?: UsersLists;
 	isLoading: boolean;
 	isError: boolean;
+	onAddFriend?: ({
+		userId,
+		friendId,
+		search,
+	}: {
+		userId: string;
+		friendId: string;
+		search: string;
+	}) => void;
 }
 
 interface IFriendListBlockProps {
 	blockTitle: BlockTitleType;
 	friendList?: Array<UserMini>;
 	admin: boolean;
-	onAddFriend: (friendId: string) => void;
+	onAddFriend?: (friendId: string) => void;
 }
 
 const StyledHr = styled.div`
@@ -75,11 +84,17 @@ const FriendListBlock = memo((props: IFriendListBlockProps) => {
 });
 
 export const FriendList = memo((props: IFriendListProps) => {
-	const { userId, profileId, fetchFriends, isError, isLoading, usersLists } =
-		props;
+	const {
+		userId,
+		profileId,
+		fetchFriends,
+		isError,
+		isLoading,
+		usersLists,
+		onAddFriend,
+	} = props;
 	const [searchParams] = useSearchParams();
 	const { t } = useTranslation('friends');
-	const [onAddFriend] = useAddFriendMutation();
 
 	useEffect(() => {
 		fetchFriends?.({
@@ -90,7 +105,7 @@ export const FriendList = memo((props: IFriendListProps) => {
 
 	const onAddFriendHandle = useCallback(
 		(friendId: string) => {
-			onAddFriend({
+			onAddFriend?.({
 				userId,
 				friendId,
 				search: searchParams.get('search') ?? '',
@@ -105,6 +120,19 @@ export const FriendList = memo((props: IFriendListProps) => {
 		'Following',
 		'Others',
 	];
+
+	if (isError) {
+		return (
+			<Flex direction="column" gap="24" justify="center" align="center">
+				<Text
+					text={t('Something went wrong')}
+					theme="error"
+					textAlign="center"
+					size="l"
+				/>
+			</Flex>
+		);
+	}
 
 	if (isLoading || !usersLists) {
 		return (

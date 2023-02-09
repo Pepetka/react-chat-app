@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { Card } from '@/shared/ui/Card';
-import { FriendSearch } from '@/entities/Friend';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
 import { useParams } from 'react-router-dom';
+import { SearchFriendsByName } from '@/features/SearchFriendsByName';
 
 const FriendsPage = memo(() => {
 	const authData = useSelector(getUserAuthData);
@@ -11,7 +11,10 @@ const FriendsPage = memo(() => {
 
 	return (
 		<Card height="100%" width="100%" borderRadius={false}>
-			<FriendSearch userId={authData?.id ?? ''} profileId={params?.id ?? ''} />
+			<SearchFriendsByName
+				userId={authData?.id ?? ''}
+				profileId={params?.id ?? ''}
+			/>
 		</Card>
 	);
 });

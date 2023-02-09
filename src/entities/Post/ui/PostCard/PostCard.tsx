@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
-import { Avatar } from '@/shared/ui/Avatar';
 import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
@@ -14,15 +13,13 @@ import MoreIcon from '@/shared/assets/more.svg';
 import { Post } from '../../model/types/postSchema';
 import { useTranslation } from 'react-i18next';
 import { AppImg } from '@/shared/ui/AppImg';
-import { getProfilePagePath } from '@/shared/const/router';
-import { AppLink } from '@/shared/ui/AppLink';
 import { useFetchPostStatsQuery } from '../../api/postApi';
-import { CommentForm, CommentList } from '@/entities/Comment';
 import { Menu } from '@/shared/ui/Menu';
 import { Carousel } from '@/widgets/Carousel';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Modal } from '@/shared/ui/Modal';
 import { UserCard } from '@/shared/ui/UserCard';
+import { PostComments } from '@/features/PostComments';
 
 interface IPostCardProps {
 	post: Post;
@@ -275,15 +272,11 @@ export const PostCard = memo((props: IPostCardProps) => {
 					</Flex>
 				</Flex>
 				{openComments && (
-					<>
-						<Text title={t('Comments')} theme="primary-invert" size="l" />
-						<CommentForm postId={post.id} userId={userId} />
-						<CommentList
-							postId={post.id}
-							userId={userId}
-							skeletonNum={Number(postStats?.comments)}
-						/>
-					</>
+					<PostComments
+						postId={post.id}
+						userId={userId}
+						commentsNum={postStats?.comments ? Number(postStats.comments) : 0}
+					/>
 				)}
 			</Flex>
 		</Card>

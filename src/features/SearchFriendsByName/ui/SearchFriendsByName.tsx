@@ -1,18 +1,21 @@
 import { memo, useCallback } from 'react';
+import {
+	useAddFriendMutation,
+	useLazyFetchFriendsQuery,
+} from '../api/searchFriendsByNameApi';
 import { Flex } from '@/shared/ui/Flex';
-import { FriendForm } from '../FriendForm/FriendForm';
-import { FriendList } from '../FriendList/FriendList';
-import { useLazyFetchFriendsQuery } from '../../api/friendApi';
+import { FriendForm, FriendList } from '@/entities/Friend';
 
-interface IFriendSearchProps {
+interface ISearchFriendsByNameProps {
 	userId: string;
 	profileId: string;
 }
 
-export const FriendSearch = memo((props: IFriendSearchProps) => {
+export const SearchFriendsByName = memo((props: ISearchFriendsByNameProps) => {
 	const { profileId, userId } = props;
 	const [fetchFriends, { data: usersLists, isFetching: isLoading, isError }] =
 		useLazyFetchFriendsQuery();
+	const [onAddFriend] = useAddFriendMutation();
 
 	const callback = useCallback(
 		({ userId, search }: { userId: string; search: string }) => {
@@ -35,6 +38,7 @@ export const FriendSearch = memo((props: IFriendSearchProps) => {
 				usersLists={usersLists}
 				isLoading={isLoading}
 				isError={isError}
+				onAddFriend={onAddFriend}
 			/>
 		</Flex>
 	);

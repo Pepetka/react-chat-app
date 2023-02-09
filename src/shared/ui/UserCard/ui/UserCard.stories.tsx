@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { UserCard } from './UserCard';
+import image from '@/shared/assets/images/image.jpg';
 
 export default {
 	title: 'shared/UserCard',
@@ -8,5 +9,15 @@ export default {
 
 const Template: StoryFn<typeof UserCard> = (args) => <UserCard {...args} />;
 
+const user = {
+	id: '1',
+	firstname: 'Ivan',
+	lastname: 'Ivanov',
+	avatar: image,
+};
+
 export const Normal = Template.bind({});
-Normal.args = {};
+Normal.args = {
+	user,
+	theme: 'primary',
+};

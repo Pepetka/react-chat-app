@@ -2,6 +2,7 @@ import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { ThemeDecorator } from '../src/shared/config/storybook/ThemeDecorator/ThemeDecorator';
 import { LocalesDecorator } from '../src/shared/config/storybook/LocalesDecorator/LocalesDecorator';
 import { StoreDecorator } from '../src/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { RouterDecorator } from '../src/shared/config/storybook/RouterDecorator/RouterDecorator';
 import { Theme } from '../src/shared/const/theme';
 
 initialize({ onUnhandledRequest: 'bypass' });
@@ -32,6 +33,7 @@ export const globalTypes = {
 };
 
 export const decorators = [
+	RouterDecorator(),
 	StoreDecorator(),
 	ThemeDecorator,
 	LocalesDecorator,

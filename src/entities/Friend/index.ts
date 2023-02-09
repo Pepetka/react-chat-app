@@ -1,2 +1,3 @@
-export { FriendSearch } from './ui/FriendSearch/FriendSearch';
-export type { FriendSchema } from './model/types/friendSchema';
+export { FriendForm } from './ui/FriendForm/FriendForm';
+export { FriendList } from './ui/FriendList/FriendList';
+export type { FriendSchema, UsersLists } from './model/types/friendSchema';
