@@ -18,6 +18,10 @@ export const getLoginPagePath = () => {
 export const getRegisterPagePath = () => {
 	return '/register';
 };
-export const getFriendsPagePath = (id: string) => {
+export const getFriendsPagePath = (id: string, search?: string) => {
+	if (search) {
+		return `/friends/${id}?search=${search}`;
+	}
+
 	return `/friends/${id}`;
 };

@@ -1,11 +1,4 @@
-import {
-	FormEvent,
-	memo,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { authByUsernameState } from '../../model/selectors/authByUsernameSelectors';
 import { authByUsernameActions } from '../../model/slice/authByUserNameSlice';
@@ -58,21 +51,12 @@ export const LoginForm = memo(() => {
 		[dispatch],
 	);
 
-	const onHandleClick = useCallback(() => {
+	const onLogin = useCallback(() => {
 		onSendLoginData({
 			password,
 			username,
 		});
 	}, [onSendLoginData, password, username]);
-
-	const onLogin = useCallback(
-		(event: FormEvent<HTMLFormElement>) => {
-			event.preventDefault();
-
-			onHandleClick();
-		},
-		[onHandleClick],
-	);
 
 	return (
 		<Card border width="570px" height="600px">

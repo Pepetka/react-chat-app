@@ -1,11 +1,4 @@
-import {
-	FormEvent,
-	memo,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { registerByUsernameState } from '../../model/selectors/registerByUsernameSelectors';
 import { useRegisterUserMutation } from '../../api/registerByUsernameApi';
@@ -92,7 +85,7 @@ export const RegisterForm = memo(() => {
 		setAgree((prev) => !prev);
 	};
 
-	const onHandleClick = useCallback(() => {
+	const onRegister = useCallback(() => {
 		onSendLoginData({
 			username,
 			password,
@@ -102,15 +95,6 @@ export const RegisterForm = memo(() => {
 			age,
 		});
 	}, [age, email, firstname, lastname, onSendLoginData, password, username]);
-
-	const onLogin = useCallback(
-		(event: FormEvent<HTMLFormElement>) => {
-			event.preventDefault();
-
-			onHandleClick();
-		},
-		[onHandleClick],
-	);
 
 	return (
 		<Card border width="570px" height="1000px">
@@ -124,7 +108,7 @@ export const RegisterForm = memo(() => {
 					/>
 					<Flex
 						FlexTag="form"
-						onSubmit={onLogin}
+						onSubmit={onRegister}
 						direction="column"
 						align="center"
 						gap="40"

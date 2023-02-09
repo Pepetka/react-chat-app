@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode } from 'react';
+import { FormEvent, ReactNode, useCallback } from 'react';
 import styled from 'styled-components';
 
 interface IFlexControls {
@@ -56,6 +56,15 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 		onMouseOver,
 	} = props;
 
+	const onSubmitHandle = useCallback(
+		(event: FormEvent<HTMLFormElement>) => {
+			event.preventDefault();
+
+			onSubmit?.(event);
+		},
+		[onSubmit],
+	);
+
 	return (
 		<StyledFlex
 			as={FlexTag}
@@ -65,7 +74,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 			gap={gap}
 			width={width}
 			height={height}
-			onSubmit={onSubmit}
+			onSubmit={onSubmit ? onSubmitHandle : undefined}
 			relative={relative}
 			onMouseOut={onMouseOut}
 			onMouseOver={onMouseOver}

@@ -4,15 +4,14 @@ import styled from 'styled-components';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
-import { Avatar } from '@/shared/ui/Avatar';
 import {
 	useFetchFriendsDataQuery,
 	useFetchSocialDataQuery,
 } from '../../api/socialCardApi';
-import { getProfilePagePath } from '@/shared/const/router';
-import { AppLink } from '@/shared/ui/AppLink';
 import { SocialCardSkeleton } from '../SocialCardSkeleton/SocialCardSkeleton';
 import { UserCard } from '@/shared/ui/UserCard';
+import { AppLink } from '@/shared/ui/AppLink';
+import { getFriendsPagePath } from '@/shared/const/router';
 
 interface ISocialCardProps {
 	userId: string;
@@ -65,50 +64,54 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 		<Card width="100%" height="282px">
 			<Flex height="100%" align="center" justify="space-between">
 				<Flex width="60%" align="center" justify="space-around">
-					<Card padding="0" width="180px" height="200px" border>
-						<Flex
-							direction="column"
-							gap="8"
-							height="100%"
-							justify="center"
-							align="center"
-						>
-							<Text
-								theme="primary-invert"
-								text={t('Followers')}
-								size="l"
-								textAlign="center"
-							/>
-							<Text
-								theme="secondary-invert"
-								title={socialData?.followersNum}
-								size="xl"
-								titleAlign="center"
-							/>
-						</Flex>
-					</Card>
-					<Card padding="0" width="180px" height="200px" border>
-						<Flex
-							direction="column"
-							gap="8"
-							height="100%"
-							justify="center"
-							align="center"
-						>
-							<Text
-								theme="primary-invert"
-								text={t('Following')}
-								size="l"
-								textAlign="center"
-							/>
-							<Text
-								theme="secondary-invert"
-								title={socialData?.followingNum}
-								size="xl"
-								titleAlign="center"
-							/>
-						</Flex>
-					</Card>
+					<AppLink href={getFriendsPagePath(profileId)}>
+						<Card padding="0" width="180px" height="200px" border>
+							<Flex
+								direction="column"
+								gap="8"
+								height="100%"
+								justify="center"
+								align="center"
+							>
+								<Text
+									theme="primary-invert"
+									text={t('Followers')}
+									size="l"
+									textAlign="center"
+								/>
+								<Text
+									theme="secondary-invert"
+									title={socialData?.followersNum}
+									size="xl"
+									titleAlign="center"
+								/>
+							</Flex>
+						</Card>
+					</AppLink>
+					<AppLink href={getFriendsPagePath(profileId)}>
+						<Card padding="0" width="180px" height="200px" border>
+							<Flex
+								direction="column"
+								gap="8"
+								height="100%"
+								justify="center"
+								align="center"
+							>
+								<Text
+									theme="primary-invert"
+									text={t('Following')}
+									size="l"
+									textAlign="center"
+								/>
+								<Text
+									theme="secondary-invert"
+									title={socialData?.followingNum}
+									size="xl"
+									titleAlign="center"
+								/>
+							</Flex>
+						</Card>
+					</AppLink>
 					<Card padding="0" width="180px" height="200px" border>
 						<Flex
 							direction="column"
@@ -134,13 +137,15 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 				</Flex>
 				<StyledLine />
 				<Flex gap="16" direction="column" width="350px" height="100%">
-					<Text
-						theme="primary-invert"
-						title={t('Friends')}
-						TitleTag="p"
-						titleAlign="center"
-						size="l"
-					/>
+					<AppLink href={getFriendsPagePath(profileId)}>
+						<Text
+							theme="primary-invert"
+							title={t('Friends')}
+							TitleTag="p"
+							titleAlign="center"
+							size="l"
+						/>
+					</AppLink>
 					{!!friendsData?.length &&
 						friendsData.map((friend, i) => {
 							if (i < 3) {

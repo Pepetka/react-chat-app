@@ -1,17 +1,24 @@
 import {
 	ChangeEvent,
+	FC,
 	HTMLInputTypeAttribute,
 	memo,
+	SVGProps,
 	useCallback,
+	useEffect,
 	useState,
 } from 'react';
 import styled from 'styled-components';
+import { Icon } from '@/shared/ui/Icon';
+import { Button } from '@/shared/ui/Button';
 
 interface IInputControls {
 	height?: string;
 	theme?: 'primary' | 'invert';
 	borderRadius?: string;
 	paddingInline?: string;
+	border?: boolean;
+	SvgIcon?: FC<SVGProps<SVGSVGElement>>;
 }
 
 interface ILabelControls {
@@ -21,13 +28,14 @@ interface ILabelControls {
 }
 
 interface IInputProps extends IInputControls {
-	label: string;
+	label?: string;
 	value: string;
 	onChange: (value: string) => void;
 	name: string;
 	type?: HTMLInputTypeAttribute;
 	required?: boolean;
 	width: string;
+	onClick?: () => void;
 }
 
 const getBgColor = (props: IInputControls | ILabelControls) =>
@@ -37,12 +45,20 @@ const StyledInput = styled.input<IInputControls>`
 	font: var(--font-m);
 	height: ${(props) => props.height};
 	width: 100%;
-	padding: ${(props) => `10px ${props.paddingInline}`};
+	padding: ${(props) =>
+		`10px ${props.SvgIcon ? '50px' : props.paddingInline} 10px ${
+			props.paddingInline
+		} `};
 	border-radius: ${(props) => props.borderRadius};
-	border: ${(props) =>
-		props.theme === 'primary'
+	border: ${(props) => {
+		if (!props.border) {
+			return 'none';
+		}
+
+		return props.theme === 'primary'
 			? '4px solid var(--primary-color)'
-			: '4px solid var(--invert-primary-color)'};
+			: '4px solid var(--invert-primary-color)';
+	}};
 	background: ${getBgColor};
 	color: ${(props) =>
 		props.theme === 'primary'
@@ -77,10 +93,16 @@ const StyledLabel = styled.div<ILabelControls>`
 	pointer-events: none;
 `;
 
-const StyledWrapper = styled.div<{ width: string }>`
+const StyledWrapper = styled.div<{ width: string; label?: string }>`
 	position: relative;
-	padding-top: 10px;
+	padding-top: ${(props) => (props.label ? '10px' : '0')};
 	width: ${(props) => props.width};
+`;
+
+const StyledBtnWrapper = styled.div<{ label?: string }>`
+	position: absolute;
+	right: 0;
+	top: ${(props) => (props.label ? '8px' : '4px')};
 `;
 
 export const Input = memo((props: IInputProps) => {
@@ -96,18 +118,28 @@ export const Input = memo((props: IInputProps) => {
 		height = 'auto',
 		paddingInline = '10px',
 		value,
+		SvgIcon,
+		border = true,
+		onClick,
 	} = props;
+	const [focused, setFocused] = useState(false);
 	const [opened, setOpened] = useState(false);
 
+	useEffect(() => {
+		if (value || focused) {
+			setOpened(true);
+		} else {
+			setOpened(false);
+		}
+	}, [focused, value]);
+
 	const onFocus = useCallback(() => {
-		setOpened(true);
+		setFocused(true);
 	}, []);
 
 	const onBlur = useCallback(() => {
-		if (!value) {
-			setOpened(false);
-		}
-	}, [value]);
+		setFocused(false);
+	}, []);
 
 	const onHandleChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +149,7 @@ export const Input = memo((props: IInputProps) => {
 	);
 
 	return (
-		<StyledWrapper width={width}>
+		<StyledWrapper width={width} label={label}>
 			<StyledInput
 				name={name}
 				type={type}
@@ -130,10 +162,25 @@ export const Input = memo((props: IInputProps) => {
 				value={value}
 				borderRadius={borderRadius}
 				paddingInline={paddingInline}
+				border={border}
+				SvgIcon={SvgIcon}
 			/>
-			<StyledLabel paddingInline={paddingInline} theme={theme} opened={opened}>
-				{label}
-			</StyledLabel>
+			{SvgIcon && (
+				<StyledBtnWrapper label={label}>
+					<Button onClick={onClick} theme="clear">
+						<Icon invert={theme === 'invert'} SvgIcon={SvgIcon} />
+					</Button>
+				</StyledBtnWrapper>
+			)}
+			{label && (
+				<StyledLabel
+					paddingInline={paddingInline}
+					theme={theme}
+					opened={opened}
+				>
+					{label}
+				</StyledLabel>
+			)}
 		</StyledWrapper>
 	);
 });
