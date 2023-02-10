@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import {
+	getChatsPagePath,
 	getFriendsPagePath,
 	getMainPagePath,
 	getProfilePagePath,
@@ -31,6 +32,9 @@ export const SideBar = memo(() => {
 				</AppLink>
 				<AppLink href={getFriendsPagePath(authData?.id ?? '')}>
 					<Text text={t('My friends')} size="xl" />
+				</AppLink>
+				<AppLink href={getChatsPagePath()}>
+					<Text text={t('My chats')} size="xl" />
 				</AppLink>
 			</Flex>
 		</StyledSidebar>

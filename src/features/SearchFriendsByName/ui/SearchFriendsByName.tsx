@@ -1,10 +1,11 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import {
 	useAddFriendMutation,
 	useLazyFetchFriendsQuery,
 } from '../api/searchFriendsByNameApi';
 import { Flex } from '@/shared/ui/Flex';
 import { FriendForm, FriendList } from '@/entities/Friend';
+import { useSearchParams } from 'react-router-dom';
 
 interface ISearchFriendsByNameProps {
 	userId: string;
@@ -13,28 +14,28 @@ interface ISearchFriendsByNameProps {
 
 export const SearchFriendsByName = memo((props: ISearchFriendsByNameProps) => {
 	const { profileId, userId } = props;
-	const [fetchFriends, { data: usersLists, isFetching: isLoading, isError }] =
+	const [searchParams] = useSearchParams();
+	const [onFetchFriends, { data: usersLists, isFetching: isLoading, isError }] =
 		useLazyFetchFriendsQuery();
 	const [onAddFriend] = useAddFriendMutation();
 
-	const callback = useCallback(
-		({ userId, search }: { userId: string; search: string }) => {
-			fetchFriends({ userId, search });
-		},
-		[fetchFriends],
-	);
+	useEffect(() => {
+		onFetchFriends({
+			userId: profileId,
+			search: searchParams.get('search') ?? '',
+		});
+	}, [onFetchFriends, profileId]);
 
 	return (
 		<Flex direction="column" gap="16">
 			<FriendForm
 				userId={userId}
 				profileId={profileId}
-				fetchFriends={callback}
+				fetchFriends={onFetchFriends}
 			/>
 			<FriendList
 				userId={userId}
 				profileId={profileId}
-				fetchFriends={callback}
 				usersLists={usersLists}
 				isLoading={isLoading}
 				isError={isError}

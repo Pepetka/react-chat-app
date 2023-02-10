@@ -1,0 +1,88 @@
+import { Meta, StoryFn } from '@storybook/react';
+import ChatsPage from './ChatsPage';
+import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { StateSchema } from '@/app/provider/Store';
+import { rest } from 'msw';
+import { Chat } from '@/entities/Chat';
+import image from '@/shared/assets/images/image.jpg';
+import { User } from '@/shared/types/userCard';
+
+export default {
+	title: 'pages/ChatsPage',
+	component: ChatsPage,
+} as Meta<typeof ChatsPage>;
+
+const Template: StoryFn<typeof ChatsPage> = (args) => <ChatsPage />;
+
+const user: Array<DeepPartial<User>> = [
+	{
+		id: '1',
+		avatar: image,
+		lastname: 'Ivanov',
+		firstname: 'Ivan',
+		username: 'user',
+		status: 'Some status first line,\nSome status second line',
+	},
+];
+
+const state: DeepPartial<StateSchema> = {
+	user: {
+		authData: user[1],
+	},
+};
+
+const chatsList: Array<Chat> = [
+	{
+		id: '0',
+		user: {
+			avatar: image,
+			firstname: 'Ivan',
+			lastname: 'Ivanov',
+			id: 'id',
+		},
+		createdAt: '12:48 03.02.2023',
+		lastMessage: 'Some last message',
+	},
+	{
+		id: '1',
+		user: {
+			avatar: image,
+			firstname: 'Ivan',
+			lastname: 'Ivanov',
+			id: 'id1',
+		},
+		createdAt: '12:48 03.02.2023',
+		lastMessage: 'Some last message',
+	},
+	{
+		id: '2',
+		user: {
+			avatar: image,
+			firstname: 'Ivan',
+			lastname: 'Ivanov',
+			id: 'id2',
+		},
+		createdAt: '12:48 03.02.2023',
+		lastMessage: 'Some last message',
+	},
+];
+
+export const Normal = Template.bind({});
+Normal.decorators = [StoreDecorator(state as StateSchema)];
+Normal.parameters = {
+	msw: [
+		rest.get(`${__API__}getChats?userId=1&search=`, (_req, res, ctx) => {
+			return res(ctx.json(chatsList));
+		}),
+	],
+};
+
+export const Error = Template.bind({});
+Error.decorators = [StoreDecorator(state as StateSchema)];
+Error.parameters = {
+	msw: [
+		rest.get(`${__API__}getChats?userId=1&search=`, (_req, res, ctx) => {
+			return res(ctx.status(403));
+		}),
+	],
+};

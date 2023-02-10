@@ -4,6 +4,7 @@ export enum AppRoutes {
 	LOGIN = 'Login',
 	REGISTER = 'Register',
 	FRIENDS = 'Friends',
+	CHATS = 'Chats,',
 }
 
 export const getMainPagePath = () => {
@@ -24,4 +25,7 @@ export const getFriendsPagePath = (id: string, search?: string) => {
 	}
 
 	return `/friends/${id}`;
+};
+export const getChatsPagePath = () => {
+	return '/chats';
 };

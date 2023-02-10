@@ -427,9 +427,68 @@
 			"createdAt": "12:50 03.02.2023"
 		}
 	],
+	"chats": [
+		{
+			"id": "0",
+			"name": "Some name",
+			"createdAt": "12:50 03.02.2023",
+			"ownerId": "6cbdb794"
+		},
+		{
+			"id": "1",
+			"name": "Some name",
+			"createdAt": "12:50 03.02.2023",
+			"ownerId": "6cbdb793"
+		}
+	],
+	"messages": [
+		{
+			"id": "0",
+			"chatId": "0",
+			"userId": "6cbdb793",
+			"type": "text",
+			"text": "Some last message text",
+			"createdAt": "12:48 03.02.2023"
+		},
+		{
+			"id": "1",
+			"chatId": "0",
+			"userId": "6cbdb794",
+			"type": "text",
+			"text": "Some last message text",
+			"createdAt": "12:50 03.02.2023"
+		},
+		{
+			"id": "2",
+			"chatId": "1",
+			"userId": "6cbdb793",
+			"type": "text",
+			"text": "Some last message text",
+			"createdAt": "12:50 03.02.2023"
+		}
+	],
+	"chat-members": [
+		{
+			"userId": "6cbdb793",
+			"chatId": "0",
+			"createdAt": "12:48 03.02.2023"
+		},
+		{
+			"userId": "6cbdb794",
+			"chatId": "0",
+			"createdAt": "12:48 03.02.2023"
+		},
+		{
+			"userId": "6cbdb793",
+			"chatId": "1",
+			"createdAt": "12:48 03.02.2023"
+		},
+		{
+			"userId": "6cbdb796",
+			"chatId": "1",
+			"createdAt": "12:48 03.02.2023"
+		}
+	],
 	"groups": [],
-	"group-members": [],
-	"chats": [],
-	"messages": [],
-	"chat-members": []
+	"group-members": []
 }

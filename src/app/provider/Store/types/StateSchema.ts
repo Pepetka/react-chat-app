@@ -12,6 +12,7 @@ import { RegisterByUsernameSchema } from '@/features/RegisterByUsername';
 import { PostSchema } from '@/entities/Post';
 import { CommentSchema } from '@/entities/Comment';
 import { FriendSchema } from '@/entities/Friend';
+import { ChatSchema } from '@/entities/Chat';
 
 export interface StateSchema {
 	user: UserSchema;
@@ -20,6 +21,7 @@ export interface StateSchema {
 	authByUsername?: AuthByUsernameSchema;
 	registerByUsername?: RegisterByUsernameSchema;
 	friend?: FriendSchema;
+	chat?: ChatSchema;
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 }
 

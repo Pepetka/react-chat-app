@@ -21,3 +21,10 @@ Normal.args = {
 	user,
 	theme: 'primary',
 };
+
+export const WithAdditionalText = Template.bind({});
+WithAdditionalText.args = {
+	user,
+	theme: 'primary',
+	additionalText: 'Some text',
+};

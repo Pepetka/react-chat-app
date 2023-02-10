@@ -1,5 +1,6 @@
 import {
 	AppRoutes,
+	getChatsPagePath,
 	getFriendsPagePath,
 	getLoginPagePath,
 	getMainPagePath,
@@ -12,6 +13,7 @@ import { ProfilePage } from '@/pages/ProfilePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { FriendsPage } from '@/pages/FriendsPage';
+import { ChatsPage } from '@/pages/ChatsPage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
@@ -37,6 +39,11 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.FRIENDS]: {
 		path: getFriendsPagePath(':id'),
 		element: <FriendsPage />,
+		authOnly: true,
+	},
+	[AppRoutes.CHATS]: {
+		path: getChatsPagePath(),
+		element: <ChatsPage />,
 		authOnly: true,
 	},
 };

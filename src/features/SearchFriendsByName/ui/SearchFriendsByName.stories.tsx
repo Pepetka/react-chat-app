@@ -50,7 +50,7 @@ Normal.args = {
 };
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers?userId=2&search=`, (_req, res, ctx) => {
 			return res(
 				ctx.json({
 					Followers: usersList,
@@ -70,7 +70,7 @@ Error.args = {
 };
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers?userId=2&search=`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],

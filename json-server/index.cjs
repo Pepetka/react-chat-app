@@ -11,6 +11,7 @@ const like = require('./endpoints/like.cjs');
 const dislike = require('./endpoints/dislike.cjs');
 const comments = require('./endpoints/comments.cjs');
 const getUsers = require('./endpoints/getUsers.cjs');
+const getChats = require('./endpoints/getChats.cjs');
 
 const server = jsonServer.create();
 const router = jsonServer.router(path.resolve(__dirname, 'db.json'));
@@ -42,6 +43,7 @@ server.get('/comments', comments.getComments);
 server.put('/comments', comments.putComments);
 server.post('/comments', comments.postComments);
 server.get('/getUsers', getUsers);
+server.get('/getChats', getChats);
 
 server.use((req, res, next) => {
 	if (!req.headers.authorization) {

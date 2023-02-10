@@ -14,13 +14,6 @@ type BlockTitleType = 'Friends' | 'Following' | 'Followers' | 'Others';
 interface IFriendListProps {
 	userId: string;
 	profileId: string;
-	fetchFriends?: ({
-		userId,
-		search,
-	}: {
-		userId: string;
-		search: string;
-	}) => void;
 	usersLists?: UsersLists;
 	isLoading: boolean;
 	isError: boolean;
@@ -84,24 +77,10 @@ const FriendListBlock = memo((props: IFriendListBlockProps) => {
 });
 
 export const FriendList = memo((props: IFriendListProps) => {
-	const {
-		userId,
-		profileId,
-		fetchFriends,
-		isError,
-		isLoading,
-		usersLists,
-		onAddFriend,
-	} = props;
-	const [searchParams] = useSearchParams();
+	const { userId, profileId, isError, isLoading, usersLists, onAddFriend } =
+		props;
 	const { t } = useTranslation('friends');
-
-	useEffect(() => {
-		fetchFriends?.({
-			userId: profileId,
-			search: searchParams.get('search') ?? '',
-		});
-	}, [profileId]);
+	const [searchParams] = useSearchParams();
 
 	const onAddFriendHandle = useCallback(
 		(friendId: string) => {
@@ -121,7 +100,7 @@ export const FriendList = memo((props: IFriendListProps) => {
 		'Others',
 	];
 
-	if (isError) {
+	if (isError && !isLoading) {
 		return (
 			<Flex direction="column" gap="24" justify="center" align="center">
 				<Text
