@@ -1,5 +1,8 @@
-import { FormEvent, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import LogoSvg from '@/shared/assets/logo.svg';
@@ -7,13 +10,10 @@ import SearchSvg from '@/shared/assets/search.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { Text } from '@/shared/ui/Text';
 import { getUserAuthData, userActions } from '@/entities/User';
-import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
-import { useTranslation } from 'react-i18next';
 import { AppLink } from '@/shared/ui/AppLink';
 import { getFriendsPagePath, getMainPagePath } from '@/shared/const/router';
 import { Input } from '@/shared/ui/Input';
-import { useNavigate } from 'react-router-dom';
 
 interface INavBarProps {
 	currentPagePath: string;

@@ -1,13 +1,13 @@
-import { memo, useCallback, useEffect } from 'react';
-import { Flex } from '@/shared/ui/Flex';
-import { Text } from '@/shared/ui/Text';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FriendCard } from '../FriendCard/FriendCard';
-import { UserMini } from '@/shared/types/userCard';
 import { useSearchParams } from 'react-router-dom';
-import { FriendCardSkeleton } from '../FriendCardSkeleton/FriendCardSkeleton';
+import { Flex } from '@/shared/ui/Flex';
+import { Text } from '@/shared/ui/Text';
+import { UserMini } from '@/shared/types/userCard';
 import { UsersLists } from '@/entities/Friend';
+import { FriendCard } from '../FriendCard/FriendCard';
+import { FriendCardSkeleton } from '../FriendCardSkeleton/FriendCardSkeleton';
 
 type BlockTitleType = 'Friends' | 'Following' | 'Followers' | 'Others';
 

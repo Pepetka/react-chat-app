@@ -1,6 +1,6 @@
 import { memo, ReactNode, useEffect, useRef, useState } from 'react';
-import { Flex } from '@/shared/ui/Flex';
 import styled from 'styled-components';
+import { Flex } from '@/shared/ui/Flex';
 import { useHover } from '@/shared/hooks/useHover';
 
 interface IPopoverControls {

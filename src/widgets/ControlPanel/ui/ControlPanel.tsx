@@ -6,7 +6,7 @@ import { Portal } from '@/shared/ui/Portal';
 import { useTheme } from '@/shared/hooks/useTheme';
 
 const StyledControlPanel = styled.div`
-	position: fixed;
+	position: absolute;
 	right: 20px;
 	bottom: 20px;
 `;

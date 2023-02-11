@@ -1,19 +1,19 @@
 import { memo, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Button } from '@/shared/ui/Button';
+import { Modal } from '@/shared/ui/Modal';
+import { AppImg } from '@/shared/ui/AppImg';
 import {
 	useAddFriendMutation,
 	useFetchProfileDataQuery,
 	useFetchRelationsDataQuery,
 } from '../../api/profileCardApi';
-import { useTranslation } from 'react-i18next';
 import { Relations } from '../../model/types/profileCardSchema';
 import { ProfileCardSkeleton } from '../ProfileCardSkeleton/ProfileCardSkeleton';
-import { Modal } from '@/shared/ui/Modal';
-import { AppImg } from '@/shared/ui/AppImg';
 
 interface IProfileCardProps {
 	userId: string;

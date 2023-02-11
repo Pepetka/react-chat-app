@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { SearchChatsByName } from './SearchChatsByName';
+import { rest } from 'msw';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
-import { rest } from 'msw';
 import { Chat } from '@/entities/Chat';
+import { SearchChatsByName } from './SearchChatsByName';
 
 export default {
 	title: 'features/SearchChatsByName',

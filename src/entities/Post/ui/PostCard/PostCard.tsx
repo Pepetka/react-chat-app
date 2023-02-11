@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
@@ -10,16 +11,15 @@ import CommentIcon from '@/shared/assets/comment.svg';
 import SpeakerIcon from '@/shared/assets/speaker.svg';
 import SuccessIcon from '@/shared/assets/check.svg';
 import MoreIcon from '@/shared/assets/more.svg';
-import { Post } from '../../model/types/postSchema';
-import { useTranslation } from 'react-i18next';
 import { AppImg } from '@/shared/ui/AppImg';
-import { useFetchPostStatsQuery } from '../../api/postApi';
 import { Menu } from '@/shared/ui/Menu';
 import { Carousel } from '@/widgets/Carousel';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Modal } from '@/shared/ui/Modal';
 import { UserCard } from '@/shared/ui/UserCard';
 import { PostComments } from '@/features/PostComments';
+import { useFetchPostStatsQuery } from '../../api/postApi';
+import { Post } from '../../model/types/postSchema';
 
 interface IPostCardProps {
 	post: Post;

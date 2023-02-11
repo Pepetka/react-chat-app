@@ -4,9 +4,9 @@ import {
 	Reducer,
 	ReducersMapObject,
 } from '@reduxjs/toolkit';
-import { StateSchema } from '../types/StateSchema';
 import { userReducer } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
+import { StateSchema } from '../types/StateSchema';
 import { createReducerManager } from './reducerManager';
 
 export const createReduxStore = (

@@ -1,6 +1,9 @@
 import { memo, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/Flex';
 import { PostCard } from '@/entities/Post';
+import { Text } from '@/shared/ui/Text';
+import { Card } from '@/shared/ui/Card';
 import {
 	useDeletePostMutation,
 	useDislikePostMutation,
@@ -8,9 +11,6 @@ import {
 	useLikePostMutation,
 	useSharePostMutation,
 } from '../../api/postApi';
-import { useTranslation } from 'react-i18next';
-import { Text } from '@/shared/ui/Text';
-import { Card } from '@/shared/ui/Card';
 import { PostCardSkeleton } from '../PostCardSkeleton/PostCardSkeleton';
 
 interface IPostListProps {

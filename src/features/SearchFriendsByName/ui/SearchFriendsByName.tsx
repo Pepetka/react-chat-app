@@ -1,11 +1,11 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Flex } from '@/shared/ui/Flex';
+import { FriendForm, FriendList } from '@/entities/Friend';
 import {
 	useAddFriendMutation,
 	useLazyFetchFriendsQuery,
 } from '../api/searchFriendsByNameApi';
-import { Flex } from '@/shared/ui/Flex';
-import { FriendForm, FriendList } from '@/entities/Friend';
-import { useSearchParams } from 'react-router-dom';
 
 interface ISearchFriendsByNameProps {
 	userId: string;

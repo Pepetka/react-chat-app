@@ -1,13 +1,13 @@
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Text } from '@/shared/ui/Text';
 import { CommentForm, CommentList } from '@/entities/Comment';
+import { Flex } from '@/shared/ui/Flex';
 import {
 	useAddCommentMutation,
 	useDeleteCommentMutation,
 	useFetchCommentsQuery,
 } from '../api/postCommentsApi';
-import { useTranslation } from 'react-i18next';
-import { Flex } from '@/shared/ui/Flex';
 
 interface IPostCommentsProps {
 	postId: string;

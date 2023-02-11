@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { SideBar } from './SideBar';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
+import { SideBar } from './SideBar';
 
 export default {
 	title: 'widgets/SideBar',

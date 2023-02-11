@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { RegisterForm } from './RegisterForm';
+import { DeepPartial } from 'redux';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { DeepPartial } from 'redux';
+import { RegisterForm } from './RegisterForm';
 
 export default {
 	title: 'features/RegisterByUsername/RegisterForm',

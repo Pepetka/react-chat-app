@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
+import { UserCard } from '@/shared/ui/UserCard';
+import { AppLink } from '@/shared/ui/AppLink';
+import { getFriendsPagePath } from '@/shared/const/router';
+import { SocialCardSkeleton } from '../SocialCardSkeleton/SocialCardSkeleton';
 import {
 	useFetchFriendsDataQuery,
 	useFetchSocialDataQuery,
 } from '../../api/socialCardApi';
-import { SocialCardSkeleton } from '../SocialCardSkeleton/SocialCardSkeleton';
-import { UserCard } from '@/shared/ui/UserCard';
-import { AppLink } from '@/shared/ui/AppLink';
-import { getFriendsPagePath } from '@/shared/const/router';
 
 interface ISocialCardProps {
 	userId: string;

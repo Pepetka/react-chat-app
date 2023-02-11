@@ -1,14 +1,14 @@
 import { memo, useCallback, useEffect } from 'react';
-import { AppRouter } from '../provider/Router/ui/AppRouter';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { getUserInited, userActions } from '@/entities/User';
 import { useTheme } from '@/shared/hooks/useTheme';
 import { NavBar } from '@/widgets/NavBar';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
-import { useSelector } from 'react-redux';
 import { Page } from '@/widgets/Page';
 import { ControlPanel } from '@/widgets/ControlPanel';
+import { AppRouter } from '../provider/Router/ui/AppRouter';
 
 export const App = memo(() => {
 	const inited = useSelector(getUserInited);

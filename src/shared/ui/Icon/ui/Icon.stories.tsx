@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Icon } from './Icon';
 import LogoSvg from '@/shared/assets/logo.svg';
+import { Icon } from './Icon';
 
 export default {
 	title: 'shared/Icon',

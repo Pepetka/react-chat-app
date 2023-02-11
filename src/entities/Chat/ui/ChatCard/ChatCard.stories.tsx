@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { ChatCard } from './ChatCard';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { ChatCard } from './ChatCard';
 
 export default {
 	title: 'entities/Chat/ChatCard',

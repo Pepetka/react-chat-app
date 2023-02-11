@@ -1,10 +1,10 @@
+import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
-import { memo } from 'react';
-import { StyledLine } from '../SocialCard/SocialCard';
 import { Text } from '@/shared/ui/Text';
-import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@/shared/ui/Skeleton';
+import { StyledLine } from '../SocialCard/SocialCard';
 
 export const SocialCardSkeleton = memo(() => {
 	const { t } = useTranslation('profile');

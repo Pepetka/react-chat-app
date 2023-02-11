@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Carousel } from './Carousel';
 import image from '@/shared/assets/images/image.jpg';
 import { AppImg } from '@/shared/ui/AppImg';
 import { Flex } from '@/shared/ui/Flex';
+import { Carousel } from './Carousel';
 
 export default {
 	title: 'widgets/Carousel',

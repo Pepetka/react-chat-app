@@ -1,14 +1,14 @@
 import { memo, useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import { Input } from '@/shared/ui/Input';
 import CloseIcon from '@/shared/assets/close.svg';
 import { DynamicModuleLoader } from '@/shared/components';
-import { chatActions, chatReducer } from '../../model/slice/chatSlice';
-import { useSelector } from 'react-redux';
-import { getChatSearch } from '../../model/selectors/chatSelectors';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
-import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
 import { useDebounce } from '@/shared/hooks/useDebounce';
+import { chatActions, chatReducer } from '../../model/slice/chatSlice';
+import { getChatSearch } from '../../model/selectors/chatSelectors';
 
 interface IChatFormProps {
 	userId: string;

@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { PostList } from './PostList';
 import { rest } from 'msw';
-import { Post, PostStats } from '../../model/types/postSchema';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
+import { Post, PostStats } from '../../model/types/postSchema';
+import { PostList } from './PostList';
 
 export default {
 	title: 'entities/Post/PostList',

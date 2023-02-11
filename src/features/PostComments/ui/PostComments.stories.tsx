@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { PostComments } from './PostComments';
 import { rest } from 'msw';
 import { Comment } from '@/entities/Comment';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
+import { PostComments } from './PostComments';
 
 export default {
 	title: 'features/PostComments',

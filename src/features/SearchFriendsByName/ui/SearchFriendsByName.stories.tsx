@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { SearchFriendsByName } from './SearchFriendsByName';
-import { Card } from '@/shared/ui/Card';
 import { rest } from 'msw';
+import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { SearchFriendsByName } from './SearchFriendsByName';
 
 export default {
 	title: 'features/SearchFriendsByName',

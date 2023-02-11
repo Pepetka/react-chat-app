@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { CommentCardSkeleton } from './CommentCardSkeleton';
 import { Card } from '@/shared/ui/Card';
+import { CommentCardSkeleton } from './CommentCardSkeleton';
 
 export default {
 	title: 'entities/Comment/CommentCardSkeleton',

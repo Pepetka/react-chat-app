@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { UserCard } from '@/shared/ui/UserCard';
 import { Text } from '@/shared/ui/Text';
+import { getMessengerPagePath } from '@/shared/const/router';
 import { Chat } from '../../model/types/chatSchema';
 
 interface IChatCardProps {
@@ -19,6 +20,7 @@ export const ChatCard = memo((props: IChatCardProps) => {
 				user={chat.user}
 				additionalText={chat.lastMessage}
 				border
+				href={getMessengerPagePath(chat.id)}
 			/>
 			<Text
 				text={chat.createdAt}

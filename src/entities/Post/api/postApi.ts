@@ -1,7 +1,7 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Post, PostStats, UserPost } from '../model/types/postSchema';
 import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
+import { Post, PostStats, UserPost } from '../model/types/postSchema';
 
 interface IPostApiProps {
 	profileId: string;

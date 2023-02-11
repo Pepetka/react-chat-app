@@ -1,11 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
-import ChatsPage from './ChatsPage';
+import { rest } from 'msw';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { rest } from 'msw';
 import { Chat } from '@/entities/Chat';
 import image from '@/shared/assets/images/image.jpg';
 import { User } from '@/shared/types/userCard';
+import ChatsPage from './ChatsPage';
 
 export default {
 	title: 'pages/ChatsPage',

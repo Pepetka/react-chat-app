@@ -1,10 +1,10 @@
 import { getUserAuthData } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Relations } from '../model/types/profileCardSchema';
 import { socialCardApi } from '@/features/SocialCard';
-import { getRelations } from '../model/selectors/profileCardSelectors';
 import { StateSchema } from '@/app/provider/Store';
 import { User, UserMini } from '@/shared/types/userCard';
+import { getRelations } from '../model/selectors/profileCardSelectors';
+import { Relations } from '../model/types/profileCardSchema';
 
 interface IProfileCardApiProps {
 	profileId: string;

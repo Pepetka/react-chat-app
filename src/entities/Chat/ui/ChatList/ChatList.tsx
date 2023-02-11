@@ -1,10 +1,10 @@
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Chat } from '@/entities/Chat';
 import { Flex } from '@/shared/ui/Flex';
-import { ChatCard } from '../ChatCard/ChatCard';
 import { Text } from '@/shared/ui/Text';
-import { useTranslation } from 'react-i18next';
 import { ChatCardSkeleton } from '@/entities/Chat/ui/ChatCardSkeleton/ChatCardSkeleton';
+import { ChatCard } from '../ChatCard/ChatCard';
 
 interface IChatListProps {
 	chats?: Array<Chat>;

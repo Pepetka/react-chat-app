@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { ProfileCard } from './ProfileCard';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Relations } from '../../model/types/profileCardSchema';
+import { ProfileCard } from './ProfileCard';
 
 export default {
 	title: 'features/ProfileCard/ProfileCard',

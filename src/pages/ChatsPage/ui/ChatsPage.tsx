@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { SearchChatsByName } from '@/features/SearchChatsByName';
 import { useSelector } from 'react-redux';
+import { SearchChatsByName } from '@/features/SearchChatsByName';
 import { getUserAuthData } from '@/entities/User';
 import { Card } from '@/shared/ui/Card';
 

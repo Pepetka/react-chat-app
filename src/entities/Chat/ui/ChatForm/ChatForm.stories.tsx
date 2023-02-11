@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { ChatForm } from './ChatForm';
 import { Card } from '@/shared/ui/Card';
+import { ChatForm } from './ChatForm';
 
 export default {
 	title: 'entities/Chat/ChatForm',

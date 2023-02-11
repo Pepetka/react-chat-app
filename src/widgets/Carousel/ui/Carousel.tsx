@@ -5,7 +5,6 @@ import {
 	ReactNode,
 	useCallback,
 	useMemo,
-	useRef,
 } from 'react';
 import Slider, { Settings } from 'react-slick';
 import styled from 'styled-components';

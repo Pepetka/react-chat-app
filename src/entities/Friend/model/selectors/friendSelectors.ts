@@ -1,5 +1,5 @@
-import { StateSchema } from '@/app/provider/Store';
 import { createSelector } from '@reduxjs/toolkit';
+import { StateSchema } from '@/app/provider/Store';
 import { FriendSchema } from '@/entities/Friend';
 
 export const getFriendSearch = createSelector(

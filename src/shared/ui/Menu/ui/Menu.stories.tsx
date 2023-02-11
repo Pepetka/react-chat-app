@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Menu } from './Menu';
 import { Flex } from '@/shared/ui/Flex';
+import { Menu } from './Menu';
 
 export default {
 	title: 'shared/Menu',

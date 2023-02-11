@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { ChatCardSkeleton } from './ChatCardSkeleton';
 import { Card } from '@/shared/ui/Card';
+import { ChatCardSkeleton } from './ChatCardSkeleton';
 
 export default {
 	title: 'entities/Chat/ChatCardSkeleton',

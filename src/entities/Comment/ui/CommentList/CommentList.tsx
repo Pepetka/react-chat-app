@@ -1,8 +1,8 @@
 import { memo, useCallback } from 'react';
-import { Flex } from '@/shared/ui/Flex';
-import { CommentCard } from '../CommentCard/CommentCard';
-import { Text } from '@/shared/ui/Text';
 import { useTranslation } from 'react-i18next';
+import { Flex } from '@/shared/ui/Flex';
+import { Text } from '@/shared/ui/Text';
+import { CommentCard } from '../CommentCard/CommentCard';
 import { CommentCardSkeleton } from '../CommentCardSkeleton/CommentCardSkeleton';
 import { Comment } from '../../model/types/commentSchema';
 

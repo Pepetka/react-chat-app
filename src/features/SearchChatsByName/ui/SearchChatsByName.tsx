@@ -1,8 +1,8 @@
 import { memo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Flex } from '@/shared/ui/Flex';
 import { ChatForm, ChatList } from '@/entities/Chat';
 import { useLazyFetchChatsQuery } from '../api/searchChatsByNameApi';
-import { useSearchParams } from 'react-router-dom';
 
 interface ISearchChatsByNameProps {
 	userId: string;

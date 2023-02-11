@@ -1,7 +1,7 @@
-import { authByUsernameReducer, LoginForm } from '@/features/AuthByUsername';
-import { DynamicModuleLoader } from '@/shared/components';
 import { memo } from 'react';
 import styled from 'styled-components';
+import { authByUsernameReducer, LoginForm } from '@/features/AuthByUsername';
+import { DynamicModuleLoader } from '@/shared/components';
 import { Flex } from '@/shared/ui/Flex';
 
 const StyledLoginPage = styled.div`

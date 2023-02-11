@@ -1,5 +1,5 @@
-import { Button } from '@/shared/ui/Button';
 import { memo, useCallback } from 'react';
+import { Button } from '@/shared/ui/Button';
 import { useTheme } from '@/shared/hooks/useTheme';
 import { Icon } from '@/shared/ui/Icon';
 import SunIcon from '@/shared/assets/sun.svg';

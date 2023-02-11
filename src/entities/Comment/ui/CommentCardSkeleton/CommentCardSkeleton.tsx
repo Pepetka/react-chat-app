@@ -1,5 +1,5 @@
-import { Flex } from '@/shared/ui/Flex';
 import { memo } from 'react';
+import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Button } from '@/shared/ui/Button';
 import MoreIcon from '@/shared/assets/more.svg';

@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { UserCard } from './UserCard';
 import image from '@/shared/assets/images/image.jpg';
+import { UserCard } from './UserCard';
 
 export default {
 	title: 'shared/UserCard',

@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { ChatList } from './ChatList';
-import { Chat } from '../../model/types/chatSchema';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
+import { Chat } from '../../model/types/chatSchema';
+import { ChatList } from './ChatList';
 
 export default {
 	title: 'entities/Chat/ChatList',

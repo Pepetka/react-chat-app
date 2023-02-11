@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { CommentCard } from './CommentCard';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
+import { CommentCard } from './CommentCard';
 
 export default {
 	title: 'entities/Comment/CommentCard',

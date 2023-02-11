@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { ProfileCard } from '@/features/ProfileCard';
 import { SocialCard } from '@/features/SocialCard';
 import { Flex } from '@/shared/ui/Flex';
 import { PostForm, PostList } from '@/entities/Post';
-import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
 
 const ProfilePage = memo(() => {

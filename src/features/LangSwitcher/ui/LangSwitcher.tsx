@@ -1,6 +1,6 @@
-import { Button } from '@/shared/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { memo, useCallback } from 'react';
+import { Button } from '@/shared/ui/Button';
 import { Text } from '@/shared/ui/Text';
 import { Lang } from '@/shared/const/locales';
 

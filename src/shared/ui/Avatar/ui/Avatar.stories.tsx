@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Avatar } from './Avatar';
 import image from '@/shared/assets/images/image.jpg';
+import { Avatar } from './Avatar';
 
 export default {
 	title: 'shared/Avatar',
