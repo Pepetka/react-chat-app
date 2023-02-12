@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "vite --open --mode dev",
+		"dev": "concurrently \"vite --open --mode dev\" \"tsc -w\"",
 		"start:dev:server": "node json-server/index.cjs",
 		"start:dev": "concurrently \"npm run dev\" \"npm run start:dev:server\"",
 		"build": "tsc && vite build",

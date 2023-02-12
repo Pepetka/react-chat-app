@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
+import { Message } from '../../model/types/messageSchema';
 import { MessageCard } from './MessageCard';
 
 export default {
@@ -11,12 +12,13 @@ const Template: StoryFn<typeof MessageCard> = (args) => (
 	<MessageCard {...args} />
 );
 
-const message = {
+const message: Message = {
 	text:
 		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis delectus, dolore est fuga illum' +
 		' ipsum laborum natus nesciunt odit perferendis quam quas, quasi, quisquam tempora tempore tenetur vel veniam.',
 	time: '15:00',
 	name: 'Ivan Ivanov',
+	authorId: '0',
 };
 
 export const Normal = Template.bind({});

@@ -1,6 +1,8 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Flex } from '@/shared/ui/Flex';
 import { MessageForm, MessageList } from '@/entities/Message';
 import { Card } from '@/shared/ui/Card';
@@ -8,67 +10,13 @@ import { UserCard } from '@/shared/ui/UserCard';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
 import SettingsIcon from '@/shared/assets/more.svg';
-import { UserMini } from '@/shared/types/userCard';
-import { Messages } from '@/entities/Message/model/types/messageSchema';
-
-const user: UserMini = {
-	id: '0',
-	avatar:
-		'https://cdn1.iconfinder.com/data/icons/avatars-55/100/avatar_profile_user_music_headphones_shirt_cool-512.png',
-	firstname: 'Ivan',
-	lastname: 'Ivanov',
-};
-
-const messages: Messages = {
-	'03.02.2023': [
-		{
-			authorId: '0',
-			text: 'Hi',
-			name: 'Max Ivanov',
-			time: '12:48',
-		},
-		{
-			authorId: '1',
-			text: 'Hello',
-			name: 'Ivan Ivanov',
-			time: '12:49',
-		},
-		{
-			authorId: '0',
-			text: 'Hello',
-			name: 'Ivan Ivanov',
-			time: '12:30',
-		},
-	],
-	'04.02.2023': [
-		{
-			authorId: '0',
-			text: 'Hi',
-			name: 'Max Ivanov',
-			time: '12:48',
-		},
-		{
-			authorId: '1',
-			text: 'Hello',
-			name: 'Ivan Ivanov',
-			time: '12:49',
-		},
-	],
-	'02.02.2023': [
-		{
-			authorId: '0',
-			text: 'Hi',
-			name: 'Max Ivanov',
-			time: '12:48',
-		},
-		{
-			authorId: '1',
-			text: 'Hello',
-			name: 'Ivan Ivanov',
-			time: '12:49',
-		},
-	],
-};
+import { Spinner } from '@/shared/ui/Spinner';
+import { Text } from '@/shared/ui/Text';
+import { getUserAuthData } from '@/entities/User';
+import {
+	useFetchMessagesQuery,
+	useSendMessageMutation,
+} from '../api/messengerPageApi';
 
 const StyledContent = styled.div`
 	overflow-y: auto;
@@ -78,16 +26,71 @@ const StyledContent = styled.div`
 const MessengerPage = memo(() => {
 	const { t } = useTranslation('chats');
 	const messengerRef = useRef<HTMLDivElement | null>(null);
+	const params = useParams<{ id: string }>();
+	const authData = useSelector(getUserAuthData);
+	const {
+		data: responseMessages,
+		isLoading,
+		isError,
+	} = useFetchMessagesQuery(
+		{
+			chatId: params.id ?? '',
+			userId: authData?.id ?? '',
+		},
+		{
+			pollingInterval: 5000,
+		},
+	);
+	const [onSendMessage, { isLoading: sendLoading, isSuccess }] =
+		useSendMessageMutation();
+
+	const onSendMessageHandle = useCallback(
+		(text: string, images?: Array<string>) => {
+			onSendMessage({
+				text,
+				img: images,
+				chatId: params.id ?? '',
+				userId: authData?.id ?? '',
+			});
+		},
+		[authData?.id, onSendMessage, params.id],
+	);
 
 	useEffect(() => {
-		messengerRef.current?.scrollTo(0, messengerRef.current?.offsetHeight);
-	}, []);
+		if (responseMessages) {
+			messengerRef.current?.scrollTo(0, messengerRef.current?.scrollHeight);
+		}
+	}, [responseMessages]);
+
+	if (isError && !isLoading) {
+		return (
+			<Card width="100%">
+				<Text
+					text={t('Something went wrong')}
+					theme="error"
+					size="l"
+					textAlign="center"
+				/>
+			</Card>
+		);
+	}
+
+	if (isLoading || !responseMessages) {
+		return (
+			<Flex width="100%" height="100%" justify="center" align="center">
+				<Spinner />
+			</Flex>
+		);
+	}
 
 	return (
 		<Flex direction="column" gap="16" height="var(--page-height)">
 			<Card padding="10px" borderRadius={false}>
 				<Flex justify="space-between" align="center">
-					<UserCard user={user} additionalText={t('online')} />
+					<UserCard
+						user={responseMessages.friend}
+						additionalText={t('online')}
+					/>
 					<Button theme="clear">
 						<Icon SvgIcon={SettingsIcon} invert size="s" />
 					</Button>
@@ -95,11 +98,18 @@ const MessengerPage = memo(() => {
 			</Card>
 			<Card borderRadius padding="10px" scrollContent>
 				<StyledContent ref={messengerRef}>
-					<MessageList messages={messages} userId={'1'} />
+					<MessageList
+						messages={responseMessages.messages}
+						userId={authData?.id ?? ''}
+					/>
 				</StyledContent>
 			</Card>
 			<Card padding="10px">
-				<MessageForm isLoading={false} isSuccess={false} />
+				<MessageForm
+					isLoading={sendLoading}
+					isSuccess={isSuccess}
+					onSubmit={onSendMessageHandle}
+				/>
 			</Card>
 		</Flex>
 	);

@@ -13,7 +13,7 @@ import { PostSchema } from '@/entities/Post';
 import { CommentSchema } from '@/entities/Comment';
 import { FriendSchema } from '@/entities/Friend';
 import { ChatSchema } from '@/entities/Chat';
-import { MessageSchema } from '@/entities/Message/model/types/messageSchema';
+import { MessageSchema } from '@/entities/Message';
 
 export interface StateSchema {
 	user: UserSchema;

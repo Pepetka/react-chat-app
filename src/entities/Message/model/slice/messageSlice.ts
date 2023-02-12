@@ -16,6 +16,10 @@ export const messageSlice = createSlice({
 		setImages: (state, { payload }: PayloadAction<string>) => {
 			state.images = payload;
 		},
+		clear: (state) => {
+			state.images = '';
+			state.text = '';
+		},
 	},
 });
 

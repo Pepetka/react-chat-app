@@ -1,20 +1,12 @@
-const sortByDate = (prevPost, nextPost) => {
-	const prevDate = new Date(
-		`${prevPost.createdAt.split(' ')[0]} ${prevPost.createdAt
-			.split(' ')[1]
-			.split('.')
-			.reverse()
-			.join('.')}`,
-	).getTime();
-	const nextDate = new Date(
-		`${nextPost.createdAt.split(' ')[0]} ${nextPost.createdAt
-			.split(' ')[1]
-			.split('.')
-			.reverse()
-			.join('.')}`,
-	).getTime();
+const dateToMilliseconds = require('./dateToMilliseconds.cjs');
 
-	return nextDate - prevDate;
+const sortByDate = (prev, current, direction = 'dawn') => {
+	const prevDate = dateToMilliseconds(prev);
+	const currentDate = dateToMilliseconds(current);
+
+	const coefficient = direction === 'dawn' ? 1 : -1;
+
+	return coefficient * (currentDate - prevDate);
 };
 
 module.exports = sortByDate;

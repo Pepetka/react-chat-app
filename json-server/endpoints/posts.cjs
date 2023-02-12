@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('node:crypto');
-const sortByDate = require('../helpers/sortByDate.cjs');
+const sortByDate = require('../helpers/sortByCreatedAt.cjs');
 const getPosts = (req, res) => {
 	if (!req.headers.authorization) {
 		return res.status(403).json({ message: 'AUTH ERROR' });

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const getContains = require('../helpers/getContains.cjs');
-const sortByDate = require('../helpers/sortByDate.cjs');
+const sortByDate = require('../helpers/sortByCreatedAt.cjs');
 
 const searchFilter = (search) => (el) => {
 	return getContains(`${el.user.firstname} ${el.user.lastname}`, search);
@@ -41,6 +41,12 @@ const getUsers = (req, res) => {
 					})
 					.sort(sortByDate)[0];
 
+				const timeDate = lastMessageFromDB.createdAt.split(' ');
+				const time =
+					timeDate[0].split(':')[0] + ':' + timeDate[0].split(':')[1];
+
+				const createdAt = time + ' ' + timeDate[1];
+
 				return {
 					id: chatId,
 					user: {
@@ -49,7 +55,7 @@ const getUsers = (req, res) => {
 						lastname: user.lastname,
 						avatar: user.avatar,
 					},
-					createdAt: lastMessageFromDB.createdAt,
+					createdAt,
 					lastMessage: lastMessageFromDB.text,
 				};
 			})

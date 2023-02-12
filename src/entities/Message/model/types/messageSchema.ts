@@ -6,7 +6,7 @@ export interface Message {
 	time: string;
 }
 
-export type Messages = Record<string, Array<Message>>;
+export type Messages = Array<[string, Array<Message>]>;
 
 export interface MessageSchema {
 	text: string;

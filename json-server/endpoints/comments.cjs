@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('node:crypto');
-const sortByDate = require('../helpers/sortByDate.cjs');
+const sortByDate = require('../helpers/sortByCreatedAt.cjs');
 
 const getComments = (req, res) => {
 	if (!req.headers.authorization) {

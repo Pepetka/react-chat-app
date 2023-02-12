@@ -8,7 +8,7 @@ import { getMessageState } from '../../model/selectors/messageSelectors';
 import { messageActions, messageReducer } from '../../model/slice/messageSlice';
 
 interface IMessageFormProps {
-	onSubmit?: () => void;
+	onSubmit?: (text: string, images?: Array<string>) => void;
 	isLoading: boolean;
 	isSuccess: boolean;
 }
@@ -18,6 +18,13 @@ export const MessageForm = memo((props: IMessageFormProps) => {
 	const { t } = useTranslation('chats');
 	const { text, images } = useSelector(getMessageState);
 	const dispatch = useAppDispatch();
+
+	const onSubmitHandle = useCallback(() => {
+		const imagesArray = images ? images.split('\n') : undefined;
+
+		onSubmit?.(text, imagesArray);
+		dispatch(messageActions.clear());
+	}, [dispatch, images, onSubmit, text]);
 
 	const onChangeText = useCallback(
 		(text: string) => {
@@ -41,7 +48,7 @@ export const MessageForm = memo((props: IMessageFormProps) => {
 				withImg
 				textPlaceholder={t('Enter your message')}
 				imgPlaceholder={t('Enter your images')}
-				onSubmit={onSubmit}
+				onSubmit={onSubmitHandle}
 				isLoading={isLoading}
 				isSuccess={isSuccess}
 				textValue={text}
