@@ -338,7 +338,8 @@
 	],
 	"post-likes": [
 		{ "userId": "6cbdb794", "postId": "0" },
-		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" }
+		{ "userId": "6cbdb793", "postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a" },
+		{ "userId": "6cbdb793", "postId": "0" }
 	],
 	"post-dislikes": [],
 	"comments": [
@@ -565,6 +566,14 @@
 			"type": "text",
 			"text": "Ok",
 			"createdAt": "15:55:20 12.02.2023"
+		},
+		{
+			"id": "d39b8b56-f90e-4861-b171-6252a734ff0e",
+			"chatId": "1",
+			"userId": "6cbdb793",
+			"type": "text",
+			"text": "Test message",
+			"createdAt": "10:11:58 13.02.2023"
 		}
 	],
 	"chat-members": [

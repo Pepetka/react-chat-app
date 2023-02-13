@@ -24,8 +24,8 @@ interface IMenuControls {
 interface IMenuProps extends IMenuControls {
 	trigger?: ReactNode;
 	children?: ReactNode;
-	width: string;
-	height: string;
+	width?: string;
+	height?: string;
 	openDefault?: boolean;
 }
 
@@ -37,9 +37,11 @@ const StyledMenu = styled.div<
 	align-items: center;
 	position: absolute;
 	top: ${(props) =>
-		props.direction?.split('_')[0] === 'bottom' ? '100%' : undefined};
+		props.direction?.split('_')[0] === 'bottom'
+			? 'calc(100% + 6px)'
+			: undefined};
 	bottom: ${(props) =>
-		props.direction?.split('_')[0] === 'top' ? '100%' : undefined};
+		props.direction?.split('_')[0] === 'top' ? 'calc(100% + 6px)' : undefined};
 	left: ${(props) =>
 		props.direction?.split('_')[1] === 'right'
 			? '0'
@@ -51,16 +53,36 @@ const StyledMenu = styled.div<
 	background: var(--bg-color);
 	border-radius: 5px;
 	border: 2px solid var(--primary-color);
-	z-index: ${(props) => (props.open ? 'var(--popup-z)' : 'var(--hidden-z)')};
 	pointer-events: ${(props) => (props.open ? 'auto' : 'none')};
+	z-index: ${(props) => (props.open ? 'var(--popup-z)' : 'var(--hidden-z)')};
+`;
+
+const StyledArrow = styled.div<IMenuControls & { open: boolean }>`
+	width: 16px;
+	height: 16px;
+	background: var(--bg-color);
+	transform: translateX(-50%)
+		${(props) =>
+			props.direction?.split('_')[0] === 'top'
+				? 'rotateZ(225deg)'
+				: 'rotateZ(45deg)'};
+	border-left: 2px solid var(--primary-color);
+	border-top: 2px solid var(--primary-color);
+	position: absolute;
+	${(props) =>
+		props.direction?.split('_')[0] === 'top'
+			? 'bottom: calc(100% - 1px);'
+			: 'top: calc(100% - 1px);'}
+	left: 50%;
+	z-index: ${(props) => (props.open ? 'var(--popup-z)' : 'var(--hidden-z)')};
 `;
 
 export const Menu = memo((props: IMenuProps) => {
 	const {
 		trigger,
 		children,
-		height,
-		width,
+		height = 'auto',
+		width = 'auto',
 		direction = 'bottom_right',
 		openDefault = false,
 	} = props;
@@ -108,7 +130,7 @@ export const Menu = memo((props: IMenuProps) => {
 	}, []);
 
 	return (
-		<Flex width="auto" height="auto">
+		<Flex width={width} height={height}>
 			<Button
 				onClick={onToggleMenu}
 				theme="clear"
@@ -126,6 +148,7 @@ export const Menu = memo((props: IMenuProps) => {
 			>
 				{children}
 			</StyledMenu>
+			<StyledArrow direction={direction} open={openMenu} />
 		</Flex>
 	);
 });
