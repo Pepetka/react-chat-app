@@ -30,6 +30,6 @@ export const getFriendsPagePath = (id: string, search?: string) => {
 export const getChatsPagePath = () => {
 	return '/chats';
 };
-export const getMessengerPagePath = (id: string) => {
-	return `/chats/${id}`;
+export const getMessengerPagePath = (id: string, query?: string) => {
+	return `/chats/${id}${query ? `?${query}` : ''}`;
 };

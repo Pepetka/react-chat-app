@@ -7,6 +7,7 @@ import { StateSchema } from '@/app/provider/Store';
 interface IMessengerPageApiProps {
 	chatId: string;
 	userId: string;
+	friendId: string;
 }
 
 export const messengerPageApi = rtkApi.injectEndpoints({
@@ -15,11 +16,12 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 			{ messages: Messages; friend: UserMini },
 			IMessengerPageApiProps
 		>({
-			query: ({ chatId, userId }) => ({
+			query: ({ chatId, userId, friendId }) => ({
 				url: '/messages',
 				params: {
 					chatId,
 					userId,
+					friendId,
 				},
 			}),
 			providesTags: (result) => ['messages'],
@@ -28,7 +30,7 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 			string,
 			IMessengerPageApiProps & { text: string; img?: Array<string> }
 		>({
-			query: ({ chatId, userId, text, img }) => ({
+			query: ({ chatId, userId, text, img, friendId }) => ({
 				url: '/messages',
 				method: 'Post',
 				body: {
@@ -36,10 +38,11 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 					userId,
 					text,
 					img,
+					friendId,
 				},
 			}),
 			async onQueryStarted(
-				{ chatId, userId, text, img },
+				{ chatId, userId, text, img, friendId },
 				{ dispatch, queryFulfilled, getState },
 			) {
 				const authData = getUserAuthData(getState() as StateSchema);
@@ -47,11 +50,11 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 				const patchResult = dispatch(
 					messengerPageApi.util.updateQueryData(
 						'fetchMessages',
-						{ chatId, userId },
+						{ chatId, userId, friendId },
 						(draft) => {
 							const currentDate = new Date().toLocaleDateString();
 
-							if (draft.messages.find(([date]) => date === currentDate)) {
+							if (draft.messages?.find(([date]) => date === currentDate)) {
 								const index = draft.messages.findIndex(
 									([date]) => date === currentDate,
 								);
@@ -63,18 +66,21 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 									time: `${new Date().getHours()}:${new Date().getMinutes()}`,
 								});
 							} else {
-								draft.messages.push([
-									currentDate,
+								draft.messages = [
+									...(draft.messages ? draft.messages : []),
 									[
-										{
-											authorId: userId,
-											name: `${authData!.firstname} ${authData!.lastname}`,
-											text,
-											img,
-											time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-										},
+										currentDate,
+										[
+											{
+												authorId: userId,
+												name: `${authData!.firstname} ${authData!.lastname}`,
+												text,
+												img,
+												time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+											},
+										],
 									],
-								]);
+								];
 							}
 						},
 					),

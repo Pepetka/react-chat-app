@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Flex } from '@/shared/ui/Flex';
 import { MessageForm, MessageList } from '@/entities/Message';
@@ -27,6 +27,7 @@ const MessengerPage = memo(() => {
 	const { t } = useTranslation('chats');
 	const messengerRef = useRef<HTMLDivElement | null>(null);
 	const params = useParams<{ id: string }>();
+	const [searchParams] = useSearchParams();
 	const authData = useSelector(getUserAuthData);
 	const {
 		data: responseMessages,
@@ -36,6 +37,7 @@ const MessengerPage = memo(() => {
 		{
 			chatId: params.id ?? '',
 			userId: authData?.id ?? '',
+			friendId: searchParams.get('friendId') ?? '',
 		},
 		{
 			pollingInterval: 5000,
@@ -51,6 +53,7 @@ const MessengerPage = memo(() => {
 				img: images,
 				chatId: params.id ?? '',
 				userId: authData?.id ?? '',
+				friendId: searchParams.get('friendId') ?? '',
 			});
 		},
 		[authData?.id, onSendMessage, params.id],
@@ -98,10 +101,12 @@ const MessengerPage = memo(() => {
 			</Card>
 			<Card borderRadius padding="10px" scrollContent>
 				<StyledContent ref={messengerRef}>
-					<MessageList
-						messages={responseMessages.messages}
-						userId={authData?.id ?? ''}
-					/>
+					{responseMessages.messages && (
+						<MessageList
+							messages={responseMessages.messages}
+							userId={authData?.id ?? ''}
+						/>
+					)}
 				</StyledContent>
 			</Card>
 			<Card padding="10px">

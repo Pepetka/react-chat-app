@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('node:crypto');
 const sortByDate = require('../helpers/sortByCreatedAt.cjs');
+const getCurrentDate = require('../helpers/getCurrentDate.cjs');
 
 const getComments = (req, res) => {
 	if (!req.headers.authorization) {
@@ -95,7 +96,7 @@ const postComments = (req, res) => {
 			text,
 			authorId,
 			postId,
-			createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+			createdAt: getCurrentDate(),
 		};
 
 		const newDb = JSON.stringify({

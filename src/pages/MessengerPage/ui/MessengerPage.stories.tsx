@@ -60,9 +60,12 @@ export const Normal = Template.bind({});
 Normal.decorators = [StoreDecorator(state as StateSchema)];
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}messages?chatId=0&userId=0`, (_req, res, ctx) => {
-			return res(ctx.json(response));
-		}),
+		rest.get(
+			`${__API__}messages?chatId=&userId=0&friendId=1`,
+			(_req, res, ctx) => {
+				return res(ctx.json(response));
+			},
+		),
 	],
 };
 
@@ -70,8 +73,11 @@ export const Error = Template.bind({});
 Error.decorators = [StoreDecorator(state as StateSchema)];
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}messages?chatId=0&userId=0`, (_req, res, ctx) => {
-			return res(ctx.status(403));
-		}),
+		rest.get(
+			`${__API__}messages?chatId=&userId=0&friendId=1`,
+			(_req, res, ctx) => {
+				return res(ctx.status(403));
+			},
+		),
 	],
 };

@@ -138,6 +138,12 @@ Normal.parameters = {
 				return res(ctx.json(postStats));
 			},
 		),
+		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
+			},
+		),
 	],
 };
 
@@ -168,6 +174,12 @@ Error.parameters = {
 			`${__API__}postStats?postId=0&userId=6cbdb793`,
 			(_req, res, ctx) => {
 				return res(ctx.status(403));
+			},
+		),
+		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
 			},
 		),
 	],

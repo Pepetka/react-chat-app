@@ -25,6 +25,15 @@ export const profileCardApi = rtkApi.injectEndpoints({
 				},
 			}),
 		}),
+		fetchChatId: build.query<string, Omit<IProfileCardApiProps, 'profileId'>>({
+			query: ({ userId, friendId }) => ({
+				url: '/getChatId',
+				params: {
+					userId,
+					friendId,
+				},
+			}),
+		}),
 		fetchRelationsData: build.query<
 			Relations,
 			Omit<IProfileCardApiProps, 'profileId'>
@@ -143,4 +152,5 @@ export const {
 	useFetchProfileDataQuery,
 	useAddFriendMutation,
 	useFetchRelationsDataQuery,
+	useFetchChatIdQuery,
 } = profileCardApi;

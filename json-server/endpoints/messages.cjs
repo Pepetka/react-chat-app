@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const sortByDate = require('../helpers/sortByDate.cjs');
 const sortByTime = require('../helpers/sortByTime.cjs');
+const getCurrentDate = require('../helpers/getCurrentDate.cjs');
 const crypto = require('node:crypto');
 
 const getMessages = (req, res) => {
@@ -10,19 +11,33 @@ const getMessages = (req, res) => {
 	}
 
 	try {
-		const { chatId, userId } = req.query;
+		const { chatId, userId, friendId } = req.query;
 
 		const db = JSON.parse(
 			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
 		);
-		const { users = [], messages = [], 'chat-members': chatMembers = [] } = db;
+		const {
+			users = [],
+			messages = [],
+			'chat-members': chatMembers = [],
+			chats = [],
+		} = db;
 
-		const chatMembersFromDB = chatMembers.find((chat) => {
-			return chat.chatId === chatId && chat.userId !== userId;
-		});
+		if (!chats.find((chat) => chat.id === chatId)) {
+			const friend = users.find((user) => user.id === friendId);
+
+			return res.json({
+				friend: {
+					id: friend.id,
+					firstname: friend.firstname,
+					lastname: friend.lastname,
+					avatar: friend.avatar,
+				},
+			});
+		}
 
 		const friend = users.find((user) => {
-			return chatMembersFromDB.userId === user.id;
+			return friendId === user.id;
 		});
 
 		const user = users.find((user) => {
@@ -90,13 +105,18 @@ const postMessages = (req, res) => {
 	}
 
 	try {
-		const { chatId, userId, text } = req.body;
+		const { chatId, userId, friendId, text } = req.body;
 		const img = req.body?.img;
 
 		const db = JSON.parse(
 			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
 		);
-		const { messages = [] } = db;
+		const {
+			users = [],
+			messages = [],
+			chats = [],
+			'chat-members': chatMembers = [],
+		} = db;
 
 		const messageId = crypto.randomUUID();
 
@@ -107,13 +127,37 @@ const postMessages = (req, res) => {
 			type: 'text',
 			text: text || undefined,
 			img,
-			createdAt: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()} ${new Date().toLocaleDateString()}`,
+			createdAt: getCurrentDate(true),
 		};
 
-		const newDb = JSON.stringify({
+		let newDbObject = {
 			...db,
 			messages: [...messages, newMessage],
-		});
+		};
+
+		if (!chats.find((chat) => chat.id === chatId)) {
+			const friend = users.find((user) => user.id === userId);
+
+			newDbObject = {
+				...newDbObject,
+				chats: [
+					...chats,
+					{
+						id: chatId,
+						name: `${friend.firstname} ${friend.lastname}`,
+						createdAt: getCurrentDate(true),
+						ownerId: userId,
+					},
+				],
+				'chat-members': [
+					...chatMembers,
+					{ userId: userId, chatId, createdAt: getCurrentDate() },
+					{ userId: friendId, chatId, createdAt: getCurrentDate() },
+				],
+			};
+		}
+
+		const newDb = JSON.stringify(newDbObject);
 		fs.writeFileSync(path.resolve(__dirname, '..', 'db.json'), newDb);
 
 		return res.json(messageId);

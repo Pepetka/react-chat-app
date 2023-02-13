@@ -20,7 +20,7 @@ export const ChatCard = memo((props: IChatCardProps) => {
 				user={chat.user}
 				additionalText={chat.lastMessage}
 				border
-				href={getMessengerPagePath(chat.id)}
+				href={getMessengerPagePath(chat.id, `friendId=${chat.user.id}`)}
 			/>
 			<Text
 				text={chat.createdAt}

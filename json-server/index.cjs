@@ -12,6 +12,7 @@ const dislike = require('./endpoints/dislike.cjs');
 const comments = require('./endpoints/comments.cjs');
 const getUsers = require('./endpoints/getUsers.cjs');
 const getChats = require('./endpoints/getChats.cjs');
+const getChatId = require('./endpoints/getChatId.cjs');
 const messages = require('./endpoints/messages.cjs');
 
 const server = jsonServer.create();
@@ -45,6 +46,7 @@ server.put('/comments', comments.putComments);
 server.post('/comments', comments.postComments);
 server.get('/getUsers', getUsers);
 server.get('/getChats', getChats);
+server.get('/getChatId', getChatId);
 server.get('/messages', messages.getMessages);
 server.post('/messages', messages.postMessages);
 

@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
@@ -7,8 +8,10 @@ import { Avatar } from '@/shared/ui/Avatar';
 import { Button } from '@/shared/ui/Button';
 import { Modal } from '@/shared/ui/Modal';
 import { AppImg } from '@/shared/ui/AppImg';
+import { getMessengerPagePath } from '@/shared/const/router';
 import {
 	useAddFriendMutation,
+	useFetchChatIdQuery,
 	useFetchProfileDataQuery,
 	useFetchRelationsDataQuery,
 } from '../../api/profileCardApi';
@@ -31,6 +34,10 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		{ profileId },
 		{ refetchOnMountOrArgChange: true },
 	);
+	const { data: chatId, isFetching: chatIdLoading } = useFetchChatIdQuery(
+		{ userId, friendId: profileId },
+		{ refetchOnMountOrArgChange: true },
+	);
 	const {
 		data: relationsData,
 		isLoading: relationsLoading,
@@ -44,6 +51,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	);
 	const [onAddFriend, { error: addFriendError }] = useAddFriendMutation();
 	const [isOpen, setIsOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const onOpenModal = useCallback(() => {
 		setIsOpen(true);
@@ -52,6 +60,12 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	const onCloseModal = useCallback(() => {
 		setIsOpen(false);
 	}, []);
+
+	const onSendMessage = useCallback(() => {
+		if (chatId) {
+			navigate(getMessengerPagePath(chatId, `friendId=${profileId}`));
+		}
+	}, [chatId, navigate]);
 
 	const friendBtnText: Record<Relations['relations'], string> = useMemo(
 		() => ({
@@ -67,7 +81,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		onAddFriend({ userId, friendId: profileId });
 	}, [onAddFriend, profileId, userId]);
 
-	if (profileLoading || relationsLoading) {
+	if (profileLoading || relationsLoading || chatIdLoading) {
 		return <ProfileCardSkeleton showBtns={profileId !== userId} />;
 	}
 
@@ -127,7 +141,12 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 									text={t(friendBtnText[relationsData?.relations ?? 'nobody'])}
 								/>
 							</Button>
-							<Button width="180px" height="50px" invert>
+							<Button
+								onClick={onSendMessage}
+								width="180px"
+								height="50px"
+								invert
+							>
 								<Text textAlign="center" size="l" text={t('Send mess')} />
 							</Button>
 						</Flex>

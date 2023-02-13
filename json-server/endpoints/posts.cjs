@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('node:crypto');
 const sortByDate = require('../helpers/sortByCreatedAt.cjs');
+const getCurrentDate = require('../helpers/getCurrentDate.cjs');
+
 const getPosts = (req, res) => {
 	if (!req.headers.authorization) {
 		return res.status(403).json({ message: 'AUTH ERROR' });
@@ -110,7 +112,7 @@ const postPosts = (req, res) => {
 			authorId,
 			text,
 			img,
-			createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+			createdAt: getCurrentDate(),
 			id: crypto.randomUUID(),
 		};
 
