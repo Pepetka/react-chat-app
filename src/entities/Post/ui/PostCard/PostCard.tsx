@@ -11,7 +11,6 @@ import CommentIcon from '@/shared/assets/comment.svg';
 import SpeakerIcon from '@/shared/assets/speaker.svg';
 import SuccessIcon from '@/shared/assets/check.svg';
 import MoreIcon from '@/shared/assets/more.svg';
-import { AppImg } from '@/shared/ui/AppImg';
 import { Menu } from '@/shared/ui/Menu';
 import { Carousel } from '@/widgets/Carousel';
 import { Skeleton } from '@/shared/ui/Skeleton';
@@ -131,44 +130,22 @@ export const PostCard = memo((props: IPostCardProps) => {
 					<Text size="m" width="50%" text={post.text} theme="primary-invert" />
 					{post.img && (
 						<>
-							<Carousel carouselWidth="385px" carouselHeight="385px">
-								{post.img.map((src, index) => (
-									<Flex key={index} height="385px" align="center">
-										<AppImg
-											width="385px"
-											src={src}
-											alt={t('Post image')}
-											errorFallback={
-												<Text
-													text={t('Something went wrong')}
-													size="l"
-													textAlign="center"
-												/>
-											}
-											onClick={onOpenModal}
-										/>
-									</Flex>
-								))}
-							</Carousel>
+							<Carousel
+								carouselWidth="385px"
+								carouselHeight="385px"
+								alt={t('Post image')}
+								onImgClick={onOpenModal}
+								imgArray={post.img}
+							/>
 							<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
-								<Carousel carouselWidth="700px" carouselHeight="700px">
-									{post.img.map((src, index) => (
-										<Flex key={index} height="700px" align="center">
-											<AppImg
-												width="700px"
-												src={src}
-												alt={t('Post image')}
-												errorFallback={
-													<Text
-														text={t('Something went wrong')}
-														size="l"
-														textAlign="center"
-													/>
-												}
-											/>
-										</Flex>
-									))}
-								</Carousel>
+								<Carousel
+									carouselWidth="700px"
+									carouselHeight="700px"
+									alt={t('Post image')}
+									imgArray={post.img}
+									customPaging
+									keysNav
+								/>
 							</Modal>
 						</>
 					)}

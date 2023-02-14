@@ -13,13 +13,13 @@ interface IFlexControls {
 
 interface IFlexProps extends IFlexControls {
 	children: ReactNode;
-	FlexTag?: 'div' | 'form' | 'label';
+	FlexTag?: 'div' | 'form' | 'label' | 'ul';
 	onMouseOver?: () => void;
 	onMouseOut?: () => void;
 }
 
 interface IFlexDiv extends IFlexProps {
-	FlexTag?: 'div' | 'label';
+	FlexTag?: 'div' | 'label' | 'ul';
 	onSubmit?: never;
 }
 

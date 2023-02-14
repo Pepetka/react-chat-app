@@ -4,7 +4,6 @@ import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Carousel } from '@/widgets/Carousel';
-import { AppImg } from '@/shared/ui/AppImg';
 import { Modal } from '@/shared/ui/Modal';
 import { Message } from '../../model/types/messageSchema';
 
@@ -37,37 +36,22 @@ export const MessageCard = memo((props: IMessageCardProps) => {
 				/>
 				{message?.img && (
 					<>
-						<Carousel carouselWidth="100%" carouselHeight="250px">
-							{message.img.map((src, index) => (
-								<Flex key={index} height="250px" align="center">
-									<AppImg
-										src={src}
-										width="100%"
-										height="auto"
-										onClick={onOpenModal}
-									/>
-								</Flex>
-							))}
-						</Carousel>
+						<Carousel
+							carouselWidth="100%"
+							carouselHeight="250px"
+							alt={t('Message image')}
+							onImgClick={onOpenModal}
+							imgArray={message.img}
+						/>
 						<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
-							<Carousel carouselWidth="700px" carouselHeight="700px">
-								{message.img.map((src, index) => (
-									<Flex key={index} height="700px" align="center">
-										<AppImg
-											width="700px"
-											src={src}
-											alt={t('Message image')}
-											errorFallback={
-												<Text
-													text={t('Something went wrong')}
-													size="l"
-													textAlign="center"
-												/>
-											}
-										/>
-									</Flex>
-								))}
-							</Carousel>
+							<Carousel
+								carouselWidth="700px"
+								carouselHeight="700px"
+								alt={t('Message image')}
+								imgArray={message.img}
+								customPaging
+								keysNav
+							/>
 						</Modal>
 					</>
 				)}
