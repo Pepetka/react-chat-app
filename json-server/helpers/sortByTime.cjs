@@ -9,8 +9,8 @@ const sortByTime = (prev, current, direction = 'dawn') => {
 	let currentSeconds = 0;
 
 	if (prev.split.length === 3) {
-		const prevSeconds = +prev.split(':')[2];
-		const currentSeconds = +current.split(':')[2];
+		prevSeconds = +prev.split(':')[2];
+		currentSeconds = +current.split(':')[2];
 	}
 
 	const coefficient = direction === 'dawn' ? 1 : -1;

@@ -3,6 +3,7 @@ import { Messages } from '@/entities/Message';
 import { UserMini } from '@/shared/types/userCard';
 import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
+import { Online } from '@/shared/types/online';
 
 interface IMessengerPageApiProps {
 	chatId: string;
@@ -25,6 +26,14 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 				},
 			}),
 			providesTags: (result) => ['messages'],
+		}),
+		fetchOnline: build.query<Online, { userId: string }>({
+			query: ({ userId }) => ({
+				url: '/online',
+				params: {
+					userId,
+				},
+			}),
 		}),
 		sendMessage: build.mutation<
 			string,
@@ -96,5 +105,8 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 	}),
 });
 
-export const { useFetchMessagesQuery, useSendMessageMutation } =
-	messengerPageApi;
+export const {
+	useFetchMessagesQuery,
+	useSendMessageMutation,
+	useFetchOnlineQuery,
+} = messengerPageApi;

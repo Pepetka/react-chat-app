@@ -56,8 +56,6 @@ const getMessages = (req, res) => {
 			const time = array[0] + ':' + array[1];
 			const date = message.createdAt.split(' ')[1];
 
-			console.log(time);
-
 			const currentData = {
 				authorId: message.userId,
 				name:

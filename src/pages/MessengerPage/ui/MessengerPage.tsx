@@ -15,6 +15,7 @@ import { Text } from '@/shared/ui/Text';
 import { getUserAuthData } from '@/entities/User';
 import {
 	useFetchMessagesQuery,
+	useFetchOnlineQuery,
 	useSendMessageMutation,
 } from '../api/messengerPageApi';
 
@@ -45,6 +46,12 @@ const MessengerPage = memo(() => {
 	);
 	const [onSendMessage, { isLoading: sendLoading, isSuccess }] =
 		useSendMessageMutation();
+	const { data: online } = useFetchOnlineQuery(
+		{
+			userId: searchParams.get('friendId') ?? '',
+		},
+		{ pollingInterval: 5000 },
+	);
 
 	const onSendMessageHandle = useCallback(
 		(text: string, images?: Array<string>) => {
@@ -56,7 +63,7 @@ const MessengerPage = memo(() => {
 				friendId: searchParams.get('friendId') ?? '',
 			});
 		},
-		[authData?.id, onSendMessage, params.id],
+		[authData?.id, onSendMessage, params.id, searchParams],
 	);
 
 	useEffect(() => {
@@ -92,7 +99,7 @@ const MessengerPage = memo(() => {
 				<Flex justify="space-between" align="center">
 					<UserCard
 						user={responseMessages.friend}
-						additionalText={t('online')}
+						additionalText={t(online ?? 'offline')}
 					/>
 					<Button theme="clear">
 						<Icon SvgIcon={SettingsIcon} invert size="s" />

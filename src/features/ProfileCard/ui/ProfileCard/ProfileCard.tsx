@@ -12,6 +12,7 @@ import { getMessengerPagePath } from '@/shared/const/router';
 import {
 	useAddFriendMutation,
 	useFetchChatIdQuery,
+	useFetchOnlineQuery,
 	useFetchProfileDataQuery,
 	useFetchRelationsDataQuery,
 } from '../../api/profileCardApi';
@@ -49,6 +50,10 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		},
 		{ refetchOnMountOrArgChange: true },
 	);
+	const { data: online } = useFetchOnlineQuery(
+		{ userId: profileId },
+		{ pollingInterval: 5000 },
+	);
 	const [onAddFriend, { error: addFriendError }] = useAddFriendMutation();
 	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
@@ -65,7 +70,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		if (chatId) {
 			navigate(getMessengerPagePath(chatId, `friendId=${profileId}`));
 		}
-	}, [chatId, navigate]);
+	}, [chatId, navigate, profileId]);
 
 	const friendBtnText: Record<Relations['relations'], string> = useMemo(
 		() => ({
@@ -104,7 +109,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		<Card width="100%" height="400px" borderRadius={false}>
 			<Flex height="100%" gap="8">
 				<Flex width="20%">
-					<Text theme="secondary-invert" text={t('online')} />
+					<Text theme="secondary-invert" text={t(online ?? 'offline')} />
 				</Flex>
 				<Flex direction="column" justify="space-between">
 					<Flex direction="column" gap="8">

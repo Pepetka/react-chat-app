@@ -4,5 +4,6 @@
 	"Enter your message": "Введите ваше сообщение...",
 	"Enter your images": "Введите ваши изображения...",
 	"online": "онлайн",
-	"Message image": "Изображение сообщения"
+	"Message image": "Изображение сообщения",
+	"offline": "офлайн"
 }

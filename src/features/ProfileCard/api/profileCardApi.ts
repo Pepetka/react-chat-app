@@ -3,6 +3,7 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { socialCardApi } from '@/features/SocialCard';
 import { StateSchema } from '@/app/provider/Store';
 import { User, UserMini } from '@/shared/types/userCard';
+import { Online } from '@/shared/types/online';
 import { getRelations } from '../model/selectors/profileCardSelectors';
 import { Relations } from '../model/types/profileCardSchema';
 
@@ -31,6 +32,14 @@ export const profileCardApi = rtkApi.injectEndpoints({
 				params: {
 					userId,
 					friendId,
+				},
+			}),
+		}),
+		fetchOnline: build.query<Online, { userId: string }>({
+			query: ({ userId }) => ({
+				url: '/online',
+				params: {
+					userId,
 				},
 			}),
 		}),
@@ -153,4 +162,5 @@ export const {
 	useAddFriendMutation,
 	useFetchRelationsDataQuery,
 	useFetchChatIdQuery,
+	useFetchOnlineQuery,
 } = profileCardApi;

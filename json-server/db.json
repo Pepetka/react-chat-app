@@ -660,6 +660,14 @@
 			"type": "text",
 			"text": "Hi",
 			"createdAt": "14:21:00 13.02.2023"
+		},
+		{
+			"id": "3d64bd8d-775a-4d99-8a27-233f33c2e827",
+			"chatId": "0",
+			"userId": "6cbdb794",
+			"type": "text",
+			"text": "Hello",
+			"createdAt": "12:01:19 14.02.2023"
 		}
 	],
 	"chat-members": [
@@ -708,6 +716,20 @@
 			"createdAt": "14:21 13.02.2023"
 		}
 	],
+	"online": {
+		"6cbdb793": "offline",
+		"6cbdb794": "offline",
+		"6cbdb795": "offline",
+		"6cbdb796": "offline",
+		"6cbdb797": "offline",
+		"6cbdb798": "offline",
+		"6cbdb799": "offline",
+		"6cbdb800": "offline",
+		"6cbdb801": "offline",
+		"6cbdb802": "offline",
+		"6cbdb803": "offline",
+		"6cbdb804": "offline"
+	},
 	"groups": [],
 	"group-members": []
 }
