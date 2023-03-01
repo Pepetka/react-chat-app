@@ -53,6 +53,9 @@ const StyledButton = styled.button<IButtonControls>`
 	height: ${(props) => props.height ?? 'auto'};
 	box-shadow: ${(props) =>
 		props.theme === 'primary' ? '0px 3px 3px rgba(0,0,0,0.7)' : 'none'};
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	@media (min-width: 768px) {
 		&:hover {

@@ -17,5 +17,5 @@ export const rtkApi = createApi({
 		},
 	}),
 	endpoints: () => ({}),
-	tagTypes: ['social', 'post', 'postStats', 'comment'],
+	tagTypes: ['social', 'post', 'postStats', 'comment', 'messages'],
 });

@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { FormWithImg } from './FormWithImg';
 import image from '@/shared/assets/images/image.jpg';
+import { FormWithImg } from './FormWithImg';
 
 export default {
 	title: 'shared/FormWithImg',

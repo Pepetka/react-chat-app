@@ -9,8 +9,15 @@ module.exports = {
 		'plugin:prettier/recommended',
 	],
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'react-hooks', 'i18next', 'prettier'],
+	plugins: [
+		'@typescript-eslint',
+		'react-hooks',
+		'i18next',
+		'prettier',
+		'unused-imports',
+	],
 	rules: {
+		'unused-imports/no-unused-imports': 'error',
 		'prettier/prettier': 'error',
 		'i18next/no-literal-string': [
 			'error',
@@ -38,6 +45,7 @@ module.exports = {
 					'avatarSize',
 					'textSize',
 					'blockTitle',
+					'padding',
 				],
 				ignore: ['ICE'],
 			},
@@ -54,6 +62,26 @@ module.exports = {
 		'no-tabs': 'off',
 		'space-before-function-paren': 'off',
 		'comma-dangle': 'off',
+		'import/no-unused-modules': [
+			'error',
+			{
+				unusedExports: true,
+			},
+		],
+		'import/order': [
+			'error',
+			{
+				'newlines-between': 'never',
+				pathGroups: [
+					{
+						pattern: '@/**',
+						group: 'external',
+						position: 'after',
+					},
+				],
+				distinctGroup: false,
+			},
+		],
 	},
 	overrides: [
 		{

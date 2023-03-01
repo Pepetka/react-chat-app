@@ -1,15 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
-import ProfilePage from './ProfilePage';
-import { RouterDecorator } from '@/shared/config/storybook/RouterDecorator/RouterDecorator';
-import { getProfilePagePath } from '@/shared/const/router';
+import { rest } from 'msw';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { rest } from 'msw';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
 import { Social } from '@/features/SocialCard/model/types/socialCardSchema';
 import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
+import ProfilePage from './ProfilePage';
 
 export default {
 	title: 'pages/ProfilePage',
@@ -140,6 +138,12 @@ Normal.parameters = {
 				return res(ctx.json(postStats));
 			},
 		),
+		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
+			},
+		),
 	],
 };
 
@@ -170,6 +174,12 @@ Error.parameters = {
 			`${__API__}postStats?postId=0&userId=6cbdb793`,
 			(_req, res, ctx) => {
 				return res(ctx.status(403));
+			},
+		),
+		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
 			},
 		),
 	],

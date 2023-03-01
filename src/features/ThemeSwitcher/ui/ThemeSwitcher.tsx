@@ -1,7 +1,10 @@
-import { Button } from '@/shared/ui/Button';
 import { memo, useCallback } from 'react';
-import { Text } from '@/shared/ui/Text';
+import { Button } from '@/shared/ui/Button';
 import { useTheme } from '@/shared/hooks/useTheme';
+import { Icon } from '@/shared/ui/Icon';
+import SunIcon from '@/shared/assets/sun.svg';
+import MoonIcon from '@/shared/assets/moon.svg';
+import { Flex } from '@/shared/ui/Flex';
 import { Theme } from '@/shared/const/theme';
 
 interface ILangSwitcherProps {
@@ -26,12 +29,13 @@ export const ThemeSwitcher = memo((props: ILangSwitcherProps) => {
 			theme={theme}
 			invert={invert}
 		>
-			<Text
-				textAlign="center"
-				text={appTheme === Theme.LIGHT ? 'Light' : 'Dark'}
-				size="m"
-				theme={invert ? 'primary' : 'primary-invert'}
-			/>
+			<Flex height="100%" justify="center" align="center">
+				<Icon
+					SvgIcon={appTheme === Theme.LIGHT ? MoonIcon : SunIcon}
+					invert={!invert}
+					size="s"
+				/>
+			</Flex>
 		</Button>
 	);
 });

@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { FriendList } from './FriendList';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { FriendList } from './FriendList';
 
 export default {
 	title: 'entities/Friend/FriendList',

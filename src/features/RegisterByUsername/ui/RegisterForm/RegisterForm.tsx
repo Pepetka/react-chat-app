@@ -1,8 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { registerByUsernameState } from '../../model/selectors/registerByUsernameSelectors';
-import { useRegisterUserMutation } from '../../api/registerByUsernameApi';
-import { registerByUsernameActions } from '../../model/slice/registerByUserNameSlice';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { userActions } from '@/entities/User';
 import { Card } from '@/shared/ui/Card';
@@ -10,7 +8,9 @@ import { Text } from '@/shared/ui/Text';
 import { Flex } from '@/shared/ui/Flex';
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
-import { useTranslation } from 'react-i18next';
+import { registerByUsernameActions } from '../../model/slice/registerByUserNameSlice';
+import { useRegisterUserMutation } from '../../api/registerByUsernameApi';
+import { registerByUsernameState } from '../../model/selectors/registerByUsernameSelectors';
 
 type RegisterErrorType = { data: { message: string } };
 

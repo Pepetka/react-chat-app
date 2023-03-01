@@ -1,11 +1,11 @@
+import styled from 'styled-components';
+import { memo } from 'react';
 import { DynamicModuleLoader } from '@/shared/components';
 import {
 	registerByUsernameReducer,
 	RegisterForm,
 } from '@/features/RegisterByUsername';
 import { Flex } from '@/shared/ui/Flex';
-import styled from 'styled-components';
-import { memo } from 'react';
 
 const StyledRegisterPage = styled.div`
 	padding-top: 50px;

@@ -1,15 +1,16 @@
 import { memo } from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import {
+	getChatsPagePath,
 	getFriendsPagePath,
 	getMainPagePath,
 	getProfilePagePath,
 } from '@/shared/const/router';
-import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { AppLink } from '@/shared/ui/AppLink';
 
 const StyledSidebar = styled.div`
@@ -31,6 +32,9 @@ export const SideBar = memo(() => {
 				</AppLink>
 				<AppLink href={getFriendsPagePath(authData?.id ?? '')}>
 					<Text text={t('My friends')} size="xl" />
+				</AppLink>
+				<AppLink href={getChatsPagePath()}>
+					<Text text={t('My chats')} size="xl" />
 				</AppLink>
 			</Flex>
 		</StyledSidebar>

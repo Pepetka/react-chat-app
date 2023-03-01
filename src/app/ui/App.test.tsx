@@ -2,9 +2,9 @@ import 'whatwg-fetch';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import { screen } from '@testing-library/react';
-import { App } from './App';
 import { StateSchema } from '@/app/provider/Store';
 import { componentTestRender } from '@/shared/config/test/componentTestRender/componentTestRender';
+import { App } from './App';
 
 const initialState: DeepPartial<StateSchema> = {
 	user: {

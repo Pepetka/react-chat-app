@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { App } from '@/app/ui/App';
 import { StoreProvider } from '@/app/provider/Store';
 import { ThemeProvider } from '@/app/provider/Theme';
+import { PageLoader } from '@/widgets/PageLoader';
 import './app/styles/index.css';
 import './shared/config/i18next/i18n';
 
@@ -12,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 		<BrowserRouter>
 			<StoreProvider>
 				<ThemeProvider>
-					<Suspense fallback="...">
+					<Suspense fallback={<PageLoader />}>
 						<App />
 					</Suspense>
 				</ThemeProvider>

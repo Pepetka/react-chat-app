@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { ProfileCard } from './ProfileCard';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Relations } from '../../model/types/profileCardSchema';
+import { ProfileCard } from './ProfileCard';
 
 export default {
 	title: 'features/ProfileCard/ProfileCard',
@@ -36,6 +36,12 @@ UserProfile.parameters = {
 			return res(ctx.json(user));
 		}),
 		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
+			},
+		),
+		rest.get(
 			`${__API__}relations?userId=6cbdb793&friendId=6cbdb793`,
 			(_req, res, ctx) => {
 				const relations: Relations = {
@@ -58,6 +64,12 @@ FriendProfile.parameters = {
 		rest.get(`${__API__}users?id=6cbdb793`, (_req, res, ctx) => {
 			return res(ctx.json(user));
 		}),
+		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
+			},
+		),
 		rest.get(
 			`${__API__}relations?userId=6cbdb794&friendId=6cbdb793`,
 			(_req, res, ctx) => {
@@ -82,6 +94,12 @@ FollowerProfile.parameters = {
 			return res(ctx.json(user));
 		}),
 		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
+			},
+		),
+		rest.get(
 			`${__API__}relations?userId=6cbdb794&friendId=6cbdb793`,
 			(_req, res, ctx) => {
 				const relations: Relations = {
@@ -105,6 +123,12 @@ FollowingProfile.parameters = {
 			return res(ctx.json(user));
 		}),
 		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.json(''));
+			},
+		),
+		rest.get(
 			`${__API__}relations?userId=6cbdb794&friendId=6cbdb793`,
 			(_req, res, ctx) => {
 				const relations: Relations = {
@@ -127,6 +151,12 @@ Error.parameters = {
 		rest.get(`${__API__}users?id=6cbdb793`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
+		rest.get(
+			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
+			(_req, res, ctx) => {
+				return res(ctx.status(403));
+			},
+		),
 		rest.get(
 			`${__API__}relations?userId=6cbdb794&friendId=6cbdb793`,
 			(_req, res, ctx) => {

@@ -1,5 +1,5 @@
-import { StateSchema } from '@/app/provider/Store';
 import { createSelector } from '@reduxjs/toolkit';
+import { StateSchema } from '@/app/provider/Store';
 import { UserSchema } from '@/entities/User';
 
 export const getUserState = (state: StateSchema) => state.user;

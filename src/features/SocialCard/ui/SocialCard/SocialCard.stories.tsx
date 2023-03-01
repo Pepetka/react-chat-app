@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { SocialCard } from './SocialCard';
 import { rest } from 'msw';
-import { Social } from '../../model/types/socialCardSchema';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
+import { Social } from '../../model/types/socialCardSchema';
+import { SocialCard } from './SocialCard';
 
 export default {
 	title: 'features/SocialCard/SocialCard',

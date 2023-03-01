@@ -11,12 +11,31 @@ const like = require('./endpoints/like.cjs');
 const dislike = require('./endpoints/dislike.cjs');
 const comments = require('./endpoints/comments.cjs');
 const getUsers = require('./endpoints/getUsers.cjs');
+const getChats = require('./endpoints/getChats.cjs');
+const getChatId = require('./endpoints/getChatId.cjs');
+const messages = require('./endpoints/messages.cjs');
+const online = require('./endpoints/online.cjs');
+const fs = require('fs');
 
 const server = jsonServer.create();
 const router = jsonServer.router(path.resolve(__dirname, 'db.json'));
 
 server.use(jsonServer.defaults({}));
 server.use(jsonServer.bodyParser);
+
+const db = JSON.parse(
+	fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+);
+const { online: onlineFromDb = {} } = db;
+const newOnline = {};
+Object.keys(onlineFromDb).forEach((key) => {
+	newOnline[key] = 'offline';
+});
+const newDb = JSON.stringify({
+	...db,
+	online: newOnline,
+});
+fs.writeFileSync(path.resolve(__dirname, 'db.json'), newDb);
 
 server.use(async (req, res, next) => {
 	await new Promise((res) => {
@@ -42,6 +61,12 @@ server.get('/comments', comments.getComments);
 server.put('/comments', comments.putComments);
 server.post('/comments', comments.postComments);
 server.get('/getUsers', getUsers);
+server.get('/getChats', getChats);
+server.get('/getChatId', getChatId);
+server.get('/messages', messages.getMessages);
+server.post('/messages', messages.postMessages);
+server.get('/online', online.getOnline);
+server.post('/online', online.postOnline);
 
 server.use((req, res, next) => {
 	if (!req.headers.authorization) {

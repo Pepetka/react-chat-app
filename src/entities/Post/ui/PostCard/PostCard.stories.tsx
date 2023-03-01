@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { PostCard } from './PostCard';
-import { Post, PostStats } from '../../model/types/postSchema';
+import { rest } from 'msw';
 import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { rest } from 'msw';
 import { Comment } from '@/entities/Comment/model/types/commentSchema';
+import { Post, PostStats } from '../../model/types/postSchema';
+import { PostCard } from './PostCard';
 
 export default {
 	title: 'entities/Post/PostCard',

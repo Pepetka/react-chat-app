@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { AppImg } from './AppImg';
 import image from '@/shared/assets/images/image.jpg';
+import { AppImg } from './AppImg';
 
 export default {
 	title: 'shared/AppImg',

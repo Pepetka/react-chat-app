@@ -1,6 +1,6 @@
 import { memo, ReactNode, useEffect, useRef, useState } from 'react';
-import { Flex } from '@/shared/ui/Flex';
 import styled from 'styled-components';
+import { Flex } from '@/shared/ui/Flex';
 import { useHover } from '@/shared/hooks/useHover';
 
 interface IPopoverControls {
@@ -27,9 +27,11 @@ const StyledPopover = styled.div<
 	align-items: center;
 	position: absolute;
 	top: ${(props) =>
-		props.direction?.split('_')[0] === 'bottom' ? '100%' : undefined};
+		props.direction?.split('_')[0] === 'bottom'
+			? 'calc(100% + 6px)'
+			: undefined};
 	bottom: ${(props) =>
-		props.direction?.split('_')[0] === 'top' ? '100%' : undefined};
+		props.direction?.split('_')[0] === 'top' ? 'calc(100% + 6px)' : undefined};
 	left: ${(props) =>
 		props.direction?.split('_')[1] === 'right'
 			? '0'
@@ -44,6 +46,26 @@ const StyledPopover = styled.div<
 	z-index: ${(props) => (props.open ? 'var(--popup-z)' : 'var(--hidden-z)')};
 	pointer-events: ${(props) => (props.open ? 'auto' : 'none')};
 	padding: 10px;
+`;
+
+const StyledArrow = styled.div<IPopoverControls & { open: boolean }>`
+	width: 16px;
+	height: 16px;
+	background: var(--bg-color);
+	transform: translateX(-50%)
+		${(props) =>
+			props.direction?.split('_')[0] === 'top'
+				? 'rotateZ(225deg)'
+				: 'rotateZ(45deg)'};
+	border-left: 2px solid var(--primary-color);
+	border-top: 2px solid var(--primary-color);
+	position: absolute;
+	${(props) =>
+		props.direction?.split('_')[0] === 'top'
+			? 'bottom: calc(100% - 1px);'
+			: 'top: calc(100% - 1px);'}
+	left: 50%;
+	z-index: ${(props) => (props.open ? 'var(--popup-z)' : 'var(--hidden-z)')};
 `;
 
 export const Popover = memo((props: IPopoverProps) => {
@@ -80,6 +102,7 @@ export const Popover = memo((props: IPopoverProps) => {
 			>
 				{children}
 			</StyledPopover>
+			<StyledArrow direction={direction} open={hover} />
 		</Flex>
 	);
 });

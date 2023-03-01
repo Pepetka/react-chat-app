@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Modal } from './Modal';
 import { Card } from '@/shared/ui/Card';
+import { Modal } from './Modal';
 
 export default {
 	title: 'shared/Modal',

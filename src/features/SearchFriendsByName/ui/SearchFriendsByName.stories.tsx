@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { SearchFriendsByName } from './SearchFriendsByName';
-import { Card } from '@/shared/ui/Card';
 import { rest } from 'msw';
+import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { SearchFriendsByName } from './SearchFriendsByName';
 
 export default {
 	title: 'features/SearchFriendsByName',
@@ -50,7 +50,7 @@ Normal.args = {
 };
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers?userId=2&search=`, (_req, res, ctx) => {
 			return res(
 				ctx.json({
 					Followers: usersList,
@@ -70,7 +70,7 @@ Error.args = {
 };
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers?userId=2&search=`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],

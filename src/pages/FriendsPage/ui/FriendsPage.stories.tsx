@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
-import FriendsPage from './FriendsPage';
+import { rest } from 'msw';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { StateSchema } from '@/app/provider/Store';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
-import { rest } from 'msw';
+import FriendsPage from './FriendsPage';
 
 export default {
 	title: 'pages/FriendsPage',

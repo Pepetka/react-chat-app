@@ -10,11 +10,12 @@ interface IThemeProp {
 		| 'secondary-invert';
 }
 
-interface ISizeProp {
-	size?: 'm' | 'l' | 'xl';
+export interface ISizeProp {
+	size?: 's' | 'm' | 'l' | 'xl';
 }
 
 const sizeTextTitle: Record<NonNullable<ISizeProp['size']>, string> = {
+	s: 'm',
 	m: 'l',
 	l: 'xl',
 	xl: 'xxl',
@@ -26,6 +27,7 @@ interface ITitleControls extends IThemeProp, ISizeProp {
 
 interface ITextControls extends IThemeProp, ISizeProp {
 	textAlign?: 'left' | 'right' | 'center';
+	nowrap?: boolean;
 }
 
 interface IWrapperControls {
@@ -73,6 +75,9 @@ const StyledText = styled.p<ITextControls>`
 	font: ${(props) => `var(--font-${props.size})`};
 	color: ${getTextColor};
 	text-align: ${(props) => props.textAlign};
+	white-space: ${(props) => (props.nowrap ? 'nowrap' : undefined)};
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 export const Text = memo((props: ITextProps) => {
@@ -85,6 +90,7 @@ export const Text = memo((props: ITextProps) => {
 		theme = 'primary',
 		size = 'm',
 		width = '100%',
+		nowrap = false,
 	} = props;
 
 	return (
@@ -103,6 +109,7 @@ export const Text = memo((props: ITextProps) => {
 				text.split('\n').map((line, index) => (
 					<StyledText
 						key={index}
+						nowrap={nowrap}
 						size={size}
 						theme={theme}
 						textAlign={textAlign}

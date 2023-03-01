@@ -1,10 +1,11 @@
 import { getUserAuthData } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Relations } from '../model/types/profileCardSchema';
 import { socialCardApi } from '@/features/SocialCard';
-import { getRelations } from '../model/selectors/profileCardSelectors';
 import { StateSchema } from '@/app/provider/Store';
 import { User, UserMini } from '@/shared/types/userCard';
+import { Online } from '@/shared/types/online';
+import { getRelations } from '../model/selectors/profileCardSelectors';
+import { Relations } from '../model/types/profileCardSchema';
 
 interface IProfileCardApiProps {
 	profileId: string;
@@ -22,6 +23,23 @@ export const profileCardApi = rtkApi.injectEndpoints({
 				url: '/users',
 				params: {
 					id: profileId,
+				},
+			}),
+		}),
+		fetchChatId: build.query<string, Omit<IProfileCardApiProps, 'profileId'>>({
+			query: ({ userId, friendId }) => ({
+				url: '/getChatId',
+				params: {
+					userId,
+					friendId,
+				},
+			}),
+		}),
+		fetchOnline: build.query<Online, { userId: string }>({
+			query: ({ userId }) => ({
+				url: '/online',
+				params: {
+					userId,
 				},
 			}),
 		}),
@@ -143,4 +161,6 @@ export const {
 	useFetchProfileDataQuery,
 	useAddFriendMutation,
 	useFetchRelationsDataQuery,
+	useFetchChatIdQuery,
+	useFetchOnlineQuery,
 } = profileCardApi;

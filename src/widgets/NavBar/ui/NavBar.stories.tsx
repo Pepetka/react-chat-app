@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { NavBar } from './NavBar';
+import { DeepPartial } from 'redux';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { DeepPartial } from 'redux';
+import { NavBar } from './NavBar';
 
 export default {
 	title: 'widgets/NavBar',
