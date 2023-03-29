@@ -1,7 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { User, UserMini } from '@/shared/types/userCard';
-import { Comment } from '@/shared/types/comment';
 import image from '@/shared/assets/images/image.jpg';
 import { Post, PostStats } from '../../model/types/postSchema';
 import { PostCard } from './PostCard';
@@ -38,30 +37,6 @@ const postStats: PostStats = {
 	isShared: true,
 };
 
-const comments = (authorId: string): Array<Comment> => [
-	{
-		postId: '0',
-		text: 'Some comment text 1',
-		createdAt: '14:24 24.01.2023',
-		author: { ...author, id: authorId },
-		id: '0',
-	},
-	{
-		postId: '0',
-		text: 'Some comment text 2',
-		createdAt: '14:24 24.01.2023',
-		author: { ...author, id: authorId },
-		id: '1',
-	},
-	{
-		postId: '0',
-		text: 'Some comment text 3',
-		createdAt: '14:24 24.01.2023',
-		author: { ...author, id: authorId },
-		id: '2',
-	},
-];
-
 export const WithSettings = Template.bind({});
 WithSettings.args = {
 	post,
@@ -92,26 +67,5 @@ WithoutSettings.parameters = {
 				return res(ctx.json(postStats));
 			},
 		),
-	],
-};
-
-export const OpenComments = Template.bind({});
-OpenComments.args = {
-	post,
-	userId: '6cbdb793',
-	admin: true,
-	openCommentsDefault: true,
-};
-OpenComments.parameters = {
-	msw: [
-		rest.get(
-			`${__API__}postStats?postId=0&userId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(postStats));
-			},
-		),
-		rest.get(`${__API__}comments?postId=0`, (_req, res, ctx) => {
-			return res(ctx.json(comments('6cbdb793')));
-		}),
 	],
 };
