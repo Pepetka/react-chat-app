@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { User, UserMini } from '@/shared/types/userCard';
+import { Comment } from '@/shared/types/comment';
 import image from '@/shared/assets/images/image.jpg';
-import { Comment } from '@/entities/Comment/model/types/commentSchema';
 import { Post, PostStats } from '../../model/types/postSchema';
 import { PostCard } from './PostCard';
 

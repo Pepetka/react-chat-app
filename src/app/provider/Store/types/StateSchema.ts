@@ -5,9 +5,9 @@ import {
 	Reducer,
 	ReducersMapObject,
 } from '@reduxjs/toolkit';
+import { rtkApi } from '@/shared/api/rtkApi';
 import { UserSchema } from '@/entities/User';
 import { AuthByUsernameSchema } from '@/features/AuthByUsername';
-import { rtkApi } from '@/shared/api/rtkApi';
 import { RegisterByUsernameSchema } from '@/features/RegisterByUsername';
 import { PostSchema } from '@/entities/Post';
 import { CommentSchema } from '@/entities/Comment';

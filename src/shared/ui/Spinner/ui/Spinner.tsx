@@ -2,6 +2,9 @@ import { memo } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 interface ISpinnerProps {
+	/**
+	 * Тема компонента
+	 */
 	theme?: 'primary' | 'invert';
 }
 

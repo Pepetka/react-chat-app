@@ -18,32 +18,73 @@ import { Icon } from '@/shared/ui/Icon';
 import { AppImg } from '@/shared/ui/AppImg';
 import { Popover } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
-import { Carousel } from '@/widgets/Carousel';
+import { Carousel } from '@/shared/ui/Carousel';
 import { Modal } from '@/shared/ui/Modal';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 import { Card } from '@/shared/ui/Card';
 import { NotificationPopover } from '@/shared/ui/NotificationPopover';
 
 interface ISendWithImgFormControls {
+	/**
+	 * Флаг, отвечающий за наличие изображений формы
+	 */
 	withImg?: boolean;
+	/**
+	 * Флаг, отвечающий за компактный режим компонента
+	 */
 	small?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие модального окна
+	 */
 	modal?: boolean;
 }
 
 interface ISendWithImgFormBase extends ISendWithImgFormControls {
+	/**
+	 * Значение текстового инпута
+	 */
 	textValue?: string;
+	/**
+	 * Функция, вызываемая при изменении значения текстового инпута
+	 * @param text - значение текстового инпута
+	 */
 	onChangeText?: (text: string) => void;
+	/**
+	 * Текст placeholder текстового инпута
+	 */
 	textPlaceholder?: string;
+	/**
+	 * Функция, вызываемая при submit
+	 */
 	onSubmit?: () => void;
+	/**
+	 * Флаг, отвечающий за процесс загрузки
+	 */
 	isLoading?: boolean;
+	/**
+	 * Флаг, отвечающий за удачное выполнение submit
+	 */
 	isSuccess?: boolean;
 }
 
 interface ISendWithImgFormWithImg extends ISendWithImgFormBase {
 	withImg: true;
+	/**
+	 * Значение инпута изображений
+	 */
 	imgValue?: string;
+	/**
+	 * Функция, вызываемая при изменении значения инпута изображений
+	 * @param img - Значение инпута изображений
+	 */
 	onChangeImg?: (img: string) => void;
+	/**
+	 * Текст placeholder инпута изображений
+	 */
 	imgPlaceholder?: string;
+	/**
+	 * Флаг, отвечающий за отображение изображений по умолчанию
+	 */
 	previewImgDefault?: boolean;
 }
 
@@ -274,13 +315,13 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 					</StyledImgWrapper>
 				)}
 				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
-					<Carousel carouselWidth="700px" carouselHeight="700px">
-						{imgValue.split('\n').map((src, index) => (
-							<Flex key={index} height="700px" align="center">
-								<AppImg width="700px" src={src} />
-							</Flex>
-						))}
-					</Carousel>
+					<Carousel
+						carouselWidth="700px"
+						carouselHeight="700px"
+						imgArray={imgValue.split('\n')}
+						customPaging
+						keysNav
+					/>
 				</Modal>
 			</>
 		);

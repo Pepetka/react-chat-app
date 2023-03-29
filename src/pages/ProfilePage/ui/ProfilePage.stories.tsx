@@ -1,12 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
+import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
-import { Social } from '@/features/SocialCard/model/types/socialCardSchema';
+import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
 import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
+import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
 import ProfilePage from './ProfilePage';
 
 export default {

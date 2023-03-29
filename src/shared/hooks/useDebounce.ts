@@ -1,10 +1,21 @@
 import { useCallback, useEffect, useRef } from 'react';
 
 interface IUseDebounceProps<T> {
+	/**
+	 * Функция, вызываемая с задержкой
+	 * @param props - пропсы callback функции
+	 */
 	callback: (props: T) => void;
+	/**
+	 * Значение задержки в мс
+	 */
 	timeout?: number;
 }
 
+/**
+ * Хук, возвращающий функцию, которая вызывает callback с задержкой timeout мс после последнего вызова
+ * @param props - аргументы, описываемые типом IUseDebounceProps
+ */
 export const useDebounce = <T extends object | undefined>(
 	props: IUseDebounceProps<T>,
 ) => {

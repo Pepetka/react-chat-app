@@ -1,7 +1,7 @@
 import {
 	ChangeEvent,
 	FC,
-	HTMLInputTypeAttribute,
+	InputHTMLAttributes,
 	memo,
 	SVGProps,
 	useCallback,
@@ -13,28 +13,66 @@ import { Icon } from '@/shared/ui/Icon';
 import { Button } from '@/shared/ui/Button';
 
 interface IInputControls {
+	/**
+	 * Высота инпута
+	 */
 	height?: string;
+	/**
+	 * Тема компонента
+	 */
 	theme?: 'primary' | 'invert';
+	/**
+	 * Значение border-radius
+	 */
 	borderRadius?: string;
+	/**
+	 * Значение padding-inline
+	 */
 	paddingInline?: string;
+	/**
+	 * Флаг, отвечающий за наличие border
+	 */
 	border?: boolean;
+	/**
+	 * Svg изображение submit кнопки
+	 */
 	SvgIcon?: FC<SVGProps<SVGSVGElement>>;
 }
 
 interface ILabelControls {
+	/**
+	 * Флаг, отвечающий за открытое состояние плавающего лейбла
+	 */
 	opened: boolean;
+	/**
+	 * Тема компонента
+	 */
 	theme: 'primary' | 'invert';
+	/**
+	 * Значение padding-inline
+	 */
 	paddingInline?: string;
 }
 
-interface IInputProps extends IInputControls {
+interface IInputProps
+	extends IInputControls,
+		Omit<InputHTMLAttributes<HTMLInputElement>, 'height' | 'onChange'> {
+	/**
+	 * Текст плавающего лейбла
+	 */
 	label?: string;
-	value: string;
+	/**
+	 * Функция, вызываемая при изменении значения инпута
+	 * @param value - значение инпута
+	 */
 	onChange: (value: string) => void;
-	name: string;
-	type?: HTMLInputTypeAttribute;
-	required?: boolean;
+	/**
+	 * Ширина инпута
+	 */
 	width: string;
+	/**
+	 * Функция, вызываемая при submit
+	 */
 	onClick?: () => void;
 }
 

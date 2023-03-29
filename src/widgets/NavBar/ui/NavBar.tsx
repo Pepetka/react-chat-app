@@ -64,7 +64,7 @@ export const NavBar = memo((props: INavBarProps) => {
 		<StyledNavBar>
 			<Flex justify="space-between" width="80%">
 				<Flex align="center" justify="space-between" width="600px">
-					<AppLink href={getMainPagePath()}>
+					<AppLink to={getMainPagePath()}>
 						<Flex align="center" width="auto">
 							<Icon size="l" SvgIcon={LogoSvg} invert />
 							<LogoName>ICE</LogoName>

@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { DeepPartial } from 'redux';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
+import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { RegisterForm } from './RegisterForm';
 
 export default {

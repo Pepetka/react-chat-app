@@ -9,13 +9,37 @@ import { UserMini } from '@/shared/types/userCard';
 type TextSizeType = 'm' | 'l' | 'xl';
 
 interface IUserCardProps {
+	/**
+	 * Объект данных о пользователе
+	 */
 	user: UserMini;
+	/**
+	 * Размер аватара
+	 */
 	avatarSize?: 's' | 'm' | 'l' | 'xl';
+	/**
+	 * Флаг, отвечающий за наличие border
+	 */
 	border?: boolean;
+	/**
+	 * Тема компонента
+	 */
 	theme?: 'primary' | 'invert';
+	/**
+	 * Размер текста
+	 */
 	textSize?: TextSizeType;
+	/**
+	 * Дополнительный текст
+	 */
 	additionalText?: string;
+	/**
+	 * Ширина компонента
+	 */
 	width?: string;
+	/**
+	 * Эндпоинт, на который перейдет пользователь при клике на компонент
+	 */
 	href?: string;
 }
 
@@ -38,7 +62,7 @@ export const UserCard = memo((props: IUserCardProps) => {
 	} = props;
 
 	return (
-		<AppLink key={user.id} href={href} width={width}>
+		<AppLink to={href} key={user.id} width={width}>
 			<Flex gap="8" align={additionalText ? 'flex-start' : 'center'}>
 				<Avatar
 					size={avatarSize}

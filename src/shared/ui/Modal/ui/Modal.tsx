@@ -6,8 +6,17 @@ import { useTheme } from '@/shared/hooks/useTheme';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface IModalProps {
+	/**
+	 * Флаг, отвечающий за открытие модального окна
+	 */
 	isOpen: boolean;
+	/**
+	 * Содержимое модального окна
+	 */
 	children: ReactNode;
+	/**
+	 * Функция, вызываемая при закрытии модального окна
+	 */
 	onCloseModal?: () => void;
 }
 

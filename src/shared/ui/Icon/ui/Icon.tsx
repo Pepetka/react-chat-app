@@ -2,11 +2,20 @@ import { FC, memo, SVGProps } from 'react';
 import styled from 'styled-components';
 
 interface IIconControls {
+	/**
+	 * Флаг, отвечающий за инвертирование цвета svg изображения
+	 */
 	invert?: boolean;
+	/**
+	 * Размер svg изображения
+	 */
 	size?: 's' | 'm' | 'l';
 }
 
 interface IIconProps extends IIconControls {
+	/**
+	 * Svg изображение
+	 */
 	SvgIcon: FC<SVGProps<SVGSVGElement>>;
 }
 
@@ -17,8 +26,8 @@ const sizeObject: Record<NonNullable<IIconControls['size']>, string> = {
 };
 
 const Logo = styled.div<IIconControls>`
-	width: ${(props) => sizeObject[props.size!]};
-	height: ${(props) => sizeObject[props.size!]};
+	width: ${(props) => sizeObject[props.size ?? 'm']};
+	height: ${(props) => sizeObject[props.size ?? 'm']};
 	color: ${(props) =>
 		props.invert ? 'var(--invert-primary-color)' : 'var(--primary-color)'};
 	display: flex;

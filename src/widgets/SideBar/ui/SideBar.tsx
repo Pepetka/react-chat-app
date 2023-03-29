@@ -24,16 +24,16 @@ export const SideBar = memo(() => {
 	return (
 		<StyledSidebar>
 			<Flex direction="column" gap="8">
-				<AppLink href={getMainPagePath()}>
+				<AppLink to={getMainPagePath()}>
 					<Text text={t('Main page')} size="xl" />
 				</AppLink>
-				<AppLink href={getProfilePagePath(authData?.id ?? '')}>
+				<AppLink to={getProfilePagePath(authData?.id ?? '')}>
 					<Text text={t('My profile')} size="xl" />
 				</AppLink>
-				<AppLink href={getFriendsPagePath(authData?.id ?? '')}>
+				<AppLink to={getFriendsPagePath(authData?.id ?? '')}>
 					<Text text={t('My friends')} size="xl" />
 				</AppLink>
-				<AppLink href={getChatsPagePath()}>
+				<AppLink to={getChatsPagePath()}>
 					<Text text={t('My chats')} size="xl" />
 				</AppLink>
 			</Flex>

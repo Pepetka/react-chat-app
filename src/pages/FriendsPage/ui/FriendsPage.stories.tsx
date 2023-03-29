@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
+import { StateSchema } from '@/app/provider/Store';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { StateSchema } from '@/app/provider/Store';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import FriendsPage from './FriendsPage';
 

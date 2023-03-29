@@ -4,10 +4,10 @@ import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
-import MoreIcon from '@/shared/assets/more.svg';
 import { Menu } from '@/shared/ui/Menu';
 import { UserCard } from '@/shared/ui/UserCard';
-import { Comment } from '../../model/types/commentSchema';
+import MoreIcon from '@/shared/assets/more.svg';
+import { Comment } from '@/shared/types/comment';
 
 interface ICommentCardProps {
 	comment: Comment;

@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Input } from '@/shared/ui/Input';
-import CloseIcon from '@/shared/assets/close.svg';
 import { DynamicModuleLoader } from '@/shared/components';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { useDebounce } from '@/shared/hooks/useDebounce';
+import CloseIcon from '@/shared/assets/close.svg';
 import { chatActions, chatReducer } from '../../model/slice/chatSlice';
 import { getChatSearch } from '../../model/selectors/chatSelectors';
 

@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { SearchChatsByName } from '@/features/SearchChatsByName';
-import { getUserAuthData } from '@/entities/User';
 import { Card } from '@/shared/ui/Card';
+import { getUserAuthData } from '@/entities/User';
+import { SearchChatsByName } from '@/features/SearchChatsByName';
 
 const ChatsPage = memo(() => {
 	const authData = useSelector(getUserAuthData);

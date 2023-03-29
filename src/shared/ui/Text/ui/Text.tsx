@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { memo } from 'react';
 
 interface IThemeProp {
+	/**
+	 * Тема текста
+	 */
 	theme?:
 		| 'primary'
 		| 'primary-invert'
@@ -11,6 +14,9 @@ interface IThemeProp {
 }
 
 export interface ISizeProp {
+	/**
+	 * Размер текста
+	 */
 	size?: 's' | 'm' | 'l' | 'xl';
 }
 

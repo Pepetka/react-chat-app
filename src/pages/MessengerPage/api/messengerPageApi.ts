@@ -1,9 +1,9 @@
-import { rtkApi } from '@/shared/api/rtkApi';
-import { Messages } from '@/entities/Message';
-import { UserMini } from '@/shared/types/userCard';
-import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
+import { rtkApi } from '@/shared/api/rtkApi';
+import { UserMini } from '@/shared/types/userCard';
 import { Online } from '@/shared/types/online';
+import { Messages } from '@/entities/Message';
+import { getUserAuthData } from '@/entities/User';
 
 interface IMessengerPageApiProps {
 	chatId: string;

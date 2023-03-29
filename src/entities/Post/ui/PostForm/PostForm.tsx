@@ -5,8 +5,8 @@ import { FormWithImg } from '@/shared/ui/FormWithImg';
 import { DynamicModuleLoader } from '@/shared/components';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { Card } from '@/shared/ui/Card';
-import { postActions, postReducer } from '../../model/slice/postSlice';
 import { getPostState } from '../../model/selectors/postSelectors';
+import { postActions, postReducer } from '../../model/slice/postSlice';
 import { useAddPostMutation } from '../../api/postApi';
 
 interface IPostFormProps {

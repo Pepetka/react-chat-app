@@ -2,16 +2,40 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface ICardControls {
+	/**
+	 * Ширина карточки
+	 */
 	width?: string;
+	/**
+	 * Высота карточки
+	 */
 	height?: string;
+	/**
+	 * Флаг, отвечающий за наличие border
+	 */
 	border?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие скруглений углов
+	 */
 	borderRadius?: boolean;
+	/**
+	 * Величина padding
+	 */
 	padding?: string;
+	/**
+	 * Флаг, отвечающий за инвертирование цвета карточки
+	 */
 	invert?: boolean;
+	/**
+	 * Флаг, отвечающий за возможность скролить содержимое карточки
+	 */
 	scrollContent?: boolean;
 }
 
 interface ICardProps extends ICardControls {
+	/**
+	 * Содержимое карточки
+	 */
 	children: ReactNode;
 }
 

@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import svgr from 'vite-plugin-svgr';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	plugins: [
 		svgr({
 			exportAsDefault: true,
@@ -20,6 +20,9 @@ export default defineConfig({
 		},
 	},
 	define: {
-		__API__: JSON.stringify('http://localhost:8000/'),
+		__API__:
+			mode === 'development'
+				? JSON.stringify('http://localhost:8000/')
+				: JSON.stringify('https://react-chat-app-server.vercel.app/'),
 	},
-});
+}));

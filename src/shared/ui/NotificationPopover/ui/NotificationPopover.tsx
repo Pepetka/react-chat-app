@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 
 interface INotificationPopoverProps {
+	/**
+	 * Содержимое уведомления
+	 */
 	children: ReactNode;
+	/**
+	 * Содержимое уведомления
+	 */
 	notification?: string | number;
 }
 

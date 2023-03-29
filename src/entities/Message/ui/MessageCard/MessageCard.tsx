@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
-import { Carousel } from '@/widgets/Carousel';
+import { Carousel } from '@/shared/ui/Carousel';
 import { Modal } from '@/shared/ui/Modal';
 import { Message } from '../../model/types/messageSchema';
 

@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently \"vite --open --mode dev\" \"tsc -w\"",
+		"dev": "concurrently \"vite --open\" \"tsc -w\"",
 		"start:dev:server": "node json-server/index.cjs",
 		"start:dev": "concurrently \"npm run dev\" \"npm run start:dev:server\"",
 		"build": "tsc && vite build",
@@ -15,8 +15,7 @@
 		"storybook:build": "storybook build",
 		"lint:ts": "eslint \"**/*.{ts,tsx}\"",
 		"lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
-		"prettier": "prettier .",
-		"prettier:fix": "prettier --write \"**/*.{ts,tsx,js,jsx,json,cjs,mjs}\"",
+		"prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,cjs,mjs}\"",
 		"prepare": "husky install",
 		"create:shared": "plop componentWithoutModel -- --layer shared",
 		"create:widget": "plop componentWithoutModel -- --layer widgets",
