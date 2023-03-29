@@ -1,17 +1,32 @@
-import { memo, ReactElement, useLayoutEffect, useState } from 'react';
+import {
+	ImgHTMLAttributes,
+	memo,
+	ReactElement,
+	useLayoutEffect,
+	useState,
+} from 'react';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
 
-interface IAppImgControls {
+interface IAppImgControls
+	extends Pick<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {
+	/**
+	 * Ширина компонента
+	 */
 	width?: string;
+	/**
+	 * Высота компонента
+	 */
 	height?: string;
-	onClick?: () => void;
 }
 
-interface IAppImgProps extends IAppImgControls {
-	src?: string;
-	alt?: string;
+interface IAppImgProps
+	extends IAppImgControls,
+		Omit<ImgHTMLAttributes<HTMLImageElement>, 'width' | 'height' | 'onClick'> {
+	/**
+	 * Элемент, отображаемый при ошибке
+	 */
 	errorFallback?: ReactElement;
 }
 
@@ -29,6 +44,7 @@ export const AppImg = memo((props: IAppImgProps) => {
 		errorFallback,
 		alt = 'App image',
 		onClick,
+		...otherProps
 	} = props;
 	const [isLoading, setIsLoading] = useState(true);
 	const [isError, setIsError] = useState(false);
@@ -70,6 +86,7 @@ export const AppImg = memo((props: IAppImgProps) => {
 			width={width}
 			height={height}
 			alt={alt}
+			{...otherProps}
 		/>
 	);
 });

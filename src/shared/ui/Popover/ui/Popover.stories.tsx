@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { Popover } from './Popover';
 import { Flex } from '@/shared/ui/Flex';
+import { Popover } from './Popover';
 
 export default {
 	title: 'shared/Popover',

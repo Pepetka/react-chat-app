@@ -1,8 +1,7 @@
-import { authByUsernameReducer, LoginForm } from '@/features/AuthByUsername';
-import { DynamicModuleLoader } from '@/shared/components';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
+import { LoginForm } from '@/features/AuthByUsername';
 
 const StyledLoginPage = styled.div`
 	padding-top: 50px;
@@ -10,16 +9,11 @@ const StyledLoginPage = styled.div`
 
 const LoginPage = memo(() => {
 	return (
-		<DynamicModuleLoader
-			reducerKey="authByUsername"
-			reducer={authByUsernameReducer}
-		>
-			<Flex justify="center" align="center" width="100%">
-				<StyledLoginPage>
-					<LoginForm />
-				</StyledLoginPage>
-			</Flex>
-		</DynamicModuleLoader>
+		<Flex justify="center" align="center" width="100%">
+			<StyledLoginPage>
+				<LoginForm />
+			</StyledLoginPage>
+		</Flex>
 	);
 });
 

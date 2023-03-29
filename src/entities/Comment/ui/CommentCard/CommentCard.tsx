@@ -1,16 +1,13 @@
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/Flex';
-import { getProfilePagePath } from '@/shared/const/router';
-import { Avatar } from '@/shared/ui/Avatar';
 import { Text } from '@/shared/ui/Text';
-import { AppLink } from '@/shared/ui/AppLink';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
-import MoreIcon from '@/shared/assets/more.svg';
-import { useTranslation } from 'react-i18next';
 import { Menu } from '@/shared/ui/Menu';
-import { Comment } from '../../model/types/commentSchema';
 import { UserCard } from '@/shared/ui/UserCard';
+import MoreIcon from '@/shared/assets/more.svg';
+import { Comment } from '@/shared/types/comment';
 
 interface ICommentCardProps {
 	comment: Comment;

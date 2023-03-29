@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { FriendForm } from './FriendForm';
 import { Card } from '@/shared/ui/Card';
+import { FriendForm } from './FriendForm';
 
 export default {
 	title: 'entities/Friend/FriendForm',

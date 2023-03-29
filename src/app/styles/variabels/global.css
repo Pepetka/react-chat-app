@@ -18,8 +18,9 @@
 		var(--font-family-main);
 
 	--navbar-height: 90px;
+	--page-height: calc(100vh - var(--navbar-height) - var(--page-padding));
 	--sidebar-width: 170px;
-	--page-padding: 50px;
+	--page-padding: 20px;
 
 	--popup-z: 1;
 	--hidden-z: -1;

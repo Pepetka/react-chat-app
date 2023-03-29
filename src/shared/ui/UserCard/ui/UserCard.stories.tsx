@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { UserCard } from './UserCard';
 import image from '@/shared/assets/images/image.jpg';
+import { UserCard } from './UserCard';
 
 export default {
 	title: 'shared/UserCard',
@@ -20,4 +20,11 @@ export const Normal = Template.bind({});
 Normal.args = {
 	user,
 	theme: 'primary',
+};
+
+export const WithAdditionalText = Template.bind({});
+WithAdditionalText.args = {
+	user,
+	theme: 'primary',
+	additionalText: 'Some text',
 };

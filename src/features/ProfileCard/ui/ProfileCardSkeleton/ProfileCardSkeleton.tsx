@@ -2,8 +2,6 @@ import { memo } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { Card } from '@/shared/ui/Card';
 import { Skeleton } from '@/shared/ui/Skeleton';
-import { Button } from '@/shared/ui/Button';
-import { Text } from '@/shared/ui/Text';
 
 interface IProfileCardSkeletonProps {
 	showBtns: boolean;

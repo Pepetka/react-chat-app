@@ -1,20 +1,32 @@
-import { memo, useLayoutEffect, useState } from 'react';
+import { ImgHTMLAttributes, memo, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Flex } from '@/shared/ui/Flex';
 
-interface IAvatarControls {
+interface IAvatarControls
+	extends Pick<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {
+	/**
+	 * Размер аватара
+	 */
 	size?: 's' | 'm' | 'l' | 'xl';
+	/**
+	 * Флаг, отвечающий за округлую форму компонента
+	 */
 	circle?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие border
+	 */
 	border?: boolean;
+	/**
+	 * Тема компонента
+	 */
 	theme?: 'primary' | 'invert';
-	onClick?: () => void;
 }
 
-interface IAvatarProps extends IAvatarControls {
-	src: string;
-}
+interface IAvatarProps
+	extends IAvatarControls,
+		Omit<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {}
 
 const getSize = (size: IAvatarControls['size']) => {
 	if (size === 's') {
@@ -55,7 +67,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 		size = 's',
 		border = false,
 		theme = 'primary',
-		onClick,
+		...otherProps
 	} = props;
 	const { t } = useTranslation();
 	const [isLoading, setIsLoading] = useState(true);
@@ -88,7 +100,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 			circle={circle}
 			src={src}
 			alt={t('Avatar')}
-			onClick={onClick}
+			{...otherProps}
 		/>
 	);
 });

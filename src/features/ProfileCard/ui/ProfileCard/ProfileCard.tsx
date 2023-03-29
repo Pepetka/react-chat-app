@@ -1,19 +1,23 @@
 import { memo, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Button } from '@/shared/ui/Button';
+import { Modal } from '@/shared/ui/Modal';
+import { AppImg } from '@/shared/ui/AppImg';
+import { getMessengerPagePath } from '@/shared/const/router';
 import {
 	useAddFriendMutation,
+	useFetchChatIdQuery,
+	useFetchOnlineQuery,
 	useFetchProfileDataQuery,
 	useFetchRelationsDataQuery,
 } from '../../api/profileCardApi';
-import { useTranslation } from 'react-i18next';
 import { Relations } from '../../model/types/profileCardSchema';
 import { ProfileCardSkeleton } from '../ProfileCardSkeleton/ProfileCardSkeleton';
-import { Modal } from '@/shared/ui/Modal';
-import { AppImg } from '@/shared/ui/AppImg';
 
 interface IProfileCardProps {
 	userId: string;
@@ -31,6 +35,10 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		{ profileId },
 		{ refetchOnMountOrArgChange: true },
 	);
+	const { data: chatId, isFetching: chatIdLoading } = useFetchChatIdQuery(
+		{ userId, friendId: profileId },
+		{ refetchOnMountOrArgChange: true },
+	);
 	const {
 		data: relationsData,
 		isLoading: relationsLoading,
@@ -42,8 +50,13 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		},
 		{ refetchOnMountOrArgChange: true },
 	);
+	const { data: online } = useFetchOnlineQuery(
+		{ userId: profileId },
+		{ pollingInterval: 5000 },
+	);
 	const [onAddFriend, { error: addFriendError }] = useAddFriendMutation();
 	const [isOpen, setIsOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const onOpenModal = useCallback(() => {
 		setIsOpen(true);
@@ -52,6 +65,12 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	const onCloseModal = useCallback(() => {
 		setIsOpen(false);
 	}, []);
+
+	const onSendMessage = useCallback(() => {
+		if (chatId) {
+			navigate(getMessengerPagePath(chatId, `friendId=${profileId}`));
+		}
+	}, [chatId, navigate, profileId]);
 
 	const friendBtnText: Record<Relations['relations'], string> = useMemo(
 		() => ({
@@ -67,7 +86,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		onAddFriend({ userId, friendId: profileId });
 	}, [onAddFriend, profileId, userId]);
 
-	if (profileLoading || relationsLoading) {
+	if (profileLoading || relationsLoading || chatIdLoading) {
 		return <ProfileCardSkeleton showBtns={profileId !== userId} />;
 	}
 
@@ -90,7 +109,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		<Card width="100%" height="400px" borderRadius={false}>
 			<Flex height="100%" gap="8">
 				<Flex width="20%">
-					<Text theme="secondary-invert" text={t('online')} />
+					<Text theme="secondary-invert" text={t(online ?? 'offline')} />
 				</Flex>
 				<Flex direction="column" justify="space-between">
 					<Flex direction="column" gap="8">
@@ -127,7 +146,12 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 									text={t(friendBtnText[relationsData?.relations ?? 'nobody'])}
 								/>
 							</Button>
-							<Button width="180px" height="50px" invert>
+							<Button
+								onClick={onSendMessage}
+								width="180px"
+								height="50px"
+								invert
+							>
 								<Text textAlign="center" size="l" text={t('Send mess')} />
 							</Button>
 						</Flex>

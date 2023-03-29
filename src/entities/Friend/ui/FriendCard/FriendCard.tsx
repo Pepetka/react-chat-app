@@ -1,11 +1,11 @@
-import { Flex } from '@/shared/ui/Flex';
 import { memo, useCallback } from 'react';
+import styled from 'styled-components';
+import { Flex } from '@/shared/ui/Flex';
 import { UserCard } from '@/shared/ui/UserCard';
-import { UserMini } from '@/shared/types/userCard';
 import { Button } from '@/shared/ui/Button';
 import { useHover } from '@/shared/hooks/useHover';
-import styled from 'styled-components';
 import { Text } from '@/shared/ui/Text';
+import { UserMini } from '@/shared/types/userCard';
 
 interface IFriendProps {
 	friend: UserMini;

@@ -1,22 +1,34 @@
-import { ForwardedRef, forwardRef, memo, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ForwardedRef, forwardRef, memo } from 'react';
 import styled from 'styled-components';
 
 type ButtonThemeType = 'primary' | 'outline' | 'clear';
 
 interface IButtonControls {
+	/**
+	 * Тема кнопки
+	 */
 	theme?: ButtonThemeType;
+	/**
+	 * Ширина кнопки
+	 */
 	width?: string;
+	/**
+	 * Высота кнопки
+	 */
 	height?: string;
+	/**
+	 * Флаг, отвечающий за инвертирование темы
+	 */
 	invert?: boolean;
+	/**
+	 * Флаг, отвечающий за округлую форму кнопки
+	 */
 	circle?: boolean;
 }
 
-interface IButtonProps extends IButtonControls {
-	onClick?: () => void;
-	children: ReactNode;
-	type?: 'button' | 'submit' | 'reset';
-	disabled?: boolean;
-}
+interface IButtonProps
+	extends IButtonControls,
+		ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const StyledButton = styled.button<IButtonControls>`
 	font: var(--font-m);
@@ -53,6 +65,9 @@ const StyledButton = styled.button<IButtonControls>`
 	height: ${(props) => props.height ?? 'auto'};
 	box-shadow: ${(props) =>
 		props.theme === 'primary' ? '0px 3px 3px rgba(0,0,0,0.7)' : 'none'};
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	@media (min-width: 768px) {
 		&:hover {
@@ -67,26 +82,24 @@ export const Button = memo(
 		const {
 			children,
 			theme = 'primary',
-			onClick,
 			type = 'button',
-			disabled = false,
 			height,
 			width,
 			invert = false,
 			circle = false,
+			...otherProps
 		} = props;
 
 		return (
 			<StyledButton
 				theme={theme}
-				onClick={onClick}
 				type={type}
 				width={width}
 				height={height}
-				disabled={disabled}
 				invert={invert}
 				circle={circle}
 				ref={ref}
+				{...otherProps}
 			>
 				{children}
 			</StyledButton>

@@ -1,10 +1,10 @@
+import { memo } from 'react';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
-import { memo } from 'react';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Button } from '@/shared/ui/Button';
-import MoreIcon from '@/shared/assets/more.svg';
 import { Icon } from '@/shared/ui/Icon';
+import MoreIcon from '@/shared/assets/more.svg';
 import CommentIcon from '@/shared/assets/comment.svg';
 import LikeIcon from '@/shared/assets/like2.svg';
 import DislikeIcon from '@/shared/assets/dislike.svg';

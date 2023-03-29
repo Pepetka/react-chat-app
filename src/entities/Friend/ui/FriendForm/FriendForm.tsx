@@ -1,14 +1,14 @@
 import { memo, useCallback, useEffect } from 'react';
-import { Input } from '@/shared/ui/Input';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { Input } from '@/shared/ui/Input';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { DynamicModuleLoader } from '@/shared/components';
-import { friendActions, friendReducer } from '../../model/slice/friendSlice';
-import { useSelector } from 'react-redux';
-import { getFriendSearch } from '../../model/selectors/friendSelectors';
 import { useDebounce } from '@/shared/hooks/useDebounce';
-import { useSearchParams } from 'react-router-dom';
 import CloseIcon from '@/shared/assets/close.svg';
+import { friendActions, friendReducer } from '../../model/slice/friendSlice';
+import { getFriendSearch } from '../../model/selectors/friendSelectors';
 
 interface IFriendFormProps {
 	profileId: string;

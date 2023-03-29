@@ -1,15 +1,16 @@
 import { memo } from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import {
+	getChatsPagePath,
 	getFriendsPagePath,
 	getMainPagePath,
 	getProfilePagePath,
 } from '@/shared/const/router';
-import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@/entities/User';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { AppLink } from '@/shared/ui/AppLink';
 
 const StyledSidebar = styled.div`
@@ -23,14 +24,17 @@ export const SideBar = memo(() => {
 	return (
 		<StyledSidebar>
 			<Flex direction="column" gap="8">
-				<AppLink href={getMainPagePath()}>
+				<AppLink to={getMainPagePath()}>
 					<Text text={t('Main page')} size="xl" />
 				</AppLink>
-				<AppLink href={getProfilePagePath(authData?.id ?? '')}>
+				<AppLink to={getProfilePagePath(authData?.id ?? '')}>
 					<Text text={t('My profile')} size="xl" />
 				</AppLink>
-				<AppLink href={getFriendsPagePath(authData?.id ?? '')}>
+				<AppLink to={getFriendsPagePath(authData?.id ?? '')}>
 					<Text text={t('My friends')} size="xl" />
+				</AppLink>
+				<AppLink to={getChatsPagePath()}>
+					<Text text={t('My chats')} size="xl" />
 				</AppLink>
 			</Flex>
 		</StyledSidebar>

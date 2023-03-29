@@ -1,13 +1,22 @@
 import { ReactNode, useEffect, useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 import { Portal } from '@/shared/ui/Portal';
 import { Overlay } from '@/shared/ui/Overlay';
-import styled, { keyframes } from 'styled-components';
 import { useTheme } from '@/shared/hooks/useTheme';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface IModalProps {
+	/**
+	 * Флаг, отвечающий за открытие модального окна
+	 */
 	isOpen: boolean;
+	/**
+	 * Содержимое модального окна
+	 */
 	children: ReactNode;
+	/**
+	 * Функция, вызываемая при закрытии модального окна
+	 */
 	onCloseModal?: () => void;
 }
 
@@ -22,22 +31,18 @@ const FadeOutAnimation = keyframes`
 `;
 
 const ScaleInAnimation = keyframes`  
-  0% { transform: scale(0.5, 0.5) translate(-75%, -75%) }
-  100% { transform: scale(1, 1) translate(-50%, -50%) }
+  0% { transform: scale(0.5, 0.5)}
+  100% { transform: scale(1, 1)}
 `;
 
 const ScaleOutAnimation = keyframes`  
-  0% { transform: scale(1, 1) translate(-50%, -50%) }
-  100% { transform: scale(0.5, 0.5) translate(-75%, -75%) }
+  0% { transform: scale(1, 1)}
+  100% { transform: scale(0.5, 0.5)}
 `;
 
 const StyledContent = styled.div<{ opened: boolean }>`
 	min-width: min(90%, 500px);
-	position: absolute;
-	top: 50%;
-	left: 50%;
 	z-index: var(--modal-z);
-	transform: translate(-50%, -50%);
 	animation: ${(props) => (props.opened ? ScaleInAnimation : ScaleOutAnimation)}
 		0.3s linear;
 `;
@@ -45,6 +50,17 @@ const StyledContent = styled.div<{ opened: boolean }>`
 const StyledWrapper = styled.div<{ opened: boolean }>`
 	animation: ${(props) => (props.opened ? FadeInAnimation : FadeOutAnimation)}
 		0.35s linear;
+`;
+
+const StyledContentWrapper = styled.div`
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const Modal = (props: IModalProps) => {
@@ -75,7 +91,9 @@ export const Modal = (props: IModalProps) => {
 		<Portal>
 			<StyledWrapper opened={isOpen} className={theme}>
 				<Overlay onClick={onCloseModal} />
-				<StyledContent opened={isOpen}>{children}</StyledContent>
+				<StyledContentWrapper>
+					<StyledContent opened={isOpen}>{children}</StyledContent>
+				</StyledContentWrapper>
 			</StyledWrapper>
 		</Portal>
 	);

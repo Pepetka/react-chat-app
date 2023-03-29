@@ -1,5 +1,5 @@
-import { Text } from '@/shared/ui/Text';
 import { useTranslation } from 'react-i18next';
+import { Text } from '@/shared/ui/Text';
 
 const MainPage = () => {
 	const { t } = useTranslation();

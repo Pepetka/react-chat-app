@@ -2,6 +2,9 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 interface IOverlayProps {
+	/**
+	 * Функция, вызываемая при клике на компонент
+	 */
 	onClick?: () => void;
 }
 

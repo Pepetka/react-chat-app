@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { CommentList } from './CommentList';
-import { Comment } from '../../model/types/commentSchema';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
+import { Comment } from '@/shared/types/comment';
+import { CommentList } from './CommentList';
 
 export default {
 	title: 'entities/Comment/CommentList',

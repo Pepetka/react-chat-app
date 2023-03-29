@@ -7,38 +7,84 @@ import {
 	useState,
 } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import SendIcon from '@/shared/assets/send.svg';
 import PaperclipIcon from '@/shared/assets/paperclip.svg';
 import SuccessIcon from '@/shared/assets/check.svg';
+import LookIcon from '@/shared/assets/look.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { AppImg } from '@/shared/ui/AppImg';
 import { Popover } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
-import { useTranslation } from 'react-i18next';
-import { Carousel } from '@/widgets/Carousel';
+import { Carousel } from '@/shared/ui/Carousel';
 import { Modal } from '@/shared/ui/Modal';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
+import { Card } from '@/shared/ui/Card';
+import { NotificationPopover } from '@/shared/ui/NotificationPopover';
 
 interface ISendWithImgFormControls {
+	/**
+	 * Флаг, отвечающий за наличие изображений формы
+	 */
 	withImg?: boolean;
+	/**
+	 * Флаг, отвечающий за компактный режим компонента
+	 */
+	small?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие модального окна
+	 */
+	modal?: boolean;
 }
 
 interface ISendWithImgFormBase extends ISendWithImgFormControls {
+	/**
+	 * Значение текстового инпута
+	 */
 	textValue?: string;
+	/**
+	 * Функция, вызываемая при изменении значения текстового инпута
+	 * @param text - значение текстового инпута
+	 */
 	onChangeText?: (text: string) => void;
+	/**
+	 * Текст placeholder текстового инпута
+	 */
 	textPlaceholder?: string;
+	/**
+	 * Функция, вызываемая при submit
+	 */
 	onSubmit?: () => void;
+	/**
+	 * Флаг, отвечающий за процесс загрузки
+	 */
 	isLoading?: boolean;
+	/**
+	 * Флаг, отвечающий за удачное выполнение submit
+	 */
 	isSuccess?: boolean;
 }
 
 interface ISendWithImgFormWithImg extends ISendWithImgFormBase {
 	withImg: true;
+	/**
+	 * Значение инпута изображений
+	 */
 	imgValue?: string;
+	/**
+	 * Функция, вызываемая при изменении значения инпута изображений
+	 * @param img - Значение инпута изображений
+	 */
 	onChangeImg?: (img: string) => void;
+	/**
+	 * Текст placeholder инпута изображений
+	 */
 	imgPlaceholder?: string;
+	/**
+	 * Флаг, отвечающий за отображение изображений по умолчанию
+	 */
 	previewImgDefault?: boolean;
 }
 
@@ -60,11 +106,13 @@ const StyledForm = styled.form`
 
 const StyledTextArea = styled.textarea<ISendWithImgFormControls>`
 	border: 3px solid var(--invert-primary-color);
-	border-bottom: ${(props) => (!props.withImg ? undefined : 'none')};
-	border-radius: ${(props) => (!props.withImg ? '10px' : '10px 10px 0 0')};
+	border-bottom: ${(props) =>
+		!props.withImg || props.modal ? undefined : 'none'};
+	border-radius: ${(props) =>
+		!props.withImg || props.modal ? '10px' : '10px 10px 0 0'};
 	width: 100%;
 	font: var(--font-m);
-	height: 200px;
+	height: ${(props) => (props.small ? '96px' : '200px')};
 	padding: ${(props) =>
 		!props.withImg ? '10px 96px 10px 10px' : '10px 176px 10px 10px'};
 	background: var(--invert-bg-color);
@@ -83,7 +131,8 @@ const StyledImgArea = styled.textarea<ISendWithImgFormControls>`
 	width: 100%;
 	height: 96px;
 	border: 3px solid var(--invert-primary-color);
-	border-radius: ${(props) => (!props.withImg ? '10px' : '0 0 10px 10px')};
+	border-radius: ${(props) =>
+		!props.withImg || props.modal ? '10px' : '0 0 10px 10px'};
 	padding: 10px;
 	background: var(--invert-bg-color);
 	color: var(--invert-primary-color);
@@ -104,11 +153,11 @@ const StyledBtns = styled.div`
 	right: 16px;
 `;
 
-const StyledImgWrapper = styled.div`
+const StyledImgWrapper = styled.div<{ modal: boolean }>`
 	width: 100%;
 	height: 96px;
 	border: 3px solid var(--invert-primary-color);
-	border-radius: 0 0 10px 10px;
+	border-radius: ${(props) => (props.modal ? '10px' : '0 0 10px 10px')};
 	padding-inline: 10px;
 	background: var(--invert-bg-color);
 `;
@@ -126,6 +175,8 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		isSuccess,
 		withImg = false,
 		previewImgDefault = false,
+		small = false,
+		modal = false,
 	} = props;
 	const { t } = useTranslation();
 	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
@@ -133,6 +184,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	const [isFocus, setIsFocus] = useState(false);
 	const [shiftPressed, setShiftPressed] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenForm, setIsOpenForm] = useState(false);
 
 	const onOpenModal = useCallback(() => {
 		setIsOpen(true);
@@ -140,6 +192,14 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 
 	const onCloseModal = useCallback(() => {
 		setIsOpen(false);
+	}, []);
+
+	const onOpenModalForm = useCallback(() => {
+		setIsOpenForm(true);
+	}, []);
+
+	const onCloseModalForm = useCallback(() => {
+		setIsOpenForm(false);
 	}, []);
 
 	const onFocus = useCallback(() => {
@@ -233,13 +293,15 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 			<>
 				{!previewImg || !imgValue ? (
 					<StyledImgArea
+						modal={modal}
 						withImg={withImg}
 						placeholder={imgPlaceholder}
 						value={imgValue}
 						onChange={onChangeImgHandle}
+						small={small}
 					/>
 				) : (
-					<StyledImgWrapper>
+					<StyledImgWrapper modal={modal}>
 						<Flex width="100%" height="100%" gap="16" align="center">
 							{imgValue.split('\n').map((src, index) => (
 								<AppImg
@@ -253,13 +315,13 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 					</StyledImgWrapper>
 				)}
 				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
-					<Carousel carouselWidth="700px" carouselHeight="700px">
-						{imgValue.split('\n').map((src, index) => (
-							<Flex key={index} height="700px" align="center">
-								<AppImg width="700px" src={src} />
-							</Flex>
-						))}
-					</Carousel>
+					<Carousel
+						carouselWidth="700px"
+						carouselHeight="700px"
+						imgArray={imgValue.split('\n')}
+						customPaging
+						keysNav
+					/>
 				</Modal>
 			</>
 		);
@@ -267,10 +329,12 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		imgPlaceholder,
 		imgValue,
 		isOpen,
+		modal,
 		onChangeImgHandle,
 		onCloseModal,
 		onOpenModal,
 		previewImg,
+		small,
 		withImg,
 	]);
 
@@ -279,18 +343,31 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 			<Flex direction="column">
 				<Flex>
 					<StyledTextArea
+						modal={modal}
 						onFocus={onFocus}
 						onBlur={onBlur}
 						withImg={withImg}
 						placeholder={textPlaceholder}
 						value={textValue}
 						onChange={onChangeTextHandle}
+						small={small}
 					/>
 					<StyledBtns>
 						{withImg && (
-							<Button onClick={onPreviewImg} invert width="64px" height="64px">
-								<Icon SvgIcon={PaperclipIcon} />
-							</Button>
+							<NotificationPopover
+								notification={
+									imgValue ? imgValue.split('\n').length : undefined
+								}
+							>
+								<Button
+									onClick={modal ? onOpenModalForm : onPreviewImg}
+									invert
+									width="64px"
+									height="64px"
+								>
+									<Icon SvgIcon={PaperclipIcon} />
+								</Button>
+							</NotificationPopover>
 						)}
 						<Popover
 							direction="top_center"
@@ -316,7 +393,25 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 						</Popover>
 					</StyledBtns>
 				</Flex>
-				{withImg && imgForm()}
+				{withImg && !modal && imgForm()}
+				{withImg && modal && (
+					<Modal isOpen={isOpenForm} onCloseModal={onCloseModalForm}>
+						<Card>
+							<Flex direction="column" gap="8" align="flex-end">
+								{imgForm()}
+								<Button
+									theme="primary"
+									invert={previewImg}
+									width="auto"
+									height="auto"
+									onClick={onPreviewImg}
+								>
+									<Icon SvgIcon={LookIcon} size="m" invert={!previewImg} />
+								</Button>
+							</Flex>
+						</Card>
+					</Modal>
+				)}
 			</Flex>
 		</StyledForm>
 	);

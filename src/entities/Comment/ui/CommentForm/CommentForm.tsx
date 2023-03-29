@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react';
-import { FormWithImg } from '@/shared/ui/FormWithImg';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getCommentState } from '../../model/selectors/commentSelectors';
+import { FormWithImg } from '@/shared/ui/FormWithImg';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
-import { commentActions, commentReducer } from '../../model/slice/commentSlice';
 import { DynamicModuleLoader } from '@/shared/components';
+import { getCommentState } from '../../model/selectors/commentSelectors';
+import { commentActions, commentReducer } from '../../model/slice/commentSlice';
 
 interface ICommentFormProps {
 	userId: string;

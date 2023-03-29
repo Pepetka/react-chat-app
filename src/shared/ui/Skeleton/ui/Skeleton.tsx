@@ -2,11 +2,29 @@ import { memo } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 interface ISkeletonControls {
+	/**
+	 * Ширина компонента
+	 */
 	width?: string;
+	/**
+	 * Высота компонента
+	 */
 	height: string;
+	/**
+	 * Флаг, отвечающий за инвертирование цвета компонента
+	 */
 	invert?: boolean;
+	/**
+	 * Флаг, отвечающий за округлую форму компонента
+	 */
 	circle?: boolean;
+	/**
+	 * Значение margin
+	 */
 	margin?: string;
+	/**
+	 * Значение border-radius
+	 */
 	borderRadius?: string;
 }
 
