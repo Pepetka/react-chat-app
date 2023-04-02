@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Flex } from '@/shared/ui/Flex';
+import fallbackImg from '@/shared/assets/images/fallback.jpg';
 
 interface IAvatarControls
 	extends Pick<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {
@@ -58,6 +59,7 @@ const StyledAvatar = styled.img<IAvatarControls>`
 	border: ${getBorder};
 	border-radius: ${(props) => (props.circle ? '50%' : '')};
 	cursor: ${(props) => (props.onClick ? 'pointer' : undefined)};
+	object-fit: cover;
 `;
 
 export const Avatar = memo((props: IAvatarProps) => {
@@ -71,12 +73,16 @@ export const Avatar = memo((props: IAvatarProps) => {
 	} = props;
 	const { t } = useTranslation();
 	const [isLoading, setIsLoading] = useState(true);
+	const [isError, setIsError] = useState(false);
 
 	useLayoutEffect(() => {
 		const img = new Image();
 		img.src = src ?? '';
 		img.onload = () => {
 			setIsLoading(false);
+		};
+		img.onerror = () => {
+			setIsError(true);
 		};
 	}, [src]);
 
@@ -89,6 +95,20 @@ export const Avatar = memo((props: IAvatarProps) => {
 					circle={circle}
 				/>
 			</Flex>
+		);
+	}
+
+	if (isError) {
+		return (
+			<StyledAvatar
+				border={border}
+				theme={theme}
+				size={size}
+				circle={circle}
+				src={fallbackImg}
+				alt={t('Avatar')}
+				{...otherProps}
+			/>
 		);
 	}
 

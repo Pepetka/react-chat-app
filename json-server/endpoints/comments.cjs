@@ -13,7 +13,7 @@ const getComments = (req, res) => {
 		const { postId } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { comments = [], users = [] } = db;
 
@@ -30,8 +30,7 @@ const getComments = (req, res) => {
 					author: {
 						id: author.id,
 						avatar: author.avatar,
-						firstname: author.firstname,
-						lastname: author.lastname,
+						name: `${author.firstname} ${author.lastname}`,
 					},
 				};
 			})
@@ -53,7 +52,7 @@ const putComments = (req, res) => {
 		const { commentId } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { comments = [] } = db;
 
@@ -87,7 +86,7 @@ const postComments = (req, res) => {
 		const { authorId, text, postId } = req.body;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { comments = [] } = db;
 

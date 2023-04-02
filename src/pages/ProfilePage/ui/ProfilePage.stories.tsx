@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
 import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
-import { User } from '@/shared/types/userCard';
+import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
 import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
@@ -60,31 +60,30 @@ const friends: Array<DeepPartial<User>> = [
 	},
 ];
 
-const author: DeepPartial<User> = {
+const author: UserMini = {
 	id: '6cbdb793',
-	firstname: 'Ivan',
-	lastname: 'Ivanov',
+	name: 'Ivan Ivanov',
 	avatar: image,
 };
 
 const posts: Array<Post> = [
 	{
 		id: '0',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '1',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '2',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',

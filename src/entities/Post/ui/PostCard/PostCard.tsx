@@ -114,7 +114,12 @@ export const PostCard = memo((props: IPostCardProps) => {
 			<Flex direction="column" gap="16">
 				<>
 					<Flex justify="space-between">
-						<UserCard user={post.author} avatarSize="m" />
+						<UserCard
+							id={post.author.id}
+							name={post.author.name}
+							avatar={post.author.avatar}
+							avatarSize="m"
+						/>
 						{admin && (
 							<Menu
 								width="64px"

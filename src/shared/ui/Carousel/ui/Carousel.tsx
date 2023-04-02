@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useHover } from '@/shared/hooks/useHover';
 import { Flex } from '@/shared/ui/Flex';
 import { AppImg } from '@/shared/ui/AppImg';
-import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
@@ -192,13 +191,6 @@ export const Carousel = memo((props: ICarouselProps) => {
 							width={carouselWidth}
 							src={src}
 							alt={alt}
-							errorFallback={
-								<Text
-									text={t('Something went wrong')}
-									size="l"
-									textAlign="center"
-								/>
-							}
 							onClick={onImgClick}
 						/>
 					</Flex>

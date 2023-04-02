@@ -23,8 +23,7 @@ export const Normal = Template.bind({});
 Normal.args = {
 	friend: {
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id',
 	},
 	withBtn: false,
@@ -34,8 +33,7 @@ export const WithBtnHover = Template.bind({});
 WithBtnHover.args = {
 	friend: {
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id',
 	},
 	btnText: 'Click',
@@ -47,8 +45,7 @@ export const WithoutBtnHover = Template.bind({});
 WithoutBtnHover.args = {
 	friend: {
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id',
 	},
 	withBtn: false,

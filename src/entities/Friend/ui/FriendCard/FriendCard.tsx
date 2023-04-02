@@ -45,7 +45,12 @@ export const FriendCard = memo((props: IFriendProps) => {
 				onMouseOut={onMouseOut}
 				onMouseOver={onMouseOver}
 			>
-				<UserCard user={friend} avatarSize="s" />
+				<UserCard
+					id={friend.id}
+					name={friend.name}
+					avatar={friend.avatar}
+					avatarSize="s"
+				/>
 				{hover && withBtn && (
 					<Button
 						onClick={onAddFriendHandle}

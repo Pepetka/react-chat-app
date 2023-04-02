@@ -18,13 +18,17 @@ const user = {
 
 export const Normal = Template.bind({});
 Normal.args = {
-	user,
+	id: user.id,
+	name: `${user.firstname} ${user.lastname}`,
+	avatar: user.avatar,
 	theme: 'primary',
 };
 
 export const WithAdditionalText = Template.bind({});
 WithAdditionalText.args = {
-	user,
+	id: user.id,
+	name: `${user.firstname} ${user.lastname}`,
+	avatar: user.avatar,
 	theme: 'primary',
 	additionalText: 'Some text',
 };

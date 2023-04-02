@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { UserMini } from '@/shared/types/userCard';
 import { FriendList } from './FriendList';
 
 export default {
@@ -19,23 +20,20 @@ export default {
 
 const Template: StoryFn<typeof FriendList> = (args) => <FriendList {...args} />;
 
-const usersList = [
+const usersList: Array<UserMini> = [
 	{
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id',
 	},
 	{
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id1',
 	},
 	{
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id2',
 	},
 ];

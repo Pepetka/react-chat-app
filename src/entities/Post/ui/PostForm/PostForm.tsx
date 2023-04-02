@@ -5,6 +5,7 @@ import { FormWithImg } from '@/shared/ui/FormWithImg';
 import { DynamicModuleLoader } from '@/shared/components';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { Card } from '@/shared/ui/Card';
+import { UserMini } from '@/shared/types/userCard';
 import { getPostState } from '../../model/selectors/postSelectors';
 import { postActions, postReducer } from '../../model/slice/postSlice';
 import { useAddPostMutation } from '../../api/postApi';
@@ -12,10 +13,11 @@ import { useAddPostMutation } from '../../api/postApi';
 interface IPostFormProps {
 	userId: string;
 	profileId: string;
+	authorData?: UserMini;
 }
 
 export const PostForm = memo((props: IPostFormProps) => {
-	const { userId, profileId } = props;
+	const { userId, profileId, authorData } = props;
 	const { img, text } = useSelector(getPostState);
 	const dispatch = useAppDispatch();
 	const [onAddPost, { isLoading, isSuccess }] = useAddPostMutation();
@@ -37,7 +39,7 @@ export const PostForm = memo((props: IPostFormProps) => {
 		const images = img === '' ? undefined : img.split('\n');
 
 		if (text.trim() || images?.length) {
-			onAddPost({ text, img: images, authorId: userId, profileId });
+			onAddPost({ text, img: images, authorId: userId, profileId, authorData });
 			dispatch(postActions.clear());
 		}
 	}, [onAddPost, text, img, userId, profileId, dispatch]);

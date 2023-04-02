@@ -5,15 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
-import LogoSvg from '@/shared/assets/logo.svg';
-import SearchSvg from '@/shared/assets/search.svg';
 import { Icon } from '@/shared/ui/Icon';
 import { Text } from '@/shared/ui/Text';
-import { getUserAuthData, userActions } from '@/entities/User';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { AppLink } from '@/shared/ui/AppLink';
 import { getFriendsPagePath, getMainPagePath } from '@/shared/const/router';
 import { Input } from '@/shared/ui/Input';
+import LogoSvg from '@/shared/assets/logo.svg';
+import SearchSvg from '@/shared/assets/search.svg';
+import { getUserAuthData, userActions } from '@/entities/User';
 
 interface INavBarProps {
 	currentPagePath: string;
@@ -56,7 +56,7 @@ export const NavBar = memo((props: INavBarProps) => {
 	}, [dispatch]);
 
 	const onSearch = useCallback(() => {
-		navigate(getFriendsPagePath(authData!.id, search));
+		navigate(getFriendsPagePath(authData?.id ?? '', search));
 		setSearch('');
 	}, [authData, navigate, search]);
 

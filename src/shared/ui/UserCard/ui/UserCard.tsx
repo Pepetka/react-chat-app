@@ -4,15 +4,22 @@ import { Flex } from '@/shared/ui/Flex';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Text } from '@/shared/ui/Text';
 import { AppLink } from '@/shared/ui/AppLink';
-import { UserMini } from '@/shared/types/userCard';
 
 type TextSizeType = 'm' | 'l' | 'xl';
 
 interface IUserCardProps {
 	/**
-	 * Объект данных о пользователе
+	 * ID карточки
 	 */
-	user: UserMini;
+	id: string;
+	/**
+	 * Аватар
+	 */
+	avatar: string;
+	/**
+	 * Имя
+	 */
+	name: string;
 	/**
 	 * Размер аватара
 	 */
@@ -51,29 +58,31 @@ const textObject: Record<TextSizeType, TextSizeType | 's'> = {
 
 export const UserCard = memo((props: IUserCardProps) => {
 	const {
-		user,
+		id,
+		avatar,
+		name,
 		avatarSize,
 		border,
 		theme = 'invert',
 		textSize = 'l',
 		additionalText,
 		width,
-		href = getProfilePagePath(user.id),
+		href = getProfilePagePath(id),
 	} = props;
 
 	return (
-		<AppLink to={href} key={user.id} width={width}>
+		<AppLink to={href} key={id} width={width}>
 			<Flex gap="8" align={additionalText ? 'flex-start' : 'center'}>
 				<Avatar
 					size={avatarSize}
 					circle
-					src={user.avatar}
+					src={avatar}
 					border={border}
 					theme={theme}
 				/>
 				<Flex direction="column">
 					<Text
-						text={`${user.firstname} ${user.lastname}`}
+						text={name}
 						theme={`primary${theme === 'invert' ? '-invert' : ''}`}
 						size={textSize}
 					/>

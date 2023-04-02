@@ -27,7 +27,13 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 	return (
 		<Flex direction="column" gap="8">
 			<Flex justify="space-between">
-				<UserCard user={comment.author} avatarSize="s" textSize="m" />
+				<UserCard
+					id={comment.author.id}
+					name={comment.author.name}
+					avatar={comment.author.avatar}
+					avatarSize="s"
+					textSize="m"
+				/>
 				{admin && (
 					<Menu
 						direction="bottom_center"

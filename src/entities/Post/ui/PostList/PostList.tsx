@@ -16,6 +16,7 @@ import { PostCard } from '../PostCard/PostCard';
 interface IPostListProps {
 	userId: string;
 	profileId: string;
+	admin: boolean;
 	commentList?: (props: {
 		postId: string;
 		userId: string;
@@ -24,7 +25,7 @@ interface IPostListProps {
 }
 
 export const PostList = memo((props: IPostListProps) => {
-	const { userId, profileId, commentList } = props;
+	const { userId, profileId, commentList, admin } = props;
 	const [postId, setPostId] = useState('');
 	const { t } = useTranslation('profile');
 	const {
@@ -110,7 +111,7 @@ export const PostList = memo((props: IPostListProps) => {
 					onDislikePost={onDislikePostHandle}
 					onDeletePost={onDeletePostHandle}
 					key={post.id}
-					admin={userId === profileId || userId === post.author.id}
+					admin={admin || userId === post.author.id}
 					userId={userId}
 					post={post}
 					commentList={commentList}

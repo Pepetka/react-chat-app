@@ -167,13 +167,6 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 						width="700px"
 						src={profileData?.[0]?.avatar ?? ''}
 						alt={t('Avatar')}
-						errorFallback={
-							<Text
-								text={t('Something went wrong')}
-								size="l"
-								textAlign="center"
-							/>
-						}
 					/>
 				</Modal>
 			</Flex>

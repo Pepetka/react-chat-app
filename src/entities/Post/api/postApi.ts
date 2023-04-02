@@ -1,6 +1,8 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
+import { UserMini } from '@/shared/types/userCard';
+import { addZeros } from '@/shared/helpers/addZeros';
 import { Post, PostStats, UserPost } from '../model/types/postSchema';
 
 interface IPostApiProps {
@@ -11,10 +13,7 @@ interface IPostApiProps {
 
 export const postApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchPostsData: build.query<
-			Array<Post>,
-			Omit<IPostApiProps, 'userId' | 'postId'>
-		>({
+		fetchPostsData: build.query<Array<Post>, Pick<IPostApiProps, 'profileId'>>({
 			query: ({ profileId }) => ({
 				url: '/posts',
 				params: {
@@ -25,7 +24,13 @@ export const postApi = rtkApi.injectEndpoints({
 		}),
 		addPost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
-			{ authorId: string; img?: Array<string>; text: string; profileId: string }
+			{
+				authorId: string;
+				img?: Array<string>;
+				text: string;
+				profileId: string;
+				authorData?: UserMini;
+			}
 		>({
 			query: ({ authorId, img, text, profileId }) => ({
 				url: '/posts',
@@ -34,13 +39,20 @@ export const postApi = rtkApi.injectEndpoints({
 					authorId,
 					text,
 					img,
-					userId: profileId,
+					profileId,
 				},
 			}),
 			async onQueryStarted(
-				{ img, text, profileId },
+				{ img, text, profileId, authorData },
 				{ dispatch, queryFulfilled, getState },
 			) {
+				const authData = getUserAuthData(getState() as StateSchema)!;
+				const author: UserMini = authorData ?? {
+					id: authData.id,
+					name: `${authData?.firstname} ${authData?.lastname}`,
+					avatar: authData.avatar,
+				};
+
 				const patchResult = dispatch(
 					postApi.util.updateQueryData(
 						'fetchPostsData',
@@ -48,10 +60,12 @@ export const postApi = rtkApi.injectEndpoints({
 						(draft) => {
 							draft.unshift({
 								id: String(Math.random()),
-								author: getUserAuthData(getState() as StateSchema)!,
+								author,
 								img,
 								text,
-								createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+								createdAt: `${addZeros(new Date().getHours())}:${addZeros(
+									new Date().getMinutes(),
+								)} ${new Date().toLocaleDateString()}`,
 							});
 						},
 					),
@@ -62,6 +76,7 @@ export const postApi = rtkApi.injectEndpoints({
 					patchResult.undo();
 				}
 			},
+			invalidatesTags: ['post'],
 		}),
 		deletePost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },

@@ -1,8 +1,8 @@
-import { User } from '@/shared/types/userCard';
+import { UserMini } from '@/shared/types/userCard';
 
 export interface Post {
 	id: string;
-	author: User;
+	author: UserMini;
 	text: string;
 	img?: Array<string>;
 	createdAt: string;

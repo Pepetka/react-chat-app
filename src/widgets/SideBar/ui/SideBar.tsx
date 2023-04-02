@@ -7,6 +7,7 @@ import { Text } from '@/shared/ui/Text';
 import {
 	getChatsPagePath,
 	getFriendsPagePath,
+	getGroupsListPagePath,
 	getMainPagePath,
 	getProfilePagePath,
 } from '@/shared/const/router';
@@ -35,6 +36,9 @@ export const SideBar = memo(() => {
 				</AppLink>
 				<AppLink to={getChatsPagePath()}>
 					<Text text={t('My chats')} size="xl" />
+				</AppLink>
+				<AppLink to={getGroupsListPagePath(authData?.id ?? '')}>
+					<Text text={t('My groups')} size="xl" />
 				</AppLink>
 			</Flex>
 		</StyledSidebar>

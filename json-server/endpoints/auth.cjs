@@ -6,7 +6,7 @@ const login = (req, res) => {
 		const { username, password } = req.body;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { users = [] } = db;
 		let wrongPass = false;
@@ -38,7 +38,7 @@ const register = (req, res) => {
 	try {
 		const { username, password, firstname, lastname, age, email } = req.body;
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { users = [] } = db;
 

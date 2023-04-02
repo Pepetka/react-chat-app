@@ -1,13 +1,8 @@
-import {
-	ImgHTMLAttributes,
-	memo,
-	ReactElement,
-	useLayoutEffect,
-	useState,
-} from 'react';
+import { ImgHTMLAttributes, memo, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
+import errorFallback from '@/shared/assets/images/fallback.jpg';
 
 interface IAppImgControls
 	extends Pick<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {
@@ -23,17 +18,13 @@ interface IAppImgControls
 
 interface IAppImgProps
 	extends IAppImgControls,
-		Omit<ImgHTMLAttributes<HTMLImageElement>, 'width' | 'height' | 'onClick'> {
-	/**
-	 * Элемент, отображаемый при ошибке
-	 */
-	errorFallback?: ReactElement;
-}
+		Omit<ImgHTMLAttributes<HTMLImageElement>, 'width' | 'height' | 'onClick'> {}
 
 const StyledImg = styled.img<IAppImgControls>`
 	width: ${(props) => props.width ?? 'auto'};
 	height: ${(props) => props.height ?? 'auto'};
 	cursor: ${(props) => (props.onClick ? 'pointer' : undefined)};
+	object-fit: cover;
 `;
 
 export const AppImg = memo((props: IAppImgProps) => {
@@ -41,7 +32,6 @@ export const AppImg = memo((props: IAppImgProps) => {
 		src,
 		height = 'auto',
 		width = 'auto',
-		errorFallback,
 		alt = 'App image',
 		onClick,
 		...otherProps
@@ -71,11 +61,16 @@ export const AppImg = memo((props: IAppImgProps) => {
 		);
 	}
 
-	if (isError && errorFallback) {
+	if (isError) {
 		return (
-			<Flex width={width} height={height} justify="center" align="center">
-				{errorFallback}
-			</Flex>
+			<StyledImg
+				onClick={onClick}
+				src={errorFallback}
+				width={width}
+				height={height}
+				alt={alt}
+				{...otherProps}
+			/>
 		);
 	}
 

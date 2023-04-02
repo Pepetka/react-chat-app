@@ -6,7 +6,10 @@ import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { UserCard } from '@/shared/ui/UserCard';
 import { AppLink } from '@/shared/ui/AppLink';
-import { getFriendsPagePath } from '@/shared/const/router';
+import {
+	getFriendsPagePath,
+	getGroupsListPagePath,
+} from '@/shared/const/router';
 import { SocialCardSkeleton } from '../SocialCardSkeleton/SocialCardSkeleton';
 import {
 	useFetchFriendsDataQuery,
@@ -112,28 +115,30 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 							</Flex>
 						</Card>
 					</AppLink>
-					<Card padding="0" width="180px" height="200px" border>
-						<Flex
-							direction="column"
-							gap="8"
-							height="100%"
-							justify="center"
-							align="center"
-						>
-							<Text
-								theme="primary-invert"
-								text={t('Groups')}
-								size="l"
-								textAlign="center"
-							/>
-							<Text
-								theme="secondary-invert"
-								title={socialData?.groupsNum}
-								size="xl"
-								titleAlign="center"
-							/>
-						</Flex>
-					</Card>
+					<AppLink to={getGroupsListPagePath(profileId)}>
+						<Card padding="0" width="180px" height="200px" border>
+							<Flex
+								direction="column"
+								gap="8"
+								height="100%"
+								justify="center"
+								align="center"
+							>
+								<Text
+									theme="primary-invert"
+									text={t('Groups')}
+									size="l"
+									textAlign="center"
+								/>
+								<Text
+									theme="secondary-invert"
+									title={socialData?.groupsNum}
+									size="xl"
+									titleAlign="center"
+								/>
+							</Flex>
+						</Card>
+					</AppLink>
 				</Flex>
 				<StyledLine />
 				<Flex gap="16" direction="column" width="350px" height="100%">
@@ -149,7 +154,14 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 					{!!friendsData?.length &&
 						friendsData.map((friend, i) => {
 							if (i < 3) {
-								return <UserCard key={friend.id} user={friend} />;
+								return (
+									<UserCard
+										key={friend.id}
+										id={friend.id}
+										name={`${friend.firstname} ${friend.lastname}`}
+										avatar={friend.avatar}
+									/>
+								);
 							}
 							return null;
 						})}

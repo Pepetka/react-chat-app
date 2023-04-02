@@ -98,7 +98,9 @@ const MessengerPage = memo(() => {
 			<Card padding="10px" borderRadius={false}>
 				<Flex justify="space-between" align="center">
 					<UserCard
-						user={responseMessages.friend}
+						id={responseMessages.friend.id}
+						avatar={responseMessages.friend.avatar}
+						name={`${responseMessages.friend.name}`}
 						additionalText={t(online ?? 'offline')}
 					/>
 					<Button theme="clear">

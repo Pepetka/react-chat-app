@@ -25,8 +25,7 @@ const Template: StoryFn<typeof PostComments> = (args) => (
 );
 
 const author: UserMini = {
-	firstname: 'Ivan',
-	lastname: 'Ivanov',
+	name: 'Ivan Ivanov',
 	avatar: image,
 	id: '',
 };

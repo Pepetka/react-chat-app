@@ -17,7 +17,9 @@ export const ChatCard = memo((props: IChatCardProps) => {
 			<UserCard
 				width="calc(100% - 170px)"
 				avatarSize="l"
-				user={chat.user}
+				id={chat.user.id}
+				name={chat.user.name}
+				avatar={chat.user.avatar}
 				additionalText={chat.lastMessage}
 				border
 				href={getMessengerPagePath(chat.id, `friendId=${chat.user.id}`)}

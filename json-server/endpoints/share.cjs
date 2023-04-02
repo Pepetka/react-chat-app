@@ -9,7 +9,7 @@ const share = (req, res) => {
 		const { postId, userId } = req.body;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { 'user-posts': userPosts = [] } = db;
 
