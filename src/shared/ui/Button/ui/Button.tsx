@@ -24,6 +24,10 @@ interface IButtonControls {
 	 * Флаг, отвечающий за округлую форму кнопки
 	 */
 	circle?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие padding-inline
+	 */
+	padding?: boolean;
 }
 
 interface IButtonProps
@@ -31,6 +35,7 @@ interface IButtonProps
 		ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const StyledButton = styled.button<IButtonControls>`
+	padding-inline: ${(props) => (props.padding ? '20px' : 'none')};
 	font: var(--font-m);
 	cursor: pointer;
 	border-radius: ${(props) => (props.circle ? '50%' : '8px')};
