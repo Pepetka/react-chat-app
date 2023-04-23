@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
 import { Flex } from '@/shared/ui/Flex';
 import { LangSwitcher } from '@/features/LangSwitcher';
 import { ThemeSwitcher } from '@/features/ThemeSwitcher';
@@ -8,7 +9,7 @@ import { useTheme } from '@/shared/hooks/useTheme';
 const StyledControlPanel = styled.div`
 	position: absolute;
 	right: 20px;
-	bottom: 20px;
+	bottom: ${() => (isMobile ? 'calc(var(--navbar-height) + 20px)' : '20px')};
 `;
 
 export const ControlPanel = () => {

@@ -1,5 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { Text } from '@/shared/ui/Text';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
@@ -15,6 +16,8 @@ interface IGroupDataCardProps {
 
 export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 	const { groupId } = props;
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
+	const isSmallestScreen = useMediaQuery({ maxWidth: 540 });
 	const { t } = useTranslation('group');
 	const {
 		data: groupData,
@@ -51,8 +54,13 @@ export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 	}
 
 	return (
-		<Card width="100%" height="400px" borderRadius={false}>
-			<Flex height="100%" gap="8">
+		<Card width="100%" minHeight="400px" borderRadius={false}>
+			<Flex
+				wrap={isDesktopOrLaptop ? 'nowrap' : 'wrap'}
+				height="100%"
+				gap="8"
+				justify="center"
+			>
 				<Flex direction="column" justify="space-between">
 					<Flex direction="column" gap="8">
 						<Text
@@ -68,6 +76,7 @@ export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 							size="m"
 						/>
 						<Text
+							width={isSmallestScreen ? '100%' : '500px'}
 							textAlign="left"
 							theme="primary-invert"
 							text={groupData?.[0]?.description}
@@ -82,7 +91,8 @@ export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 				/>
 				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
 					<AppImg
-						width="700px"
+						width={isDesktopOrLaptop ? '700px' : '100vw'}
+						height={isDesktopOrLaptop ? '700px' : '100vw'}
 						src={groupData?.[0]?.avatar ?? ''}
 						alt={t('Group Avatar')}
 					/>

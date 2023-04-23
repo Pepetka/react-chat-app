@@ -15,7 +15,7 @@ import { getUserAuthData } from '@/entities/User';
 import { AppLink } from '@/shared/ui/AppLink';
 
 const StyledSidebar = styled.div`
-	flex: 0 0 var(--sidebar-width);
+	width: var(--sidebar-width);
 `;
 
 export const SideBar = memo(() => {

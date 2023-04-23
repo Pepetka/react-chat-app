@@ -9,7 +9,3 @@
 - types
 
 `AuthByUsernameSchema` - тип, описывающий часть store, которая относится к авторизации по имени пользователя
-
-- slice
-
-`authByUsernameReducer` - reducer авторизации по имени пользователя

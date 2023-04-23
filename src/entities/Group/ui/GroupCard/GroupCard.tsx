@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { Flex } from '@/shared/ui/Flex';
 import { UserCard } from '@/shared/ui/UserCard';
 import { Text } from '@/shared/ui/Text';
@@ -11,12 +12,14 @@ interface IGroupCardProps {
 
 export const GroupCard = memo((props: IGroupCardProps) => {
 	const { group } = props;
+	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 
 	return (
 		<Flex justify="space-between">
 			<UserCard
 				width="calc(100% - 170px)"
-				avatarSize="l"
+				avatarSize={isSmallScreen ? 'm' : 'l'}
+				textSize={isSmallScreen ? 'm' : 'l'}
 				id={group.id}
 				name={group.name}
 				avatar={group.avatar}

@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
@@ -18,6 +19,7 @@ interface ICommentCardProps {
 
 export const CommentCard = memo((props: ICommentCardProps) => {
 	const { comment, admin, deleteLoading, onDeleteComment } = props;
+	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 	const { t } = useTranslation('profile');
 
 	const onDeleteCommentHandle = useCallback(() => {
@@ -36,7 +38,7 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 				/>
 				{admin && (
 					<Menu
-						direction="bottom_center"
+						direction={isSmallScreen ? 'bottom_left' : 'bottom_center'}
 						width="48px"
 						height="48px"
 						trigger={<Icon SvgIcon={MoreIcon} invert />}

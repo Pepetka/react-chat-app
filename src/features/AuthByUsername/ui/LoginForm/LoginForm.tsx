@@ -67,79 +67,90 @@ export const LoginForm = memo(() => {
 			reducerKey="authByUsername"
 			reducer={authByUsernameReducer}
 		>
-			<Card border width="570px" height="600px">
-				<Flex width="100%" height="100%" justify="center" align="center">
-					<Flex height="380px" direction="column" align="center" gap="24">
-						<Text
-							title={t('Log In')}
-							titleAlign="center"
-							theme="primary-invert"
-							size="xl"
-						/>
-						<Flex
-							FlexTag="form"
-							onSubmit={onLogin}
-							direction="column"
-							align="center"
-							gap="40"
-						>
-							<Input
-								theme="invert"
-								label={t('Enter username')}
-								value={username}
-								onChange={onChangeUsername}
-								width="500px"
-								name="username"
-								type="text"
-								required
-							/>
-							<Input
-								theme="invert"
-								label={t('Enter password')}
-								width="500px"
-								value={password}
-								onChange={onChangePassword}
-								name="password"
-								type="password"
-								required
-							/>
-							<Flex justify="space-between" align="center" width="500px">
-								<a href="#">
-									<Text
-										text={t('Forgot your password?')}
-										theme="primary-invert"
-									/>
-								</a>
-								<Button
-									width="180px"
-									height="50px"
-									disabled={isLoading}
-									theme="primary"
-									type="submit"
-									invert
-								>
-									<Text
-										text={isLoading ? t('Loading') : t('Log in')}
-										textAlign="center"
-										size="l"
-									/>
-								</Button>
-							</Flex>
-						</Flex>
-						{hasError && (
+			<Flex justify="center">
+				<Card
+					padding="16px"
+					border
+					width={window.innerWidth > 570 ? '570px' : '90%'}
+					height={window.innerWidth > 570 ? '600px' : '412px'}
+				>
+					<Flex height="100%" justify="center" align="center">
+						<Flex height="380px" direction="column" align="center" gap="24">
 							<Text
-								text={
-									(loginError as LoginErrorType)?.data
-										? (loginError as LoginErrorType).data.message
-										: t('Something went wrong')
-								}
-								textAlign="center"
-								theme="error"
+								title={t('Log In')}
+								titleAlign="center"
+								theme="primary-invert"
+								size={window.innerWidth > 768 ? 'xl' : 'l'}
 							/>
-						)}
+							<Flex
+								FlexTag="form"
+								onSubmit={onLogin}
+								direction="column"
+								align="center"
+								gap="40"
+							>
+								<Input
+									theme="invert"
+									label={t('Enter username')}
+									value={username}
+									onChange={onChangeUsername}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									name="username"
+									type="text"
+									required
+								/>
+								<Input
+									theme="invert"
+									label={t('Enter password')}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									value={password}
+									onChange={onChangePassword}
+									name="password"
+									type="password"
+									required
+								/>
+								<Flex
+									justify="space-between"
+									align="center"
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+								>
+									<a href="#">
+										<Text
+											text={t('Forgot your password?')}
+											theme="primary-invert"
+										/>
+									</a>
+									<Button
+										width={window.innerWidth > 768 ? '180px' : '120px'}
+										height="50px"
+										disabled={isLoading}
+										theme="primary"
+										type="submit"
+										invert
+									>
+										<Text
+											text={isLoading ? t('Loading') : t('Log in')}
+											textAlign="center"
+											size={window.innerWidth > 768 ? 'l' : 'm'}
+										/>
+									</Button>
+								</Flex>
+							</Flex>
+							{hasError && (
+								<Text
+									text={
+										(loginError as LoginErrorType)?.data
+											? (loginError as LoginErrorType).data.message
+											: t('Something went wrong')
+									}
+									textAlign="center"
+									theme="error"
+								/>
+							)}
+						</Flex>
 					</Flex>
-				</Flex>
-			</Card>
+				</Card>
+			</Flex>
 		</DynamicModuleLoader>
 	);
 });

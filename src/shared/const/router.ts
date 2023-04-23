@@ -8,6 +8,7 @@ export enum AppRoutes {
 	MESSENGER = 'Messenger',
 	GROUP = 'Group',
 	GROUPS_LIST = 'Groups',
+	NOT_FOUND = 'NotFound',
 }
 
 export const getMainPagePath = () => {

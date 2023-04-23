@@ -1,6 +1,7 @@
 import { ImgHTMLAttributes, memo, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Flex } from '@/shared/ui/Flex';
 import fallbackImg from '@/shared/assets/images/fallback.jpg';
@@ -29,7 +30,7 @@ interface IAvatarProps
 	extends IAvatarControls,
 		Omit<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {}
 
-const getSize = (size: IAvatarControls['size']) => {
+const getSize = (size: IAvatarControls['size'], isDesktopOrLaptop: boolean) => {
 	if (size === 's') {
 		return '50px';
 	}
@@ -42,7 +43,11 @@ const getSize = (size: IAvatarControls['size']) => {
 		return '100px';
 	}
 
-	return '340px';
+	if (isDesktopOrLaptop) {
+		return '340px';
+	} else {
+		return '250px';
+	}
 };
 
 const getBorder = (props: IAvatarControls) => {
@@ -53,9 +58,11 @@ const getBorder = (props: IAvatarControls) => {
 		: '3px solid var(--invert-primary-color)';
 };
 
-const StyledAvatar = styled.img<IAvatarControls>`
-	width: ${(props) => getSize(props.size)};
-	height: ${(props) => getSize(props.size)};
+const StyledAvatar = styled.img<
+	IAvatarControls & { isDesktopOrLaptop: boolean }
+>`
+	width: ${(props) => getSize(props.size, props.isDesktopOrLaptop)};
+	height: ${(props) => getSize(props.size, props.isDesktopOrLaptop)};
 	border: ${getBorder};
 	border-radius: ${(props) => (props.circle ? '50%' : '')};
 	cursor: ${(props) => (props.onClick ? 'pointer' : undefined)};
@@ -71,6 +78,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 		theme = 'primary',
 		...otherProps
 	} = props;
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
 	const { t } = useTranslation();
 	const [isLoading, setIsLoading] = useState(true);
 	const [isError, setIsError] = useState(false);
@@ -88,10 +96,10 @@ export const Avatar = memo((props: IAvatarProps) => {
 
 	if (isLoading) {
 		return (
-			<Flex width={getSize(size)}>
+			<Flex width={getSize(size, isDesktopOrLaptop)}>
 				<Skeleton
-					height={getSize(size)}
-					width={getSize(size)}
+					height={getSize(size, isDesktopOrLaptop)}
+					width={getSize(size, isDesktopOrLaptop)}
 					circle={circle}
 				/>
 			</Flex>
@@ -101,6 +109,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 	if (isError) {
 		return (
 			<StyledAvatar
+				isDesktopOrLaptop={isDesktopOrLaptop}
 				border={border}
 				theme={theme}
 				size={size}
@@ -114,6 +123,7 @@ export const Avatar = memo((props: IAvatarProps) => {
 
 	return (
 		<StyledAvatar
+			isDesktopOrLaptop={isDesktopOrLaptop}
 			border={border}
 			theme={theme}
 			size={size}

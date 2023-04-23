@@ -1,4 +1,5 @@
-import { memo } from 'react';
+import { FC, memo, SVGProps, useMemo } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
@@ -12,67 +13,126 @@ import SpeakerIcon from '@/shared/assets/speaker.svg';
 
 interface IPostCardSkeletonProps {
 	admin: boolean;
+	withComments?: boolean;
 }
 
 export const PostCardSkeleton = memo((props: IPostCardSkeletonProps) => {
-	const { admin } = props;
+	const { admin, withComments = true } = props;
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
+	const isSmallScreen = useMediaQuery({ maxWidth: 992 });
+	const isSmallestScreen = useMediaQuery({ maxWidth: 425 });
+
+	const postButtons: Array<{
+		name: string;
+		icon: FC<SVGProps<SVGSVGElement>>;
+		condition: boolean;
+	}> = useMemo(
+		() => [
+			{
+				name: 'comments',
+				icon: CommentIcon,
+				condition: withComments,
+			},
+			{
+				name: 'likes',
+				icon: LikeIcon,
+				condition: true,
+			},
+			{
+				name: 'dislikes',
+				icon: DislikeIcon,
+				condition: true,
+			},
+			{
+				name: 'shared',
+				icon: SpeakerIcon,
+				condition: true,
+			},
+		],
+		[withComments],
+	);
 
 	return (
 		<Card width="100%">
 			<Flex direction="column" gap="16">
 				<Flex justify="space-between">
 					<Flex align="center" gap="8" width="auto">
-						<Flex width="85px">
-							<Skeleton circle height="85px" width="85px" />
+						<Flex width={isSmallScreen ? '50px' : '85px'}>
+							<Skeleton
+								circle
+								height={isSmallScreen ? '50px' : '85px'}
+								width={isSmallScreen ? '50px' : '85px'}
+							/>
 						</Flex>
 						<Flex gap="8">
-							<Skeleton height="24px" width="100px" margin="4px" />
-							<Skeleton height="24px" width="130px" margin="4px" />
+							<Skeleton
+								height={isSmallScreen ? '16px' : '24px'}
+								width="50px"
+								margin="4px"
+							/>
+							<Skeleton
+								height={isSmallScreen ? '16px' : '24px'}
+								width="80px"
+								margin="4px"
+							/>
 						</Flex>
 					</Flex>
 					{admin && (
-						<Button theme="clear" width="64px" height="64px">
+						<Button
+							theme="clear"
+							width={isSmallScreen ? '40px' : '64px'}
+							height={isSmallScreen ? '40px' : '64px'}
+						>
 							<Icon SvgIcon={MoreIcon} invert />
 						</Button>
 					)}
 				</Flex>
-				<Flex justify="space-between">
-					<Flex direction="column" width="500px" gap="4">
+				<Flex wrap="wrap" justify="space-between">
+					<Flex
+						direction="column"
+						width={isSmallScreen ? '100%' : '50%'}
+						gap="4"
+					>
 						<Skeleton height="16px" width="100%" margin="4px" />
 						<Skeleton height="16px" width="100%" margin="4px" />
 						<Skeleton height="16px" width="100%" margin="4px" />
 						<Skeleton height="16px" width="100%" margin="4px" />
 						<Skeleton height="16px" width="100%" margin="4px" />
 					</Flex>
-					<Skeleton height="385px" width="385px" />
+					<Skeleton width={isSmallestScreen ? '100%' : '385px'} square />
 				</Flex>
-				<Flex align="flex-end" justify="space-between">
-					<Skeleton height="16px" width="200px" margin="4px" />
-					<Flex gap="24" align="center" width="auto">
-						<Flex gap="8" align="center" width="auto">
-							<Skeleton height="24px" width="50px" margin="4px" />
-							<Button width="64px" height="64px">
-								<Icon SvgIcon={CommentIcon} invert />
-							</Button>
-						</Flex>
-						<Flex gap="8" align="center" width="auto">
-							<Skeleton height="24px" width="50px" margin="4px" />
-							<Button width="64px" height="64px">
-								<Icon SvgIcon={LikeIcon} invert />
-							</Button>
-						</Flex>
-						<Flex gap="8" align="center" width="auto">
-							<Skeleton height="24px" width="50px" margin="4px" />
-							<Button width="64px" height="64px">
-								<Icon SvgIcon={DislikeIcon} invert />
-							</Button>
-						</Flex>
-						<Flex gap="8" align="center" width="auto">
-							<Skeleton height="24px" width="50px" margin="4px" />
-							<Button width="64px" height="64px">
-								<Icon SvgIcon={SpeakerIcon} invert />
-							</Button>
-						</Flex>
+				<Flex
+					direction={isDesktopOrLaptop ? 'row' : 'column'}
+					align={isDesktopOrLaptop ? 'flex-end' : 'flex-start'}
+					justify="space-between"
+				>
+					<Skeleton height="16px" width="150px" margin="4px" />
+					<Flex
+						gap="24"
+						align="center"
+						justify="center"
+						width={isDesktopOrLaptop ? 'auto' : '100%'}
+					>
+						{postButtons.map(
+							({ name, condition, icon }) =>
+								condition && (
+									<Flex
+										key={name}
+										direction={isSmallScreen ? 'column' : 'row'}
+										gap="8"
+										align="center"
+										width="auto"
+									>
+										<Skeleton height="24px" width="50px" margin="4px" />
+										<Button
+											width={isSmallScreen ? '40px' : '64px'}
+											height={isSmallScreen ? '40px' : '64px'}
+										>
+											<Icon SvgIcon={icon} invert />
+										</Button>
+									</Flex>
+								),
+						)}
 					</Flex>
 				</Flex>
 			</Flex>

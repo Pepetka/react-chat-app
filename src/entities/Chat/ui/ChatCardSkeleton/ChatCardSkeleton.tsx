@@ -1,17 +1,35 @@
 import { memo } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
 export const ChatCardSkeleton = memo(() => {
+	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
+
 	return (
 		<Flex gap="8">
-			<Flex width="100px" height="100px">
-				<Skeleton height="100px" width="100px" circle />
+			<Flex
+				width={isSmallScreen ? '85px' : '100px'}
+				height={isSmallScreen ? '85px' : '100px'}
+			>
+				<Skeleton
+					width={isSmallScreen ? '85px' : '100px'}
+					height={isSmallScreen ? '85px' : '100px'}
+					circle
+				/>
 			</Flex>
 			<Flex direction="column" width="calc(100% - 100px)" gap="4">
-				<Flex>
-					<Flex gap="8">
-						<Skeleton height="24px" width="100px" margin="4px" />
-						<Skeleton height="24px" width="120px" margin="4px" />
+				<Flex justify="space-between">
+					<Flex gap="8" wrap="wrap" width="auto">
+						<Skeleton
+							height={isSmallScreen ? '16px' : '24px'}
+							width="60px"
+							margin="4px"
+						/>
+						<Skeleton
+							height={isSmallScreen ? '16px' : '24px'}
+							width="100px"
+							margin="4px"
+						/>
 					</Flex>
 					<Skeleton height="16px" width="170px" margin="4px" />
 				</Flex>

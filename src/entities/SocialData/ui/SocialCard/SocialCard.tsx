@@ -1,6 +1,7 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
@@ -22,13 +23,32 @@ interface ISocialCardProps {
 }
 
 export const StyledLine = styled.div`
-	height: 100%;
-	width: 2px;
+	min-height: 2px;
+	min-width: 100%;
+	margin-block: 8px;
 	background: var(--invert-secondary-color);
+
+	@media (min-width: 1399px) {
+		min-height: 100%;
+		min-width: 2px;
+		margin-block: 0;
+	}
+`;
+
+export const Grid = styled.div<{ isDesktopOrLaptop: boolean }>`
+	display: grid;
+	grid-auto-flow: ${(props) => (props.isDesktopOrLaptop ? 'row' : 'column')};
+	grid-template-columns: repeat(auto-fit, 180px);
+	grid-template-rows: repeat(auto-fit, 200px);
+	justify-items: center;
+	align-items: center;
+	gap: 16px;
 `;
 
 export const SocialCard = memo((props: ISocialCardProps) => {
 	const { profileId } = props;
+	const isBigScreen = useMediaQuery({ minWidth: 1400 });
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
 	const {
 		data: socialData,
 		isFetching: socialLoading,
@@ -43,6 +63,34 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 		error: friendsError,
 	} = useFetchFriendsDataQuery({ profileId });
 	const { t } = useTranslation('profile');
+
+	const cardsData: Array<{ link: string; name: string; num?: string }> =
+		useMemo(
+			() => [
+				{
+					link: getFriendsPagePath(profileId),
+					name: t('Followers'),
+					num: socialData?.followersNum,
+				},
+				{
+					link: getFriendsPagePath(profileId),
+					name: t('Following'),
+					num: socialData?.followingNum,
+				},
+				{
+					link: getGroupsListPagePath(profileId),
+					name: t('Groups'),
+					num: socialData?.groupsNum,
+				},
+			],
+			[
+				profileId,
+				socialData?.followersNum,
+				socialData?.followingNum,
+				socialData?.groupsNum,
+				t,
+			],
+		);
 
 	if (socialLoading || friendsLoading) {
 		return <SocialCardSkeleton />;
@@ -64,81 +112,42 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 	}
 
 	return (
-		<Card width="100%" height="282px">
-			<Flex height="100%" align="center" justify="space-between">
-				<Flex width="60%" align="center" justify="space-around">
-					<AppLink to={getFriendsPagePath(profileId)}>
-						<Card padding="0" width="180px" height="200px" border>
-							<Flex
-								direction="column"
-								gap="8"
-								height="100%"
-								justify="center"
-								align="center"
-							>
-								<Text
-									theme="primary-invert"
-									text={t('Followers')}
-									size="l"
-									textAlign="center"
-								/>
-								<Text
-									theme="secondary-invert"
-									title={socialData?.followersNum}
-									size="xl"
-									titleAlign="center"
-								/>
-							</Flex>
-						</Card>
-					</AppLink>
-					<AppLink to={getFriendsPagePath(profileId)}>
-						<Card padding="0" width="180px" height="200px" border>
-							<Flex
-								direction="column"
-								gap="8"
-								height="100%"
-								justify="center"
-								align="center"
-							>
-								<Text
-									theme="primary-invert"
-									text={t('Following')}
-									size="l"
-									textAlign="center"
-								/>
-								<Text
-									theme="secondary-invert"
-									title={socialData?.followingNum}
-									size="xl"
-									titleAlign="center"
-								/>
-							</Flex>
-						</Card>
-					</AppLink>
-					<AppLink to={getGroupsListPagePath(profileId)}>
-						<Card padding="0" width="180px" height="200px" border>
-							<Flex
-								direction="column"
-								gap="8"
-								height="100%"
-								justify="center"
-								align="center"
-							>
-								<Text
-									theme="primary-invert"
-									text={t('Groups')}
-									size="l"
-									textAlign="center"
-								/>
-								<Text
-									theme="secondary-invert"
-									title={socialData?.groupsNum}
-									size="xl"
-									titleAlign="center"
-								/>
-							</Flex>
-						</Card>
-					</AppLink>
+		<Card width="100%" minHeight="282px">
+			<Flex
+				direction={isBigScreen ? 'row' : 'column'}
+				height="100%"
+				align="center"
+				justify={isBigScreen ? 'space-between' : 'center'}
+			>
+				<Flex width={isBigScreen ? '60%' : '100%'} justify="center">
+					<Grid isDesktopOrLaptop={!isDesktopOrLaptop}>
+						{cardsData.map(({ link, name, num }) => (
+							<AppLink key={name} to={link}>
+								<Card padding="0" width="180px" height="200px" border>
+									<Flex
+										direction="column"
+										gap="8"
+										height="100%"
+										justify="center"
+										align="center"
+									>
+										<Text
+											theme="primary-invert"
+											text={name}
+											size="l"
+											textAlign="center"
+										/>
+										<Text
+											theme="secondary-invert"
+											title={num}
+											size="xl"
+											titleAlign="center"
+										/>
+									</Flex>
+								</Card>
+							</AppLink>
+						))}
+					</Grid>
 				</Flex>
 				<StyledLine />
 				<Flex gap="16" direction="column" width="350px" height="100%">

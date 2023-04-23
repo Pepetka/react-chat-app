@@ -11,6 +11,10 @@ interface ICardControls {
 	 */
 	height?: string;
 	/**
+	 * Минимальная высота карточки
+	 */
+	minHeight?: string;
+	/**
 	 * Флаг, отвечающий за наличие border
 	 */
 	border?: boolean;
@@ -56,12 +60,14 @@ export const StyledCard = styled.div<ICardControls>`
 	padding: ${(props) => props.padding ?? '0'};
 	width: ${(props) => props.width ?? 'auto'};
 	height: ${(props) => props.height ?? 'auto'};
+	min-height: ${(props) => props.minHeight ?? 'auto'};
 `;
 
 export const Card = (props: ICardProps) => {
 	const {
 		children,
 		height,
+		minHeight,
 		width,
 		border = false,
 		borderRadius = true,
@@ -75,6 +81,7 @@ export const Card = (props: ICardProps) => {
 			invert={invert}
 			width={width}
 			height={height}
+			minHeight={minHeight}
 			border={border}
 			borderRadius={borderRadius}
 			padding={padding}

@@ -13,6 +13,10 @@
 	overflow: hidden;
 }
 
+body {
+	overflow: hidden;
+}
+
 * {
 	scrollbar-width: 10px;
 	scrollbar-color: var(--invert-primary-color) var(--invert-bg-color);

@@ -20,6 +20,7 @@ import { ChatsPage } from '@/pages/ChatsPage';
 import { MessengerPage } from '@/pages/MessengerPage';
 import { GroupsListPage } from '@/pages/GroupsListPage';
 import { GroupPage } from '@/pages/GroupPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
@@ -65,6 +66,11 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.GROUP]: {
 		path: getGroupPagePath(':id'),
 		element: <GroupPage />,
+		authOnly: true,
+	},
+	[AppRoutes.NOT_FOUND]: {
+		path: '/*',
+		element: <NotFoundPage />,
 		authOnly: true,
 	},
 };

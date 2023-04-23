@@ -14,7 +14,7 @@ interface IChatListProps {
 
 export const GroupList = memo((props: IChatListProps) => {
 	const { groups, isError, isLoading } = props;
-	const { t } = useTranslation('chats');
+	const { t } = useTranslation('group');
 
 	if (isError && !isLoading) {
 		return (

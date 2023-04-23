@@ -25,20 +25,17 @@ const Template: StoryFn<typeof SearchFriendsByName> = (args) => (
 const usersList = [
 	{
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id',
 	},
 	{
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id1',
 	},
 	{
 		avatar: image,
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		id: 'id2',
 	},
 ];

@@ -24,6 +24,7 @@ export const ChatForm = memo((props: IChatFormProps) => {
 
 	useEffect(() => {
 		dispatch(chatActions.setSearch(searchParams.get('search') ?? ''));
+		// eslint-disable-next-line
 	}, []);
 
 	const callback = useCallback(

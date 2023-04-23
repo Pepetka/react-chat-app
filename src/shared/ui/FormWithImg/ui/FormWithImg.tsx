@@ -8,6 +8,7 @@ import {
 } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import SendIcon from '@/shared/assets/send.svg';
@@ -104,6 +105,22 @@ const StyledForm = styled.form`
 	width: 100%;
 `;
 
+const getPadding = (withImg?: boolean) => {
+	if (withImg) {
+		if (window.innerWidth > 768) {
+			return '10px 176px 10px 10px';
+		} else {
+			return '10px 128px 10px 10px';
+		}
+	} else {
+		if (window.innerWidth > 768) {
+			return '10px 96px 10px 10px';
+		} else {
+			return '10px 48px 10px 10px';
+		}
+	}
+};
+
 const StyledTextArea = styled.textarea<ISendWithImgFormControls>`
 	border: 3px solid var(--invert-primary-color);
 	border-bottom: ${(props) =>
@@ -113,8 +130,7 @@ const StyledTextArea = styled.textarea<ISendWithImgFormControls>`
 	width: 100%;
 	font: var(--font-m);
 	height: ${(props) => (props.small ? '96px' : '200px')};
-	padding: ${(props) =>
-		!props.withImg ? '10px 96px 10px 10px' : '10px 176px 10px 10px'};
+	padding: ${(props) => getPadding(props.withImg)};
 	background: var(--invert-bg-color);
 	color: var(--invert-primary-color);
 	outline: none;
@@ -178,6 +194,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		small = false,
 		modal = false,
 	} = props;
+	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 	const { t } = useTranslation();
 	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
 	const [success, setSuccess] = useState(false);
@@ -362,8 +379,8 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 								<Button
 									onClick={modal ? onOpenModalForm : onPreviewImg}
 									invert
-									width="64px"
-									height="64px"
+									width={isSmallScreen ? '40px' : '64px'}
+									height={isSmallScreen ? '40px' : '64px'}
 								>
 									<Icon SvgIcon={PaperclipIcon} />
 								</Button>
@@ -374,8 +391,8 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 							trigger={
 								<Button
 									invert
-									width="64px"
-									height="64px"
+									width={isSmallScreen ? '40px' : '64px'}
+									height={isSmallScreen ? '40px' : '64px'}
 									type="submit"
 									disabled={isLoading}
 								>

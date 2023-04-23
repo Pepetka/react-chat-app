@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { GroupDataCardSkeleton } from './GroupDataCardSkeleton';
 
 export default {
-	title: 'features/GroupDataCardSkeleton',
+	title: 'features/GroupDataCard/GroupDataCardSkeleton',
 	component: GroupDataCardSkeleton,
 } as Meta<typeof GroupDataCardSkeleton>;
 

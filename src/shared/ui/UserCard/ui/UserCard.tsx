@@ -23,7 +23,7 @@ interface IUserCardProps {
 	/**
 	 * Размер аватара
 	 */
-	avatarSize?: 's' | 'm' | 'l' | 'xl';
+	avatarSize?: 's' | 'm' | 'l';
 	/**
 	 * Флаг, отвечающий за наличие border
 	 */
@@ -51,7 +51,7 @@ interface IUserCardProps {
 }
 
 const textObject: Record<TextSizeType, TextSizeType | 's'> = {
-	m: 's',
+	m: 'm',
 	l: 'm',
 	xl: 'l',
 };
