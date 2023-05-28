@@ -198,15 +198,15 @@ export const Carousel = memo((props: ICarouselProps) => {
 		if (full) {
 			return {
 				carouselWidth:
-					window.innerWidth >= window.innerHeight ? '100vh' : '100vw',
+					window.innerWidth >= window.innerHeight ? '100dvh' : '100vw',
 				carouselHeight:
 					window.innerHeight > window.innerWidth
 						? 'calc(100vw - 70px)'
-						: 'calc(100vh - 70px)',
+						: 'calc(100dvh - 70px)',
 				wrapperWidth:
-					window.innerWidth >= window.innerHeight ? '100vh' : '100vw',
+					window.innerWidth >= window.innerHeight ? '100dvh' : '100vw',
 				wrapperHeight:
-					window.innerHeight > window.innerWidth ? '100wh' : '100vh',
+					window.innerHeight > window.innerWidth ? '100wh' : '100dvh',
 			};
 		}
 

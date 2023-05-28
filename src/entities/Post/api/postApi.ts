@@ -20,7 +20,7 @@ export const postApi = rtkApi.injectEndpoints({
 					userId: profileId,
 				},
 			}),
-			providesTags: (result) => ['post'],
+			providesTags: () => ['post'],
 		}),
 		addPost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
@@ -46,11 +46,11 @@ export const postApi = rtkApi.injectEndpoints({
 				{ img, text, profileId, authorData },
 				{ dispatch, queryFulfilled, getState },
 			) {
-				const authData = getUserAuthData(getState() as StateSchema)!;
+				const authData = getUserAuthData(getState() as StateSchema);
 				const author: UserMini = authorData ?? {
-					id: authData.id,
+					id: authData?.id ?? '',
 					name: `${authData?.firstname} ${authData?.lastname}`,
-					avatar: authData.avatar,
+					avatar: authData?.avatar ?? '',
 				};
 
 				const patchResult = dispatch(
@@ -148,7 +148,7 @@ export const postApi = rtkApi.injectEndpoints({
 					userId,
 				},
 			}),
-			providesTags: (result) => ['post', 'postStats'],
+			providesTags: () => ['post', 'postStats'],
 		}),
 		likePost: build.mutation<
 			Omit<IPostApiProps, 'profileId'>,

@@ -8,7 +8,7 @@ import { useTheme } from '@/shared/hooks/useTheme';
 
 const StyledWrapper = styled.div`
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	display: flex;
 	justify-content: center;
 	align-items: center;

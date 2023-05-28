@@ -2,6 +2,7 @@ import { FC, memo, SVGProps, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import { Flex } from '@/shared/ui/Flex';
 import HomeIcon from '@/shared/assets/home.svg';
 import ProfileIcon from '@/shared/assets/profile.svg';
@@ -24,9 +25,13 @@ interface IBottomBarProps {
 }
 
 const StyledBottomBar = styled.div`
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	background-color: var(--invert-bg-color);
 	border-top: 2px solid rgba(0, 0, 0, 0.25);
-	height: var(--navbar-height);
+	height: ${() =>
+		isMobile ? 'var(--navbar-height-mobile)' : 'var(--navbar-height)'};
 `;
 
 export const BottomBar = memo((props: IBottomBarProps) => {

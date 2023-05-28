@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { isMobile } from 'react-device-detect';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
@@ -24,7 +25,8 @@ interface INavBarProps {
 
 const StyledNavBar = styled.div`
 	width: 100%;
-	height: var(--navbar-height);
+	height: ${() =>
+		isMobile ? 'var(--navbar-height-mobile)' : 'var(--navbar-height)'};
 	background: var(--invert-bg-color);
 	border-bottom: 2px solid rgba(0, 0, 0, 0.25);
 	display: flex;

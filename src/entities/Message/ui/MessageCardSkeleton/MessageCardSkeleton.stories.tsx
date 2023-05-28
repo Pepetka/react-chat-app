@@ -6,7 +6,7 @@ export default {
 	component: MessageCardSkeleton,
 } as Meta<typeof MessageCardSkeleton>;
 
-const Template: StoryFn<typeof MessageCardSkeleton> = (args) => (
+const Template: StoryFn<typeof MessageCardSkeleton> = () => (
 	<MessageCardSkeleton />
 );
 

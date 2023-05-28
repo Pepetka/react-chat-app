@@ -173,6 +173,8 @@ export const PostCard = memo((props: IPostCardProps) => {
 		],
 		[
 			commentList,
+			dislikeLoading,
+			likeLoading,
 			onDislikePostHandle,
 			onLikePostHandle,
 			onSharePostHandle,
@@ -185,6 +187,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 			postStats?.isShared,
 			postStats?.likes,
 			postStats?.shared,
+			shareLoading,
 		],
 	);
 

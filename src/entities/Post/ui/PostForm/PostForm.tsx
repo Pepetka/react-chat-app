@@ -42,7 +42,7 @@ export const PostForm = memo((props: IPostFormProps) => {
 			onAddPost({ text, img: images, authorId: userId, profileId, authorData });
 			dispatch(postActions.clear());
 		}
-	}, [onAddPost, text, img, userId, profileId, dispatch]);
+	}, [img, text, onAddPost, userId, profileId, authorData, dispatch]);
 
 	return (
 		<DynamicModuleLoader reducerKey="post" reducer={postReducer}>

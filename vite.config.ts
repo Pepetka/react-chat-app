@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => ({
 	define: {
 		__API__:
 			mode === 'development'
-				? JSON.stringify('http://localhost:8000/')
+				? JSON.stringify(' http://192.168.31.58:8000/')
 				: JSON.stringify('https://react-chat-app-server.vercel.app/'),
 	},
 }));

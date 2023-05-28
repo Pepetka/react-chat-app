@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react';
 import styled from 'styled-components';
-import { isMobile, MobileView, BrowserView } from 'react-device-detect';
+import { isMobile, BrowserView, MobileView } from 'react-device-detect';
 import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
 import { SideBar } from '@/widgets/SideBar';
 import { Flex } from '@/shared/ui/Flex';
@@ -14,8 +14,8 @@ interface IPageProps {
 const StyledPage = styled.div<{ noAuthPage: boolean }>`
 	height: ${(props) =>
 		isMobile && props.noAuthPage
-			? 'calc(100vh - var(--navbar-height) * 2)'
-			: 'calc(100vh - var(--navbar-height))'};
+			? 'var(--page-height-mobile)'
+			: 'var(--page-height)'};
 	overflow-y: auto;
 	overflow-x: hidden;
 `;
@@ -23,9 +23,7 @@ const StyledPage = styled.div<{ noAuthPage: boolean }>`
 const ContentWrapper = styled.div`
 	width: 80%;
 	min-height: ${() =>
-		isMobile
-			? 'calc(100vh - var(--navbar-height) * 2)'
-			: 'calc(100vh - var(--navbar-height))'};
+		isMobile ? 'var(--page-height-mobile)' : 'var(--page-height)'};
 	margin-inline: auto;
 	padding-bottom: var(--page-padding);
 	display: flex;

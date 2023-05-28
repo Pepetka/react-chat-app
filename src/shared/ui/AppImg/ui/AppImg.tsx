@@ -63,7 +63,7 @@ export const AppImg = memo((props: IAppImgProps) => {
 		if (full) {
 			return {
 				width: window.innerWidth >= window.innerHeight ? 'auto' : '100vw',
-				height: window.innerWidth > window.innerHeight ? '100vh' : 'auto',
+				height: window.innerWidth > window.innerHeight ? '100dvh' : 'auto',
 			};
 		}
 
