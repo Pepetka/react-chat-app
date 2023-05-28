@@ -2,6 +2,8 @@ import {
 	AppRoutes,
 	getChatsPagePath,
 	getFriendsPagePath,
+	getGroupPagePath,
+	getGroupsListPagePath,
 	getLoginPagePath,
 	getMainPagePath,
 	getMessengerPagePath,
@@ -16,6 +18,9 @@ import { RegisterPage } from '@/pages/RegisterPage';
 import { FriendsPage } from '@/pages/FriendsPage';
 import { ChatsPage } from '@/pages/ChatsPage';
 import { MessengerPage } from '@/pages/MessengerPage';
+import { GroupsListPage } from '@/pages/GroupsListPage';
+import { GroupPage } from '@/pages/GroupPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
@@ -51,6 +56,21 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MESSENGER]: {
 		path: getMessengerPagePath(':id'),
 		element: <MessengerPage />,
+		authOnly: true,
+	},
+	[AppRoutes.GROUPS_LIST]: {
+		path: getGroupsListPagePath(':id'),
+		element: <GroupsListPage />,
+		authOnly: true,
+	},
+	[AppRoutes.GROUP]: {
+		path: getGroupPagePath(':id'),
+		element: <GroupPage />,
+		authOnly: true,
+	},
+	[AppRoutes.NOT_FOUND]: {
+		path: '/*',
+		element: <NotFoundPage />,
 		authOnly: true,
 	},
 };

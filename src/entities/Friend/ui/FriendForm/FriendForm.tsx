@@ -31,6 +31,7 @@ export const FriendForm = memo((props: IFriendFormProps) => {
 
 	useEffect(() => {
 		dispatch(friendActions.setSearch(searchParams.get('search') ?? ''));
+		// eslint-disable-next-line
 	}, []);
 
 	const callback = useCallback(

@@ -26,8 +26,7 @@ const state: DeepPartial<StateSchema> = {
 const response: { messages: Messages; friend: UserMini } = {
 	friend: {
 		id: '1',
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		avatar: image,
 	},
 	messages: [

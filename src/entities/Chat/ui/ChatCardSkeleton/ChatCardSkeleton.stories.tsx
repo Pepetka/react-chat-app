@@ -16,9 +16,7 @@ export default {
 	],
 } as Meta<typeof ChatCardSkeleton>;
 
-const Template: StoryFn<typeof ChatCardSkeleton> = (args) => (
-	<ChatCardSkeleton />
-);
+const Template: StoryFn<typeof ChatCardSkeleton> = () => <ChatCardSkeleton />;
 
 export const Normal = Template.bind({});
 Normal.args = {};

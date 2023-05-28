@@ -24,6 +24,7 @@ export const SearchFriendsByName = memo((props: ISearchFriendsByNameProps) => {
 			userId: profileId,
 			search: searchParams.get('search') ?? '',
 		});
+		// eslint-disable-next-line
 	}, [onFetchFriends, profileId]);
 
 	return (

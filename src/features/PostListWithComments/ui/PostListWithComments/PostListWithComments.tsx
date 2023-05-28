@@ -5,6 +5,7 @@ import { PostComments } from '../PostComments/PostComments';
 interface IPostListWithCommentsProps {
 	userId: string;
 	profileId: string;
+	admin: boolean;
 }
 
 const renderComments = ({
@@ -21,13 +22,14 @@ const renderComments = ({
 
 export const PostListWithComments = memo(
 	(props: IPostListWithCommentsProps) => {
-		const { userId, profileId } = props;
+		const { userId, profileId, admin } = props;
 
 		return (
 			<PostList
 				userId={userId}
 				profileId={profileId}
 				commentList={renderComments}
+				admin={admin}
 			/>
 		);
 	},

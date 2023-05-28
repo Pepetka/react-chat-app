@@ -143,6 +143,7 @@
 - [Chat](./src/entities/Chat/README.md)
 - [Comment](./src/entities/Comment/README.md)
 - [Friend](./src/entities/Friend/README.md)
+- [Group](./src/entities/Group/README.md)
 - [Message](./src/entities/Message/README.md)
 - [Post](./src/entities/Post/README.md)
 - [SocialData](./src/entities/SocialData/README.md)
@@ -153,10 +154,12 @@
 ## Фичи (features) по FSD
 
 - [AuthByUsername](./src/features/AuthByUsername/README.md)
+- [GroupDataCard](./src/features/GroupDataCard/README.md)
 - [LangSwitcher](./src/features/LangSwitcher/README.md)
 - [PostListWithComments](./src/features/PostListWithComments/README.md)
 - [ProfileCard](./src/features/ProfileCard/README.md)
 - [RegisterByUsername](./src/features/RegisterByUsername/README.md)
 - [SearchChatsByName](./src/features/SearchChatsByName/README.md)
 - [SearchFriendsByName](./src/features/SearchFriendsByName/README.md)
+- [SearchGroupsByName](./src/features/SearchGroupsByName/README.md)
 - [ThemeSwitcher](./src/features/ThemeSwitcher/README.md)

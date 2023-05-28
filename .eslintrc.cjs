@@ -47,6 +47,8 @@ module.exports = {
 					'textSize',
 					'blockTitle',
 					'padding',
+					'wrap',
+					'minHeight',
 				],
 				ignore: ['ICE'],
 			},

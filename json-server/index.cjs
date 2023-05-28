@@ -12,6 +12,7 @@ const dislike = require('./endpoints/dislike.cjs');
 const comments = require('./endpoints/comments.cjs');
 const getUsers = require('./endpoints/getUsers.cjs');
 const getChats = require('./endpoints/getChats.cjs');
+const getGroups = require('./endpoints/getGroups.cjs');
 const getChatId = require('./endpoints/getChatId.cjs');
 const messages = require('./endpoints/messages.cjs');
 const online = require('./endpoints/online.cjs');
@@ -24,7 +25,7 @@ server.use(jsonServer.defaults({}));
 server.use(jsonServer.bodyParser);
 
 const db = JSON.parse(
-	fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'),
+	fs.readFileSync(path.resolve(__dirname, 'db.json'), 'utf8'),
 );
 const { online: onlineFromDb = {} } = db;
 const newOnline = {};
@@ -62,6 +63,7 @@ server.put('/comments', comments.putComments);
 server.post('/comments', comments.postComments);
 server.get('/getUsers', getUsers);
 server.get('/getChats', getChats);
+server.get('/getGroups', getGroups);
 server.get('/getChatId', getChatId);
 server.get('/messages', messages.getMessages);
 server.post('/messages', messages.postMessages);

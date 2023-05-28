@@ -2,14 +2,14 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { UserMini } from '@/shared/types/userCard';
 import { UsersLists } from '@/entities/Friend';
 
-interface IPostApiProps {
+interface ISearchFriendsByNameApiProps {
 	userId: string;
 	search?: string;
 }
 
 export const searchFriendsByNameApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchFriends: build.query<UsersLists, IPostApiProps>({
+		fetchFriends: build.query<UsersLists, ISearchFriendsByNameApiProps>({
 			query: ({ userId, search }) => ({
 				url: '/getUsers',
 				params: {

@@ -9,7 +9,7 @@ interface ISkeletonControls {
 	/**
 	 * Высота компонента
 	 */
-	height: string;
+	height?: string;
 	/**
 	 * Флаг, отвечающий за инвертирование цвета компонента
 	 */
@@ -26,6 +26,10 @@ interface ISkeletonControls {
 	 * Значение border-radius
 	 */
 	borderRadius?: string;
+	/**
+	 * Флаг, отвечающий за квадратную форму компонента
+	 */
+	square?: boolean;
 }
 
 type ISkeletonProps = ISkeletonControls;
@@ -39,6 +43,7 @@ const translate = keyframes`
 const StyledSkeleton = styled.div<ISkeletonControls>`
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
+	aspect-ratio: ${(props) => (props.square ? '1/1' : undefined)};
 	border-radius: ${(props) => (props.circle ? '50%' : props.borderRadius)};
 	display: inline-block;
 	position: relative;
@@ -85,7 +90,8 @@ const StyledSkeleton = styled.div<ISkeletonControls>`
 export const Skeleton = memo((props: ISkeletonProps) => {
 	const {
 		width = '100%',
-		height,
+		height = 'auto',
+		square,
 		invert = true,
 		circle = false,
 		margin,
@@ -98,6 +104,7 @@ export const Skeleton = memo((props: ISkeletonProps) => {
 			width={width}
 			invert={invert}
 			circle={circle}
+			square={square}
 			margin={margin}
 			borderRadius={borderRadius}
 		/>

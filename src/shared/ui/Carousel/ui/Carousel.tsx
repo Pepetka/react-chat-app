@@ -1,17 +1,26 @@
-import { memo, ReactNode, useCallback, useRef } from 'react';
+import { memo, ReactNode, useCallback, useRef, useState } from 'react';
 import Slider, { Settings } from 'react-slick';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import { isMobile } from 'react-device-detect';
 import { useHover } from '@/shared/hooks/useHover';
 import { Flex } from '@/shared/ui/Flex';
 import { AppImg } from '@/shared/ui/AppImg';
-import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface ICarouselControls {
+	/**
+	 * Ширина компонента
+	 */
 	carouselWidth?: string;
+	/**
+	 * Высота компонента
+	 */
 	carouselHeight?: string;
+	/**
+	 * Флаг, отвечающий за занятие компонентом всего контейнера
+	 */
+	full?: boolean;
 }
 
 interface ICarouselProps
@@ -129,8 +138,8 @@ const settings = (
 		slidesToShow: 1,
 		slidesToScroll: 1,
 		adaptiveHeight: false,
-		fade: true,
-		arrows: true,
+		fade: !isMobile,
+		arrows: !isMobile,
 		nextArrow: <NextArrow hover={hover} customPaging={customPaging} />,
 		prevArrow: <PrevArrow hover={hover} customPaging={customPaging} />,
 		...paging,
@@ -146,10 +155,11 @@ export const Carousel = memo((props: ICarouselProps) => {
 		onImgClick,
 		customPaging = false,
 		keysNav = false,
+		full,
 		...sliderProps
 	} = props;
-	const { t } = useTranslation();
 	const { hover, onMouseOut, onMouseOver } = useHover();
+	const [maxHeightRatio, setMaxHeightRatio] = useState(1);
 	const sliderRef = useRef<Slider | null>(null);
 
 	const onNextSlide = useCallback(() => {
@@ -159,6 +169,16 @@ export const Carousel = memo((props: ICarouselProps) => {
 	const onPrevSlide = useCallback(() => {
 		sliderRef.current?.slickPrev();
 	}, []);
+
+	const onLoadImg = useCallback(
+		({ width, height }: { width: number; height: number }) => {
+			if (Math.floor(height / width) > maxHeightRatio) {
+				setMaxHeightRatio(Math.floor(height / width));
+				console.log(Math.floor(height / width));
+			}
+		},
+		[maxHeightRatio],
+	);
 
 	useKeyboardEvent({
 		callback: onNextSlide,
@@ -174,12 +194,36 @@ export const Carousel = memo((props: ICarouselProps) => {
 		addCondition: keysNav,
 	});
 
+	const getImgSize = useCallback(() => {
+		if (full) {
+			return {
+				carouselWidth:
+					window.innerWidth >= window.innerHeight ? '100dvh' : '100vw',
+				carouselHeight:
+					window.innerHeight > window.innerWidth
+						? 'calc(100vw - 70px)'
+						: 'calc(100dvh - 70px)',
+				wrapperWidth:
+					window.innerWidth >= window.innerHeight ? '100dvh' : '100vw',
+				wrapperHeight:
+					window.innerHeight > window.innerWidth ? '100wh' : '100dvh',
+			};
+		}
+
+		return {
+			carouselWidth,
+			carouselHeight,
+			wrapperWidth: carouselWidth,
+			wrapperHeight: carouselHeight,
+		};
+	}, [full, carouselWidth, carouselHeight]);
+
 	return (
 		<StyledWrapper
 			onMouseOver={onMouseOver}
 			onMouseOut={onMouseOut}
-			carouselWidth={carouselWidth}
-			carouselHeight={carouselHeight}
+			carouselWidth={getImgSize().wrapperWidth}
+			carouselHeight={getImgSize().wrapperHeight}
 		>
 			<Slider
 				ref={sliderRef}
@@ -187,18 +231,19 @@ export const Carousel = memo((props: ICarouselProps) => {
 				{...sliderProps}
 			>
 				{imgArray.map((src, index) => (
-					<Flex key={index} height={carouselHeight} align="center">
+					<Flex
+						key={index}
+						height={getImgSize().carouselHeight}
+						width={getImgSize().carouselWidth}
+						align="center"
+						justify="center"
+					>
 						<AppImg
-							width={carouselWidth}
+							onLoadImg={onLoadImg}
+							width={getImgSize().carouselWidth}
+							height={getImgSize().carouselHeight}
 							src={src}
 							alt={alt}
-							errorFallback={
-								<Text
-									text={t('Something went wrong')}
-									size="l"
-									textAlign="center"
-								/>
-							}
 							onClick={onImgClick}
 						/>
 					</Flex>

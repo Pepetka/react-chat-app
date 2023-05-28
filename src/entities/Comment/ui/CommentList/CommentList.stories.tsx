@@ -24,8 +24,7 @@ const Template: StoryFn<typeof CommentList> = (args) => (
 );
 
 const author: UserMini = {
-	firstname: 'Ivan',
-	lastname: 'Ivanov',
+	name: 'Ivan Ivanov',
 	avatar: image,
 	id: '',
 };

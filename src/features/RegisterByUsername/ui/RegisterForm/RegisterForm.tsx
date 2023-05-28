@@ -105,122 +105,136 @@ export const RegisterForm = memo(() => {
 			reducerKey="registerByUsername"
 			reducer={registerByUsernameReducer}
 		>
-			<Card border width="570px" height="1000px">
-				<Flex width="100%" height="100%" justify="center" align="center">
-					<Flex height="800px" direction="column" align="center" gap="24">
-						<Text
-							title={t('Sign Up')}
-							titleAlign="center"
-							theme="primary-invert"
-							size="xl"
-						/>
-						<Flex
-							FlexTag="form"
-							onSubmit={onRegister}
-							direction="column"
-							align="center"
-							gap="40"
-						>
-							<Input
-								theme="invert"
-								label={t('Enter username')}
-								value={username}
-								onChange={onChangeUsername}
-								width="500px"
-								name="username"
-								type="text"
-								required
-							/>
-							<Input
-								theme="invert"
-								label={t('Enter password')}
-								width="500px"
-								value={password}
-								onChange={onChangePassword}
-								name="password"
-								type="password"
-								required
-							/>
-							<Input
-								theme="invert"
-								label={t('Enter your age')}
-								width="500px"
-								value={String(age)}
-								onChange={onChangeAge}
-								name="age"
-								type="text"
-								required
-							/>
-							<Input
-								theme="invert"
-								label={t('Enter email')}
-								width="500px"
-								value={email}
-								onChange={onChangeEmail}
-								name="email"
-								type="email"
-								required
-							/>
-							<Input
-								theme="invert"
-								label={t('Enter your name')}
-								width="500px"
-								value={firstname}
-								onChange={onChangeFirstname}
-								name="firstname"
-								type="firstname"
-								required
-							/>
-							<Input
-								theme="invert"
-								label={t('Enter surname')}
-								width="500px"
-								value={lastname}
-								onChange={onChangeLastname}
-								name="lastname"
-								type="lastname"
-								required
-							/>
-							<Flex justify="space-between" align="center" width="500px">
-								<Flex FlexTag="label" align="center" gap="8">
-									<input
-										type="checkbox"
-										checked={agree}
-										onChange={onAgree}
-										required
-									/>
-									<Text text={t('I agree with terms')} theme="primary-invert" />
-								</Flex>
-								<Button
-									width="180px"
-									height="50px"
-									disabled={isLoading}
-									theme="primary"
-									type="submit"
-									invert
-								>
-									<Text
-										text={isLoading ? t('Loading') : t('Sign up')}
-										textAlign="center"
-										size="l"
-									/>
-								</Button>
-							</Flex>
-						</Flex>
-						{hasError && (
+			<Flex justify="center">
+				<Card
+					padding="16px"
+					border
+					width={window.innerWidth > 570 ? '570px' : '90%'}
+					height={window.innerWidth > 570 ? '1000px' : '832px'}
+				>
+					<Flex width="100%" height="100%" justify="center" align="center">
+						<Flex height="800px" direction="column" align="center" gap="24">
 							<Text
-								text={
-									(registerError as RegisterErrorType)?.data
-										? (registerError as RegisterErrorType).data.message
-										: t('Something went wrong')
-								}
-								textAlign="center"
-								theme="error"
+								title={t('Sign Up')}
+								titleAlign="center"
+								theme="primary-invert"
+								size={window.innerWidth > 768 ? 'xl' : 'l'}
 							/>
-						)}
+							<Flex
+								FlexTag="form"
+								onSubmit={onRegister}
+								direction="column"
+								align="center"
+								gap="40"
+							>
+								<Input
+									theme="invert"
+									label={t('Enter username')}
+									value={username}
+									onChange={onChangeUsername}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									name="username"
+									type="text"
+									required
+								/>
+								<Input
+									theme="invert"
+									label={t('Enter password')}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									value={password}
+									onChange={onChangePassword}
+									name="password"
+									type="password"
+									required
+								/>
+								<Input
+									theme="invert"
+									label={t('Enter your age')}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									value={String(age)}
+									onChange={onChangeAge}
+									name="age"
+									type="text"
+									required
+								/>
+								<Input
+									theme="invert"
+									label={t('Enter email')}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									value={email}
+									onChange={onChangeEmail}
+									name="email"
+									type="email"
+									required
+								/>
+								<Input
+									theme="invert"
+									label={t('Enter your name')}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									value={firstname}
+									onChange={onChangeFirstname}
+									name="firstname"
+									type="firstname"
+									required
+								/>
+								<Input
+									theme="invert"
+									label={t('Enter surname')}
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+									value={lastname}
+									onChange={onChangeLastname}
+									name="lastname"
+									type="lastname"
+									required
+								/>
+								<Flex
+									justify="space-between"
+									align="center"
+									width={window.innerWidth > 768 ? '500px' : '100%'}
+								>
+									<Flex FlexTag="label" align="center" gap="8">
+										<input
+											type="checkbox"
+											checked={agree}
+											onChange={onAgree}
+											required
+										/>
+										<Text
+											text={t('I agree with terms')}
+											theme="primary-invert"
+										/>
+									</Flex>
+									<Button
+										width={window.innerWidth > 768 ? '180px' : '120px'}
+										height="50px"
+										disabled={isLoading}
+										theme="primary"
+										type="submit"
+										invert
+									>
+										<Text
+											text={isLoading ? t('Loading') : t('Sign up')}
+											textAlign="center"
+											size={window.innerWidth > 768 ? 'l' : 'm'}
+										/>
+									</Button>
+								</Flex>
+							</Flex>
+							{hasError && (
+								<Text
+									text={
+										(registerError as RegisterErrorType)?.data
+											? (registerError as RegisterErrorType).data.message
+											: t('Something went wrong')
+									}
+									textAlign="center"
+									theme="error"
+								/>
+							)}
+						</Flex>
 					</Flex>
-				</Flex>
-			</Card>
+				</Card>
+			</Flex>
 		</DynamicModuleLoader>
 	);
 });

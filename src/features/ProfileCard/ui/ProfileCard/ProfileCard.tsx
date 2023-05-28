@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
@@ -27,6 +28,9 @@ interface IProfileCardProps {
 export const ProfileCard = memo((props: IProfileCardProps) => {
 	const { userId, profileId } = props;
 	const { t } = useTranslation('profile');
+	const isBigScreen = useMediaQuery({ minWidth: 1400 });
+	const isSmallestScreen = useMediaQuery({ maxWidth: 540 });
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
 	const {
 		data: profileData,
 		isFetching: profileLoading,
@@ -50,7 +54,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		},
 		{ refetchOnMountOrArgChange: true },
 	);
-	const { data: online } = useFetchOnlineQuery(
+	const { data: online = 'offline' } = useFetchOnlineQuery(
 		{ userId: profileId },
 		{ pollingInterval: 5000 },
 	);
@@ -106,74 +110,102 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	}
 
 	return (
-		<Card width="100%" height="400px" borderRadius={false}>
-			<Flex height="100%" gap="8">
-				<Flex width="20%">
-					<Text theme="secondary-invert" text={t(online ?? 'offline')} />
+		<Card width="100%" minHeight="400px" borderRadius={false}>
+			<Flex wrap="wrap" height="100%" justify="space-between">
+				<Flex width="80px">
+					<Text theme="secondary-invert" text={t(online)} />
 				</Flex>
-				<Flex direction="column" justify="space-between">
-					<Flex direction="column" gap="8">
-						<Text
-							textAlign="right"
-							theme="primary-invert"
-							text={`${profileData?.[0]?.firstname} ${profileData?.[0]?.lastname}`}
-							size="xl"
-						/>
-						<Text
-							textAlign="right"
-							theme="secondary-invert"
-							text={`id:${profileData?.[0]?.id}`}
-							size="m"
-						/>
-						<Text
-							textAlign="right"
-							theme="primary-invert"
-							text={profileData?.[0]?.status}
-							size="l"
-						/>
-					</Flex>
-					{profileId !== userId && (
-						<Flex justify="end" gap="24">
-							<Button
-								onClick={onAddFriendHandle}
-								width="180px"
-								height="50px"
-								invert
-							>
-								<Text
-									textAlign="center"
-									size="l"
-									text={t(friendBtnText[relationsData?.relations ?? 'nobody'])}
+				<Flex
+					wrap="wrap"
+					width={isBigScreen ? 'auto' : '100%'}
+					gap="8"
+					justify="center"
+				>
+					<Flex
+						width={isSmallestScreen ? '100%' : 'auto'}
+						direction="column"
+						justify="space-between"
+						align="center"
+						gap="8"
+					>
+						<Flex direction="column" gap="8">
+							<Text
+								textAlign="right"
+								theme="primary-invert"
+								text={`${profileData?.[0]?.firstname} ${profileData?.[0]?.lastname}`}
+								size="xl"
+							/>
+							<Text
+								textAlign="right"
+								theme="secondary-invert"
+								text={`id:${profileData?.[0]?.id}`}
+								size="m"
+							/>
+							<Text
+								width={isSmallestScreen ? '100%' : '500px'}
+								textAlign="right"
+								theme="primary-invert"
+								text={profileData?.[0]?.status}
+								size="l"
+							/>
+						</Flex>
+						{!isBigScreen && (
+							<Flex width="auto">
+								<Avatar
+									src={profileData?.[0]?.avatar ?? ''}
+									size="xl"
+									onClick={onOpenModal}
 								/>
-							</Button>
-							<Button
-								onClick={onSendMessage}
-								width="180px"
-								height="50px"
-								invert
-							>
-								<Text textAlign="center" size="l" text={t('Send mess')} />
-							</Button>
+							</Flex>
+						)}
+						{profileId !== userId && (
+							<Flex justify={isBigScreen ? 'end' : 'center'} gap="24">
+								<Button
+									onClick={onAddFriendHandle}
+									width={isDesktopOrLaptop ? '180px' : '150px'}
+									height={isDesktopOrLaptop ? '50px' : '32px'}
+									invert
+								>
+									<Text
+										textAlign="center"
+										size={isDesktopOrLaptop ? 'l' : 'm'}
+										text={t(
+											friendBtnText[relationsData?.relations ?? 'nobody'],
+										)}
+									/>
+								</Button>
+								<Button
+									onClick={onSendMessage}
+									width={isDesktopOrLaptop ? '180px' : '150px'}
+									height={isDesktopOrLaptop ? '50px' : '32px'}
+									invert
+								>
+									<Text
+										textAlign="center"
+										size={isDesktopOrLaptop ? 'l' : 'm'}
+										text={t('Send mess')}
+									/>
+								</Button>
+							</Flex>
+						)}
+					</Flex>
+					{isBigScreen && (
+						<Flex width="auto">
+							<Avatar
+								src={profileData?.[0]?.avatar ?? ''}
+								size="xl"
+								onClick={onOpenModal}
+							/>
 						</Flex>
 					)}
 				</Flex>
-				<Avatar
-					src={profileData?.[0]?.avatar ?? ''}
-					size="xl"
-					onClick={onOpenModal}
-				/>
 				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
 					<AppImg
 						width="700px"
+						height="700px"
+						full={!isBigScreen}
 						src={profileData?.[0]?.avatar ?? ''}
 						alt={t('Avatar')}
-						errorFallback={
-							<Text
-								text={t('Something went wrong')}
-								size="l"
-								textAlign="center"
-							/>
-						}
 					/>
 				</Modal>
 			</Flex>

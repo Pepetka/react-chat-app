@@ -9,7 +9,11 @@
 	font: var(--font-m);
 	background-color: var(--bg-color);
 	color: var(--primary-color);
-	height: 100vh;
+	height: 100dvh;
+	overflow: hidden;
+}
+
+body {
 	overflow: hidden;
 }
 

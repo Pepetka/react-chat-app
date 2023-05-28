@@ -20,6 +20,7 @@ const ProfilePage = memo(() => {
 			<PostListWithComments
 				userId={authData?.id ?? ''}
 				profileId={params?.id ?? ''}
+				admin={authData?.id === params?.id}
 			/>
 		</Flex>
 	);

@@ -20,8 +20,8 @@ export const CommentCardSkeleton = memo((props: ICommentCardSkeletonProps) => {
 						<Skeleton circle height="50px" width="50px" />
 					</Flex>
 					<Flex gap="8">
+						<Skeleton height="16px" width="80px" margin="4px" />
 						<Skeleton height="16px" width="100px" margin="4px" />
-						<Skeleton height="16px" width="130px" margin="4px" />
 					</Flex>
 				</Flex>
 				{admin && (

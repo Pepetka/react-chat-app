@@ -1,6 +1,8 @@
+import { StateSchema } from '@/app/provider/Store';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Comment } from '@/shared/types/comment';
-import { StateSchema } from '@/app/provider/Store';
+import { UserMini } from '@/shared/types/userCard';
+import { addZeros } from '@/shared/helpers/addZeros';
 import { getUserAuthData } from '@/entities/User';
 import { postApi } from '@/entities/Post';
 
@@ -37,6 +39,11 @@ const postCommentsApi = rtkApi.injectEndpoints({
 				{ dispatch, queryFulfilled, getState },
 			) {
 				const userData = getUserAuthData(getState() as StateSchema)!;
+				const author: UserMini = {
+					id: userData.id,
+					name: `${userData.firstname} ${userData.lastname}`,
+					avatar: userData.avatar,
+				};
 
 				const patchResult = dispatch(
 					postCommentsApi.util.updateQueryData(
@@ -45,10 +52,12 @@ const postCommentsApi = rtkApi.injectEndpoints({
 						(draft) => {
 							draft.unshift({
 								id: String(Math.random()),
-								author: userData,
+								author,
 								text,
 								postId,
-								createdAt: `${new Date().getHours()}:${new Date().getMinutes()} ${new Date().toLocaleDateString()}`,
+								createdAt: `${addZeros(new Date().getHours())}:${addZeros(
+									new Date().getMinutes(),
+								)} ${new Date().toLocaleDateString()}`,
 							});
 						},
 					),

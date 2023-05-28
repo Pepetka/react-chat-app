@@ -28,8 +28,7 @@ const chatsList: Array<Chat> = [
 		id: '0',
 		user: {
 			avatar: image,
-			firstname: 'Ivan',
-			lastname: 'Ivanov',
+			name: 'Ivan Ivanov',
 			id: 'id',
 		},
 		createdAt: '12:48 03.02.2023',
@@ -39,8 +38,7 @@ const chatsList: Array<Chat> = [
 		id: '1',
 		user: {
 			avatar: image,
-			firstname: 'Ivan',
-			lastname: 'Ivanov',
+			name: 'Ivan Ivanov',
 			id: 'id1',
 		},
 		createdAt: '12:48 03.02.2023',
@@ -50,8 +48,7 @@ const chatsList: Array<Chat> = [
 		id: '2',
 		user: {
 			avatar: image,
-			firstname: 'Ivan',
-			lastname: 'Ivanov',
+			name: 'Ivan Ivanov',
 			id: 'id2',
 		},
 		createdAt: '12:48 03.02.2023',

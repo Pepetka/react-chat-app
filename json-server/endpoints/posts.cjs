@@ -13,9 +13,14 @@ const getPosts = (req, res) => {
 		const { userId } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
-		const { 'user-posts': userPosts = [], posts = [], users = [] } = db;
+		const {
+			'user-posts': userPosts = [],
+			posts = [],
+			users = [],
+			groups = [],
+		} = db;
 
 		const userPostsFromBd = userPosts
 			.filter((post) => {
@@ -28,17 +33,28 @@ const getPosts = (req, res) => {
 				return userPostsFromBd.includes(post.id);
 			})
 			.map((post) => {
-				const author = users.find((user) => user.id === post.authorId);
+				let authorData = users.find((user) => user.id === post.authorId);
+				let author;
+
+				if (!authorData) {
+					authorData = groups.find((group) => group.id === post.authorId);
+					author = {
+						id: authorData.id,
+						avatar: authorData.avatar,
+						name: authorData.name,
+					};
+				} else {
+					author = {
+						id: authorData.id,
+						avatar: authorData.avatar,
+						name: `${authorData.firstname} ${authorData.lastname}`,
+					};
+				}
 
 				return {
 					...post,
 					authorId: undefined,
-					author: {
-						id: author.id,
-						avatar: author.avatar,
-						firstname: author.firstname,
-						lastname: author.lastname,
-					},
+					author,
 				};
 			})
 			.sort(sortByDate);
@@ -59,7 +75,7 @@ const putPosts = (req, res) => {
 		const { postId, userId } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { 'user-posts': userPosts = [], posts = [] } = db;
 
@@ -101,15 +117,23 @@ const postPosts = (req, res) => {
 	}
 
 	try {
-		const { text, authorId, img, userId } = req.body;
+		const { text, authorId, img, profileId } = req.body;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
-		const { 'user-posts': userPosts = [], posts = [] } = db;
+		const {
+			'user-posts': userPosts = [],
+			posts = [],
+			'group-members': groupMembers = [],
+		} = db;
+
+		const groupMember = groupMembers.find((member) => {
+			return member.userId === authorId && member.groupId === profileId;
+		});
 
 		const newPost = {
-			authorId,
+			authorId: groupMember ? groupMember.groupId : authorId,
 			text,
 			img,
 			createdAt: getCurrentDate(),
@@ -117,7 +141,7 @@ const postPosts = (req, res) => {
 		};
 
 		const newUserPost = {
-			userId,
+			userId: profileId,
 			postId: newPost.id,
 		};
 

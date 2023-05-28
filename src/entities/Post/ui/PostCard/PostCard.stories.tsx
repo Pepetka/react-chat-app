@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { User, UserMini } from '@/shared/types/userCard';
+import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Post, PostStats } from '../../model/types/postSchema';
 import { PostCard } from './PostCard';
@@ -14,14 +14,13 @@ const Template: StoryFn<typeof PostCard> = (args) => <PostCard {...args} />;
 
 const author: UserMini = {
 	id: '6cbdb793',
-	firstname: 'Ivan',
-	lastname: 'Ivanov',
+	name: 'Ivan Ivanov',
 	avatar: image,
 };
 
 const post: Post = {
 	id: '0',
-	author: author as User,
+	author,
 	img: [image, image, image],
 	createdAt: '14:24 24.01.2023',
 	text: 'Some post text first line,\nsome post text second line,\nsome post text third line',

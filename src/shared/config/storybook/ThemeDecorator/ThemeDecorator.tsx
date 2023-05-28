@@ -7,7 +7,7 @@ export const ThemeDecorator: Decorator = (StoryComponent, { globals }) => {
 	return (
 		<div
 			className={`App ${globalTheme}`}
-			style={{ height: 'auto', minHeight: '100vh' }}
+			style={{ height: 'auto', minHeight: '100dvh' }}
 		>
 			<StoryComponent />
 		</div>

@@ -30,6 +30,10 @@ interface IFlexControls {
 	 * Флаг, отвечающий за relative значение свойства position
 	 */
 	relative?: boolean;
+	/**
+	 * Пропс, отвечающий за свойство flex-wrap
+	 */
+	wrap?: 'wrap' | 'nowrap';
 }
 
 interface IFlexProps extends IFlexControls {
@@ -71,6 +75,7 @@ const StyledFlex = styled.div<IFlexControls>`
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
 	flex: 0 1 auto;
+	flex-wrap: ${(props) => props.wrap};
 `;
 
 export const Flex = (props: IFlexDiv | IFlexForm) => {
@@ -85,6 +90,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 		height = 'auto',
 		onSubmit,
 		relative = true,
+		wrap = 'nowrap',
 		onMouseOut,
 		onMouseOver,
 	} = props;
@@ -109,6 +115,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 			height={height}
 			onSubmit={onSubmit ? onSubmitHandle : undefined}
 			relative={relative}
+			wrap={wrap}
 			onMouseOut={onMouseOut}
 			onMouseOver={onMouseOver}
 		>

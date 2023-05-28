@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { User } from '@/shared/types/userCard';
+import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Post, PostStats } from '../../model/types/postSchema';
 import { PostList } from './PostList';
@@ -12,31 +12,30 @@ export default {
 
 const Template: StoryFn<typeof PostList> = (args) => <PostList {...args} />;
 
-const author: DeepPartial<User> = {
+const author: UserMini = {
 	id: '6cbdb793',
-	firstname: 'Ivan',
-	lastname: 'Ivanov',
+	name: 'Ivan Ivanov',
 	avatar: image,
 };
 
 const posts: Array<Post> = [
 	{
 		id: '0',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '1',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '2',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
