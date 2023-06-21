@@ -1,4 +1,4 @@
-import { StorybookConfig } from '@storybook/builder-vite';
+import { StorybookConfig } from '@storybook/react-vite';
 import svgr from 'vite-plugin-svgr';
 import { mergeConfig } from 'vite';
 

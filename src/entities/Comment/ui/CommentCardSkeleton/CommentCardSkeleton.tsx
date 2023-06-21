@@ -2,8 +2,8 @@ import { memo } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Button } from '@/shared/ui/Button';
-import MoreIcon from '@/shared/assets/more.svg';
 import { Icon } from '@/shared/ui/Icon';
+import MoreIcon from '@/shared/assets/more.svg';
 
 interface ICommentCardSkeletonProps {
 	admin: boolean;
@@ -20,8 +20,8 @@ export const CommentCardSkeleton = memo((props: ICommentCardSkeletonProps) => {
 						<Skeleton circle height="50px" width="50px" />
 					</Flex>
 					<Flex gap="8">
+						<Skeleton height="16px" width="80px" margin="4px" />
 						<Skeleton height="16px" width="100px" margin="4px" />
-						<Skeleton height="16px" width="130px" margin="4px" />
 					</Flex>
 				</Flex>
 				{admin && (

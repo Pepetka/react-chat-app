@@ -5,8 +5,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { UserMini } from '@/shared/types/userCard';
-import { UsersLists } from '@/entities/Friend';
 import { FriendCard } from '../FriendCard/FriendCard';
+import { UsersLists } from '../../model/types/friendSchema';
 import { FriendCardSkeleton } from '../FriendCardSkeleton/FriendCardSkeleton';
 
 type BlockTitleType = 'Friends' | 'Following' | 'Followers' | 'Others';

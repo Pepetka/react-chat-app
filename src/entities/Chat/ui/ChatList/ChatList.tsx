@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chat } from '@/entities/Chat';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
-import { ChatCardSkeleton } from '@/entities/Chat/ui/ChatCardSkeleton/ChatCardSkeleton';
+import { Chat } from '../../model/types/chatSchema';
+import { ChatCardSkeleton } from '../ChatCardSkeleton/ChatCardSkeleton';
 import { ChatCard } from '../ChatCard/ChatCard';
 
 interface IChatListProps {

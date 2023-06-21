@@ -10,4 +10,4 @@ export interface User {
 	status?: string;
 }
 
-export type UserMini = Pick<User, 'id' | 'avatar' | 'firstname' | 'lastname'>;
+export type UserMini = Pick<User, 'id' | 'avatar'> & { name: string };

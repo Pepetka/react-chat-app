@@ -9,7 +9,7 @@ const getFriends = (req, res) => {
 		const { userId } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { friends = [], users = [] } = db;
 
@@ -48,7 +48,7 @@ const postFriends = (req, res) => {
 		const { userId, friendId } = req.body;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { friends = [], followers = [] } = db;
 

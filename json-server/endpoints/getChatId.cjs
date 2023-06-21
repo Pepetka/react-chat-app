@@ -11,7 +11,7 @@ const getChatId = (req, res) => {
 		const { userId, friendId } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { chats = [], 'chat-members': chatMembers = [] } = db;
 

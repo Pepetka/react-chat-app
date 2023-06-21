@@ -2,9 +2,9 @@ import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
+import { Comment } from '@/shared/types/comment';
 import { CommentCard } from '../CommentCard/CommentCard';
 import { CommentCardSkeleton } from '../CommentCardSkeleton/CommentCardSkeleton';
-import { Comment } from '../../model/types/commentSchema';
 
 interface ICommentListProps {
 	postId: string;

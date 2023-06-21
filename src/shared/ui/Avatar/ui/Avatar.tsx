@@ -1,22 +1,36 @@
-import { memo, useLayoutEffect, useState } from 'react';
+import { ImgHTMLAttributes, memo, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Flex } from '@/shared/ui/Flex';
+import fallbackImg from '@/shared/assets/images/fallback.jpg';
 
-interface IAvatarControls {
+interface IAvatarControls
+	extends Pick<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {
+	/**
+	 * Размер аватара
+	 */
 	size?: 's' | 'm' | 'l' | 'xl';
+	/**
+	 * Флаг, отвечающий за округлую форму компонента
+	 */
 	circle?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие border
+	 */
 	border?: boolean;
+	/**
+	 * Тема компонента
+	 */
 	theme?: 'primary' | 'invert';
-	onClick?: () => void;
 }
 
-interface IAvatarProps extends IAvatarControls {
-	src: string;
-}
+interface IAvatarProps
+	extends IAvatarControls,
+		Omit<ImgHTMLAttributes<HTMLImageElement>, 'onClick'> {}
 
-const getSize = (size: IAvatarControls['size']) => {
+const getSize = (size: IAvatarControls['size'], isDesktopOrLaptop: boolean) => {
 	if (size === 's') {
 		return '50px';
 	}
@@ -29,7 +43,11 @@ const getSize = (size: IAvatarControls['size']) => {
 		return '100px';
 	}
 
-	return '340px';
+	if (isDesktopOrLaptop) {
+		return '340px';
+	} else {
+		return '250px';
+	}
 };
 
 const getBorder = (props: IAvatarControls) => {
@@ -40,12 +58,15 @@ const getBorder = (props: IAvatarControls) => {
 		: '3px solid var(--invert-primary-color)';
 };
 
-const StyledAvatar = styled.img<IAvatarControls>`
-	width: ${(props) => getSize(props.size)};
-	height: ${(props) => getSize(props.size)};
+const StyledAvatar = styled.img<
+	IAvatarControls & { isDesktopOrLaptop: boolean }
+>`
+	width: ${(props) => getSize(props.size, props.isDesktopOrLaptop)};
+	height: ${(props) => getSize(props.size, props.isDesktopOrLaptop)};
 	border: ${getBorder};
 	border-radius: ${(props) => (props.circle ? '50%' : '')};
 	cursor: ${(props) => (props.onClick ? 'pointer' : undefined)};
+	object-fit: cover;
 `;
 
 export const Avatar = memo((props: IAvatarProps) => {
@@ -55,10 +76,12 @@ export const Avatar = memo((props: IAvatarProps) => {
 		size = 's',
 		border = false,
 		theme = 'primary',
-		onClick,
+		...otherProps
 	} = props;
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
 	const { t } = useTranslation();
 	const [isLoading, setIsLoading] = useState(true);
+	const [isError, setIsError] = useState(false);
 
 	useLayoutEffect(() => {
 		const img = new Image();
@@ -66,29 +89,48 @@ export const Avatar = memo((props: IAvatarProps) => {
 		img.onload = () => {
 			setIsLoading(false);
 		};
+		img.onerror = () => {
+			setIsError(true);
+		};
 	}, [src]);
 
 	if (isLoading) {
 		return (
-			<Flex width={getSize(size)}>
+			<Flex width={getSize(size, isDesktopOrLaptop)}>
 				<Skeleton
-					height={getSize(size)}
-					width={getSize(size)}
+					height={getSize(size, isDesktopOrLaptop)}
+					width={getSize(size, isDesktopOrLaptop)}
 					circle={circle}
 				/>
 			</Flex>
 		);
 	}
 
+	if (isError) {
+		return (
+			<StyledAvatar
+				isDesktopOrLaptop={isDesktopOrLaptop}
+				border={border}
+				theme={theme}
+				size={size}
+				circle={circle}
+				src={fallbackImg}
+				alt={t('Avatar')}
+				{...otherProps}
+			/>
+		);
+	}
+
 	return (
 		<StyledAvatar
+			isDesktopOrLaptop={isDesktopOrLaptop}
 			border={border}
 			theme={theme}
 			size={size}
 			circle={circle}
 			src={src}
 			alt={t('Avatar')}
-			onClick={onClick}
+			{...otherProps}
 		/>
 	);
 });

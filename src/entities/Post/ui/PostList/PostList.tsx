@@ -1,7 +1,6 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, ReactNode, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/Flex';
-import { PostCard } from '@/entities/Post';
 import { Text } from '@/shared/ui/Text';
 import { Card } from '@/shared/ui/Card';
 import {
@@ -12,14 +11,21 @@ import {
 	useSharePostMutation,
 } from '../../api/postApi';
 import { PostCardSkeleton } from '../PostCardSkeleton/PostCardSkeleton';
+import { PostCard } from '../PostCard/PostCard';
 
 interface IPostListProps {
 	userId: string;
 	profileId: string;
+	admin: boolean;
+	commentList?: (props: {
+		postId: string;
+		userId: string;
+		commentsNum: number;
+	}) => ReactNode;
 }
 
 export const PostList = memo((props: IPostListProps) => {
-	const { userId, profileId } = props;
+	const { userId, profileId, commentList, admin } = props;
 	const [postId, setPostId] = useState('');
 	const { t } = useTranslation('profile');
 	const {
@@ -105,9 +111,10 @@ export const PostList = memo((props: IPostListProps) => {
 					onDislikePost={onDislikePostHandle}
 					onDeletePost={onDeletePostHandle}
 					key={post.id}
-					admin={userId === profileId || userId === post.author.id}
+					admin={admin || userId === post.author.id}
 					userId={userId}
 					post={post}
+					commentList={commentList}
 				/>
 			))}
 		</Flex>

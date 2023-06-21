@@ -1,12 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { User } from '@/shared/types/userCard';
+import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
-import { Social } from '@/features/SocialCard/model/types/socialCardSchema';
+import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
 import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
+import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
 import ProfilePage from './ProfilePage';
 
 export default {
@@ -60,31 +60,30 @@ const friends: Array<DeepPartial<User>> = [
 	},
 ];
 
-const author: DeepPartial<User> = {
+const author: UserMini = {
 	id: '6cbdb793',
-	firstname: 'Ivan',
-	lastname: 'Ivanov',
+	name: 'Ivan Ivanov',
 	avatar: image,
 };
 
 const posts: Array<Post> = [
 	{
 		id: '0',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '1',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',
 	},
 	{
 		id: '2',
-		author: author as User,
+		author,
 		img: [image, image, image],
 		createdAt: '14:24 24.01.2023',
 		text: 'Some post text first line,\nsome post text second line,\nsome post text third line',

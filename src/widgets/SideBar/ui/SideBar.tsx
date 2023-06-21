@@ -7,6 +7,7 @@ import { Text } from '@/shared/ui/Text';
 import {
 	getChatsPagePath,
 	getFriendsPagePath,
+	getGroupsListPagePath,
 	getMainPagePath,
 	getProfilePagePath,
 } from '@/shared/const/router';
@@ -14,7 +15,7 @@ import { getUserAuthData } from '@/entities/User';
 import { AppLink } from '@/shared/ui/AppLink';
 
 const StyledSidebar = styled.div`
-	flex: 0 0 var(--sidebar-width);
+	width: var(--sidebar-width);
 `;
 
 export const SideBar = memo(() => {
@@ -24,17 +25,20 @@ export const SideBar = memo(() => {
 	return (
 		<StyledSidebar>
 			<Flex direction="column" gap="8">
-				<AppLink href={getMainPagePath()}>
+				<AppLink to={getMainPagePath()}>
 					<Text text={t('Main page')} size="xl" />
 				</AppLink>
-				<AppLink href={getProfilePagePath(authData?.id ?? '')}>
+				<AppLink to={getProfilePagePath(authData?.id ?? '')}>
 					<Text text={t('My profile')} size="xl" />
 				</AppLink>
-				<AppLink href={getFriendsPagePath(authData?.id ?? '')}>
+				<AppLink to={getFriendsPagePath(authData?.id ?? '')}>
 					<Text text={t('My friends')} size="xl" />
 				</AppLink>
-				<AppLink href={getChatsPagePath()}>
+				<AppLink to={getChatsPagePath()}>
 					<Text text={t('My chats')} size="xl" />
+				</AppLink>
+				<AppLink to={getGroupsListPagePath(authData?.id ?? '')}>
+					<Text text={t('My groups')} size="xl" />
 				</AppLink>
 			</Flex>
 		</StyledSidebar>

@@ -3,6 +3,7 @@ import {
 	configureStore,
 	Reducer,
 	ReducersMapObject,
+	Store,
 } from '@reduxjs/toolkit';
 import { userReducer } from '@/entities/User';
 import { rtkApi } from '@/shared/api/rtkApi';
@@ -19,6 +20,10 @@ export const createReduxStore = (
 		...asyncReducers,
 	};
 
+	type TStore = {
+		reducerManager: ReturnType<typeof createReducerManager>;
+	} & Store;
+
 	const reducerManager = createReducerManager(rootReducer);
 
 	const store = configureStore({
@@ -26,9 +31,8 @@ export const createReduxStore = (
 		preloadedState: initialState,
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware().concat(rtkApi.middleware),
-	});
+	}) as TStore;
 
-	// @ts-ignore
 	store.reducerManager = reducerManager;
 
 	return store;

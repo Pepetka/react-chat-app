@@ -2,10 +2,10 @@ import { memo, useCallback } from 'react';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 import { UserCard } from '@/shared/ui/UserCard';
-import { UserMini } from '@/shared/types/userCard';
 import { Button } from '@/shared/ui/Button';
 import { useHover } from '@/shared/hooks/useHover';
 import { Text } from '@/shared/ui/Text';
+import { UserMini } from '@/shared/types/userCard';
 
 interface IFriendProps {
 	friend: UserMini;
@@ -45,7 +45,12 @@ export const FriendCard = memo((props: IFriendProps) => {
 				onMouseOut={onMouseOut}
 				onMouseOver={onMouseOver}
 			>
-				<UserCard user={friend} avatarSize="s" />
+				<UserCard
+					id={friend.id}
+					name={friend.name}
+					avatar={friend.avatar}
+					avatarSize="s"
+				/>
 				{hover && withBtn && (
 					<Button
 						onClick={onAddFriendHandle}

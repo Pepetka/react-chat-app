@@ -19,6 +19,7 @@ export const SearchChatsByName = memo((props: ISearchChatsByNameProps) => {
 			userId,
 			search: searchParams.get('search') ?? '',
 		});
+		// eslint-disable-next-line
 	}, [onFetchChats, userId]);
 
 	return (

@@ -4,8 +4,8 @@ const getContains = require('../helpers/getContains.cjs');
 
 const searchFilter =
 	(search) =>
-	({ firstname, lastname }) => {
-		return getContains(`${firstname} ${lastname}`, search);
+	({ name }) => {
+		return getContains(name, search);
 	};
 
 const getUsers = (req, res) => {
@@ -17,7 +17,7 @@ const getUsers = (req, res) => {
 		const { userId, search = '' } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const { friends = [], followers = [], users = [] } = db;
 
@@ -47,7 +47,7 @@ const getUsers = (req, res) => {
 
 				const { id, avatar, firstname, lastname } = user;
 
-				return { id, avatar, firstname, lastname };
+				return { id, avatar, name: `${firstname} ${lastname}` };
 			})
 			.filter(searchFilter(search));
 
@@ -57,7 +57,7 @@ const getUsers = (req, res) => {
 
 				const { id, avatar, firstname, lastname } = user;
 
-				return { id, avatar, firstname, lastname };
+				return { id, avatar, name: `${firstname} ${lastname}` };
 			})
 			.filter(searchFilter(search));
 
@@ -67,7 +67,7 @@ const getUsers = (req, res) => {
 
 				const { id, avatar, firstname, lastname } = user;
 
-				return { id, avatar, firstname, lastname };
+				return { id, avatar, name: `${firstname} ${lastname}` };
 			})
 			.filter(searchFilter(search));
 
@@ -86,7 +86,7 @@ const getUsers = (req, res) => {
 				);
 			})
 			.map(({ id, avatar, firstname, lastname }) => {
-				return { id, avatar, firstname, lastname };
+				return { id, avatar, name: `${firstname} ${lastname}` };
 			})
 			.filter(searchFilter(search));
 

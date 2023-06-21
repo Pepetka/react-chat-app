@@ -4,52 +4,85 @@ import { Flex } from '@/shared/ui/Flex';
 import { Avatar } from '@/shared/ui/Avatar';
 import { Text } from '@/shared/ui/Text';
 import { AppLink } from '@/shared/ui/AppLink';
-import { UserMini } from '@/shared/types/userCard';
 
 type TextSizeType = 'm' | 'l' | 'xl';
 
 interface IUserCardProps {
-	user: UserMini;
-	avatarSize?: 's' | 'm' | 'l' | 'xl';
+	/**
+	 * ID карточки
+	 */
+	id: string;
+	/**
+	 * Аватар
+	 */
+	avatar: string;
+	/**
+	 * Имя
+	 */
+	name: string;
+	/**
+	 * Размер аватара
+	 */
+	avatarSize?: 's' | 'm' | 'l';
+	/**
+	 * Флаг, отвечающий за наличие border
+	 */
 	border?: boolean;
+	/**
+	 * Тема компонента
+	 */
 	theme?: 'primary' | 'invert';
+	/**
+	 * Размер текста
+	 */
 	textSize?: TextSizeType;
+	/**
+	 * Дополнительный текст
+	 */
 	additionalText?: string;
+	/**
+	 * Ширина компонента
+	 */
 	width?: string;
+	/**
+	 * Эндпоинт, на который перейдет пользователь при клике на компонент
+	 */
 	href?: string;
 }
 
 const textObject: Record<TextSizeType, TextSizeType | 's'> = {
-	m: 's',
+	m: 'm',
 	l: 'm',
 	xl: 'l',
 };
 
 export const UserCard = memo((props: IUserCardProps) => {
 	const {
-		user,
+		id,
+		avatar,
+		name,
 		avatarSize,
 		border,
 		theme = 'invert',
 		textSize = 'l',
 		additionalText,
 		width,
-		href = getProfilePagePath(user.id),
+		href = getProfilePagePath(id),
 	} = props;
 
 	return (
-		<AppLink key={user.id} href={href} width={width}>
+		<AppLink to={href} key={id} width={width}>
 			<Flex gap="8" align={additionalText ? 'flex-start' : 'center'}>
 				<Avatar
 					size={avatarSize}
 					circle
-					src={user.avatar}
+					src={avatar}
 					border={border}
 					theme={theme}
 				/>
 				<Flex direction="column">
 					<Text
-						text={`${user.firstname} ${user.lastname}`}
+						text={name}
 						theme={`primary${theme === 'invert' ? '-invert' : ''}`}
 						size={textSize}
 					/>

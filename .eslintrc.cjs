@@ -16,6 +16,7 @@ module.exports = {
 		'prettier',
 		'unused-imports',
 	],
+	ignorePatterns: 'dist/**/*',
 	rules: {
 		'unused-imports/no-unused-imports': 'error',
 		'prettier/prettier': 'error',
@@ -46,6 +47,8 @@ module.exports = {
 					'textSize',
 					'blockTitle',
 					'padding',
+					'wrap',
+					'minHeight',
 				],
 				ignore: ['ICE'],
 			},

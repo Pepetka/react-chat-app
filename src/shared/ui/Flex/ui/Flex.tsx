@@ -2,19 +2,56 @@ import { FormEvent, ReactNode, useCallback } from 'react';
 import styled from 'styled-components';
 
 interface IFlexControls {
+	/**
+	 * Пропс, отвечающий за свойство justify-content
+	 */
 	justify?: 'center' | 'start' | 'end' | 'space-between' | 'space-around';
+	/**
+	 * Пропс, отвечающий за свойство align-items
+	 */
 	align?: 'center' | 'flex-start' | 'flex-end';
+	/**
+	 * Пропс, отвечающий за свойство flex-direction
+	 */
 	direction?: 'row' | 'column';
+	/**
+	 * Пропс, отвечающий за свойство gap
+	 */
 	gap?: '4' | '8' | '16' | '24' | '32' | '40';
+	/**
+	 * Ширина компонента
+	 */
 	width?: string;
+	/**
+	 * Высота компонента
+	 */
 	height?: string;
+	/**
+	 * Флаг, отвечающий за relative значение свойства position
+	 */
 	relative?: boolean;
+	/**
+	 * Пропс, отвечающий за свойство flex-wrap
+	 */
+	wrap?: 'wrap' | 'nowrap';
 }
 
 interface IFlexProps extends IFlexControls {
+	/**
+	 * Содержимое компонента
+	 */
 	children: ReactNode;
+	/**
+	 * Тэг, оборачивающий содержимое
+	 */
 	FlexTag?: 'div' | 'form' | 'label' | 'ul';
+	/**
+	 * Функция, вызываемая при наведении на компонент
+	 */
 	onMouseOver?: () => void;
+	/**
+	 * Функция, вызываемая при выходе курсора за пределы компонента
+	 */
 	onMouseOut?: () => void;
 }
 
@@ -38,6 +75,7 @@ const StyledFlex = styled.div<IFlexControls>`
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
 	flex: 0 1 auto;
+	flex-wrap: ${(props) => props.wrap};
 `;
 
 export const Flex = (props: IFlexDiv | IFlexForm) => {
@@ -52,6 +90,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 		height = 'auto',
 		onSubmit,
 		relative = true,
+		wrap = 'nowrap',
 		onMouseOut,
 		onMouseOver,
 	} = props;
@@ -76,6 +115,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 			height={height}
 			onSubmit={onSubmit ? onSubmitHandle : undefined}
 			relative={relative}
+			wrap={wrap}
 			onMouseOut={onMouseOut}
 			onMouseOver={onMouseOver}
 		>

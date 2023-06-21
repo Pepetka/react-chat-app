@@ -1,7 +1,4 @@
-export type { UserSchema } from './model/types/UserSchema';
 export { userReducer, userActions } from './model/Slice/userSlice';
-export {
-	getUserState,
-	getUserAuthData,
-	getUserInited,
-} from './model/selectors/userSelectors';
+export type { UserSchema } from './model/types/UserSchema';
+export { getUserAuthData } from './model/selectors/userSelectors';
+export { getUserInited } from './model/selectors/userSelectors';

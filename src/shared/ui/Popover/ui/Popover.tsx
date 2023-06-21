@@ -4,6 +4,9 @@ import { Flex } from '@/shared/ui/Flex';
 import { useHover } from '@/shared/hooks/useHover';
 
 interface IPopoverControls {
+	/**
+	 * Направление открытия меню
+	 */
 	direction?:
 		| 'bottom_left'
 		| 'bottom_right'
@@ -14,8 +17,17 @@ interface IPopoverControls {
 }
 
 interface IPopoverProps extends IPopoverControls {
+	/**
+	 * Компонент, наведение на который открывает меню
+	 */
 	trigger?: ReactNode;
+	/**
+	 * Содержимое меню
+	 */
 	children?: ReactNode;
+	/**
+	 * Флаг, отвечающий за открытое состояние меню по умолчанию
+	 */
 	openDefault?: boolean;
 }
 

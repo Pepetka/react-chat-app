@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { Messages } from '@/entities/Message';
+import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
+import { Messages } from '@/entities/Message';
 import MessengerPage from './MessengerPage';
 
 export default {
@@ -26,8 +26,7 @@ const state: DeepPartial<StateSchema> = {
 const response: { messages: Messages; friend: UserMini } = {
 	friend: {
 		id: '1',
-		firstname: 'Ivan',
-		lastname: 'Ivanov',
+		name: 'Ivan Ivanov',
 		avatar: image,
 	},
 	messages: [

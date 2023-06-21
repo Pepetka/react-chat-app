@@ -1,11 +1,12 @@
 import { memo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ProfileCard } from '@/features/ProfileCard';
-import { SocialCard } from '@/features/SocialCard';
 import { Flex } from '@/shared/ui/Flex';
-import { PostForm, PostList } from '@/entities/Post';
+import { SocialCard } from '@/entities/SocialData';
+import { PostForm } from '@/entities/Post';
 import { getUserAuthData } from '@/entities/User';
+import { ProfileCard } from '@/features/ProfileCard';
+import { PostListWithComments } from '@/features/PostListWithComments';
 
 const ProfilePage = memo(() => {
 	const params = useParams<{ id: string }>();
@@ -16,7 +17,11 @@ const ProfilePage = memo(() => {
 			<ProfileCard userId={authData?.id ?? ''} profileId={params?.id ?? ''} />
 			<SocialCard userId={authData?.id ?? ''} profileId={params?.id ?? ''} />
 			<PostForm userId={authData?.id ?? ''} profileId={params?.id ?? ''} />
-			<PostList userId={authData?.id ?? ''} profileId={params?.id ?? ''} />
+			<PostListWithComments
+				userId={authData?.id ?? ''}
+				profileId={params?.id ?? ''}
+				admin={authData?.id === params?.id}
+			/>
 		</Flex>
 	);
 });

@@ -1,13 +1,14 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
-import MoreIcon from '@/shared/assets/more.svg';
 import { Menu } from '@/shared/ui/Menu';
 import { UserCard } from '@/shared/ui/UserCard';
-import { Comment } from '../../model/types/commentSchema';
+import MoreIcon from '@/shared/assets/more.svg';
+import { Comment } from '@/shared/types/comment';
 
 interface ICommentCardProps {
 	comment: Comment;
@@ -18,6 +19,7 @@ interface ICommentCardProps {
 
 export const CommentCard = memo((props: ICommentCardProps) => {
 	const { comment, admin, deleteLoading, onDeleteComment } = props;
+	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 	const { t } = useTranslation('profile');
 
 	const onDeleteCommentHandle = useCallback(() => {
@@ -27,10 +29,16 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 	return (
 		<Flex direction="column" gap="8">
 			<Flex justify="space-between">
-				<UserCard user={comment.author} avatarSize="s" textSize="m" />
+				<UserCard
+					id={comment.author.id}
+					name={comment.author.name}
+					avatar={comment.author.avatar}
+					avatarSize="s"
+					textSize="m"
+				/>
 				{admin && (
 					<Menu
-						direction="bottom_center"
+						direction={isSmallScreen ? 'bottom_left' : 'bottom_center'}
 						width="48px"
 						height="48px"
 						trigger={<Icon SvgIcon={MoreIcon} invert />}

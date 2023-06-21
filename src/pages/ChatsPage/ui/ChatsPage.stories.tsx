@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
-import { Chat } from '@/entities/Chat';
+import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
 import image from '@/shared/assets/images/image.jpg';
 import { User } from '@/shared/types/userCard';
+import { Chat } from '@/entities/Chat';
 import ChatsPage from './ChatsPage';
 
 export default {
@@ -36,8 +36,7 @@ const chatsList: Array<Chat> = [
 		id: '0',
 		user: {
 			avatar: image,
-			firstname: 'Ivan',
-			lastname: 'Ivanov',
+			name: 'Ivan Ivanov',
 			id: 'id',
 		},
 		createdAt: '12:48 03.02.2023',
@@ -47,8 +46,7 @@ const chatsList: Array<Chat> = [
 		id: '1',
 		user: {
 			avatar: image,
-			firstname: 'Ivan',
-			lastname: 'Ivanov',
+			name: 'Ivan Ivanov',
 			id: 'id1',
 		},
 		createdAt: '12:48 03.02.2023',
@@ -58,8 +56,7 @@ const chatsList: Array<Chat> = [
 		id: '2',
 		user: {
 			avatar: image,
-			firstname: 'Ivan',
-			lastname: 'Ivanov',
+			name: 'Ivan Ivanov',
 			id: 'id2',
 		},
 		createdAt: '12:48 03.02.2023',

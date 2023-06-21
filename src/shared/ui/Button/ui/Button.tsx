@@ -1,24 +1,41 @@
-import { ForwardedRef, forwardRef, memo, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ForwardedRef, forwardRef, memo } from 'react';
 import styled from 'styled-components';
 
 type ButtonThemeType = 'primary' | 'outline' | 'clear';
 
 interface IButtonControls {
+	/**
+	 * Тема кнопки
+	 */
 	theme?: ButtonThemeType;
+	/**
+	 * Ширина кнопки
+	 */
 	width?: string;
+	/**
+	 * Высота кнопки
+	 */
 	height?: string;
+	/**
+	 * Флаг, отвечающий за инвертирование темы
+	 */
 	invert?: boolean;
+	/**
+	 * Флаг, отвечающий за округлую форму кнопки
+	 */
 	circle?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие padding-inline
+	 */
+	padding?: boolean;
 }
 
-interface IButtonProps extends IButtonControls {
-	onClick?: () => void;
-	children: ReactNode;
-	type?: 'button' | 'submit' | 'reset';
-	disabled?: boolean;
-}
+interface IButtonProps
+	extends IButtonControls,
+		ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const StyledButton = styled.button<IButtonControls>`
+	padding-inline: ${(props) => (props.padding ? '20px' : 'none')};
 	font: var(--font-m);
 	cursor: pointer;
 	border-radius: ${(props) => (props.circle ? '50%' : '8px')};
@@ -70,26 +87,24 @@ export const Button = memo(
 		const {
 			children,
 			theme = 'primary',
-			onClick,
 			type = 'button',
-			disabled = false,
 			height,
 			width,
 			invert = false,
 			circle = false,
+			...otherProps
 		} = props;
 
 		return (
 			<StyledButton
 				theme={theme}
-				onClick={onClick}
 				type={type}
 				width={width}
 				height={height}
-				disabled={disabled}
 				invert={invert}
 				circle={circle}
 				ref={ref}
+				{...otherProps}
 			>
 				{children}
 			</StyledButton>

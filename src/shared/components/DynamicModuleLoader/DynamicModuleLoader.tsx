@@ -4,9 +4,21 @@ import { Reducer } from '@reduxjs/toolkit';
 import { ReduxStoreWithManager, StateSchemaKey } from '@/app/provider/Store';
 
 interface DynamicModuleLoaderProps {
+	/**
+	 * Имя reducer, который необходимо подключить
+	 */
 	reducerKey: StateSchemaKey;
+	/**
+	 * Reducer, который необходимо подключить
+	 */
 	reducer: Reducer;
+	/**
+	 * Флаг, отвечающий за отключение reducer после размонтирования компонента
+	 */
 	removeOnUnmount?: boolean;
+	/**
+	 * Компонент, для работы которого необходимо подключить reducer
+	 */
 	children: ReactNode;
 }
 

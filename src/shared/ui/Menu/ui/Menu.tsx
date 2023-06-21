@@ -12,6 +12,9 @@ import { Flex } from '@/shared/ui/Flex';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface IMenuControls {
+	/**
+	 * Направление, в котором открывается меню
+	 */
 	direction?:
 		| 'bottom_left'
 		| 'bottom_right'
@@ -22,10 +25,25 @@ interface IMenuControls {
 }
 
 interface IMenuProps extends IMenuControls {
+	/**
+	 * Компонент, нажатие на который, открывается меню
+	 */
 	trigger?: ReactNode;
+	/**
+	 * Содержимое меню
+	 */
 	children?: ReactNode;
+	/**
+	 * Ширина меню
+	 */
 	width?: string;
+	/**
+	 * Высота меню
+	 */
 	height?: string;
+	/**
+	 * Флаг, отвечающий за открытое состояние меню по умолчанию
+	 */
 	openDefault?: boolean;
 }
 

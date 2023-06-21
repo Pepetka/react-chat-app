@@ -1,9 +1,9 @@
-import { getUserAuthData } from '@/entities/User';
-import { rtkApi } from '@/shared/api/rtkApi';
-import { socialCardApi } from '@/features/SocialCard';
 import { StateSchema } from '@/app/provider/Store';
 import { User, UserMini } from '@/shared/types/userCard';
 import { Online } from '@/shared/types/online';
+import { rtkApi } from '@/shared/api/rtkApi';
+import { socialDataApi } from '@/entities/SocialData';
+import { getUserAuthData } from '@/entities/User';
 import { getRelations } from '../model/selectors/profileCardSelectors';
 import { Relations } from '../model/types/profileCardSchema';
 
@@ -93,7 +93,7 @@ export const profileCardApi = rtkApi.injectEndpoints({
 				);
 
 				const patchResultSocial = dispatch(
-					socialCardApi.util.updateQueryData(
+					socialDataApi.util.updateQueryData(
 						'fetchSocialData',
 						{ profileId: friendId },
 						(draft) => {
@@ -122,7 +122,7 @@ export const profileCardApi = rtkApi.injectEndpoints({
 				);
 
 				const patchResultFriends = dispatch(
-					socialCardApi.util.updateQueryData(
+					socialDataApi.util.updateQueryData(
 						'fetchFriendsData',
 						{ profileId: friendId },
 						(draft) => {

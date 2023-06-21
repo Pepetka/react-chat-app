@@ -1,11 +1,11 @@
-import { HTMLAttributeAnchorTarget, memo, ReactNode } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, NavLinkProps } from 'react-router-dom';
 
-interface IAppLinkProps {
-	children: ReactNode;
-	href: string;
-	target?: HTMLAttributeAnchorTarget;
+interface IAppLinkProps extends NavLinkProps {
+	/**
+	 * Ширина компонента
+	 */
 	width?: string;
 }
 
@@ -18,10 +18,10 @@ const StyledLink = styled.a<{ width: string }>`
 `;
 
 export const AppLink = memo((props: IAppLinkProps) => {
-	const { children, href, target, width = 'auto' } = props;
+	const { children, width = 'auto', ...otherProps } = props;
 
 	return (
-		<StyledLink as={NavLink} to={href} target={target} width={width}>
+		<StyledLink as={NavLink} width={width} {...otherProps}>
 			{children}
 		</StyledLink>
 	);

@@ -17,10 +17,12 @@
 	--font-xxl: var(--font-size-xxl) / var(--font-line-xxl)
 		var(--font-family-main);
 
-	--navbar-height: 90px;
-	--page-height: calc(100vh - var(--navbar-height) - var(--page-padding));
-	--sidebar-width: 170px;
 	--page-padding: 20px;
+	--navbar-height: 90px;
+	--page-height: calc(100dvh - var(--navbar-height));
+	--navbar-height-mobile: 60px;
+	--page-height-mobile: calc(100dvh - var(--navbar-height-mobile) * 2);
+	--sidebar-width: 170px;
 
 	--popup-z: 1;
 	--hidden-z: -1;

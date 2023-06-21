@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Flex } from '@/shared/ui/Flex';
-import { MessageForm, MessageList } from '@/entities/Message';
 import { Card } from '@/shared/ui/Card';
 import { UserCard } from '@/shared/ui/UserCard';
 import { Button } from '@/shared/ui/Button';
@@ -12,6 +11,7 @@ import { Icon } from '@/shared/ui/Icon';
 import SettingsIcon from '@/shared/assets/more.svg';
 import { Spinner } from '@/shared/ui/Spinner';
 import { Text } from '@/shared/ui/Text';
+import { MessageForm, MessageList } from '@/entities/Message';
 import { getUserAuthData } from '@/entities/User';
 import {
 	useFetchMessagesQuery,
@@ -98,7 +98,9 @@ const MessengerPage = memo(() => {
 			<Card padding="10px" borderRadius={false}>
 				<Flex justify="space-between" align="center">
 					<UserCard
-						user={responseMessages.friend}
+						id={responseMessages.friend.id}
+						avatar={responseMessages.friend.avatar}
+						name={`${responseMessages.friend.name}`}
 						additionalText={t(online ?? 'offline')}
 					/>
 					<Button theme="clear">

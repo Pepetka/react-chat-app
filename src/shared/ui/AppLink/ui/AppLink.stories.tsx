@@ -10,6 +10,6 @@ const Template: StoryFn<typeof AppLink> = (args) => <AppLink {...args} />;
 
 export const Normal = Template.bind({});
 Normal.args = {
-	href: '/',
+	to: '/',
 	children: <div>Some link</div>,
 };

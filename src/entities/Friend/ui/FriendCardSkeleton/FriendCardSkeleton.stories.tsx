@@ -16,7 +16,7 @@ export default {
 	],
 } as Meta<typeof FriendCardSkeleton>;
 
-const Template: StoryFn<typeof FriendCardSkeleton> = (args) => (
+const Template: StoryFn<typeof FriendCardSkeleton> = () => (
 	<FriendCardSkeleton />
 );
 

@@ -1,6 +1,6 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 
-interface IPostApiProps {
+interface IApiProps {
 
 }
 
@@ -8,7 +8,7 @@ export const {{camelCase name}}Api = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchData: build.query<
 			any,
-			IPostApiProps,
+			IApiProps,
 		>({
 			query: ({  }) => ({
 				url: '',
@@ -19,7 +19,7 @@ export const {{camelCase name}}Api = rtkApi.injectEndpoints({
 
 		addData: build.mutation<
 			any,
-			IPostApiProps,
+			IApiProps,
 		>({
 			query: ({  }) => ({
 				url: '',

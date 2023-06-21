@@ -6,8 +6,17 @@ import { useTheme } from '@/shared/hooks/useTheme';
 import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 
 interface IModalProps {
+	/**
+	 * Флаг, отвечающий за открытие модального окна
+	 */
 	isOpen: boolean;
+	/**
+	 * Содержимое модального окна
+	 */
 	children: ReactNode;
+	/**
+	 * Функция, вызываемая при закрытии модального окна
+	 */
 	onCloseModal?: () => void;
 }
 
@@ -34,13 +43,17 @@ const ScaleOutAnimation = keyframes`
 const StyledContent = styled.div<{ opened: boolean }>`
 	min-width: min(90%, 500px);
 	z-index: var(--modal-z);
-	animation: ${(props) => (props.opened ? ScaleInAnimation : ScaleOutAnimation)}
-		0.3s linear;
+	animation-name: ${(props) =>
+		props.opened ? ScaleInAnimation : ScaleOutAnimation};
+	animation-duration: ${(props) => (props.opened ? '0.3s' : '0.1s')};
+	animation-timing-function: linear;
 `;
 
 const StyledWrapper = styled.div<{ opened: boolean }>`
-	animation: ${(props) => (props.opened ? FadeInAnimation : FadeOutAnimation)}
-		0.35s linear;
+	animation-name: ${(props) =>
+		props.opened ? FadeInAnimation : FadeOutAnimation};
+	animation-duration: ${(props) => (props.opened ? '0.35s' : '0.15s')};
+	animation-timing-function: linear;
 `;
 
 const StyledContentWrapper = styled.div`
@@ -65,7 +78,7 @@ export const Modal = (props: IModalProps) => {
 		} else {
 			setTimeout(() => {
 				setOpened(false);
-			}, 300);
+			}, 100);
 		}
 	}, [isOpen]);
 

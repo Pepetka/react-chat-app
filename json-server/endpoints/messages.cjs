@@ -14,7 +14,7 @@ const getMessages = (req, res) => {
 		const { chatId, userId, friendId } = req.query;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const {
 			users = [],
@@ -107,7 +107,7 @@ const postMessages = (req, res) => {
 		const img = req.body?.img;
 
 		const db = JSON.parse(
-			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'UTF-8'),
+			fs.readFileSync(path.resolve(__dirname, '..', 'db.json'), 'utf8'),
 		);
 		const {
 			users = [],
