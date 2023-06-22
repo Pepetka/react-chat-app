@@ -16,7 +16,7 @@ module.exports = {
 		'prettier',
 		'unused-imports',
 	],
-	ignorePatterns: 'dist/**/*',
+	ignorePatterns: ['dist/**/*', 'storybook-static/**/*'],
 	rules: {
 		'unused-imports/no-unused-imports': 'error',
 		'prettier/prettier': 'error',

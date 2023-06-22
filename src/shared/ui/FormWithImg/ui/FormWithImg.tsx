@@ -394,7 +394,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 									width={isSmallScreen ? '40px' : '64px'}
 									height={isSmallScreen ? '40px' : '64px'}
 									type="submit"
-									disabled={isLoading}
+									disabled={isLoading || (!textValue && !imgValue)}
 								>
 									{isLoading ? (
 										'...'

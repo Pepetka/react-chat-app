@@ -1,7 +1,11 @@
 import { ReactNode, useMemo } from 'react';
 import styled from 'styled-components';
 import { isMobile, BrowserView, MobileView } from 'react-device-detect';
-import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
+import {
+	getLoginPagePath,
+	getMessengerPagePath,
+	getRegisterPagePath,
+} from '@/shared/const/router';
 import { SideBar } from '@/widgets/SideBar';
 import { Flex } from '@/shared/ui/Flex';
 import { BottomBar } from '@/widgets/BottomBar';
@@ -20,12 +24,13 @@ const StyledPage = styled.div<{ noAuthPage: boolean }>`
 	overflow-x: hidden;
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled.div<{ isMessengerPage: boolean }>`
 	width: 80%;
 	min-height: ${() =>
 		isMobile ? 'var(--page-height-mobile)' : 'var(--page-height)'};
 	margin-inline: auto;
-	padding-bottom: var(--page-padding);
+	padding-bottom: ${(props) =>
+		props.isMessengerPage && isMobile ? '0' : 'var(--page-padding)'};
 	display: flex;
 	gap: 8px;
 
@@ -37,18 +42,23 @@ const ContentWrapper = styled.div`
 export const Page = (props: IPageProps) => {
 	const { children, currentPagePath } = props;
 
-	const noAuthPage = useMemo(
+	const isNoAuthPage = useMemo(
 		() =>
 			currentPagePath !== getLoginPagePath() &&
 			currentPagePath !== getRegisterPagePath(),
 		[currentPagePath],
 	);
 
+	const isMessengerPage = useMemo(
+		() => currentPagePath.includes(getMessengerPagePath('')),
+		[currentPagePath],
+	);
+
 	return (
 		<>
-			<StyledPage noAuthPage={noAuthPage}>
-				<ContentWrapper>
-					{noAuthPage && (
+			<StyledPage noAuthPage={isNoAuthPage}>
+				<ContentWrapper isMessengerPage={isMessengerPage}>
+					{isNoAuthPage && (
 						<BrowserView>
 							<SideBar />
 						</BrowserView>
@@ -58,7 +68,7 @@ export const Page = (props: IPageProps) => {
 					</Flex>
 				</ContentWrapper>
 			</StyledPage>
-			{noAuthPage && (
+			{isNoAuthPage && (
 				<MobileView>
 					<BottomBar currentPagePath={currentPagePath} />
 				</MobileView>

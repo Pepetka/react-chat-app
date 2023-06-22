@@ -19,9 +19,13 @@ interface ICardControls {
 	 */
 	border?: boolean;
 	/**
-	 * Флаг, отвечающий за наличие скруглений углов
+	 * Флаг, отвечающий за наличие скруглений углов сверху
 	 */
 	borderRadius?: boolean;
+	/**
+	 * Флаг, отвечающий за наличие скруглений углов снизу
+	 */
+	borderRadiusBottom?: boolean;
 	/**
 	 * Величина padding
 	 */
@@ -46,7 +50,10 @@ interface ICardProps extends ICardControls {
 export const StyledCard = styled.div<ICardControls>`
 	${(props) =>
 		props.scrollContent ? 'flex: 1;\n	overflow: hidden;' : undefined}
-	border-radius: ${(props) => (props.borderRadius ? '25px' : '0 0 25px 25px')};
+	border-radius: ${(props) =>
+		`${props.borderRadius ? '25px 25px' : '0 0'} ${
+			props.borderRadiusBottom ? '25px 25px' : '0 0'
+		}`};
 	border: ${(props) =>
 		props.border
 			? props.invert
@@ -71,6 +78,7 @@ export const Card = (props: ICardProps) => {
 		width,
 		border = false,
 		borderRadius = true,
+		borderRadiusBottom = true,
 		padding = '20px',
 		invert = false,
 		scrollContent = false,
@@ -84,6 +92,7 @@ export const Card = (props: ICardProps) => {
 			minHeight={minHeight}
 			border={border}
 			borderRadius={borderRadius}
+			borderRadiusBottom={borderRadiusBottom}
 			padding={padding}
 			scrollContent={scrollContent}
 		>

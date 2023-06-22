@@ -5,8 +5,10 @@
 	"type": "module",
 	"scripts": {
 		"dev": "concurrently \"vite --open --host\" \"tsc -w\"",
+		"dev:local": "concurrently \"vite --open --host --mode LOCALDEV\" \"tsc -w\"",
 		"start:dev:server": "node json-server/index.cjs",
 		"start:dev": "concurrently \"npm run dev\" \"npm run start:dev:server\"",
+		"start:dev:local": "concurrently \"npm run dev:local\" \"npm run start:dev:server\"",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
 		"test:unit": "jest --config=./test/config/jest.config.ts",

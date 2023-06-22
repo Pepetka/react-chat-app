@@ -29,8 +29,7 @@ const getMessages = (req, res) => {
 			return res.json({
 				friend: {
 					id: friend.id,
-					firstname: friend.firstname,
-					lastname: friend.lastname,
+					name: `${friend.firstname} ${friend.lastname}`,
 					avatar: friend.avatar,
 				},
 			});
@@ -81,8 +80,7 @@ const getMessages = (req, res) => {
 		const response = {
 			friend: {
 				id: friend.id,
-				firstname: friend.firstname,
-				lastname: friend.lastname,
+				name: `${friend.firstname} ${friend.lastname}`,
 				avatar: friend.avatar,
 			},
 			messages: Object.entries(messagesResponse).sort((prev, current) =>

@@ -1,5 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
@@ -16,6 +17,8 @@ export const MessageCard = memo((props: IMessageCardProps) => {
 	const { message, admin } = props;
 	const { t } = useTranslation('chats');
 	const [isOpen, setIsOpen] = useState(false);
+	const isSmallScreen = useMediaQuery({ maxWidth: 992 });
+	const isSmallScreenHeight = useMediaQuery({ maxHeight: 992 });
 
 	const onOpenModal = useCallback(() => {
 		setIsOpen(true);
@@ -47,6 +50,7 @@ export const MessageCard = memo((props: IMessageCardProps) => {
 							<Carousel
 								carouselWidth="700px"
 								carouselHeight="700px"
+								full={isSmallScreen || isSmallScreenHeight}
 								alt={t('Message image')}
 								imgArray={message.img}
 								customPaging

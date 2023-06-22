@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { isBrowser } from 'react-device-detect';
 import { Flex } from '@/shared/ui/Flex';
 import { Card } from '@/shared/ui/Card';
 import { UserCard } from '@/shared/ui/UserCard';
@@ -94,7 +95,15 @@ const MessengerPage = memo(() => {
 	}
 
 	return (
-		<Flex direction="column" gap="16" height="var(--page-height)">
+		<Flex
+			direction="column"
+			gap="16"
+			height={
+				isBrowser
+					? 'calc(var(--page-height) - var(--page-padding))'
+					: 'calc(var(--page-height-mobile))'
+			}
+		>
 			<Card padding="10px" borderRadius={false}>
 				<Flex justify="space-between" align="center">
 					<UserCard
@@ -118,7 +127,7 @@ const MessengerPage = memo(() => {
 					)}
 				</StyledContent>
 			</Card>
-			<Card padding="10px">
+			<Card padding="10px" borderRadiusBottom={isBrowser}>
 				<MessageForm
 					isLoading={sendLoading}
 					isSuccess={isSuccess}

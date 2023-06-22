@@ -1,5 +1,6 @@
 import { memo, ReactNode, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { isBrowser } from 'react-device-detect';
 import { Flex } from '@/shared/ui/Flex';
 import { useHover } from '@/shared/hooks/useHover';
 
@@ -110,11 +111,11 @@ export const Popover = memo((props: IPopoverProps) => {
 				onMouseOut={onMouseOut}
 				direction={direction}
 				contentWidth={contentWidth}
-				open={hover}
+				open={isBrowser && hover}
 			>
 				{children}
 			</StyledPopover>
-			<StyledArrow direction={direction} open={hover} />
+			<StyledArrow direction={direction} open={isBrowser && hover} />
 		</Flex>
 	);
 });
