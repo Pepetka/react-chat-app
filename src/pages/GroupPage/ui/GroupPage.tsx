@@ -20,20 +20,17 @@ const GroupPage = memo(() => {
 	return (
 		<Flex direction="column" width="100%" height="100%" gap="16">
 			<GroupDataCard groupId={params?.id ?? ''} />
-			{(roleData?.[0]?.role === 'admin' ||
-				roleData?.[0]?.role === 'moderator') && (
+			{(roleData?.role === 'admin' || roleData?.role === 'moderator') && (
 				<PostForm
 					userId={authData?.id ?? ''}
 					profileId={params.id ?? ''}
-					authorData={groupData?.[0]}
+					authorData={groupData}
 				/>
 			)}
 			<PostListWithComments
 				userId={authData?.id ?? ''}
 				profileId={params.id ?? ''}
-				admin={
-					roleData?.[0]?.role === 'admin' || roleData?.[0]?.role === 'moderator'
-				}
+				admin={roleData?.role === 'admin' || roleData?.role === 'moderator'}
 			/>
 		</Flex>
 	);

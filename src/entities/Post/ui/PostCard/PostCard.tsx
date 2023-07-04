@@ -74,11 +74,15 @@ export const PostCard = memo((props: IPostCardProps) => {
 	const [success, setSuccess] = useState(false);
 	const [openComments, setOpenComments] = useState(openCommentsDefault);
 	const { t } = useTranslation('profile');
-	const { data: postStats, isLoading } = useFetchPostStatsQuery({
-		postId: post.id,
-		userId,
-	});
+	const { data: postStats, isLoading } = useFetchPostStatsQuery(
+		{
+			postId: post.id,
+			userId,
+		},
+		{ refetchOnMountOrArgChange: true },
+	);
 	const [isOpen, setIsOpen] = useState(false);
+	const [isRerender, setIsRerender] = useState(false);
 
 	const onOpenModal = useCallback(() => {
 		setIsOpen(true);
@@ -89,9 +93,13 @@ export const PostCard = memo((props: IPostCardProps) => {
 	}, []);
 
 	useEffect(() => {
+		setIsRerender(true);
+	}, []);
+
+	useEffect(() => {
 		let timerId: ReturnType<typeof setTimeout>;
 
-		if (shareSuccess) {
+		if (shareSuccess && isRerender) {
 			setSuccess(true);
 			timerId = setTimeout(() => {
 				setSuccess(false);
@@ -101,6 +109,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 		return () => {
 			clearTimeout(timerId);
 		};
+		// eslint-disable-next-line
 	}, [shareSuccess]);
 
 	const onToggleComments = useCallback(() => {

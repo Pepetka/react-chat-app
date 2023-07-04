@@ -16,7 +16,7 @@ interface IGroupDataCardProps {
 
 export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 	const { groupId } = props;
-	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1400 });
 	const isSmallestScreen = useMediaQuery({ maxWidth: 540 });
 	const { t } = useTranslation('group');
 	const {
@@ -66,34 +66,30 @@ export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 						<Text
 							textAlign="left"
 							theme="primary-invert"
-							text={groupData?.[0]?.name}
+							text={groupData?.name}
 							size="xl"
 						/>
 						<Text
 							textAlign="left"
 							theme="secondary-invert"
-							text={`id:${groupData?.[0]?.id}`}
+							text={`id:${groupData?.id}`}
 							size="m"
 						/>
 						<Text
 							width={isSmallestScreen ? '100%' : '500px'}
 							textAlign="left"
 							theme="primary-invert"
-							text={groupData?.[0]?.description}
+							text={groupData?.description}
 							size="l"
 						/>
 					</Flex>
 				</Flex>
-				<Avatar
-					src={groupData?.[0]?.avatar ?? ''}
-					size="xl"
-					onClick={onOpenModal}
-				/>
+				<Avatar src={groupData?.avatar ?? ''} size="xl" onClick={onOpenModal} />
 				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
 					<AppImg
 						width={isDesktopOrLaptop ? '700px' : '100vw'}
 						height={isDesktopOrLaptop ? '700px' : '100vw'}
-						src={groupData?.[0]?.avatar ?? ''}
+						src={groupData?.avatar ?? ''}
 						alt={t('Group Avatar')}
 					/>
 				</Modal>

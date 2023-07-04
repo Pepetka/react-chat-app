@@ -16,13 +16,13 @@ interface IProfileCardApiProps {
 export const profileCardApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchProfileData: build.query<
-			Array<User>,
+			User,
 			Omit<IProfileCardApiProps, 'friendId' | 'userId'>
 		>({
 			query: ({ profileId }) => ({
-				url: '/users',
+				url: '/profile',
 				params: {
-					id: profileId,
+					profileId,
 				},
 			}),
 		}),
@@ -130,17 +130,22 @@ export const profileCardApi = rtkApi.injectEndpoints({
 								userId,
 								friendId,
 							});
-							const userData = getUserAuthData(getState() as StateSchema)!;
+							const userData = getUserAuthData(getState() as StateSchema);
+							const userDataMini: UserMini = {
+								id: userData?.id ?? '',
+								name: `${userData?.firstname} ${userData?.lastname}`,
+								avatar: userData?.avatar ?? '',
+							};
 
 							if (relations?.relations === 'follower') {
 								const index = draft.findIndex(
-									(user) => user.id === userData.id,
+									(user) => user.id === userDataMini.id,
 								);
 								draft.splice(index, 1);
 							}
 
 							if (relations?.relations === 'friend') {
-								draft.push(userData);
+								draft.push(userDataMini);
 							}
 						},
 					),

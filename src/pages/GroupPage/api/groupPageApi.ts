@@ -8,7 +8,7 @@ interface IPostApiProps {
 
 export const groupPageApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchRole: build.query<Array<GroupRole>, IPostApiProps>({
+		fetchRole: build.query<GroupRole, IPostApiProps>({
 			query: ({ groupId, userId }) => ({
 				url: '/group-members',
 				params: {

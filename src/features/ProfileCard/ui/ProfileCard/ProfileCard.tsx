@@ -132,27 +132,27 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 							<Text
 								textAlign="right"
 								theme="primary-invert"
-								text={`${profileData?.[0]?.firstname} ${profileData?.[0]?.lastname}`}
+								text={`${profileData?.firstname} ${profileData?.lastname}`}
 								size="xl"
 							/>
 							<Text
 								textAlign="right"
 								theme="secondary-invert"
-								text={`id:${profileData?.[0]?.id}`}
+								text={`id:${profileData?.id}`}
 								size="m"
 							/>
 							<Text
 								width={isSmallestScreen ? '100%' : '500px'}
 								textAlign="right"
 								theme="primary-invert"
-								text={profileData?.[0]?.status}
+								text={profileData?.status}
 								size="l"
 							/>
 						</Flex>
 						{!isBigScreen && (
 							<Flex width="auto">
 								<Avatar
-									src={profileData?.[0]?.avatar ?? ''}
+									src={profileData?.avatar ?? ''}
 									size="xl"
 									onClick={onOpenModal}
 								/>
@@ -192,7 +192,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 					{isBigScreen && (
 						<Flex width="auto">
 							<Avatar
-								src={profileData?.[0]?.avatar ?? ''}
+								src={profileData?.avatar ?? ''}
 								size="xl"
 								onClick={onOpenModal}
 							/>
@@ -204,7 +204,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 						width="700px"
 						height="700px"
 						full={!isBigScreen}
-						src={profileData?.[0]?.avatar ?? ''}
+						src={profileData?.avatar ?? ''}
 						alt={t('Avatar')}
 					/>
 				</Modal>

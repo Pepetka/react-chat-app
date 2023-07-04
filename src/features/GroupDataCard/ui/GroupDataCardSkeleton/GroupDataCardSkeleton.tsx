@@ -5,7 +5,8 @@ import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
 
 export const GroupDataCardSkeleton = memo(() => {
-	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1400 });
+	const isDesktopOrLaptopMini = useMediaQuery({ minWidth: 1200 });
 	const isSmallestScreen = useMediaQuery({ maxWidth: 540 });
 
 	return (
@@ -44,12 +45,12 @@ export const GroupDataCardSkeleton = memo(() => {
 					</Flex>
 				</Flex>
 				<Flex
-					width={isDesktopOrLaptop ? '340px' : '250px'}
-					height={isDesktopOrLaptop ? '340px' : '250px'}
+					width={isDesktopOrLaptopMini ? '340px' : '250px'}
+					height={isDesktopOrLaptopMini ? '340px' : '250px'}
 				>
 					<Skeleton
-						width={isDesktopOrLaptop ? '340px' : '250px'}
-						height={isDesktopOrLaptop ? '340px' : '250px'}
+						width={isDesktopOrLaptopMini ? '340px' : '250px'}
+						height={isDesktopOrLaptopMini ? '340px' : '250px'}
 					/>
 				</Flex>
 			</Flex>

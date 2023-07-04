@@ -7,11 +7,11 @@ interface IGroupCardApiProps {
 
 export const groupCardApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchGroupData: build.query<Array<Group>, IGroupCardApiProps>({
+		fetchGroupData: build.query<Group, IGroupCardApiProps>({
 			query: ({ groupId }) => ({
-				url: '/groups',
+				url: '/group',
 				params: {
-					id: groupId,
+					groupId,
 				},
 			}),
 		}),

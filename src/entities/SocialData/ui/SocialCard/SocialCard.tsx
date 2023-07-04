@@ -162,17 +162,18 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 					</AppLink>
 					{!!friendsData?.length &&
 						friendsData.map((friend, i) => {
-							if (i < 3) {
-								return (
-									<UserCard
-										key={friend.id}
-										id={friend.id}
-										name={`${friend.firstname} ${friend.lastname}`}
-										avatar={friend.avatar}
-									/>
-								);
+							if (i >= 3) {
+								return null;
 							}
-							return null;
+
+							return (
+								<UserCard
+									key={friend.id}
+									id={friend.id}
+									name={friend.name}
+									avatar={friend.avatar}
+								/>
+							);
 						})}
 				</Flex>
 			</Flex>

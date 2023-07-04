@@ -1,5 +1,5 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { User } from '@/shared/types/userCard';
+import { UserMini } from '@/shared/types/userCard';
 import { Social } from '../model/types/socialDataSchema';
 
 interface ISocialCardApiProps {
@@ -17,7 +17,7 @@ export const socialDataApi = rtkApi.injectEndpoints({
 			}),
 			providesTags: (result) => ['social'],
 		}),
-		fetchFriendsData: build.query<Array<User>, ISocialCardApiProps>({
+		fetchFriendsData: build.query<Array<UserMini>, ISocialCardApiProps>({
 			query: ({ profileId }) => ({
 				url: '/friends',
 				params: {

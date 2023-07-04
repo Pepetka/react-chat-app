@@ -63,7 +63,10 @@ export const Page = (props: IPageProps) => {
 							<SideBar />
 						</BrowserView>
 					)}
-					<Flex width={isMobile ? '100%' : 'calc(100% - 170px)'}>
+					<Flex
+						width={isMobile || !isNoAuthPage ? '100%' : 'calc(100% - 170px)'}
+						justify="center"
+					>
 						{children}
 					</Flex>
 				</ContentWrapper>
