@@ -4,9 +4,9 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently \"vite --open --host\" \"tsc -w\"",
+		"dev": "concurrently \"vite --open --host --mode DEV\" \"tsc -w\"",
 		"dev:local": "concurrently \"vite --open --host --mode LOCALDEV\" \"tsc -w\"",
-		"build": "tsc && vite build",
+		"build": "tsc && vite build --mode PROD",
 		"preview": "vite preview",
 		"test:unit": "jest --config=./test/config/jest.config.ts",
 		"test:ui": "npx chromatic --project-token=b8feaa236f57 --build-script-name=storybook:build",
