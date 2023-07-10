@@ -18,6 +18,7 @@ export default {
 	},
 	globals: {
 		__API__: JSON.stringify('http://api/'),
+		__API_SOCKET__: JSON.stringify('ws://api/'),
 	},
 	setupFilesAfterEnv: ['<rootDir>/test/config/jest.setup.ts'],
 	reporters: [

@@ -14,7 +14,7 @@ export const getSocket = () => {
 	}
 
 	if (!socket) {
-		socket = io('ws://192.168.31.58:8000', options);
+		socket = io(__API_SOCKET__, options);
 	}
 
 	return socket;

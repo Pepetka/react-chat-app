@@ -26,6 +26,7 @@ const config: StorybookConfig = {
 			],
 			define: {
 				__API__: JSON.stringify('https://api/'),
+				__API_SOCKET__: JSON.stringify('wss://api/'),
 			},
 		});
 	},

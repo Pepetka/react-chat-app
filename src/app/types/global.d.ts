@@ -11,6 +11,7 @@ type DeepPartial<T> = T extends object
 	: T;
 
 declare const __API__: string;
+declare const __API_SOCKET__: string;
 
 interface ImportMeta {
 	env: {
