@@ -1,9 +1,7 @@
-import { StateSchema } from '@/app/provider/Store';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { UserMini } from '@/shared/types/userCard';
-import { Online } from '@/shared/types/online';
 import { Messages } from '@/entities/Message';
-import { getUserAuthData } from '@/entities/User';
+import { getSocket } from '@/shared/api/socketApi';
 
 interface IMessengerPageApiProps {
 	chatId: string;
@@ -17,90 +15,194 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 			{ messages: Messages; friend: UserMini },
 			IMessengerPageApiProps
 		>({
-			query: ({ chatId, userId, friendId }) => ({
-				url: '/messages',
-				params: {
-					chatId,
-					userId,
-					friendId,
-				},
-			}),
-			providesTags: (result) => ['messages'],
+			queryFn: () => {
+				return {
+					data: { messages: [], friend: { avatar: '', id: '', name: '' } },
+				};
+			},
+			async onCacheEntryAdded(
+				arg,
+				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+			) {
+				try {
+					await cacheDataLoaded;
+
+					const socket = getSocket();
+
+					socket.emit('get_messages', arg);
+
+					socket.on(
+						'messages',
+						(data: {
+							messages: Messages;
+							chatMembers: Record<string, UserMini>;
+						}) => {
+							updateCachedData((draft) => {
+								draft.messages = data.messages;
+								draft.friend = data.chatMembers[arg.friendId];
+							});
+						},
+					);
+
+					await cacheEntryRemoved;
+
+					socket.off('messages');
+				} catch (e) {
+					console.error(e);
+				}
+			},
 		}),
-		fetchOnline: build.query<Online, { userId: string }>({
-			query: ({ userId }) => ({
-				url: '/online',
-				params: {
-					userId,
-				},
-			}),
+		joinChat: build.mutation<void, string>({
+			queryFn: async (chatId) => {
+				const socket = getSocket();
+				socket.emit('join_chat', chatId);
+
+				return { data: undefined };
+			},
+		}),
+		leaveChat: build.mutation<void, string>({
+			queryFn: async (chatId) => {
+				const socket = getSocket();
+				socket.emit('leave_chat', chatId);
+
+				return { data: undefined };
+			},
+		}),
+		fetchOnline: build.query<Array<string>, void>({
+			queryFn: () => {
+				return { data: [] };
+			},
+			async onCacheEntryAdded(
+				arg,
+				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+			) {
+				try {
+					await cacheDataLoaded;
+
+					const socket = getSocket();
+
+					socket.emit('online');
+
+					socket.on('online', (data: Array<string>) => {
+						updateCachedData(() => {
+							return data;
+						});
+					});
+
+					await cacheEntryRemoved;
+
+					socket.off('online');
+				} catch (e) {
+					console.error(e);
+				}
+			},
+		}),
+		typingMessage: build.mutation<void, string>({
+			queryFn: async (chatId) => {
+				const socket = getSocket();
+				socket.emit('typing', chatId);
+
+				return { data: undefined };
+			},
+		}),
+		stopTyping: build.mutation<void, string>({
+			queryFn: async (chatId) => {
+				const socket = getSocket();
+				socket.emit('stop_typing', chatId);
+
+				return { data: undefined };
+			},
+		}),
+		friendTyping: build.query<{ friendId: string; isTyping: boolean }, void>({
+			queryFn: () => {
+				return { data: { friendId: '', isTyping: false } };
+			},
+			async onCacheEntryAdded(
+				arg,
+				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+			) {
+				try {
+					await cacheDataLoaded;
+
+					const socket = getSocket();
+
+					socket.on(
+						'typing',
+						(data: { friendId: string; isTyping: boolean }) => {
+							updateCachedData(() => {
+								return data;
+							});
+						},
+					);
+
+					await cacheEntryRemoved;
+
+					socket.off('typing');
+				} catch (e) {
+					console.error(e);
+				}
+			},
 		}),
 		sendMessage: build.mutation<
 			string,
 			IMessengerPageApiProps & { text: string; img?: Array<string> }
 		>({
-			query: ({ chatId, userId, text, img, friendId }) => ({
-				url: '/messages',
-				method: 'Post',
-				body: {
-					chatId,
-					userId,
-					text,
-					img,
-					friendId,
-				},
-			}),
-			async onQueryStarted(
-				{ chatId, userId, text, img, friendId },
-				{ dispatch, queryFulfilled, getState },
-			) {
-				const authData = getUserAuthData(getState() as StateSchema);
+			queryFn: async (props) => {
+				const socket = getSocket();
+				socket.emit('new_message', props);
 
-				const patchResult = dispatch(
-					messengerPageApi.util.updateQueryData(
-						'fetchMessages',
-						{ chatId, userId, friendId },
-						(draft) => {
-							const currentDate = new Date().toLocaleDateString();
-
-							if (draft.messages?.find(([date]) => date === currentDate)) {
-								const index = draft.messages.findIndex(
-									([date]) => date === currentDate,
-								);
-								draft.messages[index][1].push({
-									authorId: userId,
-									name: `${authData!.firstname} ${authData!.lastname}`,
-									text,
-									img,
-									time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-								});
-							} else {
-								draft.messages = [
-									...(draft.messages ? draft.messages : []),
-									[
-										currentDate,
-										[
-											{
-												authorId: userId,
-												name: `${authData!.firstname} ${authData!.lastname}`,
-												text,
-												img,
-												time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-											},
-										],
-									],
-								];
-							}
-						},
-					),
-				);
-				try {
-					await queryFulfilled;
-				} catch {
-					patchResult.undo();
-				}
+				return { data: '' };
 			},
-			invalidatesTags: ['messages'],
+			// async onQueryStarted(
+			// 	{ chatId, userId, text, img, friendId },
+			// 	{ dispatch, queryFulfilled, getState },
+			// ) {
+			// 	const authData = getUserAuthData(getState() as StateSchema);
+			//
+			// 	const patchResult = dispatch(
+			// 		messengerPageApi.util.updateQueryData(
+			// 			'fetchMessages',
+			// 			{ chatId, userId, friendId },
+			// 			(draft) => {
+			// 				const currentDate = new Date().toLocaleDateString();
+			//
+			// 				if (draft.messages?.find(([date]) => date === currentDate)) {
+			// 					const index = draft.messages.findIndex(
+			// 						([date]) => date === currentDate,
+			// 					);
+			// 					draft.messages[index][1].push({
+			// 						authorId: userId,
+			// 						name: `${authData!.firstname} ${authData!.lastname}`,
+			// 						text,
+			// 						img,
+			// 						time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+			// 					});
+			// 				} else {
+			// 					draft.messages = [
+			// 						...(draft.messages ? draft.messages : []),
+			// 						[
+			// 							currentDate,
+			// 							[
+			// 								{
+			// 									authorId: userId,
+			// 									name: `${authData!.firstname} ${authData!.lastname}`,
+			// 									text,
+			// 									img,
+			// 									time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+			// 								},
+			// 							],
+			// 						],
+			// 					];
+			// 				}
+			// 			},
+			// 		),
+			// 	);
+			// 	try {
+			// 		await queryFulfilled;
+			// 	} catch {
+			// 		patchResult.undo();
+			// 	}
+			// },
 		}),
 	}),
 });
@@ -108,5 +210,10 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 export const {
 	useFetchMessagesQuery,
 	useSendMessageMutation,
+	useJoinChatMutation,
+	useLeaveChatMutation,
 	useFetchOnlineQuery,
+	useTypingMessageMutation,
+	useStopTypingMutation,
+	useFriendTypingQuery,
 } = messengerPageApi;

@@ -1,5 +1,5 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Online } from '@/shared/types/online';
+import { getSocket } from '@/shared/api/socketApi';
 
 interface IAppApiProps {
 	userId: string;
@@ -7,16 +7,24 @@ interface IAppApiProps {
 
 export const appApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		setOnline: build.mutation<Online, IAppApiProps>({
-			query: ({ userId }) => ({
-				url: '/online',
-				method: 'Post',
-				body: {
-					userId,
-				},
-			}),
+		initApp: build.mutation<void, IAppApiProps>({
+			queryFn: async ({ userId }) => {
+				const socket = getSocket();
+				socket.connect();
+				socket.emit('init', userId);
+
+				return { data: undefined };
+			},
+		}),
+		termApp: build.mutation<void, void>({
+			queryFn: async () => {
+				const socket = getSocket();
+				socket.disconnect();
+
+				return { data: undefined };
+			},
 		}),
 	}),
 });
 
-export const { useSetOnlineMutation } = appApi;
+export const { useInitAppMutation, useTermAppMutation } = appApi;

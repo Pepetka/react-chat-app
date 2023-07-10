@@ -1,9 +1,9 @@
 import { StateSchema } from '@/app/provider/Store';
 import { User, UserMini } from '@/shared/types/userCard';
-import { Online } from '@/shared/types/online';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { socialDataApi } from '@/entities/SocialData';
 import { getUserAuthData } from '@/entities/User';
+import { getSocket } from '@/shared/api/socketApi';
 import { getRelations } from '../model/selectors/profileCardSelectors';
 import { Relations } from '../model/types/profileCardSchema';
 
@@ -35,13 +35,34 @@ export const profileCardApi = rtkApi.injectEndpoints({
 				},
 			}),
 		}),
-		fetchOnline: build.query<Online, { userId: string }>({
-			query: ({ userId }) => ({
-				url: '/online',
-				params: {
-					userId,
-				},
-			}),
+		fetchOnline: build.query<Array<string>, void>({
+			queryFn: () => {
+				return { data: [] };
+			},
+			async onCacheEntryAdded(
+				arg,
+				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+			) {
+				try {
+					await cacheDataLoaded;
+
+					const socket = getSocket();
+
+					socket.emit('online');
+
+					socket.on('online', (data: Array<string>) => {
+						updateCachedData(() => {
+							return data;
+						});
+					});
+
+					await cacheEntryRemoved;
+
+					socket.off('online');
+				} catch (e) {
+					console.error(e);
+				}
+			},
 		}),
 		fetchRelationsData: build.query<
 			Relations,

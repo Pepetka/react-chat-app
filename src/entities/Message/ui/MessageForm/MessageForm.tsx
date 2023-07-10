@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { KeyboardEvent, memo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FormWithImg } from '@/shared/ui/FormWithImg';
@@ -9,12 +9,13 @@ import { messageActions, messageReducer } from '../../model/slice/messageSlice';
 
 interface IMessageFormProps {
 	onSubmit?: (text: string, images?: Array<string>) => void;
+	onTyping?: (e: KeyboardEvent) => void;
 	isLoading: boolean;
 	isSuccess: boolean;
 }
 
 export const MessageForm = memo((props: IMessageFormProps) => {
-	const { isLoading, isSuccess, onSubmit } = props;
+	const { isLoading, isSuccess, onSubmit, onTyping } = props;
 	const { t } = useTranslation('chats');
 	const { text, images } = useSelector(getMessageState);
 	const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ export const MessageForm = memo((props: IMessageFormProps) => {
 		dispatch(messageActions.clear());
 	}, [dispatch, images, onSubmit, text]);
 
-	const onChangeText = useCallback(
+	const onChangeTextHandle = useCallback(
 		(text: string) => {
 			dispatch(messageActions.setText(text));
 		},
@@ -46,15 +47,16 @@ export const MessageForm = memo((props: IMessageFormProps) => {
 				small
 				modal
 				withImg
-				textPlaceholder={t('Enter your message')}
-				imgPlaceholder={t('Enter your images')}
+				textPlaceholder={t('Message')}
+				imgPlaceholder={t('Images')}
 				onSubmit={onSubmitHandle}
 				isLoading={isLoading}
 				isSuccess={isSuccess}
 				textValue={text}
-				onChangeText={onChangeText}
+				onChangeText={onChangeTextHandle}
 				imgValue={images}
 				onChangeImg={onChangeImg}
+				onTyping={onTyping}
 			/>
 		</DynamicModuleLoader>
 	);

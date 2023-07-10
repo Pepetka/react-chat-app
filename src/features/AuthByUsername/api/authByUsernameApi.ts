@@ -6,7 +6,7 @@ interface IAuthByUsernameApiProps {
 	username: string;
 }
 
-const authByUsernameApi = rtkApi.injectEndpoints({
+export const authByUsernameApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		authUser: build.mutation<User, IAuthByUsernameApiProps>({
 			query: (body) => ({

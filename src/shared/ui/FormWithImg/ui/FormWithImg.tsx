@@ -1,9 +1,10 @@
-import {
+import React, {
 	ChangeEvent,
 	FormEvent,
 	memo,
 	useCallback,
 	useEffect,
+	useMemo,
 	useState,
 } from 'react';
 import styled from 'styled-components';
@@ -50,6 +51,10 @@ interface ISendWithImgFormBase extends ISendWithImgFormControls {
 	 * @param text - значение текстового инпута
 	 */
 	onChangeText?: (text: string) => void;
+	/**
+	 * Функция, вызываемая при печати
+	 */
+	onTyping?: (e: React.KeyboardEvent) => void;
 	/**
 	 * Текст placeholder текстового инпута
 	 */
@@ -140,6 +145,10 @@ const StyledTextArea = styled.textarea<ISendWithImgFormControls>`
 		font: var(--font-m);
 		color: var(--invert-secondary-color);
 	}
+
+	@media (max-height: 768px) {
+		height: ${(props) => (props.small ? '72px' : '100px')};
+	}
 `;
 
 const StyledImgArea = styled.textarea<ISendWithImgFormControls>`
@@ -184,6 +193,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		textValue = '',
 		onChangeImg,
 		onChangeText,
+		onTyping,
 		textPlaceholder = '',
 		imgPlaceholder = '',
 		isLoading = false,
@@ -195,6 +205,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		modal = false,
 	} = props;
 	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
+	const isSmallScreenHeight = useMediaQuery({ maxHeight: 768 });
 	const { t } = useTranslation();
 	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
 	const [success, setSuccess] = useState(false);
@@ -203,33 +214,44 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenForm, setIsOpenForm] = useState(false);
 
-	const onOpenModal = useCallback(() => {
-		setIsOpen(true);
-	}, []);
-
-	const onCloseModal = useCallback(() => {
-		setIsOpen(false);
-	}, []);
-
-	const onOpenModalForm = useCallback(() => {
-		setIsOpenForm(true);
-	}, []);
-
-	const onCloseModalForm = useCallback(() => {
-		setIsOpenForm(false);
-	}, []);
-
-	const onFocus = useCallback(() => {
-		setIsFocus(true);
-	}, []);
-
-	const onBlur = useCallback(() => {
-		setIsFocus(false);
-	}, []);
-
-	const onKeyDownShift = useCallback(() => {
-		setShiftPressed(true);
-	}, []);
+	const {
+		onBlur,
+		onCloseModal,
+		onCloseModalForm,
+		onFocus,
+		onKeyDownShift,
+		onOpenModal,
+		onOpenModalForm,
+		onKeyUp,
+	} = useMemo(
+		() => ({
+			onOpenModal: () => {
+				setIsOpen(true);
+			},
+			onCloseModal: () => {
+				setIsOpen(false);
+			},
+			onOpenModalForm: () => {
+				setIsOpenForm(true);
+			},
+			onCloseModalForm: () => {
+				setIsOpenForm(false);
+			},
+			onFocus: () => {
+				setIsFocus(true);
+			},
+			onBlur: () => {
+				setIsFocus(false);
+			},
+			onKeyDownShift: () => {
+				setShiftPressed(true);
+			},
+			onKeyUp: () => {
+				setShiftPressed(false);
+			},
+		}),
+		[],
+	);
 
 	const onKeyDownEnter = useCallback(
 		(event: KeyboardEvent) => {
@@ -238,10 +260,6 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		},
 		[onSubmit],
 	);
-
-	const onKeyUp = useCallback(() => {
-		setShiftPressed(false);
-	}, []);
 
 	useKeyboardEvent({
 		addCondition: isFocus,
@@ -367,6 +385,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 						placeholder={textPlaceholder}
 						value={textValue}
 						onChange={onChangeTextHandle}
+						onKeyDown={onTyping}
 						small={small}
 					/>
 					<StyledBtns>
@@ -379,8 +398,10 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 								<Button
 									onClick={modal ? onOpenModalForm : onPreviewImg}
 									invert
-									width={isSmallScreen ? '40px' : '64px'}
-									height={isSmallScreen ? '40px' : '64px'}
+									width={isSmallScreen || isSmallScreenHeight ? '40px' : '64px'}
+									height={
+										isSmallScreen || isSmallScreenHeight ? '40px' : '64px'
+									}
 								>
 									<Icon SvgIcon={PaperclipIcon} />
 								</Button>
@@ -391,8 +412,10 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 							trigger={
 								<Button
 									invert
-									width={isSmallScreen ? '40px' : '64px'}
-									height={isSmallScreen ? '40px' : '64px'}
+									width={isSmallScreen || isSmallScreenHeight ? '40px' : '64px'}
+									height={
+										isSmallScreen || isSmallScreenHeight ? '40px' : '64px'
+									}
 									type="submit"
 									disabled={isLoading || (!textValue && !imgValue)}
 								>

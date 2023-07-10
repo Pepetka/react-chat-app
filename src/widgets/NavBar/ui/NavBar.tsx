@@ -21,6 +21,7 @@ interface INavBarProps {
 	currentPagePath: string;
 	onLogin?: () => void;
 	onRegister?: () => void;
+	onLogout?: () => void;
 }
 
 const StyledNavBar = styled.div`
@@ -47,9 +48,9 @@ const LogoName = styled.div`
 `;
 
 export const NavBar = memo((props: INavBarProps) => {
+	const { currentPagePath, onLogin, onRegister, onLogout } = props;
 	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 	const { t } = useTranslation();
-	const { currentPagePath, onLogin, onRegister } = props;
 	const authData = useSelector(getUserAuthData);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -60,9 +61,10 @@ export const NavBar = memo((props: INavBarProps) => {
 		setSearch(value);
 	}, []);
 
-	const onLogout = useCallback(() => {
+	const onLogoutHandle = useCallback(() => {
+		onLogout?.();
 		dispatch(userActions.removeUser());
-	}, [dispatch]);
+	}, [dispatch, onLogout]);
 
 	const onSearch = useCallback(() => {
 		navigate(getFriendsPagePath(authData?.id ?? '', search));
@@ -107,7 +109,7 @@ export const NavBar = memo((props: INavBarProps) => {
 				</Flex>
 				{authData ? (
 					<Button
-						onClick={onLogout}
+						onClick={onLogoutHandle}
 						theme={'outline'}
 						width={isSmallScreen ? '100px' : '140px'}
 						height={isSmallScreen ? '50px' : '70px'}

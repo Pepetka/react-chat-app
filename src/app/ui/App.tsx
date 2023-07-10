@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
@@ -9,7 +9,7 @@ import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
 import { Page } from '@/widgets/Page';
 import { ControlPanel } from '@/widgets/ControlPanel';
 import { AppRouter } from '../provider/Router/ui/AppRouter';
-import { useSetOnlineMutation } from '../api/appApi';
+import { useInitAppMutation, useTermAppMutation } from '../api/appApi';
 
 export const App = memo(() => {
 	const inited = useSelector(getUserInited);
@@ -18,26 +18,14 @@ export const App = memo(() => {
 	const location = useLocation();
 	const navigation = useNavigate();
 	const dispatch = useAppDispatch();
-	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-	const [setOnline] = useSetOnlineMutation();
+	const [initSocketUser] = useInitAppMutation();
+	const [termSocketUser] = useTermAppMutation();
 
 	useEffect(() => {
-		if (intervalRef.current) {
-			clearInterval(intervalRef.current);
-		}
-
 		if (authData) {
-			intervalRef.current = setInterval(() => {
-				setOnline({ userId: authData.id });
-			}, 5000);
+			initSocketUser({ userId: authData.id });
 		}
-
-		return () => {
-			if (intervalRef.current) {
-				clearInterval(intervalRef.current);
-			}
-		};
-	}, [authData, setOnline]);
+	}, [authData, initSocketUser]);
 
 	useEffect(() => {
 		dispatch(userActions.initUser());
@@ -47,6 +35,10 @@ export const App = memo(() => {
 		navigation(getLoginPagePath());
 	}, [navigation]);
 
+	const onLogout = useCallback(() => {
+		termSocketUser();
+	}, [termSocketUser]);
+
 	const onRegister = useCallback(() => {
 		navigation(getRegisterPagePath());
 	}, [navigation]);
@@ -55,6 +47,7 @@ export const App = memo(() => {
 		<div className={`App ${theme}`} data-testid="App">
 			<NavBar
 				onLogin={onLogin}
+				onLogout={onLogout}
 				onRegister={onRegister}
 				currentPagePath={location.pathname}
 			/>

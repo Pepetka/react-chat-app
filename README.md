@@ -2,18 +2,19 @@
 
 **[ICE Chat App](https://remarkable-basbousa-d78cf9.netlify.app/)**
 
+## Репозиторий сервера
+**[react-chat-app-server](https://github.com/Pepetka/react-chat-app-server)**
+
 ## Запуск проекта
 
 - `npm install` - установка зависимостей
-- `npm run start:dev` - запуск dev сервера + запуск dev проекта
 
 ---
 
 ## Скрипты
 
 - `npm run dev` - запуск dev проекта
-- `npm run start:dev:server` - запуск dev сервера
-- `npm run start:dev` - запуск dev сервера + запуск dev проекта
+- `npm run dev:local` - запуск dev проекта с 
 - `npm run build` - сборка в prod режиме в папку dist
 - `npm run preview` - предпросмотр сборки
 - `npm run prettier` - форматирование файлов

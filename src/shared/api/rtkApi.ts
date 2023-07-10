@@ -15,6 +15,7 @@ export const rtkApi = createApi({
 			return headers;
 		},
 	}),
+	refetchOnReconnect: true,
 	endpoints: () => ({}),
 	tagTypes: ['social', 'post', 'postStats', 'comment', 'messages'],
 });

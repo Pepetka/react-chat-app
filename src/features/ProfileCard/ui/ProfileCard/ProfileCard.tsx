@@ -54,10 +54,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		},
 		{ refetchOnMountOrArgChange: true },
 	);
-	const { data: online = 'offline' } = useFetchOnlineQuery(
-		{ userId: profileId },
-		{ pollingInterval: 5000 },
-	);
+	const { data: online } = useFetchOnlineQuery();
 	const [onAddFriend, { error: addFriendError }] = useAddFriendMutation();
 	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
@@ -113,7 +110,10 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 		<Card width="100%" minHeight="400px" borderRadius={false}>
 			<Flex wrap="wrap" height="100%" justify="space-between">
 				<Flex width="80px">
-					<Text theme="secondary-invert" text={t(online)} />
+					<Text
+						theme="secondary-invert"
+						text={t(online?.includes(profileId) ? 'online' : 'offline')}
+					/>
 				</Flex>
 				<Flex
 					wrap="wrap"

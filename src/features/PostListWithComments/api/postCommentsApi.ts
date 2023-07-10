@@ -1,10 +1,6 @@
-import { StateSchema } from '@/app/provider/Store';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Comment } from '@/shared/types/comment';
-import { UserMini } from '@/shared/types/userCard';
-import { addZeros } from '@/shared/helpers/addZeros';
-import { getUserAuthData } from '@/entities/User';
-import { postApi } from '@/entities/Post';
+import { getSocket } from '@/shared/api/socketApi';
 
 interface ICommentApiProps {
 	postId: string;
@@ -13,123 +9,167 @@ interface ICommentApiProps {
 const postCommentsApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchComments: build.query<Array<Comment>, ICommentApiProps>({
-			query: ({ postId }) => ({
-				url: '/comments',
-				params: {
-					postId,
-				},
-			}),
-			providesTags: (result) => ['comment'],
+			queryFn: () => {
+				return { data: [] };
+			},
+			async onCacheEntryAdded(
+				arg,
+				{ cacheDataLoaded, cacheEntryRemoved, dispatch },
+			) {
+				try {
+					await cacheDataLoaded;
+
+					const socket = getSocket();
+
+					socket.emit('comments', arg.postId);
+
+					socket.on(
+						'comments',
+						(data: { postId: string; comments: Array<Comment> }) => {
+							dispatch(
+								postCommentsApi.util.updateQueryData(
+									'fetchComments',
+									{ postId: data.postId },
+									() => {
+										return data.comments;
+									},
+								),
+							);
+							dispatch(postCommentsApi.util.invalidateTags(['postStats']));
+						},
+					);
+
+					await cacheEntryRemoved;
+
+					socket.off('comments');
+				} catch (e) {
+					console.error(e);
+				}
+			},
 		}),
 		addComment: build.mutation<
 			Omit<Comment, 'author'> & { authorId: string },
 			{ authorId: string; text: string; postId: string }
 		>({
-			query: ({ authorId, text, postId }) => ({
-				url: '/comments',
-				method: 'POST',
-				body: {
-					authorId,
-					text,
-					postId,
-				},
-			}),
-			async onQueryStarted(
-				{ text, postId },
-				{ dispatch, queryFulfilled, getState },
-			) {
-				const userData = getUserAuthData(getState() as StateSchema)!;
-				const author: UserMini = {
-					id: userData.id,
-					name: `${userData.firstname} ${userData.lastname}`,
-					avatar: userData.avatar,
-				};
+			queryFn: async (props) => {
+				const socket = getSocket();
+				const data: Omit<Comment, 'author'> & { authorId: string } =
+					await new Promise((resolve) => {
+						socket.emit(
+							'new_comment',
+							props,
+							(data: Omit<Comment, 'author'> & { authorId: string }) => {
+								resolve(data);
+							},
+						);
+					});
 
-				const patchResult = dispatch(
-					postCommentsApi.util.updateQueryData(
-						'fetchComments',
-						{ postId },
-						(draft) => {
-							draft.unshift({
-								id: String(Math.random()),
-								author,
-								text,
-								postId,
-								createdAt: `${addZeros(new Date().getHours())}:${addZeros(
-									new Date().getMinutes(),
-								)} ${new Date().toLocaleDateString()}`,
-							});
-						},
-					),
-				);
-				const patchResultPost = dispatch(
-					postApi.util.updateQueryData(
-						'fetchPostStats',
-						{ postId, userId: userData.id },
-						(draft) => {
-							Object.assign(draft, {
-								comments: String(Number(draft.comments) + 1),
-							});
-						},
-					),
-				);
-				try {
-					await queryFulfilled;
-				} catch {
-					patchResult.undo();
-					patchResultPost.undo();
-				}
+				return {
+					data,
+				};
 			},
-			invalidatesTags: ['comment', 'postStats'],
+			// async onQueryStarted(
+			// 	{ text, postId },
+			// 	{ dispatch, queryFulfilled, getState },
+			// ) {
+			// 	const userData = getUserAuthData(getState() as StateSchema);
+			// 	const author: UserMini = {
+			// 		id: userData?.id ?? '',
+			// 		name: `${userData?.firstname} ${userData?.lastname}`,
+			// 		avatar: userData?.avatar ?? '',
+			// 	};
+			//
+			// 	const patchResult = dispatch(
+			// 		postCommentsApi.util.updateQueryData(
+			// 			'fetchComments',
+			// 			{ postId },
+			// 			(draft) => {
+			// 				draft.unshift({
+			// 					id: String(Math.random()),
+			// 					author,
+			// 					text,
+			// 					postId,
+			// 					createdAt: `${addZeros(new Date().getHours())}:${addZeros(
+			// 						new Date().getMinutes(),
+			// 					)} ${new Date().toLocaleDateString()}`,
+			// 				});
+			// 			},
+			// 		),
+			// 	);
+			// 	const patchResultPost = dispatch(
+			// 		postApi.util.updateQueryData(
+			// 			'fetchPostStats',
+			// 			{ postId, userId: userData?.id ?? '' },
+			// 			(draft) => {
+			// 				Object.assign(draft, {
+			// 					comments: String(Number(draft.comments) + 1),
+			// 				});
+			// 			},
+			// 		),
+			// 	);
+			// 	try {
+			// 		await queryFulfilled;
+			// 	} catch {
+			// 		patchResult.undo();
+			// 		patchResultPost.undo();
+			// 	}
+			// },
+			// invalidatesTags: ['comment', 'postStats'],
 		}),
 		deleteComment: build.mutation<
-			Omit<Comment, 'author'> & { authorId: string },
+			string,
 			{ commentId: string; postId: string }
 		>({
-			query: ({ commentId }) => ({
-				url: '/comments',
-				method: 'PUT',
-				params: {
-					commentId,
-				},
-			}),
-			async onQueryStarted(
-				{ commentId, postId },
-				{ dispatch, queryFulfilled, getState },
-			) {
-				const userData = getUserAuthData(getState() as StateSchema)!;
+			queryFn: async (props) => {
+				const socket = getSocket();
 
-				const patchResult = dispatch(
-					postCommentsApi.util.updateQueryData(
-						'fetchComments',
-						{ postId },
-						(draft) => {
-							const index = draft.findIndex(
-								(comment) => comment.id === commentId,
-							);
-							draft.splice(index, 1);
-						},
-					),
-				);
-				const patchResultPost = dispatch(
-					postApi.util.updateQueryData(
-						'fetchPostStats',
-						{ postId, userId: userData.id },
-						(draft) => {
-							Object.assign(draft, {
-								comments: String(Number(draft.comments) - 1),
-							});
-						},
-					),
-				);
-				try {
-					await queryFulfilled;
-				} catch {
-					patchResult.undo();
-					patchResultPost.undo();
-				}
+				const data: string = await new Promise((resolve) => {
+					socket.emit('delete_comment', props, (data: string) => {
+						resolve(data);
+					});
+				});
+
+				return {
+					data,
+				};
 			},
-			invalidatesTags: ['postStats'],
+			// async onQueryStarted(
+			// 	{ commentId, postId },
+			// 	{ dispatch, queryFulfilled, getState },
+			// ) {
+			// 	const userData = getUserAuthData(getState() as StateSchema);
+			//
+			// 	const patchResult = dispatch(
+			// 		postCommentsApi.util.updateQueryData(
+			// 			'fetchComments',
+			// 			{ postId },
+			// 			(draft) => {
+			// 				const index = draft.findIndex(
+			// 					(comment) => comment.id === commentId,
+			// 				);
+			// 				draft.splice(index, 1);
+			// 			},
+			// 		),
+			// 	);
+			// 	const patchResultPost = dispatch(
+			// 		postApi.util.updateQueryData(
+			// 			'fetchPostStats',
+			// 			{ postId, userId: userData?.id ?? '' },
+			// 			(draft) => {
+			// 				Object.assign(draft, {
+			// 					comments: String(Number(draft.comments) - 1),
+			// 				});
+			// 			},
+			// 		),
+			// 	);
+			// 	try {
+			// 		await queryFulfilled;
+			// 	} catch {
+			// 		patchResult.undo();
+			// 		patchResultPost.undo();
+			// 	}
+			// },
+			// invalidatesTags: ['postStats'],
 		}),
 	}),
 });
