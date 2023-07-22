@@ -1,15 +1,18 @@
-import { rest } from 'msw';
 import { Meta, StoryFn } from '@storybook/react';
 import { UserMini } from '@/shared/types/userCard';
 import { Comment } from '@/shared/types/comment';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
+import { WithCallbackDecorator } from '@/shared/config/storybook/decorators/WithCallbackDecorator/WithCallbackDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { PostComments } from './PostComments';
 
 export default {
 	title: 'features/PostListWithComments/PostComments',
 	component: PostComments,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">
@@ -60,13 +63,16 @@ Normal.args = {
 	userId: '1',
 	postId: '2',
 };
-Normal.parameters = {
-	msw: [
-		rest.get(`${__API__}comments?postId=2`, (_req, res, ctx) => {
-			return res(ctx.json(comments('1')));
-		}),
-	],
-};
+Normal.decorators = [
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('comments', () => {
+			mockServerSocket.emit('comments', {
+				postId: '2',
+				comments: comments('2'),
+			});
+		});
+	}),
+];
 
 export const Error = Template.bind({});
 Error.args = {
@@ -74,10 +80,17 @@ Error.args = {
 	userId: '1',
 	postId: '2',
 };
-Error.parameters = {
-	msw: [
-		rest.get(`${__API__}comments?postId=2`, (_req, res, ctx) => {
-			return res(ctx.status(403));
-		}),
-	],
-};
+Error.decorators = [
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('comments', () => {
+			mockServerSocket.emit(
+				'comments',
+				{
+					postId: '2',
+					comments: comments('2'),
+				},
+				true,
+			);
+		});
+	}),
+];

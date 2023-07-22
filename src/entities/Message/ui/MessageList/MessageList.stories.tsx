@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Card } from '@/shared/ui/Card';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Messages } from '../../model/types/messageSchema';
 import { MessageList } from './MessageList';
 
@@ -7,6 +8,7 @@ export default {
 	title: 'entities/Message/MessageList',
 	component: MessageList,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">

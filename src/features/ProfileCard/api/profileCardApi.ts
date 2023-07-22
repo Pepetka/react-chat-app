@@ -4,6 +4,7 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { socialDataApi } from '@/entities/SocialData';
 import { getUserAuthData } from '@/entities/User';
 import { getSocket } from '@/shared/api/socketApi';
+import { socketError } from '@/shared/config/RTKQuery/socketError';
 import { getRelations } from '../model/selectors/profileCardSelectors';
 import { Relations } from '../model/types/profileCardSchema';
 
@@ -41,7 +42,13 @@ export const profileCardApi = rtkApi.injectEndpoints({
 			},
 			async onCacheEntryAdded(
 				arg,
-				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+				{
+					updateCachedData,
+					cacheDataLoaded,
+					cacheEntryRemoved,
+					requestId,
+					dispatch,
+				},
 			) {
 				try {
 					await cacheDataLoaded;
@@ -61,6 +68,15 @@ export const profileCardApi = rtkApi.injectEndpoints({
 					socket.off('online');
 				} catch (e) {
 					console.error(e);
+
+					dispatch(
+						socketError({
+							arg,
+							requestId,
+							error: e as Error,
+							endpointName: 'fetchOnline',
+						}),
+					);
 				}
 			},
 		}),

@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Chat } from '../../model/types/chatSchema';
 import { ChatList } from './ChatList';
 
@@ -8,6 +9,7 @@ export default {
 	title: 'entities/Chat/ChatList',
 	component: ChatList,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">

@@ -1,12 +1,14 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { DeepPartial } from 'redux';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
 import { StateSchema } from '@/app/provider/Store';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { NavBar } from './NavBar';
 
 export default {
 	title: 'widgets/NavBar',
 	component: NavBar,
+	decorators: [RouterDecorator()],
 } as Meta<typeof NavBar>;
 
 const Template: StoryFn<typeof NavBar> = (args) => <NavBar {...args} />;

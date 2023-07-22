@@ -2,12 +2,14 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Post, PostStats } from '../../model/types/postSchema';
 import { PostList } from './PostList';
 
 export default {
 	title: 'entities/Post/PostList',
 	component: PostList,
+	decorators: [RouterDecorator()],
 } as Meta<typeof PostList>;
 
 const Template: StoryFn<typeof PostList> = (args) => <PostList {...args} />;
@@ -59,15 +61,12 @@ Normal.args = {
 };
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}posts?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
 			return res(ctx.json(posts));
 		}),
-		rest.get(
-			`${__API__}postStats?postId=0&userId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(postStats));
-			},
-		),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats));
+		}),
 	],
 };
 
@@ -78,14 +77,11 @@ Error.args = {
 };
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}posts?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
-		rest.get(
-			`${__API__}postStats?postId=0&userId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(postStats));
-			},
-		),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats));
+		}),
 	],
 };

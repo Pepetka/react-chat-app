@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { MessageForm } from './MessageForm';
 
 export default {
 	title: 'entities/Message/MessageForm',
 	component: MessageForm,
+	decorators: [RouterDecorator()],
 } as Meta<typeof MessageForm>;
 
 const Template: StoryFn<typeof MessageForm> = (args) => (

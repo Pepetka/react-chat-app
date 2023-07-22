@@ -1,12 +1,14 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { FriendCard } from './FriendCard';
 
 export default {
 	title: 'entities/Friend/FriendCard',
 	component: FriendCard,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">

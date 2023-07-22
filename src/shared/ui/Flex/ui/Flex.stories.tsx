@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Flex } from './Flex';
 
 export default {
 	title: 'shared/Flex',
 	component: Flex,
+	decorators: [RouterDecorator()],
 	argTypes: {
 		gap: {
 			options: ['4', '8', '16', '24', '32', '40'],

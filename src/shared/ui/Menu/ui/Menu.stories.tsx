@@ -1,11 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Flex } from '@/shared/ui/Flex';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Menu } from './Menu';
 
 export default {
 	title: 'shared/Menu',
 	component: Menu,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Flex height="300px" justify="center" align="center">

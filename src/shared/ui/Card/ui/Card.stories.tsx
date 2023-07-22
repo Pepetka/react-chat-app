@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Card } from './Card';
 
 export default {
 	title: 'shared/Card',
 	component: Card,
+	decorators: [RouterDecorator()],
 } as Meta<typeof Card>;
 
 const Template: StoryFn<typeof Card> = (args) => <Card {...args} />;

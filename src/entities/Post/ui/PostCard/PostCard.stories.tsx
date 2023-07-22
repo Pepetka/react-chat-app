@@ -2,12 +2,14 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Post, PostStats } from '../../model/types/postSchema';
 import { PostCard } from './PostCard';
 
 export default {
 	title: 'entities/Post/PostCard',
 	component: PostCard,
+	decorators: [RouterDecorator()],
 } as Meta<typeof PostCard>;
 
 const Template: StoryFn<typeof PostCard> = (args) => <PostCard {...args} />;
@@ -44,12 +46,9 @@ WithSettings.args = {
 };
 WithSettings.parameters = {
 	msw: [
-		rest.get(
-			`${__API__}postStats?postId=0&userId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(postStats));
-			},
-		),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats));
+		}),
 	],
 };
 
@@ -60,11 +59,8 @@ WithoutSettings.args = {
 };
 WithoutSettings.parameters = {
 	msw: [
-		rest.get(
-			`${__API__}postStats?postId=0&userId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(postStats));
-			},
-		),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats));
+		}),
 	],
 };

@@ -3,13 +3,15 @@ import { rest } from 'msw';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { StateSchema } from '@/app/provider/Store';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
 import { Group } from '@/entities/Group';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import GroupsListPage from './GroupsListPage';
 
 export default {
 	title: 'pages/GroupsListPage',
 	component: GroupsListPage,
+	decorators: [RouterDecorator()],
 } as Meta<typeof GroupsListPage>;
 
 const Template: StoryFn<typeof GroupsListPage> = (args) => <GroupsListPage />;
@@ -65,7 +67,7 @@ export const Normal = Template.bind({});
 Normal.decorators = [StoreDecorator(state as StateSchema)];
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}getGroups?userId=1&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getGroups`, (_req, res, ctx) => {
 			return res(ctx.json(groupsList));
 		}),
 	],
@@ -75,7 +77,7 @@ export const Error = Template.bind({});
 Error.decorators = [StoreDecorator(state as StateSchema)];
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}getGroups?userId=1&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getGroups`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],

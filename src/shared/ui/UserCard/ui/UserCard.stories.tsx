@@ -1,10 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { UserCard } from './UserCard';
 
 export default {
 	title: 'shared/UserCard',
 	component: UserCard,
+	decorators: [RouterDecorator()],
 } as Meta<typeof UserCard>;
 
 const Template: StoryFn<typeof UserCard> = (args) => <UserCard {...args} />;

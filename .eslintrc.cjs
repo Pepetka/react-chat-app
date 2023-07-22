@@ -49,6 +49,7 @@ module.exports = {
 					'padding',
 					'wrap',
 					'minHeight',
+					'path'
 				],
 				ignore: ['ICE'],
 			},
@@ -98,5 +99,6 @@ module.exports = {
 	globals: {
 		__API__: true,
 		__API_SOCKET__: true,
+		__MODE__: true,
 	},
 };

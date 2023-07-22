@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Text } from './Text';
 
 export default {
 	title: 'shared/Text',
 	component: Text,
+	decorators: [RouterDecorator()],
 } as Meta<typeof Text>;
 
 const Template: StoryFn<typeof Text> = (args) => <Text {...args} />;

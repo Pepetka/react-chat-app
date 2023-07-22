@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Input } from './Input';
 
 export default {
 	title: 'shared/Input',
 	component: Input,
+	decorators: [RouterDecorator()],
 } as Meta<typeof Input>;
 
 const Template: StoryFn<typeof Input> = (args) => <Input {...args} />;

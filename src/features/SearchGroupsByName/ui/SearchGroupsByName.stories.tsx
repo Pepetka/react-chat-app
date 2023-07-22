@@ -3,12 +3,14 @@ import { rest } from 'msw';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
 import { Group } from '@/entities/Group';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { SearchGroupsByName } from './SearchGroupsByName';
 
 export default {
 	title: 'features/SearchGroupsByName',
 	component: SearchGroupsByName,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">
@@ -60,7 +62,7 @@ Normal.args = {
 };
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}getGroups?groupId=2&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getGroups`, (_req, res, ctx) => {
 			return res(ctx.json(groupsList));
 		}),
 	],
@@ -73,7 +75,7 @@ Error.args = {
 };
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}getGroups?groupId=2&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getGroups`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],

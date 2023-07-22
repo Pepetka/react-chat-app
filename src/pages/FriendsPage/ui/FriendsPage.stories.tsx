@@ -3,12 +3,14 @@ import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import FriendsPage from './FriendsPage';
 
 export default {
 	title: 'pages/FriendsPage',
 	component: FriendsPage,
+	decorators: [RouterDecorator()],
 } as Meta<typeof FriendsPage>;
 
 const Template: StoryFn<typeof FriendsPage> = (args) => <FriendsPage />;
@@ -52,7 +54,7 @@ export const Normal = Template.bind({});
 Normal.decorators = [StoreDecorator(state as StateSchema)];
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?userId=1&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers`, (_req, res, ctx) => {
 			return res(
 				ctx.json({
 					Followers: usersList,
@@ -69,7 +71,7 @@ export const Error = Template.bind({});
 Error.decorators = [StoreDecorator(state as StateSchema)];
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?userId=1&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],

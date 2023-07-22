@@ -2,6 +2,7 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { UserMini } from '@/shared/types/userCard';
 import { Messages } from '@/entities/Message';
 import { getSocket } from '@/shared/api/socketApi';
+import { socketError } from '@/shared/config/RTKQuery/socketError';
 
 interface IMessengerPageApiProps {
 	chatId: string;
@@ -22,7 +23,13 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 			},
 			async onCacheEntryAdded(
 				arg,
-				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+				{
+					updateCachedData,
+					cacheDataLoaded,
+					cacheEntryRemoved,
+					requestId,
+					dispatch,
+				},
 			) {
 				try {
 					await cacheDataLoaded;
@@ -49,6 +56,15 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 					socket.off('messages');
 				} catch (e) {
 					console.error(e);
+
+					dispatch(
+						socketError({
+							arg,
+							requestId,
+							error: e as Error,
+							endpointName: 'fetchMessages',
+						}),
+					);
 				}
 			},
 		}),
@@ -74,7 +90,13 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 			},
 			async onCacheEntryAdded(
 				arg,
-				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+				{
+					updateCachedData,
+					cacheDataLoaded,
+					cacheEntryRemoved,
+					requestId,
+					dispatch,
+				},
 			) {
 				try {
 					await cacheDataLoaded;
@@ -94,6 +116,15 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 					socket.off('online');
 				} catch (e) {
 					console.error(e);
+
+					dispatch(
+						socketError({
+							arg,
+							requestId,
+							error: e as Error,
+							endpointName: 'fetchOnline',
+						}),
+					);
 				}
 			},
 		}),
@@ -119,7 +150,13 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 			},
 			async onCacheEntryAdded(
 				arg,
-				{ updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+				{
+					updateCachedData,
+					cacheDataLoaded,
+					cacheEntryRemoved,
+					requestId,
+					dispatch,
+				},
 			) {
 				try {
 					await cacheDataLoaded;
@@ -140,6 +177,15 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 					socket.off('typing');
 				} catch (e) {
 					console.error(e);
+
+					dispatch(
+						socketError({
+							arg,
+							requestId,
+							error: e as Error,
+							endpointName: 'friendTyping',
+						}),
+					);
 				}
 			},
 		}),

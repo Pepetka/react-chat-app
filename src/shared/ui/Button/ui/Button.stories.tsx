@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Button } from './Button';
 
 export default {
 	title: 'shared/Button',
 	component: Button,
+	decorators: [RouterDecorator()],
 	argTypes: {
 		theme: {
 			options: ['primary', 'outline', 'clear'],

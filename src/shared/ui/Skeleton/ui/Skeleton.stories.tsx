@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Skeleton } from './Skeleton';
 
 export default {
 	title: 'shared/Skeleton',
 	component: Skeleton,
+	decorators: [RouterDecorator()],
 } as Meta<typeof Skeleton>;
 
 const Template: StoryFn<typeof Skeleton> = (args) => <Skeleton {...args} />;

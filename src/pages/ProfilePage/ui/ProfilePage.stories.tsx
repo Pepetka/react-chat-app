@@ -1,62 +1,55 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
-import { StoreDecorator } from '@/shared/config/storybook/StoreDecorator/StoreDecorator';
+import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
 import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
 import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { WithCallbackDecorator } from '@/shared/config/storybook/decorators/WithCallbackDecorator/WithCallbackDecorator';
+import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
 import ProfilePage from './ProfilePage';
 
 export default {
 	title: 'pages/ProfilePage',
 	component: ProfilePage,
+	decorators: [RouterDecorator('/profile/6cbdb793', '/profile/:id')],
 } as Meta<typeof ProfilePage>;
 
 const Template: StoryFn<typeof ProfilePage> = (args) => <ProfilePage />;
 
-const user: Array<DeepPartial<User>> = [
-	{
-		id: '6cbdb793',
-		avatar: image,
-		lastname: 'Ivanov',
-		firstname: 'Ivan',
-		username: 'user',
-		status: 'Some status first line,\nSome status second line',
-	},
-];
+const user: DeepPartial<User> = {
+	id: '6cbdb793',
+	avatar: image,
+	lastname: 'Ivanov',
+	firstname: 'Ivan',
+	username: 'user',
+	status: 'Some status first line,\nSome status second line',
+};
 
 const state: DeepPartial<StateSchema> = {
 	user: {
-		authData: user[0],
+		authData: user,
 	},
 };
 
-const friends: Array<DeepPartial<User>> = [
+const friends: Array<UserMini> = [
 	{
 		id: '6cbdb794',
 		avatar: image,
-		lastname: 'Ivanov',
-		firstname: 'Ivan',
-		username: 'user',
-		status: 'Some status first line,\nSome status second line',
+		name: 'Ivan Ivanov',
 	},
 	{
 		id: '6cbdb795',
 		avatar: image,
-		lastname: 'Ivanov',
-		firstname: 'Oleg',
-		username: 'user',
-		status: 'Some status first line,\nSome status second line',
+		name: 'Oleg Ivanov',
 	},
 	{
 		id: '6cbdb796',
 		avatar: image,
-		lastname: 'Ivanov',
-		firstname: 'Pavel',
-		username: 'user',
-		status: 'Some status first line,\nSome status second line',
+		name: 'Pavel Ivanov',
 	},
 ];
 
@@ -102,21 +95,25 @@ const postStats: PostStats = {
 
 export const Normal = Template.bind({});
 Normal.args = {};
-Normal.decorators = [StoreDecorator(state as StateSchema)];
+Normal.decorators = [
+	StoreDecorator(state as StateSchema),
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('online', () => {
+			mockServerSocket.emit('online', ['6cbdb793']);
+		});
+	}),
+];
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}users?id=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}profile`, (_req, res, ctx) => {
 			return res(ctx.json(user));
 		}),
-		rest.get(
-			`${__API__}relations?userId=6cbdb793&friendId=6cbdb793`,
-			(_req, res, ctx) => {
-				const relations: Relations = { relations: 'nobody' };
+		rest.get(`${__API__}relations`, (_req, res, ctx) => {
+			const relations: Relations = { relations: 'nobody' };
 
-				return res(ctx.json(relations));
-			},
-		),
-		rest.get(`${__API__}social?userId=6cbdb793`, (_req, res, ctx) => {
+			return res(ctx.json(relations));
+		}),
+		rest.get(`${__API__}social`, (_req, res, ctx) => {
 			const social: Social = {
 				followersNum: '101',
 				followingNum: '202',
@@ -125,61 +122,53 @@ Normal.parameters = {
 
 			return res(ctx.json(social));
 		}),
-		rest.get(`${__API__}friends?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}friends`, (_req, res, ctx) => {
 			return res(ctx.json(friends));
 		}),
-		rest.get(`${__API__}posts?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
 			return res(ctx.json(posts));
 		}),
-		rest.get(
-			`${__API__}postStats?postId=0&userId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(postStats));
-			},
-		),
-		rest.get(
-			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(''));
-			},
-		),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats));
+		}),
+		rest.get(`${__API__}getChatId`, (_req, res, ctx) => {
+			return res(ctx.json(''));
+		}),
 	],
 };
 
 export const Error = Template.bind({});
 Error.args = {};
-Error.decorators = [StoreDecorator(state as StateSchema)];
+Error.decorators = [
+	StoreDecorator(state as StateSchema),
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('online', () => {
+			mockServerSocket.emit('online', ['6cbdb793'], true);
+		});
+	}),
+];
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}users?id=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}profile`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
-		rest.get(
-			`${__API__}relations?userId=6cbdb793&friendId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.status(403));
-			},
-		),
-		rest.get(`${__API__}social?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}relations`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
-		rest.get(`${__API__}friends?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}social`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
-		rest.get(`${__API__}posts?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}friends`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
-		rest.get(
-			`${__API__}postStats?postId=0&userId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.status(403));
-			},
-		),
-		rest.get(
-			`${__API__}getChatId?userId=6cbdb793&friendId=6cbdb793`,
-			(_req, res, ctx) => {
-				return res(ctx.json(''));
-			},
-		),
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
+			return res(ctx.status(403));
+		}),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.status(403));
+		}),
+		rest.get(`${__API__}getChatId`, (_req, res, ctx) => {
+			return res(ctx.json(''));
+		}),
 	],
 };

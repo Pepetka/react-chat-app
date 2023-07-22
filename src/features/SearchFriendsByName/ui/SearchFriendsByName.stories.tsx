@@ -2,12 +2,14 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { SearchFriendsByName } from './SearchFriendsByName';
 
 export default {
 	title: 'features/SearchFriendsByName',
 	component: SearchFriendsByName,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">
@@ -47,7 +49,7 @@ Normal.args = {
 };
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?userId=2&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers`, (_req, res, ctx) => {
 			return res(
 				ctx.json({
 					Followers: usersList,
@@ -67,7 +69,7 @@ Error.args = {
 };
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}getUsers?userId=2&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getUsers`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],

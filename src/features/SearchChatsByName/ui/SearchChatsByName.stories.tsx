@@ -3,12 +3,14 @@ import { rest } from 'msw';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
 import { Chat } from '@/entities/Chat';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { SearchChatsByName } from './SearchChatsByName';
 
 export default {
 	title: 'features/SearchChatsByName',
 	component: SearchChatsByName,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">
@@ -62,7 +64,7 @@ Normal.args = {
 };
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}getChats?userId=1&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getChats`, (_req, res, ctx) => {
 			return res(ctx.json(chatsList));
 		}),
 	],
@@ -74,7 +76,7 @@ Error.args = {
 };
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}getChats?userId=1&search=`, (_req, res, ctx) => {
+		rest.get(`${__API__}getChats`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],

@@ -1,11 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Message } from '../../model/types/messageSchema';
 import { MessageCard } from './MessageCard';
 
 export default {
 	title: 'entities/Message/MessageCard',
 	component: MessageCard,
+	decorators: [RouterDecorator()],
 } as Meta<typeof MessageCard>;
 
 const Template: StoryFn<typeof MessageCard> = (args) => (

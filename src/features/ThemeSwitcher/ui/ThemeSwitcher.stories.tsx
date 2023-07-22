@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
 export default {
 	title: 'features/ThemeSwitcher',
 	component: ThemeSwitcher,
+	decorators: [RouterDecorator()],
 } as Meta<typeof ThemeSwitcher>;
 
 const Template: StoryFn<typeof ThemeSwitcher> = (args) => (

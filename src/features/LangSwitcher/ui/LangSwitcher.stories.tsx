@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { LangSwitcher } from './LangSwitcher';
 
 export default {
 	title: 'features/LangSwitcher',
 	component: LangSwitcher,
+	decorators: [RouterDecorator()],
 } as Meta<typeof LangSwitcher>;
 
 const Template: StoryFn<typeof LangSwitcher> = (args) => (

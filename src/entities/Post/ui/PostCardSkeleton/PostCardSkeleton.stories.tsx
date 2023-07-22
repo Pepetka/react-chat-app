@@ -1,9 +1,11 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { PostCardSkeleton } from './PostCardSkeleton';
 
 export default {
 	title: 'entities/Post/PostCardSkeleton',
 	component: PostCardSkeleton,
+	decorators: [RouterDecorator()],
 } as Meta<typeof PostCardSkeleton>;
 
 const Template: StoryFn<typeof PostCardSkeleton> = (args) => (

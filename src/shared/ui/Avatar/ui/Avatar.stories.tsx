@@ -1,10 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Avatar } from './Avatar';
 
 export default {
 	title: 'shared/Avatar',
 	component: Avatar,
+	decorators: [RouterDecorator()],
 } as Meta<typeof Avatar>;
 
 const Template: StoryFn<typeof Avatar> = (args) => <Avatar {...args} />;

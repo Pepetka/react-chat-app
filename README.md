@@ -133,6 +133,8 @@
 
 Запросы на сервер отправляются с применением [RTK query](./src/shared/api/rtkApi.ts).
 
+Для постоянного соединения используется [Socket.io](https://socket.io/docs).
+
 Для асинхронного подключения reducer используется
 [ReducerManager](./src/app/provider/Store/config/reducerManager.ts), применяемый в HOC
 [DynamicModuleLoader](./src/shared/components/DynamicModuleLoader/DynamicModuleLoader.tsx)

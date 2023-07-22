@@ -1,11 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Card } from '@/shared/ui/Card';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { ChatCardSkeleton } from './ChatCardSkeleton';
 
 export default {
 	title: 'entities/Chat/ChatCardSkeleton',
 	component: ChatCardSkeleton,
 	decorators: [
+		RouterDecorator(),
 		(StoryComponent) => {
 			return (
 				<Card width="100%">

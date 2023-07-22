@@ -87,12 +87,14 @@ export const PostList = memo((props: IPostListProps) => {
 	if (error) {
 		return (
 			<Card width="100%" height="300px">
-				<Text
-					theme="error"
-					text={t('Something went wrong')}
-					textAlign="center"
-					size="l"
-				/>
+				<Flex width="100%" height="100%" align="center">
+					<Text
+						theme="error"
+						text={t('Something went wrong')}
+						textAlign="center"
+						size="l"
+					/>
+				</Flex>
 			</Card>
 		);
 	}

@@ -1,41 +1,34 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
-import { User } from '@/shared/types/userCard';
+import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
+import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Social } from '../../model/types/socialDataSchema';
 import { SocialCard } from './SocialCard';
 
 export default {
 	title: 'features/SocialCard/SocialCard',
 	component: SocialCard,
+	decorators: [RouterDecorator()],
 } as Meta<typeof SocialCard>;
 
 const Template: StoryFn<typeof SocialCard> = (args) => <SocialCard {...args} />;
 
-const users: Array<DeepPartial<User>> = [
+const users: Array<UserMini> = [
 	{
 		id: '6cbdb794',
 		avatar: image,
-		lastname: 'Ivanov',
-		firstname: 'Ivan',
-		username: 'user',
-		status: 'Some status first line,\nSome status second line',
+		name: 'Ivan Ivanov',
 	},
 	{
 		id: '6cbdb795',
 		avatar: image,
-		lastname: 'Ivanov',
-		firstname: 'Oleg',
-		username: 'user',
-		status: 'Some status first line,\nSome status second line',
+		name: 'Oleg Ivanov',
 	},
 	{
 		id: '6cbdb796',
 		avatar: image,
-		lastname: 'Ivanov',
-		firstname: 'Pavel',
-		username: 'user',
-		status: 'Some status first line,\nSome status second line',
+		name: 'Pavel Ivanov',
 	},
 ];
 
@@ -46,7 +39,7 @@ Normal.args = {
 };
 Normal.parameters = {
 	msw: [
-		rest.get(`${__API__}social?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}social`, (_req, res, ctx) => {
 			const social: Social = {
 				followersNum: '101',
 				followingNum: '202',
@@ -55,7 +48,7 @@ Normal.parameters = {
 
 			return res(ctx.json(social));
 		}),
-		rest.get(`${__API__}friends?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}friends`, (_req, res, ctx) => {
 			return res(ctx.json(users));
 		}),
 	],
@@ -68,10 +61,10 @@ Error.args = {
 };
 Error.parameters = {
 	msw: [
-		rest.get(`${__API__}social?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}social`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
-		rest.get(`${__API__}friends?userId=6cbdb793`, (_req, res, ctx) => {
+		rest.get(`${__API__}friends`, (_req, res, ctx) => {
 			return res(ctx.status(403));
 		}),
 	],
