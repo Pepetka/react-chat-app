@@ -52,8 +52,8 @@ const MessengerPage = memo(() => {
 		isError,
 	} = useFetchMessagesQuery({
 		chatId: params.id ?? '',
-		userId: authData?.id ?? '',
 		friendId: searchParams.get('friendId') ?? '',
+		userId: authData?.id ?? '',
 	});
 	const [onSendMessage, { isLoading: sendLoading, isSuccess }] =
 		useSendMessageMutation();

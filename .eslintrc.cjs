@@ -49,7 +49,7 @@ module.exports = {
 					'padding',
 					'wrap',
 					'minHeight',
-					'path'
+					'path',
 				],
 				ignore: ['ICE'],
 			},

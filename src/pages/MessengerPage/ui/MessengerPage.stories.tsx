@@ -81,4 +81,15 @@ Normal.decorators = [
 ];
 
 export const Error = Template.bind({});
-Error.decorators = [StoreDecorator(state as StateSchema)];
+Error.decorators = [
+	StoreDecorator(state as StateSchema),
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('online', () => {
+			mockServerSocket.emit('online', ['0', '1']);
+		});
+
+		mockServerSocket.on('get_messages', () => {
+			mockServerSocket.emit('messages', response, true);
+		});
+	}),
+];

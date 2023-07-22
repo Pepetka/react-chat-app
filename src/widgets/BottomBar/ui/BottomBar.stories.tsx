@@ -11,10 +11,9 @@ export default {
 			return (
 				<div
 					style={{
-						height: 'auto',
+						height: '300px',
 						width: '100%',
 						position: 'relative',
-						top: '50dvh',
 					}}
 				>
 					<StoryComponent />

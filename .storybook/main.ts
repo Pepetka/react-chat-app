@@ -1,7 +1,6 @@
 import { StorybookConfig } from '@storybook/react-vite';
 import svgr from 'vite-plugin-svgr';
 import { mergeConfig } from 'vite';
-
 const config: StorybookConfig = {
 	stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
@@ -31,6 +30,8 @@ const config: StorybookConfig = {
 			},
 		});
 	},
+	docs: {
+		autodocs: true,
+	},
 };
-
 export default config;

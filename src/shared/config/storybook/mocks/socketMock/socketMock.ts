@@ -1,10 +1,10 @@
 class SocketMock {
 	#mockOn: Record<string, any> = {};
 	#mockEmit: Record<string, any> = {};
-	#error = false;
+	#error: Record<string, boolean> = {};
 
 	#clientOn = (ev: string, listener: (data: any) => void): any => {
-		if (this.#error) throw new Error('Mock Socket Error');
+		if (this.#error[ev]) throw new Error('Mock Socket Error');
 		listener(this.#mockOn[ev]);
 	};
 
@@ -24,7 +24,7 @@ class SocketMock {
 	};
 
 	#serverEmit = (ev: string, args: any, error = false) => {
-		this.#error = error;
+		this.#error[ev] = error;
 		this.#mockOn[ev] = args;
 	};
 
