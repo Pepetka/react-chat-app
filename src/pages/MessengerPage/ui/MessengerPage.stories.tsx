@@ -1,18 +1,24 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { StateSchema } from '@/app/provider/Store';
-import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Messages } from '@/entities/Message';
-import { WithCallbackDecorator } from '@/shared/config/storybook/decorators/WithCallbackDecorator/WithCallbackDecorator';
 import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import {
+	PageDecorator,
+	RouterDecorator,
+	StoreDecorator,
+	WithCallbackDecorator,
+} from '@/shared/config/storybook/decorators';
 import MessengerPage from './MessengerPage';
 
 export default {
 	title: 'pages/MessengerPage',
 	component: MessengerPage,
-	decorators: [RouterDecorator('/chats/0?friendId=1', '/chats/:id')],
+	decorators: [
+		RouterDecorator('/chats/0?friendId=1', '/chats/:id'),
+		PageDecorator(true),
+	],
 } as Meta<typeof MessengerPage>;
 
 const Template: StoryFn<typeof MessengerPage> = (args) => <MessengerPage />;

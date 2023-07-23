@@ -3,7 +3,7 @@ import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
 import { Comment } from '@/shared/types/comment';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { CommentList } from './CommentList';
 
 export default {

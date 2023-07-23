@@ -1,17 +1,20 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
-import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
+import {
+	StoreDecorator,
+	RouterDecorator,
+	PageDecorator,
+} from '@/shared/config/storybook/decorators';
 import image from '@/shared/assets/images/image.jpg';
 import { User } from '@/shared/types/userCard';
 import { Chat } from '@/entities/Chat';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import ChatsPage from './ChatsPage';
 
 export default {
 	title: 'pages/ChatsPage',
 	component: ChatsPage,
-	decorators: [RouterDecorator()],
+	decorators: [RouterDecorator(), PageDecorator()],
 } as Meta<typeof ChatsPage>;
 
 const Template: StoryFn<typeof ChatsPage> = (args) => <ChatsPage />;

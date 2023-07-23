@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { LangSwitcher } from './LangSwitcher';
 
 export default {

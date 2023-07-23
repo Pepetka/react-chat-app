@@ -1,8 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { ReducersMapObject } from '@reduxjs/toolkit';
-import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
+import {
+	StoreDecorator,
+	RouterDecorator,
+} from '@/shared/config/storybook/decorators';
 import { StateSchema } from '@/app/provider/Store';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { authByUsernameReducer } from '../../model/slice/authByUserNameSlice';
 import { LoginForm } from './LoginForm';
 

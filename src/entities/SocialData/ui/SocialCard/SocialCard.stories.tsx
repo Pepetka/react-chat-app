@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { Social } from '../../model/types/socialDataSchema';
 import { SocialCard } from './SocialCard';
 

@@ -13,10 +13,6 @@
 	overflow: hidden;
 }
 
-body {
-	overflow: hidden;
-}
-
 * {
 	box-sizing: border-box;
 	scrollbar-width: 10px;

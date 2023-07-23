@@ -35,7 +35,7 @@ interface IPopoverProps extends IPopoverControls {
 const StyledPopover = styled.div<
 	IPopoverControls & { contentWidth: number; open: boolean }
 >`
-	display: flex;
+	display: ${(props) => (props.open ? 'flex' : 'none')};
 	justify-content: center;
 	align-items: center;
 	position: absolute;

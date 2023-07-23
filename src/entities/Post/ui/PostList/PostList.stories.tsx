@@ -2,14 +2,30 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { Post, PostStats } from '../../model/types/postSchema';
 import { PostList } from './PostList';
 
 export default {
 	title: 'entities/Post/PostList',
 	component: PostList,
-	decorators: [RouterDecorator()],
+	decorators: [
+		RouterDecorator(),
+		(StoryComponent) => {
+			return (
+				<div
+					style={{
+						overflowY: 'auto',
+						overflowX: 'hidden',
+						width: '100%',
+						height: '100%',
+					}}
+				>
+					<StoryComponent />
+				</div>
+			);
+		},
+	],
 } as Meta<typeof PostList>;
 
 const Template: StoryFn<typeof PostList> = (args) => <PostList {...args} />;

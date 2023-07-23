@@ -3,7 +3,7 @@ import { rest } from 'msw';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
 import { Chat } from '@/entities/Chat';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { SearchChatsByName } from './SearchChatsByName';
 
 export default {

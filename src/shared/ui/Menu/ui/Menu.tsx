@@ -50,7 +50,7 @@ interface IMenuProps extends IMenuControls {
 const StyledMenu = styled.div<
 	IMenuControls & { contentWidth: number; open: boolean }
 >`
-	display: flex;
+	display: ${(props) => (props.open ? 'flex' : 'none')};
 	justify-content: center;
 	align-items: center;
 	position: absolute;

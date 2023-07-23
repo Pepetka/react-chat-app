@@ -3,13 +3,29 @@ import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
 import { UserMini } from '@/shared/types/userCard';
 import { Post, PostStats } from '@/entities/Post';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { PostListWithComments } from './PostListWithComments';
 
 export default {
 	title: 'features/PostListWithComments/PostListWithComments',
 	component: PostListWithComments,
-	decorators: [RouterDecorator()],
+	decorators: [
+		RouterDecorator(),
+		(StoryComponent) => {
+			return (
+				<div
+					style={{
+						overflowY: 'auto',
+						overflowX: 'hidden',
+						width: '100%',
+						height: '100%',
+					}}
+				>
+					<StoryComponent />
+				</div>
+			);
+		},
+	],
 } as Meta<typeof PostListWithComments>;
 
 const Template: StoryFn<typeof PostListWithComments> = (args) => (

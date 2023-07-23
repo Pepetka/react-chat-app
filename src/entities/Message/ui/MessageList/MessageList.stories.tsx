@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Card } from '@/shared/ui/Card';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { Messages } from '../../model/types/messageSchema';
 import { MessageList } from './MessageList';
 
@@ -11,9 +11,18 @@ export default {
 		RouterDecorator(),
 		(StoryComponent) => {
 			return (
-				<Card width="100%">
-					<StoryComponent />
-				</Card>
+				<div
+					style={{
+						overflowY: 'auto',
+						overflowX: 'hidden',
+						width: '100%',
+						height: '100%',
+					}}
+				>
+					<Card width="100%">
+						<StoryComponent />
+					</Card>
+				</div>
 			);
 		},
 	],

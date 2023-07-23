@@ -3,15 +3,18 @@ import { rest } from 'msw';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { StateSchema } from '@/app/provider/Store';
-import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
+import {
+	StoreDecorator,
+	RouterDecorator,
+	PageDecorator,
+} from '@/shared/config/storybook/decorators';
 import { Group } from '@/entities/Group';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import GroupsListPage from './GroupsListPage';
 
 export default {
 	title: 'pages/GroupsListPage',
 	component: GroupsListPage,
-	decorators: [RouterDecorator()],
+	decorators: [RouterDecorator(), PageDecorator()],
 } as Meta<typeof GroupsListPage>;
 
 const Template: StoryFn<typeof GroupsListPage> = (args) => <GroupsListPage />;

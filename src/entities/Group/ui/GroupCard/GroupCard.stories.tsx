@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { Group } from '../../model/types/groupSchema';
 import { GroupCard } from './GroupCard';
 

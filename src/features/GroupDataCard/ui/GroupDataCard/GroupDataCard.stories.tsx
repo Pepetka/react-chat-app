@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { Group } from '@/entities/Group';
 import image from '@/shared/assets/images/image.jpg';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { GroupDataCard } from './GroupDataCard';
 
 export default {

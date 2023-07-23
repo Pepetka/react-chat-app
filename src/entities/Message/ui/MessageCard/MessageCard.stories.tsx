@@ -1,13 +1,23 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
+import { Card } from '@/shared/ui/Card';
 import { Message } from '../../model/types/messageSchema';
 import { MessageCard } from './MessageCard';
 
 export default {
 	title: 'entities/Message/MessageCard',
 	component: MessageCard,
-	decorators: [RouterDecorator()],
+	decorators: [
+		RouterDecorator(),
+		(StoryComponent) => {
+			return (
+				<Card width="100%">
+					<StoryComponent />
+				</Card>
+			);
+		},
+	],
 } as Meta<typeof MessageCard>;
 
 const Template: StoryFn<typeof MessageCard> = (args) => (

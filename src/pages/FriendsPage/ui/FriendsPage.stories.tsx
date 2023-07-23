@@ -3,14 +3,17 @@ import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import {
+	StoreDecorator,
+	RouterDecorator,
+	PageDecorator,
+} from '@/shared/config/storybook/decorators';
 import FriendsPage from './FriendsPage';
 
 export default {
 	title: 'pages/FriendsPage',
 	component: FriendsPage,
-	decorators: [RouterDecorator()],
+	decorators: [RouterDecorator(), PageDecorator()],
 } as Meta<typeof FriendsPage>;
 
 const Template: StoryFn<typeof FriendsPage> = (args) => <FriendsPage />;

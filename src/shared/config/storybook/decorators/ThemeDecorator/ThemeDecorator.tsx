@@ -1,24 +1,24 @@
 import { Decorator } from '@storybook/react';
 import '@/app/styles/index.css';
 import styled from 'styled-components';
-import { Flex } from '@/shared/ui/Flex';
 
-const StyledPage = styled.div`
-	height: 100%;
-	overflow-y: auto;
-	overflow-x: hidden;
+const App = styled.div`
+	font: var(--font-m);
+	background-color: var(--bg-color);
+	color: var(--primary-color);
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
 `;
 
 export const ThemeDecorator: Decorator = (StoryComponent, { globals }) => {
 	const { globalTheme } = globals;
 
 	return (
-		<div className={`App ${globalTheme}`}>
-			<StyledPage>
-				<Flex width="100%" height="100%" justify="center">
-					<StoryComponent />
-				</Flex>
-			</StyledPage>
-		</div>
+		<App className={globalTheme}>
+			<StoryComponent />
+		</App>
 	);
 };

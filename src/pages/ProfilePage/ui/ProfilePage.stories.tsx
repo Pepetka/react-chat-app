@@ -1,21 +1,27 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
-import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
+import {
+	StoreDecorator,
+	RouterDecorator,
+	WithCallbackDecorator,
+	PageDecorator,
+} from '@/shared/config/storybook/decorators';
 import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
 import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
-import { WithCallbackDecorator } from '@/shared/config/storybook/decorators/WithCallbackDecorator/WithCallbackDecorator';
 import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
 import ProfilePage from './ProfilePage';
 
 export default {
 	title: 'pages/ProfilePage',
 	component: ProfilePage,
-	decorators: [RouterDecorator('/profile/6cbdb793', '/profile/:id')],
+	decorators: [
+		RouterDecorator('/profile/6cbdb793', '/profile/:id'),
+		PageDecorator(),
+	],
 } as Meta<typeof ProfilePage>;
 
 const Template: StoryFn<typeof ProfilePage> = (args) => <ProfilePage />;

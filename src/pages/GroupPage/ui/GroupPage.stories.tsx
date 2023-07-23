@@ -3,17 +3,20 @@ import { rest } from 'msw';
 import { User, UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Post, PostStats } from '@/entities/Post';
-import { StoreDecorator } from '@/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
+import {
+	StoreDecorator,
+	RouterDecorator,
+	PageDecorator,
+} from '@/shared/config/storybook/decorators';
 import { StateSchema } from '@/app/provider/Store';
 import { Group } from '@/entities/Group';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { GroupRole } from '../model/types/groupPage';
 import GroupPage from './GroupPage';
 
 export default {
 	title: 'pages/GroupPage',
 	component: GroupPage,
-	decorators: [RouterDecorator()],
+	decorators: [RouterDecorator(), PageDecorator()],
 } as Meta<typeof GroupPage>;
 
 const Template: StoryFn<typeof GroupPage> = (args) => <GroupPage />;

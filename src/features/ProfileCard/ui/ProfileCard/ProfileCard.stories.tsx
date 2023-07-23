@@ -3,8 +3,10 @@ import { rest } from 'msw';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
-import { WithCallbackDecorator } from '@/shared/config/storybook/decorators/WithCallbackDecorator/WithCallbackDecorator';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import {
+	WithCallbackDecorator,
+	RouterDecorator,
+} from '@/shared/config/storybook/decorators';
 import { Relations } from '../../model/types/profileCardSchema';
 import { ProfileCard } from './ProfileCard';
 

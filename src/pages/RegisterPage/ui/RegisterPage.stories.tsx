@@ -1,11 +1,14 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import {
+	RouterDecorator,
+	PageDecorator,
+} from '@/shared/config/storybook/decorators';
 import RegisterPage from './RegisterPage';
 
 export default {
 	title: 'pages/RegisterPage',
 	component: RegisterPage,
-	decorators: [RouterDecorator()],
+	decorators: [RouterDecorator(), PageDecorator()],
 } as Meta<typeof RegisterPage>;
 
 const Template: StoryFn<typeof RegisterPage> = (args) => <RegisterPage />;

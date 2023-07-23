@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { CommentCard } from './CommentCard';
 
 export default {
