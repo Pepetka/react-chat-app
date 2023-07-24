@@ -1,11 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { ReducersMapObject } from '@reduxjs/toolkit';
-import {
-	StoreDecorator,
-	RouterDecorator,
-} from '@/shared/config/storybook/decorators';
-import { StateSchema } from '@/app/provider/Store';
-import { authByUsernameReducer } from '../../model/slice/authByUserNameSlice';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { LoginForm } from './LoginForm';
 
 export default {
@@ -16,21 +10,4 @@ export default {
 
 const Template: StoryFn<typeof LoginForm> = (args) => <LoginForm />;
 
-const state: DeepPartial<StateSchema> = {
-	authByUsername: {
-		password: 'password',
-		username: 'User',
-	},
-};
-
-const reducers: DeepPartial<ReducersMapObject<StateSchema>> = {
-	authByUsername: authByUsernameReducer,
-};
-
 export const Normal = Template.bind({});
-Normal.decorators = [
-	StoreDecorator(
-		state as StateSchema,
-		reducers as ReducersMapObject<StateSchema>,
-	),
-];

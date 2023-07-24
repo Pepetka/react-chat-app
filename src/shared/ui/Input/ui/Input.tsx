@@ -1,6 +1,7 @@
 import {
 	ChangeEvent,
 	FC,
+	forwardRef,
 	InputHTMLAttributes,
 	memo,
 	SVGProps,
@@ -22,6 +23,10 @@ interface IInputControls {
 	 */
 	theme?: 'primary' | 'invert';
 	/**
+	 * Флаг, отвечающий за наличие ошибки
+	 */
+	error?: boolean;
+	/**
 	 * Значение border-radius
 	 */
 	borderRadius?: string;
@@ -40,6 +45,10 @@ interface IInputControls {
 }
 
 interface ILabelControls {
+	/**
+	 * Флаг, отвечающий за наличие ошибки
+	 */
+	error?: boolean;
 	/**
 	 * Флаг, отвечающий за открытое состояние плавающего лейбла
 	 */
@@ -89,6 +98,10 @@ const StyledInput = styled.input<IInputControls>`
 		} `};
 	border-radius: ${(props) => props.borderRadius};
 	border: ${(props) => {
+		if (props.error) {
+			return '4px solid var(--primary-error-color)';
+		}
+
 		if (!props.border) {
 			return 'none';
 		}
@@ -123,10 +136,15 @@ const StyledLabel = styled.div<ILabelControls>`
 	top: ${(props) => (props.opened ? '0' : '24px')};
 	left: ${(props) => props.paddingInline};
 	background: ${getBgColor};
-	color: ${(props) =>
-		props.theme === 'primary'
+	color: ${(props) => {
+		if (props.error) {
+			return 'var(--primary-error-color)';
+		}
+
+		return props.theme === 'primary'
 			? 'var(--secondary-color)'
-			: 'var(--invert-secondary-color)'};
+			: 'var(--invert-secondary-color)';
+	}};
 	transition: all linear 0.2s;
 	pointer-events: none;
 `;
@@ -143,82 +161,88 @@ const StyledBtnWrapper = styled.div<{ label?: string }>`
 	top: ${(props) => (props.label ? '8px' : '4px')};
 `;
 
-export const Input = memo((props: IInputProps) => {
-	const {
-		width,
-		label,
-		onChange,
-		theme = 'primary',
-		name,
-		required = false,
-		type = 'text',
-		borderRadius = '8px',
-		height = 'auto',
-		paddingInline = '10px',
-		value,
-		SvgIcon,
-		border = true,
-		onClick,
-	} = props;
-	const [focused, setFocused] = useState(false);
-	const [opened, setOpened] = useState(false);
+export const Input = memo(
+	forwardRef<HTMLInputElement, IInputProps>((props, forwardedRef) => {
+		const {
+			error,
+			width,
+			label,
+			onChange,
+			theme = 'primary',
+			name,
+			required = false,
+			type = 'text',
+			borderRadius = '8px',
+			height = 'auto',
+			paddingInline = '10px',
+			value,
+			SvgIcon,
+			border = true,
+			onClick,
+		} = props;
+		const [focused, setFocused] = useState(false);
+		const [opened, setOpened] = useState(false);
 
-	useEffect(() => {
-		if (value || focused) {
-			setOpened(true);
-		} else {
-			setOpened(false);
-		}
-	}, [focused, value]);
+		useEffect(() => {
+			if (value || focused) {
+				setOpened(true);
+			} else {
+				setOpened(false);
+			}
+		}, [focused, value]);
 
-	const onFocus = useCallback(() => {
-		setFocused(true);
-	}, []);
+		const onFocus = useCallback(() => {
+			setFocused(true);
+		}, []);
 
-	const onBlur = useCallback(() => {
-		setFocused(false);
-	}, []);
+		const onBlur = useCallback(() => {
+			setFocused(false);
+		}, []);
 
-	const onHandleChange = useCallback(
-		(event: ChangeEvent<HTMLInputElement>) => {
-			onChange(event.target.value);
-		},
-		[onChange],
-	);
+		const onHandleChange = useCallback(
+			(event: ChangeEvent<HTMLInputElement>) => {
+				onChange(event.target.value);
+			},
+			[onChange],
+		);
 
-	return (
-		<StyledWrapper width={width} label={label}>
-			<StyledInput
-				name={name}
-				type={type}
-				required={required}
-				theme={theme}
-				height={height}
-				onFocus={onFocus}
-				onBlur={onBlur}
-				onChange={onHandleChange}
-				value={value}
-				borderRadius={borderRadius}
-				paddingInline={paddingInline}
-				border={border}
-				SvgIcon={SvgIcon}
-			/>
-			{SvgIcon && (
-				<StyledBtnWrapper label={label}>
-					<Button onClick={onClick} theme="clear">
-						<Icon invert={theme === 'invert'} SvgIcon={SvgIcon} />
-					</Button>
-				</StyledBtnWrapper>
-			)}
-			{label && (
-				<StyledLabel
-					paddingInline={paddingInline}
+		return (
+			<StyledWrapper width={width} label={label}>
+				<StyledInput
+					ref={forwardedRef}
+					error={error}
+					name={name}
+					type={type}
+					required={required}
 					theme={theme}
-					opened={opened}
-				>
-					{label}
-				</StyledLabel>
-			)}
-		</StyledWrapper>
-	);
-});
+					height={height}
+					onFocus={onFocus}
+					onBlur={onBlur}
+					onChange={onHandleChange}
+					value={value}
+					borderRadius={borderRadius}
+					paddingInline={paddingInline}
+					border={border}
+					SvgIcon={SvgIcon}
+				/>
+				{SvgIcon && (
+					<StyledBtnWrapper label={label}>
+						<Button onClick={onClick} theme="clear">
+							<Icon invert={theme === 'invert'} SvgIcon={SvgIcon} />
+						</Button>
+					</StyledBtnWrapper>
+				)}
+				{label && (
+					<StyledLabel
+						error={error}
+						paddingInline={paddingInline}
+						theme={theme}
+						opened={opened}
+					>
+						{label}
+					</StyledLabel>
+				)}
+			</StyledWrapper>
+		);
+	}),
+);

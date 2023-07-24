@@ -23,6 +23,7 @@
 		"create:feature": "plop componentWithModel -- --layer features"
 	},
 	"dependencies": {
+		"@hookform/resolvers": "^3.1.1",
 		"@reduxjs/toolkit": "^1.9.1",
 		"i18next": "^22.4.9",
 		"i18next-browser-languagedetector": "^7.0.1",
@@ -30,6 +31,7 @@
 		"react": "^18.2.0",
 		"react-device-detect": "^2.2.3",
 		"react-dom": "^18.2.0",
+		"react-hook-form": "^7.45.2",
 		"react-i18next": "^11.18.6",
 		"react-redux": "^8.0.5",
 		"react-responsive": "^9.0.2",
@@ -39,7 +41,8 @@
 		"slick-carousel": "^1.8.1",
 		"socket.io-client": "^4.7.1",
 		"styled-components": "^5.3.6",
-		"vite-plugin-svgr": "^2.4.0"
+		"vite-plugin-svgr": "^2.4.0",
+		"yup": "^1.2.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.12",

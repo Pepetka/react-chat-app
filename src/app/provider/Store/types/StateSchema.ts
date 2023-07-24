@@ -7,8 +7,6 @@ import {
 } from '@reduxjs/toolkit';
 import { rtkApi } from '@/shared/api/rtkApi';
 import { UserSchema } from '@/entities/User';
-import { AuthByUsernameSchema } from '@/features/AuthByUsername';
-import { RegisterByUsernameSchema } from '@/features/RegisterByUsername';
 import { PostSchema } from '@/entities/Post';
 import { CommentSchema } from '@/entities/Comment';
 import { FriendSchema } from '@/entities/Friend';
@@ -20,8 +18,6 @@ export interface StateSchema {
 	user: UserSchema;
 	post?: PostSchema;
 	comment?: CommentSchema;
-	authByUsername?: AuthByUsernameSchema;
-	registerByUsername?: RegisterByUsernameSchema;
 	friend?: FriendSchema;
 	chat?: ChatSchema;
 	message?: MessageSchema;

@@ -27,6 +27,10 @@ interface IFlexControls {
 	 */
 	height?: string;
 	/**
+	 * Высота компонента
+	 */
+	minHeight?: string;
+	/**
 	 * Флаг, отвечающий за relative значение свойства position
 	 */
 	relative?: boolean;
@@ -74,12 +78,14 @@ const StyledFlex = styled.div<IFlexControls>`
 	gap: ${(props) => (props.gap ? `${props.gap}px` : '0')};
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
+	min-height: ${(props) => props.minHeight};
 	flex: 0 1 auto;
 	flex-wrap: ${(props) => props.wrap};
 `;
 
 export const Flex = (props: IFlexDiv | IFlexForm) => {
 	const {
+		minHeight,
 		children,
 		direction = 'row',
 		align,
@@ -107,6 +113,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 	return (
 		<StyledFlex
 			as={FlexTag}
+			minHeight={minHeight}
 			justify={justify}
 			align={align}
 			direction={direction}
