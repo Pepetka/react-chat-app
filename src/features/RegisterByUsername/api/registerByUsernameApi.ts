@@ -1,10 +1,10 @@
 import { User } from '@/shared/types/userCard';
 import { rtkApi } from '@/shared/api/rtkApi';
-import { RegisterByUsernameSchema } from '../model/types/RegisterByUsernameSchema';
+import { Inputs } from '../ui/RegisterForm/RegisterForm';
 
 const registerByUsernameApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		registerUser: build.mutation<User, RegisterByUsernameSchema>({
+		registerUser: build.mutation<User, Inputs>({
 			query: (body) => ({
 				method: 'POST',
 				url: '/register',

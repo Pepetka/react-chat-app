@@ -20,7 +20,7 @@ import { userActions } from '@/entities/User';
 import { useRegisterUserMutation } from '../../api/registerByUsernameApi';
 
 type RegisterErrorType = { data: { message: string } };
-type Inputs = {
+export type Inputs = {
 	username: string;
 	password: string;
 	age: number;

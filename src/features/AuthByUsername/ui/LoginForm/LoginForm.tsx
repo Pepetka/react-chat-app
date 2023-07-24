@@ -20,7 +20,7 @@ import { userActions } from '@/entities/User';
 import { useAuthUserMutation } from '../../api/authByUsernameApi';
 
 type LoginErrorType = { data: { message: string } };
-type Inputs = {
+export type Inputs = {
 	username: string;
 	password: string;
 };

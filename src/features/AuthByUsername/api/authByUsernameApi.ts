@@ -1,14 +1,10 @@
 import { User } from '@/shared/types/userCard';
 import { rtkApi } from '@/shared/api/rtkApi';
-
-interface IAuthByUsernameApiProps {
-	password: string;
-	username: string;
-}
+import { Inputs } from '../ui/LoginForm/LoginForm';
 
 export const authByUsernameApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		authUser: build.mutation<User, IAuthByUsernameApiProps>({
+		authUser: build.mutation<User, Inputs>({
 			query: (body) => ({
 				method: 'POST',
 				url: '/login',
