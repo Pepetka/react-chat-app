@@ -179,6 +179,7 @@ export const Input = memo(
 			SvgIcon,
 			border = true,
 			onClick,
+			...otherProps
 		} = props;
 		const [focused, setFocused] = useState(false);
 		const [opened, setOpened] = useState(false);
@@ -224,6 +225,7 @@ export const Input = memo(
 					paddingInline={paddingInline}
 					border={border}
 					SvgIcon={SvgIcon}
+					{...otherProps}
 				/>
 				{SvgIcon && (
 					<StyledBtnWrapper label={label}>

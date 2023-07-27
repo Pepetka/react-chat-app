@@ -94,18 +94,6 @@ export const Avatar = memo((props: IAvatarProps) => {
 		};
 	}, [src]);
 
-	if (isLoading) {
-		return (
-			<Flex width={getSize(size, isDesktopOrLaptop)}>
-				<Skeleton
-					height={getSize(size, isDesktopOrLaptop)}
-					width={getSize(size, isDesktopOrLaptop)}
-					circle={circle}
-				/>
-			</Flex>
-		);
-	}
-
 	if (isError) {
 		return (
 			<StyledAvatar
@@ -118,6 +106,18 @@ export const Avatar = memo((props: IAvatarProps) => {
 				alt={t('Avatar')}
 				{...otherProps}
 			/>
+		);
+	}
+
+	if (isLoading) {
+		return (
+			<Flex width={getSize(size, isDesktopOrLaptop)}>
+				<Skeleton
+					height={getSize(size, isDesktopOrLaptop)}
+					width={getSize(size, isDesktopOrLaptop)}
+					circle={circle}
+				/>
+			</Flex>
 		);
 	}
 

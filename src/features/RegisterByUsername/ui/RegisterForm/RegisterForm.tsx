@@ -165,6 +165,7 @@ export const RegisterForm = memo(() => {
 											width={isMediumScreen ? '500px' : '100%'}
 											type={type}
 											error={!!formErrors[name]}
+											autoFocus={name === 'username'}
 											{...field}
 										/>
 									)}

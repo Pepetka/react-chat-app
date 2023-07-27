@@ -17,3 +17,10 @@ Normal.args = {
 	src: image,
 	width: '200px',
 };
+
+export const Error = Template.bind({});
+Error.args = {
+	alt: 'Image',
+	src: '',
+	width: '200px',
+};

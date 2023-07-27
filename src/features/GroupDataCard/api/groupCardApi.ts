@@ -14,6 +14,11 @@ export const groupCardApi = rtkApi.injectEndpoints({
 					groupId,
 				},
 			}),
+			transformResponse: (data: Group) => {
+				data.avatar = `${__API__}/images/${data.avatar}`;
+
+				return data;
+			},
 		}),
 	}),
 });

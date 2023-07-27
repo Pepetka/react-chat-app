@@ -45,8 +45,19 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 							chatMembers: Record<string, UserMini>;
 						}) => {
 							updateCachedData((draft) => {
-								draft.messages = data.messages;
-								draft.friend = data.chatMembers[arg.friendId];
+								draft.messages = data.messages.map(([date, messages]) => [
+									date,
+									messages.map((message) => ({
+										...message,
+										img: message.img?.map((img) => `${__API__}/images/${img}`),
+									})),
+								]);
+								draft.friend = {
+									...data.chatMembers[arg.friendId],
+									avatar: `${__API__}/images/${
+										data.chatMembers[arg.friendId].avatar
+									}`,
+								};
 							});
 						},
 					);
@@ -191,11 +202,18 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 		}),
 		sendMessage: build.mutation<
 			string,
-			IMessengerPageApiProps & { text: string; img?: Array<string> }
+			IMessengerPageApiProps & { text?: string; files?: FileList }
 		>({
-			queryFn: async (props) => {
+			queryFn: async (data) => {
 				const socket = getSocket();
-				socket.emit('new_message', props);
+				let filesArray: Array<{ name: string; file: File }> | undefined;
+				if (data.files) {
+					filesArray = Array.from(data.files).map((file) => ({
+						name: file.name,
+						file,
+					}));
+				}
+				socket.emit('new_message', { ...data, files: filesArray });
 
 				return { data: '' };
 			},

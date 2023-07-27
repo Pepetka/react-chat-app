@@ -32,7 +32,21 @@ const postCommentsApi = rtkApi.injectEndpoints({
 									'fetchComments',
 									{ postId: data.postId },
 									() => {
-										return data.comments;
+										const newComments: Array<Comment> = data.comments.map(
+											(comment) => {
+												const newComment: Comment = {
+													...comment,
+													author: {
+														...comment.author,
+														avatar: `${__API__}/images/${comment.author.avatar}`,
+													},
+												};
+
+												return newComment;
+											},
+										);
+
+										return newComments;
 									},
 								),
 							);

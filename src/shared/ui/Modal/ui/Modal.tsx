@@ -73,11 +73,15 @@ export const Modal = (props: IModalProps) => {
 	const { theme } = useTheme();
 
 	useEffect(() => {
+		const body = document.querySelector('body')!;
+
 		if (isOpen) {
 			setOpened(true);
+			body.style.overflow = 'hidden';
 		} else {
 			setTimeout(() => {
 				setOpened(false);
+				body.style.overflow = 'initial';
 			}, 100);
 		}
 	}, [isOpen]);

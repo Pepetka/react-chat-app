@@ -24,6 +24,15 @@ export const socialDataApi = rtkApi.injectEndpoints({
 					userId: profileId,
 				},
 			}),
+			transformResponse: (data: Array<UserMini>) => {
+				data = data.map((user) => {
+					user.avatar = `${__API__}/images/${user.avatar}`;
+
+					return user;
+				});
+
+				return data;
+			},
 			providesTags: (result) => ['social'],
 		}),
 	}),

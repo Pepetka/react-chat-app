@@ -26,6 +26,11 @@ export const profileCardApi = rtkApi.injectEndpoints({
 					profileId,
 				},
 			}),
+			transformResponse: (res: User) => {
+				res.avatar = `${__API__}/images/${res.avatar}`;
+
+				return res;
+			},
 		}),
 		fetchChatId: build.query<string, Omit<IProfileCardApiProps, 'profileId'>>({
 			query: ({ userId, friendId }) => ({

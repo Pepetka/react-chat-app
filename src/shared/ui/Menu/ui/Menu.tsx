@@ -73,6 +73,7 @@ const StyledMenu = styled.div<
 	border: 2px solid var(--primary-color);
 	pointer-events: ${(props) => (props.open ? 'auto' : 'none')};
 	z-index: ${(props) => (props.open ? 'var(--popup-z)' : 'var(--hidden-z)')};
+	padding: 10px;
 `;
 
 const StyledArrow = styled.div<IMenuControls & { open: boolean }>`

@@ -1,30 +1,33 @@
 import React, {
 	ChangeEvent,
-	FormEvent,
 	memo,
 	useCallback,
 	useEffect,
 	useMemo,
+	useRef,
 	useState,
 } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Flex } from '@/shared/ui/Flex';
 import { Button } from '@/shared/ui/Button';
 import SendIcon from '@/shared/assets/send.svg';
-import PaperclipIcon from '@/shared/assets/paperclip.svg';
 import SuccessIcon from '@/shared/assets/check.svg';
-import LookIcon from '@/shared/assets/look.svg';
 import { Icon } from '@/shared/ui/Icon';
-import { AppImg } from '@/shared/ui/AppImg';
 import { Popover } from '@/shared/ui/Popover';
 import { Text } from '@/shared/ui/Text';
+import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
 import { Carousel } from '@/shared/ui/Carousel';
 import { Modal } from '@/shared/ui/Modal';
-import { useKeyboardEvent } from '@/shared/hooks/useKeyboardEvent';
-import { Card } from '@/shared/ui/Card';
+import { AppImg } from '@/shared/ui/AppImg';
 import { NotificationPopover } from '@/shared/ui/NotificationPopover';
+import PaperclipIcon from '@/shared/assets/paperclip.svg';
+import { fileListToPaths } from '@/shared/helpers/fileListToPaths';
+import { Card } from '@/shared/ui/Card';
 
 interface ISendWithImgFormControls {
 	/**
@@ -43,15 +46,6 @@ interface ISendWithImgFormControls {
 
 interface ISendWithImgFormBase extends ISendWithImgFormControls {
 	/**
-	 * Значение текстового инпута
-	 */
-	textValue?: string;
-	/**
-	 * Функция, вызываемая при изменении значения текстового инпута
-	 * @param text - значение текстового инпута
-	 */
-	onChangeText?: (text: string) => void;
-	/**
 	 * Функция, вызываемая при печати
 	 */
 	onTyping?: (e: React.KeyboardEvent) => void;
@@ -62,7 +56,7 @@ interface ISendWithImgFormBase extends ISendWithImgFormControls {
 	/**
 	 * Функция, вызываемая при submit
 	 */
-	onSubmit?: () => void;
+	onSubmit?: (data: { text?: string; files?: FileList }) => void;
 	/**
 	 * Флаг, отвечающий за процесс загрузки
 	 */
@@ -71,35 +65,20 @@ interface ISendWithImgFormBase extends ISendWithImgFormControls {
 	 * Флаг, отвечающий за удачное выполнение submit
 	 */
 	isSuccess?: boolean;
+	/**
+	 * Картинки, отображаемые по-умолчанию
+	 */
+	defaultImages?: Array<string>;
 }
 
 interface ISendWithImgFormWithImg extends ISendWithImgFormBase {
 	withImg: true;
-	/**
-	 * Значение инпута изображений
-	 */
-	imgValue?: string;
-	/**
-	 * Функция, вызываемая при изменении значения инпута изображений
-	 * @param img - Значение инпута изображений
-	 */
-	onChangeImg?: (img: string) => void;
-	/**
-	 * Текст placeholder инпута изображений
-	 */
-	imgPlaceholder?: string;
-	/**
-	 * Флаг, отвечающий за отображение изображений по умолчанию
-	 */
-	previewImgDefault?: boolean;
+	defaultImages?: Array<string>;
 }
 
 interface ISendWithImgFormWithoutImg extends ISendWithImgFormBase {
 	withImg?: false;
-	imgValue?: never;
-	onChangeImg?: never;
-	imgPlaceholder?: never;
-	previewImgDefault?: never;
+	defaultImages?: never;
 }
 
 type SendWithImgFormPropsType =
@@ -151,25 +130,6 @@ const StyledTextArea = styled.textarea<ISendWithImgFormControls>`
 	}
 `;
 
-const StyledImgArea = styled.textarea<ISendWithImgFormControls>`
-	font: var(--font-m);
-	width: 100%;
-	height: 96px;
-	border: 3px solid var(--invert-primary-color);
-	border-radius: ${(props) =>
-		!props.withImg || props.modal ? '10px' : '0 0 10px 10px'};
-	padding: 10px;
-	background: var(--invert-bg-color);
-	color: var(--invert-primary-color);
-	outline: none;
-	resize: none;
-
-	&::placeholder {
-		font: var(--font-m);
-		color: var(--invert-secondary-color);
-	}
-`;
-
 const StyledBtns = styled.div`
 	display: flex;
 	gap: 16px;
@@ -187,35 +147,65 @@ const StyledImgWrapper = styled.div<{ modal: boolean }>`
 	background: var(--invert-bg-color);
 `;
 
+const StyledFileInput = styled.input`
+	display: none;
+`;
+
+const schema = yup
+	.object({
+		files: yup.mixed(),
+		text: yup.string().default(''),
+	})
+	.test('at-least-one-filled', '', function (value) {
+		return !!value.files || !!value.text;
+	});
+
+type Inputs = {
+	text: string;
+	files: any;
+};
+
 export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	const {
-		imgValue = '',
-		textValue = '',
-		onChangeImg,
-		onChangeText,
+		defaultImages = [],
 		onTyping,
 		textPlaceholder = '',
-		imgPlaceholder = '',
 		isLoading = false,
 		onSubmit,
 		isSuccess,
 		withImg = false,
-		previewImgDefault = false,
 		small = false,
 		modal = false,
 	} = props;
 	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 	const isSmallScreenHeight = useMediaQuery({ maxHeight: 768 });
 	const { t } = useTranslation();
-	const [previewImg, setPreviewImg] = useState(previewImgDefault ?? false);
 	const [success, setSuccess] = useState(false);
 	const [isFocus, setIsFocus] = useState(false);
 	const [shiftPressed, setShiftPressed] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenForm, setIsOpenForm] = useState(false);
+	const [images, setImages] = useState<Array<string>>(defaultImages);
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+	const { reset, getValues, control, handleSubmit } = useForm<Inputs>({
+		defaultValues: {
+			text: '',
+			files: undefined,
+		},
+		resolver: yupResolver(schema),
+	});
+	const onSubmitHandle: SubmitHandler<Inputs> = useCallback(
+		(data) => {
+			onSubmit?.(data);
+			reset({ text: '', files: undefined });
+			setImages([]);
+		},
+		[onSubmit, reset],
+	);
 
 	const {
-		onBlur,
+		onBlurHandle,
 		onCloseModal,
 		onCloseModalForm,
 		onFocus,
@@ -240,7 +230,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 			onFocus: () => {
 				setIsFocus(true);
 			},
-			onBlur: () => {
+			onBlurHandle: () => {
 				setIsFocus(false);
 			},
 			onKeyDownShift: () => {
@@ -253,12 +243,23 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		[],
 	);
 
+	const onAddImg = useCallback(() => {
+		fileInputRef.current?.click();
+	}, []);
+
+	const onInputImages = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		const images = fileListToPaths(event.target.files);
+		setImages(images);
+	}, []);
+
 	const onKeyDownEnter = useCallback(
 		(event: KeyboardEvent) => {
 			event.preventDefault();
-			onSubmit?.();
+
+			const data = getValues();
+			onSubmitHandle(data);
 		},
-		[onSubmit],
+		[getValues, onSubmitHandle],
 	);
 
 	useKeyboardEvent({
@@ -296,107 +297,64 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		};
 	}, [isSuccess]);
 
-	const onPreviewImg = useCallback(() => {
-		setPreviewImg((prev) => !prev);
-	}, []);
-
-	const onChangeTextHandle = useCallback(
-		(event: ChangeEvent<HTMLTextAreaElement>) => {
-			onChangeText?.(event.target.value);
-		},
-		[onChangeText],
-	);
-
-	const onChangeImgHandle = useCallback(
-		(event: ChangeEvent<HTMLTextAreaElement>) => {
-			onChangeImg?.(event.target.value);
-		},
-		[onChangeImg],
-	);
-
-	const onSubmitHandle = useCallback(
-		(event: FormEvent<HTMLFormElement>) => {
-			event.preventDefault();
-
-			onSubmit?.();
-		},
-		[onSubmit],
-	);
-
 	const imgForm = useCallback(() => {
 		return (
 			<>
-				{!previewImg || !imgValue ? (
-					<StyledImgArea
-						modal={modal}
-						withImg={withImg}
-						placeholder={imgPlaceholder}
-						value={imgValue}
-						onChange={onChangeImgHandle}
-						small={small}
-					/>
-				) : (
-					<StyledImgWrapper modal={modal}>
-						<Flex width="100%" height="100%" gap="16" align="center">
-							{imgValue.split('\n').map((src, index) => (
-								<AppImg
-									key={index}
-									src={src}
-									height="80px"
-									onClick={onOpenModal}
-								/>
-							))}
-						</Flex>
-					</StyledImgWrapper>
-				)}
+				<StyledImgWrapper modal={modal}>
+					<Flex width="100%" height="100%" gap="16" align="center">
+						{images.map((src, index) => (
+							<AppImg
+								key={index}
+								src={src}
+								height="80px"
+								onClick={onOpenModal}
+							/>
+						))}
+					</Flex>
+				</StyledImgWrapper>
 				<Modal isOpen={isOpen} onCloseModal={onCloseModal}>
 					<Carousel
 						carouselWidth="700px"
 						carouselHeight="700px"
-						imgArray={imgValue.split('\n')}
+						imgArray={images}
 						customPaging
 						keysNav
 					/>
 				</Modal>
 			</>
 		);
-	}, [
-		imgPlaceholder,
-		imgValue,
-		isOpen,
-		modal,
-		onChangeImgHandle,
-		onCloseModal,
-		onOpenModal,
-		previewImg,
-		small,
-		withImg,
-	]);
+	}, [images, isOpen, modal, onCloseModal, onOpenModal]);
 
 	return (
-		<StyledForm onSubmit={onSubmitHandle}>
+		<StyledForm onSubmit={handleSubmit(onSubmitHandle)}>
 			<Flex direction="column">
 				<Flex>
-					<StyledTextArea
-						modal={modal}
-						onFocus={onFocus}
-						onBlur={onBlur}
-						withImg={withImg}
-						placeholder={textPlaceholder}
-						value={textValue}
-						onChange={onChangeTextHandle}
-						onKeyDown={onTyping}
-						small={small}
+					<Controller
+						name="text"
+						control={control}
+						render={({ field: { onBlur, ...field } }) => (
+							<StyledTextArea
+								modal={modal}
+								onFocus={onFocus}
+								onBlur={() => {
+									onBlur();
+									onBlurHandle();
+								}}
+								withImg={withImg}
+								placeholder={textPlaceholder}
+								onKeyDown={onTyping}
+								small={small}
+								{...field}
+							/>
+						)}
 					/>
 					<StyledBtns>
 						{withImg && (
 							<NotificationPopover
-								notification={
-									imgValue ? imgValue.split('\n').length : undefined
-								}
+								notification={images?.length > 0 ? images.length : undefined}
 							>
 								<Button
-									onClick={modal ? onOpenModalForm : onPreviewImg}
+									onClick={modal ? onOpenModalForm : onAddImg}
 									invert
 									width={isSmallScreen || isSmallScreenHeight ? '40px' : '64px'}
 									height={
@@ -408,7 +366,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 							</NotificationPopover>
 						)}
 						<Popover
-							direction="top_center"
+							direction="top_left"
 							trigger={
 								<Button
 									invert
@@ -417,7 +375,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 										isSmallScreen || isSmallScreenHeight ? '40px' : '64px'
 									}
 									type="submit"
-									disabled={isLoading || (!textValue && !imgValue)}
+									disabled={isLoading}
 								>
 									{isLoading ? (
 										'...'
@@ -439,20 +397,48 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 						<Card>
 							<Flex direction="column" gap="8" align="flex-end">
 								{imgForm()}
-								<Button
-									theme="primary"
-									invert={previewImg}
-									width="auto"
-									height="auto"
-									onClick={onPreviewImg}
+								<NotificationPopover
+									notification={images?.length > 0 ? images.length : undefined}
 								>
-									<Icon SvgIcon={LookIcon} size="m" invert={!previewImg} />
-								</Button>
+									<Button
+										onClick={onAddImg}
+										invert
+										width={
+											isSmallScreen || isSmallScreenHeight ? '40px' : '64px'
+										}
+										height={
+											isSmallScreen || isSmallScreenHeight ? '40px' : '64px'
+										}
+									>
+										<Icon SvgIcon={PaperclipIcon} />
+									</Button>
+								</NotificationPopover>
 							</Flex>
 						</Card>
 					</Modal>
 				)}
 			</Flex>
+			<Controller
+				name="files"
+				control={control}
+				render={({ field: { ref, value, onChange, ...field } }) => (
+					<StyledFileInput
+						ref={(instance) => {
+							ref(instance);
+							fileInputRef.current = instance;
+						}}
+						value={value?.fileName}
+						onChange={(event) => {
+							onInputImages(event);
+							onChange(event.target.files);
+						}}
+						type="file"
+						accept="image/*"
+						multiple
+						{...field}
+					/>
+				)}
+			/>
 		</StyledForm>
 	);
 });

@@ -1,4 +1,5 @@
 import { rtkApi } from '@/shared/api/rtkApi';
+import { fileListToPaths } from '@/shared/helpers/fileListToPaths';
 import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
 import { UserMini } from '@/shared/types/userCard';
@@ -20,33 +21,54 @@ export const postApi = rtkApi.injectEndpoints({
 					userId: profileId,
 				},
 			}),
+			transformResponse: (res: Array<Post>) => {
+				res = res.map((post) => {
+					post.img = post.img?.map((img) => `${__API__}/images/${img}`);
+					post.author.avatar = `${__API__}/images/${post.author.avatar}`;
+
+					return post;
+				});
+
+				return res;
+			},
 			providesTags: () => ['post'],
 		}),
 		addPost: build.mutation<
 			Omit<Post, 'author'> & { authorId: string },
 			{
+				text?: string;
+				files?: FileList;
 				authorId: string;
-				img?: Array<string>;
-				text: string;
 				profileId: string;
 				authorData?: UserMini;
 			}
 		>({
-			query: ({ authorId, img, text, profileId }) => ({
-				url: '/posts',
-				method: 'POST',
-				body: {
-					authorId,
-					text,
-					img,
-					profileId,
-				},
-			}),
+			query: ({ authorId, files, text, profileId }) => {
+				const formData = new FormData();
+				if (files) {
+					for (let i = 0; i < files.length; i++) {
+						formData.append('images', files[i], files[i].name);
+					}
+				}
+				formData.append('text', text ?? '');
+				formData.append('authorId', authorId);
+				formData.append('profileId', profileId);
+
+				return {
+					url: '/posts',
+					method: 'POST',
+					body: formData,
+					formData: true,
+				};
+			},
 			async onQueryStarted(
-				{ img, text, profileId, authorData },
+				{ profileId, text, files, authorData },
 				{ dispatch, queryFulfilled, getState },
 			) {
+				const img = fileListToPaths(files);
+
 				const authData = getUserAuthData(getState() as StateSchema);
+
 				const author: UserMini = authorData ?? {
 					id: authData?.id ?? '',
 					name: `${authData?.firstname} ${authData?.lastname}`,
@@ -62,7 +84,7 @@ export const postApi = rtkApi.injectEndpoints({
 								id: String(Math.random()),
 								author,
 								img,
-								text,
+								text: text ?? '',
 								createdAt: `${addZeros(new Date().getHours())}:${addZeros(
 									new Date().getMinutes(),
 								)} ${new Date().toLocaleDateString()}`,

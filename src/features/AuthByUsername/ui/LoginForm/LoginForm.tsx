@@ -56,7 +56,7 @@ export const LoginForm = memo(() => {
 			{
 				name: 'password',
 				type: 'password',
-				label: t('Enter username'),
+				label: t('Enter password'),
 			},
 		],
 		[t],
@@ -121,6 +121,7 @@ export const LoginForm = memo(() => {
 											width={isMediumScreen ? '500px' : '100%'}
 											type={type}
 											error={!!formErrors[name]}
+											autoFocus={name === 'username'}
 											{...field}
 										/>
 									)}

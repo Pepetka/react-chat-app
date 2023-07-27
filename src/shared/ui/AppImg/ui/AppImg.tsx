@@ -80,10 +80,23 @@ export const AppImg = memo((props: IAppImgProps) => {
 			setIsLoading(false);
 			onLoadImg?.({ width: img.width, height: img.height });
 		};
-		img.onerror = () => {
+		img.onerror = (event, source, lineno, colno, error) => {
 			setIsError(true);
 		};
 	}, [onLoadImg, src]);
+
+	if (isError) {
+		return (
+			<StyledImg
+				onClick={onClick}
+				src={errorFallback}
+				width={getImgSize().width}
+				height={getImgSize().height}
+				alt={alt}
+				{...otherProps}
+			/>
+		);
+	}
 
 	if (isLoading) {
 		return (
@@ -101,19 +114,6 @@ export const AppImg = memo((props: IAppImgProps) => {
 			>
 				<Skeleton height="100%" width="100%" />
 			</Flex>
-		);
-	}
-
-	if (isError) {
-		return (
-			<StyledImg
-				onClick={onClick}
-				src={errorFallback}
-				width={getImgSize().width}
-				height={getImgSize().height}
-				alt={alt}
-				{...otherProps}
-			/>
 		);
 	}
 

@@ -70,12 +70,12 @@ const MessengerPage = memo(() => {
 	}, [onUserStopTyping, params.id]);
 
 	const onSendMessageHandle = useCallback(
-		(text: string, images?: Array<string>) => {
+		({ text, files }: { text?: string; files?: FileList }) => {
 			onStopTyping();
 
 			onSendMessage({
 				text,
-				img: images,
+				files,
 				chatId: params.id ?? '',
 				userId: authData?.id ?? '',
 				friendId: searchParams.get('friendId') ?? '',

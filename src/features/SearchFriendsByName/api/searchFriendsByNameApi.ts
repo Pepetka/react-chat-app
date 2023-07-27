@@ -17,6 +17,26 @@ export const searchFriendsByNameApi = rtkApi.injectEndpoints({
 					search,
 				},
 			}),
+			transformResponse: (data: UsersLists) => {
+				data.Followers = data.Followers?.map((follower) => ({
+					...follower,
+					avatar: `${__API__}/images/${follower.avatar}`,
+				}));
+				data.Following = data.Following?.map((following) => ({
+					...following,
+					avatar: `${__API__}/images/${following.avatar}`,
+				}));
+				data.Friends = data.Friends?.map((friend) => ({
+					...friend,
+					avatar: `${__API__}/images/${friend.avatar}`,
+				}));
+				data.Others = data.Others?.map((user) => ({
+					...user,
+					avatar: `${__API__}/images/${user.avatar}`,
+				}));
+
+				return data;
+			},
 		}),
 		addFriend: build.mutation<
 			UserMini,

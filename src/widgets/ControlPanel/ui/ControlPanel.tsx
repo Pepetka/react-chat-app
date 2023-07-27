@@ -17,14 +17,20 @@ const StyledControlPanel = styled.div`
 `;
 
 const AnimatedLang = styled.div<{ opened: boolean }>`
-	transform: translateX(${(props) => (props.opened ? '0' : '132px')});
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translateX(${(props) => (props.opened ? '-132px' : '0')});
 	opacity: ${(props) => (props.opened ? 1 : 0)};
 	pointer-events: ${(props) => (props.opened ? 'auto' : 'none')};
 	transition: all 0.3s linear;
 `;
 
 const AnimatedTheme = styled.div<{ opened: boolean }>`
-	transform: translateX(${(props) => (props.opened ? '0' : '66px')});
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translateX(${(props) => (props.opened ? '-66px' : '0')});
 	opacity: ${(props) => (props.opened ? 1 : 0)};
 	pointer-events: ${(props) => (props.opened ? 'auto' : 'none')};
 	transition: all 0.3s linear;

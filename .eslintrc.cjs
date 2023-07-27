@@ -50,6 +50,7 @@ module.exports = {
 					'wrap',
 					'minHeight',
 					'path',
+					'accept'
 				],
 				ignore: ['ICE'],
 			},

@@ -217,13 +217,13 @@ export const PostCard = memo((props: IPostCardProps) => {
 								width={isSmallScreen ? '40px' : '64px'}
 								height={isSmallScreen ? '40px' : '64px'}
 								trigger={<Icon SvgIcon={MoreIcon} invert />}
-								direction={isSmallScreen ? 'bottom_left' : 'bottom_right'}
+								direction="bottom_left"
 							>
 								<Button
 									onClick={onDeletePostHandle}
 									theme="clear"
-									width="120px"
-									height="48px"
+									width="100px"
+									height="28px"
 								>
 									{deleteLoading ? '...' : t('Delete')}
 								</Button>
