@@ -16,14 +16,6 @@ export const searchGroupsByNameApi = rtkApi.injectEndpoints({
 					search,
 				},
 			}),
-			transformResponse: (data: Array<Group>) => {
-				data = data.map((group) => ({
-					...group,
-					avatar: `${__API__}/images/${group.avatar}`,
-				}));
-
-				return data;
-			},
 		}),
 	}),
 });

@@ -45,19 +45,8 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 							chatMembers: Record<string, UserMini>;
 						}) => {
 							updateCachedData((draft) => {
-								draft.messages = data.messages.map(([date, messages]) => [
-									date,
-									messages.map((message) => ({
-										...message,
-										img: message.img?.map((img) => `${__API__}/images/${img}`),
-									})),
-								]);
-								draft.friend = {
-									...data.chatMembers[arg.friendId],
-									avatar: `${__API__}/images/${
-										data.chatMembers[arg.friendId].avatar
-									}`,
-								};
+								draft.messages = data.messages;
+								draft.friend = data.chatMembers[arg.friendId];
 							});
 						},
 					);

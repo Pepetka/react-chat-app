@@ -21,16 +21,6 @@ export const postApi = rtkApi.injectEndpoints({
 					userId: profileId,
 				},
 			}),
-			transformResponse: (res: Array<Post>) => {
-				res = res.map((post) => {
-					post.img = post.img?.map((img) => `${__API__}/images/${img}`);
-					post.author.avatar = `${__API__}/images/${post.author.avatar}`;
-
-					return post;
-				});
-
-				return res;
-			},
 			providesTags: () => ['post'],
 		}),
 		addPost: build.mutation<

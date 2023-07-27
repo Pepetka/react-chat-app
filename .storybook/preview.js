@@ -2,7 +2,6 @@ import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { ThemeDecorator } from '../src/shared/config/storybook/decorators/ThemeDecorator/ThemeDecorator';
 import { LocalesDecorator } from '../src/shared/config/storybook/decorators/LocalesDecorator/LocalesDecorator';
 import { StoreDecorator } from '../src/shared/config/storybook/decorators/StoreDecorator/StoreDecorator';
-import { RouterDecorator } from '../src/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Theme } from '../src/shared/const/theme';
 
 initialize({ onUnhandledRequest: 'bypass' });

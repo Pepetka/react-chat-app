@@ -16,18 +16,6 @@ export const searchChatsByNameApi = rtkApi.injectEndpoints({
 					search,
 				},
 			}),
-			transformResponse: (data: Array<Chat>) => {
-				data.map((chat) => {
-					chat.user = {
-						...chat.user,
-						avatar: `${__API__}/images/${chat.user.avatar}`,
-					};
-
-					return chat;
-				});
-
-				return data;
-			},
 		}),
 	}),
 });
