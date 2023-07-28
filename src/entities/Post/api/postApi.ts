@@ -14,11 +14,16 @@ interface IPostApiProps {
 
 export const postApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchPostsData: build.query<Array<Post>, Pick<IPostApiProps, 'profileId'>>({
-			query: ({ profileId }) => ({
+		fetchPostsData: build.query<
+			{ posts: Array<Post>; endReached: boolean },
+			Pick<IPostApiProps, 'profileId'> & { page?: number; limit?: number }
+		>({
+			query: ({ profileId, page = 0, limit = 10 }) => ({
 				url: '/posts',
 				params: {
 					userId: profileId,
+					page,
+					limit,
 				},
 			}),
 			providesTags: () => ['post'],
@@ -70,7 +75,7 @@ export const postApi = rtkApi.injectEndpoints({
 						'fetchPostsData',
 						{ profileId },
 						(draft) => {
-							draft.unshift({
+							draft.posts.unshift({
 								id: String(Math.random()),
 								author,
 								img,
@@ -108,8 +113,8 @@ export const postApi = rtkApi.injectEndpoints({
 						'fetchPostsData',
 						{ profileId: userId },
 						(draft) => {
-							const index = draft.findIndex((post) => post.id === postId);
-							draft.splice(index, 1);
+							const index = draft.posts.findIndex((post) => post.id === postId);
+							draft.posts.splice(index, 1);
 						},
 					),
 				);
@@ -260,6 +265,7 @@ export const postApi = rtkApi.injectEndpoints({
 });
 
 export const {
+	useLazyFetchPostsDataQuery,
 	useFetchPostsDataQuery,
 	useAddPostMutation,
 	useDeletePostMutation,

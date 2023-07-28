@@ -17,7 +17,7 @@ export const ThemeDecorator: Decorator = (StoryComponent, { globals }) => {
 	const { globalTheme } = globals;
 
 	return (
-		<App className={globalTheme}>
+		<App className={globalTheme} data-scroll>
 			<StoryComponent />
 		</App>
 	);

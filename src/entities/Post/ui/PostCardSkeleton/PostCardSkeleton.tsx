@@ -14,6 +14,7 @@ import SpeakerIcon from '@/shared/assets/speaker.svg';
 interface IPostCardSkeletonProps {
 	admin: boolean;
 	withComments?: boolean;
+	height?: number;
 }
 
 export const PostCardSkeleton = memo((props: IPostCardSkeletonProps) => {

@@ -107,7 +107,7 @@ Normal.parameters = {
 			return res(ctx.json(groupRole));
 		}),
 		rest.get(`${__API__}posts`, (_req, res, ctx) => {
-			return res(ctx.json(posts));
+			return res(ctx.json({ posts, endReached: true }));
 		}),
 		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
 			return res(ctx.json(postStats));

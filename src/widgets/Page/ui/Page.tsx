@@ -56,7 +56,7 @@ export const Page = (props: IPageProps) => {
 
 	return (
 		<>
-			<StyledPage noAuthPage={isNoAuthPage}>
+			<StyledPage data-scroll noAuthPage={isNoAuthPage}>
 				<ContentWrapper isMessengerPage={isMessengerPage}>
 					{isNoAuthPage && (
 						<BrowserView>

@@ -237,11 +237,11 @@ export const PostCard = memo((props: IPostCardProps) => {
 							text={post.text}
 							theme="primary-invert"
 						/>
-						{post.img && (
+						{!!post.img?.length && (
 							<>
 								<Carousel
 									carouselWidth={isSmallestScreen ? '100%' : '385px'}
-									carouselHeight="auto"
+									carouselHeight="385px"
 									alt={t('Post image')}
 									onImgClick={onOpenModal}
 									imgArray={post.img}
