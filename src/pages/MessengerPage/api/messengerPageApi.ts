@@ -2,7 +2,7 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { UserMini } from '@/shared/types/userCard';
 import { Messages } from '@/entities/Message';
 import { getSocket } from '@/shared/api/socketApi';
-import { socketError } from '@/shared/config/RTKQuery/socketError';
+import { socketError } from '@/shared/config/socket/socketError';
 
 interface IMessengerPageApiProps {
 	chatId: string;

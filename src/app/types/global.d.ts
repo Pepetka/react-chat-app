@@ -5,6 +5,7 @@ declare module '*.svg' {
 	export default SVG;
 }
 declare module '*.jpg';
+declare module '*.png';
 
 type DeepPartial<T> = T extends object
 	? { [P in keyof T]?: DeepPartial<T[P]> }
@@ -12,7 +13,7 @@ type DeepPartial<T> = T extends object
 
 declare const __API__: string;
 declare const __API_SOCKET__: string;
-declare const __STORYBOOK__: string;
+declare const __MOCK_SOCKET__: boolean;
 
 interface ImportMeta {
 	env: {

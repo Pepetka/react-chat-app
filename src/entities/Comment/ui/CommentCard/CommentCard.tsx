@@ -14,10 +14,17 @@ interface ICommentCardProps {
 	admin?: boolean;
 	deleteLoading?: boolean;
 	onDeleteComment?: (commentId: string) => void;
+	'data-testid'?: string;
 }
 
 export const CommentCard = memo((props: ICommentCardProps) => {
-	const { comment, admin, deleteLoading, onDeleteComment } = props;
+	const {
+		comment,
+		admin,
+		deleteLoading,
+		onDeleteComment,
+		'data-testid': dataTestId,
+	} = props;
 	const { t } = useTranslation('profile');
 
 	const onDeleteCommentHandle = useCallback(() => {
@@ -25,7 +32,7 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 	}, [comment.id, onDeleteComment]);
 
 	return (
-		<Flex direction="column" gap="8">
+		<Flex data-testid={dataTestId} direction="column" gap="8">
 			<Flex justify="space-between">
 				<UserCard
 					id={comment.author.id}

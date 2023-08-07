@@ -26,6 +26,7 @@ interface IFriendListProps {
 		friendId: string;
 		search: string;
 	}) => void;
+	'data-testid'?: string;
 }
 
 interface IFriendListBlockProps {
@@ -33,6 +34,7 @@ interface IFriendListBlockProps {
 	friendList?: Array<UserMini>;
 	admin: boolean;
 	onAddFriend?: (friendId: string) => void;
+	'data-testid'?: string;
 }
 
 const StyledHr = styled.div`
@@ -49,7 +51,13 @@ const btnText: Record<BlockTitleType, string> = {
 };
 
 const FriendListBlock = memo((props: IFriendListBlockProps) => {
-	const { friendList, blockTitle, admin, onAddFriend } = props;
+	const {
+		friendList,
+		blockTitle,
+		admin,
+		onAddFriend,
+		'data-testid': dataTestId,
+	} = props;
 	const { t } = useTranslation('friends');
 
 	if (!friendList || (!admin && blockTitle === 'Others')) {
@@ -65,6 +73,7 @@ const FriendListBlock = memo((props: IFriendListBlockProps) => {
 			{friendList.map((friend) => (
 				<Flex key={friend.id} direction="column">
 					<FriendCard
+						data-testid={`${dataTestId}.card.${friend.id}`}
 						friend={friend}
 						withBtn={admin}
 						btnText={t(btnText[blockTitle])}
@@ -77,8 +86,15 @@ const FriendListBlock = memo((props: IFriendListBlockProps) => {
 });
 
 export const FriendList = memo((props: IFriendListProps) => {
-	const { userId, profileId, isError, isLoading, usersLists, onAddFriend } =
-		props;
+	const {
+		userId,
+		profileId,
+		isError,
+		isLoading,
+		usersLists,
+		onAddFriend,
+		'data-testid': dataTestId,
+	} = props;
 	const { t } = useTranslation('friends');
 	const [searchParams] = useSearchParams();
 
@@ -102,7 +118,13 @@ export const FriendList = memo((props: IFriendListProps) => {
 
 	if (isError && !isLoading) {
 		return (
-			<Flex direction="column" gap="24" justify="center" align="center">
+			<Flex
+				data-testid={`${dataTestId}.error`}
+				direction="column"
+				gap="24"
+				justify="center"
+				align="center"
+			>
 				<Text
 					text={t('Something went wrong')}
 					theme="error"
@@ -115,7 +137,7 @@ export const FriendList = memo((props: IFriendListProps) => {
 
 	if (isLoading || !usersLists) {
 		return (
-			<Flex direction="column" gap="24">
+			<Flex data-testid={`${dataTestId}.skeleton`} direction="column" gap="24">
 				{groups.map((group) => {
 					if (userId !== profileId && group === 'Others') {
 						return null;
@@ -141,6 +163,7 @@ export const FriendList = memo((props: IFriendListProps) => {
 		<Flex direction="column" gap="24">
 			{groups.map((group) => (
 				<FriendListBlock
+					data-testid={dataTestId}
 					key={group}
 					blockTitle={group}
 					friendList={usersLists[group]}

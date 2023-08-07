@@ -97,10 +97,12 @@ export const Modal = (props: IModalProps) => {
 
 	return (
 		<Portal>
-			<StyledWrapper opened={isOpen} className={theme}>
-				<Overlay onClick={onCloseModal} />
+			<StyledWrapper data-testid="Modal" opened={isOpen} className={theme}>
+				<Overlay data-testid="Modal.overlay" onClick={onCloseModal} />
 				<StyledContentWrapper>
-					<StyledContent opened={isOpen}>{children}</StyledContent>
+					<StyledContent data-testid="Modal.content" opened={isOpen}>
+						{children}
+					</StyledContent>
 				</StyledContentWrapper>
 			</StyledWrapper>
 		</Portal>

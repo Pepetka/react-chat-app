@@ -83,6 +83,10 @@ interface IInputProps
 	 * Функция, вызываемая при submit
 	 */
 	onClick?: () => void;
+	/**
+	 * Id для тестирования
+	 */
+	'data-testid'?: string;
 }
 
 const getBgColor = (props: IInputControls | ILabelControls) =>
@@ -179,6 +183,7 @@ export const Input = memo(
 			SvgIcon,
 			border = true,
 			onClick,
+			'data-testid': dataTestId,
 			...otherProps
 		} = props;
 		const [focused, setFocused] = useState(false);
@@ -225,6 +230,7 @@ export const Input = memo(
 					paddingInline={paddingInline}
 					border={border}
 					SvgIcon={SvgIcon}
+					data-testid={dataTestId}
 					{...otherProps}
 				/>
 				{SvgIcon && (

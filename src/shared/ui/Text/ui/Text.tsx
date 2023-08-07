@@ -44,6 +44,7 @@ interface ITextProps extends ITitleControls, ITextControls, IWrapperControls {
 	title?: string;
 	text?: string;
 	TitleTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
+	'data-testid'?: string;
 }
 
 const getTextColor = (props: ITitleControls) => {
@@ -97,10 +98,11 @@ export const Text = memo((props: ITextProps) => {
 		size = 'm',
 		width = '100%',
 		nowrap = false,
+		'data-testid': dataTestId,
 	} = props;
 
 	return (
-		<TextWrapper width={width}>
+		<TextWrapper width={width} data-testid={dataTestId}>
 			{title && (
 				<StyledTitle
 					size={size}

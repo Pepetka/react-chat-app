@@ -32,14 +32,6 @@ export const PostList = memo((props: IPostListProps) => {
 	const [page, setPage] = useState(0);
 	const [posts, setPosts] = useState<Array<Post>>([]);
 	const { t } = useTranslation('profile');
-	// const {
-	// 	data: posts,
-	// 	isFetching: isLoading,
-	// 	error,
-	// } = useFetchPostsDataQuery(
-	// 	{ profileId },
-	// 	{ refetchOnMountOrArgChange: true },
-	// );
 	const [loadMore, { data: postsData, isFetching: isLoading, error }] =
 		useLazyFetchPostsDataQuery();
 	const [onDeletePost, { isLoading: deleteLoading }] = useDeletePostMutation();
@@ -100,7 +92,7 @@ export const PostList = memo((props: IPostListProps) => {
 
 	if (isLoading) {
 		return (
-			<Flex direction="column" gap="40">
+			<Flex data-testid="PostList.skeleton" direction="column" gap="40">
 				<PostCardSkeleton admin={userId === profileId} />
 				<PostCardSkeleton admin={userId === profileId} />
 				<PostCardSkeleton admin={userId === profileId} />
@@ -110,7 +102,7 @@ export const PostList = memo((props: IPostListProps) => {
 
 	if (error) {
 		return (
-			<Card width="100%" height="300px">
+			<Card data-testid="PostList.error" width="100%" height="300px">
 				<Flex width="100%" height="100%" align="center">
 					<Text
 						theme="error"
@@ -156,6 +148,7 @@ export const PostList = memo((props: IPostListProps) => {
 					}}
 				>
 					<PostCard
+						data-testid={`PostList.card.${post.id}`}
 						deleteLoading={postId === post.id && deleteLoading}
 						shareLoading={postId === post.id && shareLoading}
 						shareSuccess={postId === post.id && shareSuccess}

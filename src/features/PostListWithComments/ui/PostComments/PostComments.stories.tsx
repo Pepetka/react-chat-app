@@ -3,7 +3,7 @@ import { UserMini } from '@/shared/types/userCard';
 import { Comment } from '@/shared/types/comment';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
-import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
+import { mockServerSocket } from '@/shared/config/socket/socketMock';
 import {
 	WithCallbackDecorator,
 	RouterDecorator,

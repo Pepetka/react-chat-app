@@ -35,6 +35,7 @@ export const SearchFriendsByName = memo((props: ISearchFriendsByNameProps) => {
 				fetchFriends={onFetchFriends}
 			/>
 			<FriendList
+				data-testid="SearchFriendsByName"
 				userId={userId}
 				profileId={profileId}
 				usersLists={usersLists}

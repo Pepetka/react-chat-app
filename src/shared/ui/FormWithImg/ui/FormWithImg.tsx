@@ -26,7 +26,7 @@ import { Modal } from '@/shared/ui/Modal';
 import { AppImg } from '@/shared/ui/AppImg';
 import { NotificationPopover } from '@/shared/ui/NotificationPopover';
 import PaperclipIcon from '@/shared/assets/paperclip.svg';
-import { fileListToPaths } from '@/shared/helpers/fileListToPaths';
+import { fileListToPaths } from '@/shared/helpers/fileListToPaths/fileListToPaths';
 import { Card } from '@/shared/ui/Card';
 
 interface ISendWithImgFormControls {

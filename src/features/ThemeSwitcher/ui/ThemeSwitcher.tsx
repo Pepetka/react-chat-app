@@ -22,6 +22,7 @@ export const ThemeSwitcher = memo((props: ILangSwitcherProps) => {
 
 	return (
 		<Button
+			data-testid="ThemeSwitcher.button"
 			width="50px"
 			height="50px"
 			circle
@@ -29,7 +30,12 @@ export const ThemeSwitcher = memo((props: ILangSwitcherProps) => {
 			theme={theme}
 			invert={invert}
 		>
-			<Flex height="100%" justify="center" align="center">
+			<Flex
+				data-testid={`ThemeSwitcher.${appTheme}`}
+				height="100%"
+				justify="center"
+				align="center"
+			>
 				<Icon
 					SvgIcon={appTheme === Theme.LIGHT ? MoonIcon : SunIcon}
 					invert={!invert}

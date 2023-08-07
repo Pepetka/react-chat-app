@@ -12,6 +12,7 @@ dist
 dist-ssr
 storybook-static
 html-report
+reports
 *.local
 
 # Editor directories and files

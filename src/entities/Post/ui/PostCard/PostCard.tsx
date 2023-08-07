@@ -48,6 +48,7 @@ interface IPostCardProps {
 		userId: string;
 		commentsNum: number;
 	}) => ReactNode;
+	'data-testid'?: string;
 }
 
 export const PostCard = memo((props: IPostCardProps) => {
@@ -66,6 +67,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 		onLikePost,
 		openCommentsDefault = false,
 		commentList,
+		'data-testid': dataTestId,
 	} = props;
 	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
 	const isSmallScreen = useMediaQuery({ maxWidth: 992 });
@@ -201,7 +203,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 	);
 
 	return (
-		<Card width="100%">
+		<Card data-testid={dataTestId} width="100%">
 			<Flex direction="column" gap="16">
 				<>
 					<Flex justify="space-between">

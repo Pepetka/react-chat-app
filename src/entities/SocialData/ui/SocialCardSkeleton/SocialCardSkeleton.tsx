@@ -7,7 +7,12 @@ import { Text } from '@/shared/ui/Text';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { Grid, StyledLine } from '../SocialCard/SocialCard';
 
-export const SocialCardSkeleton = memo(() => {
+interface ISocialCardSkeletonProps {
+	'data-testid'?: string;
+}
+
+export const SocialCardSkeleton = memo((props: ISocialCardSkeletonProps) => {
+	const { 'data-testid': dataTestId } = props;
 	const { t } = useTranslation('profile');
 	const isBigScreen = useMediaQuery({ minWidth: 1400 });
 	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
@@ -28,7 +33,7 @@ export const SocialCardSkeleton = memo(() => {
 	);
 
 	return (
-		<Card width="100%" minHeight="282px">
+		<Card data-testid={dataTestId} width="100%" minHeight="282px">
 			<Flex
 				wrap="wrap"
 				height="100%"

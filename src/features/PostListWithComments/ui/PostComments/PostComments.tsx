@@ -39,6 +39,7 @@ export const PostComments = memo((props: IPostCommentsProps) => {
 				isSuccess={isSuccess}
 			/>
 			<CommentList
+				data-testid="PostComments"
 				postId={postId}
 				userId={userId}
 				skeletonNum={commentsNum}

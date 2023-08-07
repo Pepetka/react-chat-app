@@ -21,6 +21,7 @@ interface ICommentListProps {
 		postId: string;
 	}) => void;
 	deleteLoading: boolean;
+	'data-testid'?: string;
 }
 
 export const CommentList = memo((props: ICommentListProps) => {
@@ -33,6 +34,7 @@ export const CommentList = memo((props: ICommentListProps) => {
 		isError,
 		isLoading,
 		onDeleteComment,
+		'data-testid': dataTestId,
 	} = props;
 	const { t } = useTranslation('profile');
 
@@ -45,7 +47,13 @@ export const CommentList = memo((props: ICommentListProps) => {
 
 	if (isError) {
 		return (
-			<Flex width="100%" height="100px" justify="center" align="center">
+			<Flex
+				data-testid={`${dataTestId}.error`}
+				width="100%"
+				height="100px"
+				justify="center"
+				align="center"
+			>
 				<Text
 					theme="error"
 					text={t('Something went wrong')}
@@ -58,7 +66,7 @@ export const CommentList = memo((props: ICommentListProps) => {
 
 	if (isLoading || !comments) {
 		return (
-			<Flex direction="column" gap="16">
+			<Flex data-testid={`${dataTestId}.skeleton`} direction="column" gap="16">
 				{new Array(skeletonNum ?? 3).fill(0).map((_, index) => (
 					<CommentCardSkeleton key={index} admin={false} />
 				))}
@@ -71,6 +79,7 @@ export const CommentList = memo((props: ICommentListProps) => {
 			{comments?.map((comment) => {
 				return (
 					<CommentCard
+						data-testid={`${dataTestId}.card.${comment.id}`}
 						key={comment.id}
 						comment={comment}
 						admin={userId === comment.author.id}

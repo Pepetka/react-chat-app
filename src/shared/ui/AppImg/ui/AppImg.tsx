@@ -77,11 +77,13 @@ export const AppImg = memo((props: IAppImgProps) => {
 		const img = new Image();
 		img.src = src ?? '';
 		img.onload = () => {
+			setIsError(false);
 			setIsLoading(false);
 			onLoadImg?.({ width: img.width, height: img.height });
 		};
-		img.onerror = (event, source, lineno, colno, error) => {
+		img.onerror = () => {
 			setIsError(true);
+			setIsLoading(false);
 		};
 	}, [onLoadImg, src]);
 

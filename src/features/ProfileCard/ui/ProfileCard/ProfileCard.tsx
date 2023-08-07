@@ -88,12 +88,22 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	}, [onAddFriend, profileId, userId]);
 
 	if (profileLoading || relationsLoading || chatIdLoading) {
-		return <ProfileCardSkeleton showBtns={profileId !== userId} />;
+		return (
+			<ProfileCardSkeleton
+				data-testid={'ProfileCard.skeleton'}
+				showBtns={profileId !== userId}
+			/>
+		);
 	}
 
 	if (profileError || relationsError || addFriendError) {
 		return (
-			<Card width="100%" height="400px" borderRadius={false}>
+			<Card
+				data-testid="ProfileCard.error"
+				width="100%"
+				height="400px"
+				borderRadius={false}
+			>
 				<Flex height="100%" justify="center" align="center">
 					<Text
 						theme="error"
@@ -107,7 +117,12 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 	}
 
 	return (
-		<Card width="100%" minHeight="400px" borderRadius={false}>
+		<Card
+			data-testid="ProfileCard.card"
+			width="100%"
+			minHeight="400px"
+			borderRadius={false}
+		>
 			<Flex wrap="wrap" height="100%" justify="space-between">
 				<Flex width="80px">
 					<Text
@@ -145,7 +160,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 								width={isSmallestScreen ? '100%' : '500px'}
 								textAlign="right"
 								theme="primary-invert"
-								text={profileData?.status}
+								text={profileData?.status ?? ''}
 								size="l"
 							/>
 						</Flex>

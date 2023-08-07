@@ -50,7 +50,8 @@ module.exports = {
 					'wrap',
 					'minHeight',
 					'path',
-					'accept'
+					'accept',
+					'data-testid',
 				],
 				ignore: ['ICE'],
 			},
@@ -100,6 +101,6 @@ module.exports = {
 	globals: {
 		__API__: true,
 		__API_SOCKET__: true,
-		__MODE__: true,
+		__MOCK_SOCKET__: true,
 	},
 };

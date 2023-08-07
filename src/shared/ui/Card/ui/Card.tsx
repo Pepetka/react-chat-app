@@ -45,6 +45,10 @@ interface ICardProps extends ICardControls {
 	 * Содержимое карточки
 	 */
 	children: ReactNode;
+	/**
+	 * Id для тестирования
+	 */
+	'data-testid'?: string;
 }
 
 export const StyledCard = styled.div<ICardControls>`
@@ -82,10 +86,12 @@ export const Card = (props: ICardProps) => {
 		padding = '20px',
 		invert = false,
 		scrollContent = false,
+		'data-testid': dataTestId,
 	} = props;
 
 	return (
 		<StyledCard
+			data-testid={dataTestId}
 			invert={invert}
 			width={width}
 			height={height}

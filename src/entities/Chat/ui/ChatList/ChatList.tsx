@@ -10,15 +10,16 @@ interface IChatListProps {
 	chats?: Array<Chat>;
 	isLoading: boolean;
 	isError: boolean;
+	'data-testid'?: string;
 }
 
 export const ChatList = memo((props: IChatListProps) => {
-	const { chats, isError, isLoading } = props;
+	const { chats, isError, isLoading, 'data-testid': dataTestId } = props;
 	const { t } = useTranslation('chats');
 
 	if (isError && !isLoading) {
 		return (
-			<Flex direction="column" gap="24">
+			<Flex data-testid={`${dataTestId}.error`} direction="column" gap="24">
 				<Text
 					text={t('Something went wrong')}
 					theme="error"
@@ -31,7 +32,7 @@ export const ChatList = memo((props: IChatListProps) => {
 
 	if (isLoading || !chats) {
 		return (
-			<Flex direction="column" gap="24">
+			<Flex data-testid={`${dataTestId}.skeleton`} direction="column" gap="24">
 				<ChatCardSkeleton />
 				<ChatCardSkeleton />
 				<ChatCardSkeleton />
@@ -42,7 +43,11 @@ export const ChatList = memo((props: IChatListProps) => {
 	return (
 		<Flex direction="column" gap="24">
 			{chats.map((chat) => (
-				<ChatCard key={chat.id} chat={chat} />
+				<ChatCard
+					data-testid={`${dataTestId}.card.${chat.id}`}
+					key={chat.id}
+					chat={chat}
+				/>
 			))}
 		</Flex>
 	);

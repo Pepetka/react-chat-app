@@ -57,6 +57,10 @@ interface IFlexProps extends IFlexControls {
 	 * Функция, вызываемая при выходе курсора за пределы компонента
 	 */
 	onMouseOut?: () => void;
+	/**
+	 * Id для тестирования
+	 */
+	'data-testid'?: string;
 }
 
 interface IFlexDiv extends IFlexProps {
@@ -99,6 +103,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 		wrap = 'nowrap',
 		onMouseOut,
 		onMouseOver,
+		'data-testid': dataTestId,
 	} = props;
 
 	const onSubmitHandle = useCallback(
@@ -125,6 +130,7 @@ export const Flex = (props: IFlexDiv | IFlexForm) => {
 			wrap={wrap}
 			onMouseOut={onMouseOut}
 			onMouseOver={onMouseOver}
+			data-testid={dataTestId}
 		>
 			{children}
 		</StyledFlex>

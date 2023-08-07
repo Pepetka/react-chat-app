@@ -28,6 +28,12 @@ class SocketMock {
 		this.#mockOn[ev] = args;
 	};
 
+	resetMockSocket = () => {
+		this.#mockOn = {};
+		this.#mockEmit = {};
+		this.#error = {};
+	};
+
 	mockClientSocket: {
 		on: (ev: string, listener: (data: any) => void) => void;
 		emit: (ev: string, args?: any, listener?: (data: any) => void) => void;
@@ -51,4 +57,5 @@ class SocketMock {
 	};
 }
 
-export const { mockClientSocket, mockServerSocket } = new SocketMock();
+export const { mockClientSocket, mockServerSocket, resetMockSocket } =
+	new SocketMock();

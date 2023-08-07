@@ -147,6 +147,7 @@ export const RegisterForm = memo(() => {
 							size={isMediumScreen ? 'xl' : 'l'}
 						/>
 						<Flex
+							data-testid="RegisterForm.form"
 							FlexTag="form"
 							onSubmit={handleSubmit(onRegister)}
 							direction="column"
@@ -160,6 +161,7 @@ export const RegisterForm = memo(() => {
 									control={control}
 									render={({ field }) => (
 										<Input
+											data-testid={`RegisterForm.input.${name}`}
 											theme="invert"
 											label={label}
 											width={isMediumScreen ? '500px' : '100%'}
@@ -177,7 +179,11 @@ export const RegisterForm = memo(() => {
 								width={isMediumScreen ? '500px' : '100%'}
 							>
 								<Flex FlexTag="label" align="center" gap="8">
-									<input type="checkbox" {...register('agree')} />
+									<input
+										data-testid="RegisterForm.input.agree"
+										type="checkbox"
+										{...register('agree')}
+									/>
 									<Text
 										text={t('I agree with terms')}
 										theme={formErrors.agree ? 'error' : 'primary-invert'}
@@ -201,6 +207,7 @@ export const RegisterForm = memo(() => {
 						</Flex>
 						{isError && (
 							<Text
+								data-testid={'RegisterForm.error.server'}
 								text={
 									(registerError as RegisterErrorType)?.data
 										? (registerError as RegisterErrorType).data.message
@@ -212,6 +219,7 @@ export const RegisterForm = memo(() => {
 						)}
 						{Object.entries(formErrors).map(([name, { message }]) => (
 							<Text
+								data-testid={`RegisterForm.error.${name}`}
 								key={name}
 								text={message}
 								textAlign="center"

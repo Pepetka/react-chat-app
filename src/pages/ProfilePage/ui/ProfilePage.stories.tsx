@@ -12,7 +12,7 @@ import image from '@/shared/assets/images/image.jpg';
 import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
 import { Post, PostStats } from '@/entities/Post/model/types/postSchema';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
-import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
+import { mockServerSocket } from '@/shared/config/socket/socketMock';
 import ProfilePage from './ProfilePage';
 
 export default {

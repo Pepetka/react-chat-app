@@ -108,6 +108,7 @@ export const LoginForm = memo(() => {
 							direction="column"
 							align="center"
 							gap="40"
+							data-testid="LoginForm.form"
 						>
 							{inputsArray.map(({ name, type, label }) => (
 								<Controller
@@ -116,6 +117,7 @@ export const LoginForm = memo(() => {
 									control={control}
 									render={({ field }) => (
 										<Input
+											data-testid={`LoginForm.input.${name}`}
 											theme="invert"
 											label={label}
 											width={isMediumScreen ? '500px' : '100%'}
@@ -156,6 +158,7 @@ export const LoginForm = memo(() => {
 						</Flex>
 						{isError && (
 							<Text
+								data-testid={`LoginForm.error.server`}
 								text={
 									(loginError as LoginErrorType)?.data
 										? (loginError as LoginErrorType).data.message
@@ -167,6 +170,7 @@ export const LoginForm = memo(() => {
 						)}
 						{Object.entries(formErrors).map(([name, { message }]) => (
 							<Text
+								data-testid={`LoginForm.error.${name}`}
 								key={name}
 								text={message}
 								textAlign="center"

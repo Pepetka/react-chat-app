@@ -4,7 +4,7 @@ import { rtkApi } from '@/shared/api/rtkApi';
 import { socialDataApi } from '@/entities/SocialData';
 import { getUserAuthData } from '@/entities/User';
 import { getSocket } from '@/shared/api/socketApi';
-import { socketError } from '@/shared/config/RTKQuery/socketError';
+import { socketError } from '@/shared/config/socket/socketError';
 import { getRelations } from '../model/selectors/profileCardSelectors';
 import { Relations } from '../model/types/profileCardSchema';
 

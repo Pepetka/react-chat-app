@@ -6,6 +6,10 @@ interface IOverlayProps {
 	 * Функция, вызываемая при клике на компонент
 	 */
 	onClick?: () => void;
+	/**
+	 * Id для тестирования
+	 */
+	'data-testid'?: string;
 }
 
 const StyledOverlay = styled.div`
@@ -19,7 +23,7 @@ const StyledOverlay = styled.div`
 `;
 
 export const Overlay = memo((props: IOverlayProps) => {
-	const { onClick } = props;
+	const { onClick, 'data-testid': dataTestId } = props;
 
-	return <StyledOverlay onClick={onClick} />;
+	return <StyledOverlay data-testid={dataTestId} onClick={onClick} />;
 });

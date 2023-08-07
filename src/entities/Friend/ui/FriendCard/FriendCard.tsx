@@ -13,6 +13,7 @@ interface IFriendProps {
 	withBtn?: boolean;
 	initialHover?: boolean;
 	onAddFriend?: (friendId: string) => void;
+	'data-testid'?: string;
 }
 
 const StyledHr = styled.div<{ hover: boolean }>`
@@ -29,6 +30,7 @@ export const FriendCard = memo((props: IFriendProps) => {
 		withBtn = true,
 		onAddFriend,
 		initialHover = false,
+		'data-testid': dataTestId,
 	} = props;
 	const { hover, onMouseOut, onMouseOver } = useHover({
 		initialHover,
@@ -39,7 +41,7 @@ export const FriendCard = memo((props: IFriendProps) => {
 	}, [friend.id, onAddFriend]);
 
 	return (
-		<Flex direction="column" gap="4">
+		<Flex data-testid={dataTestId} direction="column" gap="4">
 			<Flex
 				justify="space-between"
 				onMouseOut={onMouseOut}

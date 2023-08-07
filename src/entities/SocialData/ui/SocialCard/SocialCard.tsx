@@ -93,12 +93,12 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 		);
 
 	if (socialLoading || friendsLoading) {
-		return <SocialCardSkeleton />;
+		return <SocialCardSkeleton data-testid="SocialCard.skeleton" />;
 	}
 
 	if (socialError || friendsError) {
 		return (
-			<Card width="100%" height="282px">
+			<Card data-testid="SocialCard.error" width="100%" height="282px">
 				<Flex height="100%" justify="center" align="center">
 					<Text
 						theme="error"
@@ -122,7 +122,11 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 				<Flex width={isBigScreen ? '60%' : '100%'} justify="center">
 					<Grid isDesktopOrLaptop={!isDesktopOrLaptop}>
 						{cardsData.map(({ link, name, num }) => (
-							<AppLink key={name} to={link}>
+							<AppLink
+								data-testid={`SocialCard.cards.${name}.${num}`}
+								key={name}
+								to={link}
+							>
 								<Card padding="0" width="180px" height="200px" border>
 									<Flex
 										direction="column"
@@ -168,6 +172,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 
 							return (
 								<UserCard
+									data-testid={`SocialCard.friends.${friend.id}`}
 									key={friend.id}
 									id={friend.id}
 									name={friend.name}

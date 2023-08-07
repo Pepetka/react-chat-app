@@ -102,10 +102,15 @@ export const Popover = memo((props: IPopoverProps) => {
 
 	return (
 		<Flex width="auto" height="auto">
-			<div onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+			<div
+				data-testid="Popover.trigger"
+				onMouseOver={onMouseOver}
+				onMouseOut={onMouseOut}
+			>
 				{trigger}
 			</div>
 			<StyledPopover
+				data-testid="Popover.content"
 				ref={popoverRef}
 				onMouseOver={onMouseOver}
 				onMouseOut={onMouseOut}

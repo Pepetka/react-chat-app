@@ -1,4 +1,4 @@
-export const fileListToPaths = (fileList?: FileList | null) => {
+export const fileListToPaths = (fileList?: FileList | Array<File> | null) => {
 	if (!fileList) return [];
 
 	const paths = [];

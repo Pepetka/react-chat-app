@@ -8,14 +8,15 @@ import { Chat } from '../../model/types/chatSchema';
 
 interface IChatCardProps {
 	chat: Chat;
+	'data-testid'?: string;
 }
 
 export const ChatCard = memo((props: IChatCardProps) => {
-	const { chat } = props;
+	const { chat, 'data-testid': dataTestId } = props;
 	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 
 	return (
-		<Flex justify="space-between">
+		<Flex data-testid={dataTestId} justify="space-between">
 			<UserCard
 				width="calc(100% - 170px)"
 				avatarSize={isSmallScreen ? 'm' : 'l'}

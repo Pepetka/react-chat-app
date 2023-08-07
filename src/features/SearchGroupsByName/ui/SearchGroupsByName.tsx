@@ -30,7 +30,12 @@ export const SearchGroupsByName = memo((props: ISearchGroupsByNameProps) => {
 				profileId={profileId}
 				fetchGroups={onFetchGroups}
 			/>
-			<GroupList isLoading={isLoading} isError={isError} groups={groups} />
+			<GroupList
+				data-testid="SearchGroupsByName"
+				isLoading={isLoading}
+				isError={isError}
+				groups={groups}
+			/>
 		</Flex>
 	);
 });

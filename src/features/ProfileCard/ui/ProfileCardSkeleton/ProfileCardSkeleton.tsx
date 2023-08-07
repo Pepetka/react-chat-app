@@ -6,16 +6,22 @@ import { Skeleton } from '@/shared/ui/Skeleton';
 
 interface IProfileCardSkeletonProps {
 	showBtns: boolean;
+	'data-testid'?: string;
 }
 
 export const ProfileCardSkeleton = memo((props: IProfileCardSkeletonProps) => {
-	const { showBtns } = props;
+	const { showBtns, 'data-testid': dataTestId } = props;
 	const isBigScreen = useMediaQuery({ minWidth: 1400 });
 	const isSmallestScreen = useMediaQuery({ maxWidth: 540 });
 	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1200 });
 
 	return (
-		<Card width="100%" minHeight="400px" borderRadius={false}>
+		<Card
+			data-testid={dataTestId}
+			width="100%"
+			minHeight="400px"
+			borderRadius={false}
+		>
 			<Flex wrap="wrap" height="100%" justify="space-between">
 				<Flex width="100px">
 					<Skeleton height="24px" width="100%" />

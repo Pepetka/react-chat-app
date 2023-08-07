@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { User } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
+import { mockServerSocket } from '@/shared/config/socket/socketMock';
 import {
 	WithCallbackDecorator,
 	RouterDecorator,

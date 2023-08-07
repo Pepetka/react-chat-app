@@ -1,7 +1,7 @@
 import { rtkApi } from '@/shared/api/rtkApi';
 import { Comment } from '@/shared/types/comment';
 import { getSocket } from '@/shared/api/socketApi';
-import { socketError } from '@/shared/config/RTKQuery/socketError';
+import { socketError } from '@/shared/config/socket/socketError';
 
 interface ICommentApiProps {
 	postId: string;
@@ -44,8 +44,6 @@ const postCommentsApi = rtkApi.injectEndpoints({
 
 					socket.off('comments');
 				} catch (e) {
-					console.error(e);
-
 					dispatch(
 						socketError({
 							arg,

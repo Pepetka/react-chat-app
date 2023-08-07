@@ -1,3 +1,5 @@
+import { Config } from 'jest';
+
 export default {
 	clearMocks: true,
 	testEnvironment: 'jsdom',
@@ -12,25 +14,30 @@ export default {
 	},
 	moduleNameMapper: {
 		'\\.s?css$': 'identity-obj-proxy',
-		'\\.(gif|ttf|eot|png|jpeg)$': '<rootDir>/test/__mocks__/fileMock.js',
+		'\\.(gif|ttf|eot|png|jpeg|jpg)$': '<rootDir>/test/__mocks__/fileMock.js',
 		'\\.svg$': '<rootDir>/test/__mocks__/jestEmptyComponent.tsx',
 		'^@/(.*)$': '<rootDir>/src/$1',
 	},
 	globals: {
-		__API__: JSON.stringify('http://api/'),
-		__API_SOCKET__: JSON.stringify('ws://api/'),
+		__API__: 'https://api/',
+		__API_SOCKET__: 'wss://api/',
+		__MOCK_SOCKET__: true,
 	},
-	setupFilesAfterEnv: ['<rootDir>/test/config/jest.setup.ts'],
+	setupFilesAfterEnv: [
+		'<rootDir>/test/config/jest.setup.ts',
+		'<rootDir>/test/config/jest.env.ts',
+	],
 	reporters: [
 		'default',
 		[
 			'jest-html-reporters',
 			{
-				publicPath: '<rootDir>/html-report',
+				publicPath: '<rootDir>/reports',
 				filename: 'report.html',
 				openReport: false,
 				inlineSource: true,
 			},
 		],
 	],
-};
+	automock: false,
+} as Config;

@@ -35,12 +35,17 @@ export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 	}, []);
 
 	if (isFetching) {
-		return <GroupDataCardSkeleton />;
+		return <GroupDataCardSkeleton data-testid="GroupDataCard.skeleton" />;
 	}
 
 	if (isError) {
 		return (
-			<Card width="100%" height="400px" borderRadius={false}>
+			<Card
+				data-testid="GroupDataCard.error"
+				width="100%"
+				height="400px"
+				borderRadius={false}
+			>
 				<Flex height="100%" justify="center" align="center">
 					<Text
 						theme="error"
@@ -54,7 +59,12 @@ export const GroupDataCard = memo((props: IGroupDataCardProps) => {
 	}
 
 	return (
-		<Card width="100%" minHeight="400px" borderRadius={false}>
+		<Card
+			data-testid="GroupDataCard.card"
+			width="100%"
+			minHeight="400px"
+			borderRadius={false}
+		>
 			<Flex
 				wrap={isDesktopOrLaptop ? 'nowrap' : 'wrap'}
 				height="100%"

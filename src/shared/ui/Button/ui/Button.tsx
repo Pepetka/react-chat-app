@@ -32,7 +32,9 @@ interface IButtonControls {
 
 interface IButtonProps
 	extends IButtonControls,
-		ButtonHTMLAttributes<HTMLButtonElement> {}
+		ButtonHTMLAttributes<HTMLButtonElement> {
+	'data-testid'?: string;
+}
 
 const StyledButton = styled.button<IButtonControls>`
 	padding-inline: ${(props) => (props.padding ? '20px' : 'none')};
@@ -92,11 +94,13 @@ export const Button = memo(
 			width,
 			invert = false,
 			circle = false,
+			'data-testid': dataTestId,
 			...otherProps
 		} = props;
 
 		return (
 			<StyledButton
+				data-testid={dataTestId}
 				theme={theme}
 				type={type}
 				width={width}

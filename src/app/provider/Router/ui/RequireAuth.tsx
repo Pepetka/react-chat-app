@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { ReactElement } from 'react';
 import { getUserAuthData } from '@/entities/User';
 import { getLoginPagePath, getProfilePagePath } from '@/shared/const/router';
 
 interface RequireAuthProps {
-	children: JSX.Element;
+	children: ReactElement;
 	authOnly: boolean;
 }
 

@@ -48,6 +48,10 @@ interface IUserCardProps {
 	 * Эндпоинт, на который перейдет пользователь при клике на компонент
 	 */
 	href?: string;
+	/**
+	 * Id для тестирования
+	 */
+	'data-testid'?: string;
 }
 
 const textObject: Record<TextSizeType, TextSizeType | 's'> = {
@@ -68,11 +72,16 @@ export const UserCard = memo((props: IUserCardProps) => {
 		additionalText,
 		width,
 		href = getProfilePagePath(id),
+		'data-testid': dataTestId,
 	} = props;
 
 	return (
 		<AppLink to={href} key={id} width={width}>
-			<Flex gap="8" align={additionalText ? 'flex-start' : 'center'}>
+			<Flex
+				data-testid={dataTestId}
+				gap="8"
+				align={additionalText ? 'flex-start' : 'center'}
+			>
 				<Avatar
 					size={avatarSize}
 					circle

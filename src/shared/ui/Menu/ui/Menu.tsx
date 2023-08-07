@@ -151,6 +151,7 @@ export const Menu = memo((props: IMenuProps) => {
 	return (
 		<Flex width={width} height={height}>
 			<Button
+				data-testid="Menu.trigger"
 				onClick={onToggleMenu}
 				theme="clear"
 				width={width}
@@ -160,6 +161,7 @@ export const Menu = memo((props: IMenuProps) => {
 				{trigger}
 			</Button>
 			<StyledMenu
+				data-testid="Menu.content"
 				contentWidth={contentWidth}
 				ref={menuRef}
 				direction={direction}

@@ -3,7 +3,7 @@ import { StateSchema } from '@/app/provider/Store';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
 import { Messages } from '@/entities/Message';
-import { mockServerSocket } from '@/shared/config/storybook/mocks/socketMock/socketMock';
+import { mockServerSocket } from '@/shared/config/socket/socketMock';
 import {
 	PageDecorator,
 	RouterDecorator,

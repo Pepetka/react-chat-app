@@ -4,13 +4,23 @@ import { Card } from '@/shared/ui/Card';
 import { Flex } from '@/shared/ui/Flex';
 import { Skeleton } from '@/shared/ui/Skeleton';
 
-export const GroupDataCardSkeleton = memo(() => {
+interface IGroupDataCardSkeleton {
+	'data-testid'?: string;
+}
+
+export const GroupDataCardSkeleton = memo((props: IGroupDataCardSkeleton) => {
+	const { 'data-testid': dataTestId } = props;
 	const isDesktopOrLaptop = useMediaQuery({ minWidth: 1400 });
 	const isDesktopOrLaptopMini = useMediaQuery({ minWidth: 1200 });
 	const isSmallestScreen = useMediaQuery({ maxWidth: 540 });
 
 	return (
-		<Card width="100%" minHeight="400px" borderRadius={false}>
+		<Card
+			data-testid={dataTestId}
+			width="100%"
+			minHeight="400px"
+			borderRadius={false}
+		>
 			<Flex
 				wrap={isDesktopOrLaptop ? 'nowrap' : 'wrap'}
 				justify="center"

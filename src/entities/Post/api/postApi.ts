@@ -1,9 +1,9 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { fileListToPaths } from '@/shared/helpers/fileListToPaths';
+import { fileListToPaths } from '@/shared/helpers/fileListToPaths/fileListToPaths';
 import { getUserAuthData } from '@/entities/User';
 import { StateSchema } from '@/app/provider/Store';
 import { UserMini } from '@/shared/types/userCard';
-import { addZeros } from '@/shared/helpers/addZeros';
+import { addZeros } from '@/shared/helpers/addZeros/addZeros';
 import { Post, PostStats, UserPost } from '../model/types/postSchema';
 
 interface IPostApiProps {
@@ -266,7 +266,6 @@ export const postApi = rtkApi.injectEndpoints({
 
 export const {
 	useLazyFetchPostsDataQuery,
-	useFetchPostsDataQuery,
 	useAddPostMutation,
 	useDeletePostMutation,
 	useSharePostMutation,

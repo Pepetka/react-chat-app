@@ -24,14 +24,14 @@ const config: StorybookConfig = {
 				}),
 			],
 			define: {
-				__API__: JSON.stringify('https://api/'),
-				__API_SOCKET__: JSON.stringify('wss://api/'),
-				__STORYBOOK__: true,
+				__API__: 'https://api/',
+				__API_SOCKET__: 'wss://api/',
+				__MOCK_SOCKET__: true,
 			},
 		});
 	},
 	docs: {
-		autodocs: true,
+		autodocs: false,
 	},
 };
 export default config;

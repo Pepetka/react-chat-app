@@ -10,15 +10,16 @@ interface IChatListProps {
 	groups?: Array<Group>;
 	isLoading: boolean;
 	isError: boolean;
+	'data-testid'?: string;
 }
 
 export const GroupList = memo((props: IChatListProps) => {
-	const { groups, isError, isLoading } = props;
+	const { groups, isError, isLoading, 'data-testid': dataTestId } = props;
 	const { t } = useTranslation('group');
 
 	if (isError && !isLoading) {
 		return (
-			<Flex direction="column" gap="24">
+			<Flex data-testid={`${dataTestId}.error`} direction="column" gap="24">
 				<Text
 					text={t('Something went wrong')}
 					theme="error"
@@ -31,7 +32,7 @@ export const GroupList = memo((props: IChatListProps) => {
 
 	if (isLoading || !groups) {
 		return (
-			<Flex direction="column" gap="24">
+			<Flex data-testid={`${dataTestId}.skeleton`} direction="column" gap="24">
 				<GroupCardSkeleton />
 				<GroupCardSkeleton />
 				<GroupCardSkeleton />
@@ -42,7 +43,11 @@ export const GroupList = memo((props: IChatListProps) => {
 	return (
 		<Flex direction="column" gap="24">
 			{groups.map((group) => (
-				<GroupCard key={group.id} group={group} />
+				<GroupCard
+					data-testid={`${dataTestId}.card.${group.id}`}
+					key={group.id}
+					group={group}
+				/>
 			))}
 		</Flex>
 	);

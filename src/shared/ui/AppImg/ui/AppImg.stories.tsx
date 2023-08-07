@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { AppImg } from './AppImg';
 
 export default {

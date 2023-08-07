@@ -8,14 +8,15 @@ import { Group } from '../../model/types/groupSchema';
 
 interface IGroupCardProps {
 	group: Group;
+	'data-testid'?: string;
 }
 
 export const GroupCard = memo((props: IGroupCardProps) => {
-	const { group } = props;
+	const { group, 'data-testid': dataTestId } = props;
 	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 
 	return (
-		<Flex justify="space-between">
+		<Flex data-testid={dataTestId} justify="space-between">
 			<UserCard
 				width="calc(100% - 170px)"
 				avatarSize={isSmallScreen ? 'm' : 'l'}
