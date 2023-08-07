@@ -5,8 +5,8 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:promise/recommended',
 		'plugin:react-hooks/recommended',
-		'plugin:prettier/recommended',
 		'plugin:i18next/recommended',
+		'plugin:prettier/recommended'
 	],
 	parser: '@typescript-eslint/parser',
 	plugins: [
@@ -18,11 +18,11 @@ module.exports = {
 	],
 	ignorePatterns: ['dist/**/*', 'storybook-static/**/*'],
 	rules: {
-		'prettier/prettier': [
-			'error',
+		"prettier/prettier": [
+			"error",
 			{
-				endOfLine: 'crlf',
-			},
+				"endOfLine": "auto"
+			}
 		],
 		'unused-imports/no-unused-imports': 'error',
 		'i18next/no-literal-string': [
