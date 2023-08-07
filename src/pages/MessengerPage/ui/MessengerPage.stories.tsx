@@ -35,12 +35,12 @@ const state: DeepPartial<StateSchema> = {
 const response: { messages: Messages; chatMembers: Record<string, UserMini> } =
 	{
 		chatMembers: {
-			'0': {
+			0: {
 				id: '0',
 				name: 'Vlad Kuznetsov',
 				avatar: image,
 			},
-			'1': {
+			1: {
 				id: '1',
 				name: 'Ivan Ivanov',
 				avatar: image,

@@ -7,6 +7,6 @@ describe('addZeros', () => {
 			expect(addZeros(i)).toEqual(`0${i}`);
 		}
 
-		expect(addZeros(10)).toEqual(`10`);
+		expect(addZeros(10)).toEqual('10');
 	});
 });

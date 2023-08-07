@@ -158,7 +158,7 @@ export const LoginForm = memo(() => {
 						</Flex>
 						{isError && (
 							<Text
-								data-testid={`LoginForm.error.server`}
+								data-testid={'LoginForm.error.server'}
 								text={
 									(loginError as LoginErrorType)?.data
 										? (loginError as LoginErrorType).data.message

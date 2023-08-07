@@ -15,10 +15,10 @@ describe('Menu', () => {
 
 		await user.click(screen.getByTestId('Menu.trigger'));
 
-		expect(screen.getByTestId('Menu.content')).toHaveStyle(`display: flex`);
+		expect(screen.getByTestId('Menu.content')).toHaveStyle('display: flex');
 
 		await user.click(screen.getByTestId('Menu.trigger'));
 
-		expect(screen.getByTestId('Menu.content')).toHaveStyle(`display: none`);
+		expect(screen.getByTestId('Menu.content')).toHaveStyle('display: none');
 	});
 });

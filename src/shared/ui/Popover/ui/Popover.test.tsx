@@ -15,10 +15,10 @@ describe('Popover', () => {
 
 		await user.hover(screen.getByTestId('Popover.trigger'));
 
-		expect(screen.getByTestId('Popover.content')).toHaveStyle(`display: flex`);
+		expect(screen.getByTestId('Popover.content')).toHaveStyle('display: flex');
 
 		await user.unhover(screen.getByTestId('Popover.trigger'));
 
-		expect(screen.getByTestId('Popover.content')).toHaveStyle(`display: none`);
+		expect(screen.getByTestId('Popover.content')).toHaveStyle('display: none');
 	});
 });
