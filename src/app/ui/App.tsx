@@ -8,7 +8,7 @@ import { NavBar } from '@/widgets/NavBar';
 import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
 import { Page } from '@/widgets/Page';
 import { ControlPanel } from '@/widgets/ControlPanel';
-import { AppRouter } from '../provider/Router/ui/AppRouter';
+import { AppRouter } from '../provider/Router/ui';
 import { useInitAppMutation, useTermAppMutation } from '../api/appApi';
 
 export const App = memo(() => {

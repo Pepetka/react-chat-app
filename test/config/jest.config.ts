@@ -33,7 +33,7 @@ export default {
 			'jest-html-reporters',
 			{
 				publicPath: '<rootDir>/reports',
-				filename: 'report.html',
+				filename: 'index.html',
 				openReport: false,
 				inlineSource: true,
 			},
