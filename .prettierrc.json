@@ -5,5 +5,5 @@
 	"singleQuote": true,
 	"trailingComma": "all",
 	"bracketSameLine": false,
-	"endOfLine": "lf"
+	"endOfLine": "crlf"
 }

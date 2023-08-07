@@ -6,7 +6,6 @@ module.exports = {
 		'plugin:promise/recommended',
 		'plugin:react-hooks/recommended',
 		'plugin:i18next/recommended',
-		'plugin:prettier/recommended',
 	],
 	parser: '@typescript-eslint/parser',
 	plugins: [
@@ -19,7 +18,6 @@ module.exports = {
 	ignorePatterns: ['dist/**/*', 'storybook-static/**/*'],
 	rules: {
 		'unused-imports/no-unused-imports': 'error',
-		'prettier/prettier': 'error',
 		'i18next/no-literal-string': [
 			'error',
 			{

@@ -66,10 +66,11 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: 'reports'
+        if: always()
       - name: Deploy to GitHub Pages
         id: deployment
-        if: always()
         uses: actions/deploy-pages@v1
+        if: always()
 
   building:
     needs: testing
