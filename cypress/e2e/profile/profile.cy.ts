@@ -17,7 +17,7 @@ describe('profile', () => {
 						cy.addComment(this.post3.id).as('comment3');
 					});
 
-				cy.visit(getProfilePagePath(this.userData.id));
+				cy.visitPage('ProfilePage', getProfilePagePath(this.userData.id));
 			});
 	});
 
@@ -34,74 +34,44 @@ describe('profile', () => {
 	});
 
 	it('Get posts', function () {
-		cy.getByTestId('ProfilePage', { timeout: 3000 });
-
-		cy.getByTestId('Page').scrollTo('bottom');
-		cy.wait(500).getByTestId('Page').scrollTo('bottom');
-		cy.getByTestId('PostList.card').should('have.length', 3);
+		cy.testPostCardsNum(3);
 	});
 
 	it('Add/Delete post', function () {
-		cy.getByTestId('ProfilePage', { timeout: 3000 });
-
-		const form = cy.getByTestId('PostForm.form');
-		form.clear().type('New test post{shift}{enter}');
-
-		cy.wait(500);
-
-		cy.getByTestId('Page').scrollTo('bottom');
-		cy.wait(500).getByTestId('Page').scrollTo('bottom');
-
-		cy.getByTestId('PostList.card').should('have.length', 4);
+		cy.addNewCard('PostForm', 'New test post');
+		cy.testPostCardsNum(4);
 
 		const newPost = cy.contains(
 			'[data-testid^="PostList.card"]',
 			'New test post',
 		);
-
 		newPost.within(() => {
-			cy.getByTestId('Menu.trigger').click();
-			cy.getByTestId('PostCard.delete').click();
+			cy.deleteCard('PostCard');
 		});
 
-		cy.wait(500);
-
-		cy.getByTestId('PostList.card').should('have.length', 3);
+		cy.testPostCardsNum(3);
 	});
 
 	it('Add/Delete comment', function () {
-		cy.getByTestId('ProfilePage', { timeout: 3000 });
-
-		cy.getByTestId('Page').scrollTo('bottom');
-		cy.wait(500).getByTestId('Page').scrollTo('bottom');
+		cy.testPostCardsNum(3);
 
 		const post = cy.getByTestId('PostList.card').last();
-
 		post.within(() => {
-			cy.getByTestId('PostCard.comments.number.text').should('have.text', 3);
-			cy.getByTestId('PostCard.comments.button').click();
+			cy.testStatClick('comments', 3, 3);
 			cy.getByTestId('PostComments.card').should('have.length', 3);
 
-			const form = cy.getByTestId('PostComments.form');
-			form.clear().type('New test comment{shift}{enter}');
-
-			cy.wait(500);
-
-			cy.getByTestId('PostCard.comments.number.text').should('have.text', 4);
-			cy.getByTestId('PostComments.card').should('have.length', 4);
+			cy.addNewCard('PostComments', 'New test comment');
+			cy.testCommentsCardNum(4);
 
 			const newComment = cy.contains(
 				'[data-testid^="PostComments.card"]',
 				'New test comment',
 			);
-
 			newComment.within(() => {
-				cy.getByTestId('Menu.trigger').click();
-				cy.getByTestId('CommentCard.delete').click();
+				cy.deleteCard('CommentCard');
 			});
 
-			cy.getByTestId('PostCard.comments.number.text').should('have.text', 3);
-			cy.getByTestId('PostComments.card').should('have.length', 3);
+			cy.testCommentsCardNum(3);
 		});
 	});
 });

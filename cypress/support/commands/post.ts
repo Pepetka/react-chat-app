@@ -93,11 +93,13 @@ export const deleteComment = (id: string, token?: string) => {
 };
 
 export const testPostCardsNum = (number: number) => {
-	cy.getByTestId('Page').scrollTo('bottom');
-	cy.wait(500);
-	cy.getByTestId('Page').scrollTo('bottom');
-
+	if (number) cy.getByTestId('PostList.card').last().scrollIntoView();
 	cy.getByTestId('PostList.card').should('have.length', number);
+};
+
+export const testCommentsCardNum = (number: number) => {
+	cy.getByTestId('PostCard.comments.number.text').should('have.text', number);
+	cy.getByTestId('PostComments.card').should('have.length', number);
 };
 
 export const testStatClick = (statName: string, before = 0, after = 1) => {
@@ -123,11 +125,18 @@ export const testChangeRelations = (
 	cy.getByTestId(`ProfileCard.relations.${after}`).should('exist');
 };
 
+export const addNewCard = (formName: string, text: string) => {
+	const form = cy.getByTestId(`${formName}.form`);
+	form.clear().type(`${text}{shift}{enter}`);
+	cy.wait(500);
+};
+
 declare global {
 	namespace Cypress {
 		interface Chainable {
 			addPost(token?: string, authData?: User): Chainable<Post>;
 			deletePost(id: string, token?: string, authData?: User): Chainable<void>;
+			addNewCard(formName: string, text: string): Chainable<void>;
 			addComment(
 				postId: string,
 				token?: string,
@@ -135,6 +144,7 @@ declare global {
 			): Chainable<Comment>;
 			deleteComment(id: string, token?: string): Chainable<void>;
 			testPostCardsNum(number: number): Chainable<void>;
+			testCommentsCardNum(number: number): Chainable<void>;
 			testStatClick(
 				statName: string,
 				before?: number,
