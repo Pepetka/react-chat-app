@@ -135,7 +135,7 @@ export const RegisterForm = memo(() => {
 			<Card
 				padding="16px"
 				border
-				width={!isSmallestScreen ? '570px' : '90%'}
+				width={!isSmallestScreen ? '570px' : '100%'}
 				minHeight={!isSmallestScreen ? '1000px' : '832px'}
 			>
 				<Flex width="100%" height="100%" justify="center" align="center">
@@ -178,7 +178,7 @@ export const RegisterForm = memo(() => {
 								align="center"
 								width={isMediumScreen ? '500px' : '100%'}
 							>
-								<Flex FlexTag="label" align="center" gap="8">
+								<Flex width="50%" FlexTag="label" align="center" gap="8">
 									<input
 										data-testid="RegisterForm.input.agree"
 										type="checkbox"
@@ -190,7 +190,7 @@ export const RegisterForm = memo(() => {
 									/>
 								</Flex>
 								<Button
-									width={isMediumScreen ? '180px' : '120px'}
+									width={isMediumScreen ? '180px' : '140px'}
 									height="50px"
 									disabled={isLoading}
 									theme="primary"

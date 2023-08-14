@@ -59,6 +59,16 @@ jobs:
       - name: unit testing
         run: npm run test:unit
         if: always()
+      - name: e2e testing
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          record: true
+          start: npm run dev:server
+          wait-on: 'http://localhost:5173'
+          config: baseUrl=http://localhost:5173
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v2
         if: always()

@@ -6,7 +6,7 @@ module.exports = {
 		'plugin:promise/recommended',
 		'plugin:react-hooks/recommended',
 		'plugin:i18next/recommended',
-		'plugin:prettier/recommended'
+		'plugin:prettier/recommended',
 	],
 	parser: '@typescript-eslint/parser',
 	plugins: [
@@ -15,15 +15,23 @@ module.exports = {
 		'i18next',
 		'prettier',
 		'unused-imports',
+		'cypress',
 	],
 	ignorePatterns: ['dist/**/*', 'storybook-static/**/*'],
+	env: {
+		'cypress/globals': true,
+	},
 	rules: {
-		"prettier/prettier": [
-			"error",
+		'prettier/prettier': [
+			'error',
 			{
-				"endOfLine": "auto"
-			}
+				endOfLine: 'auto',
+			},
 		],
+		'promise/no-nesting': 'off',
+		'promise/catch-or-return': 'off',
+		'promise/always-return': 'off',
+		'@typescript-eslint/no-namespace': 'off',
 		'unused-imports/no-unused-imports': 'error',
 		'i18next/no-literal-string': [
 			'error',

@@ -50,8 +50,20 @@ describe('SocialCard', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.getAllByTestId((id) => id.startsWith('SocialCard.cards')),
-			).toHaveLength(3);
+				screen.getByTestId((id) =>
+					id.startsWith('SocialCard.cards.Followers.number.title'),
+				),
+			).toHaveTextContent('3');
+			expect(
+				screen.getByTestId((id) =>
+					id.startsWith('SocialCard.cards.Following.number.title'),
+				),
+			).toHaveTextContent('3');
+			expect(
+				screen.getByTestId((id) =>
+					id.startsWith('SocialCard.cards.Groups.number.title'),
+				),
+			).toHaveTextContent('3');
 			expect(
 				screen.getAllByTestId((id) => id.startsWith('SocialCard.friends')),
 			).toHaveLength(3);

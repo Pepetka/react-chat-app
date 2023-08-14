@@ -222,6 +222,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 								direction="bottom_left"
 							>
 								<Button
+									data-testid="PostCard.delete"
 									onClick={onDeletePostHandle}
 									theme="clear"
 									width="100px"
@@ -296,6 +297,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 												<Skeleton height="24px" width="50px" margin="4px" />
 											) : (
 												<Text
+													data-testid={`PostCard.${name}.number`}
 													width="50px"
 													text={num ?? '0'}
 													textAlign={isSmallScreen ? 'center' : 'right'}
@@ -304,6 +306,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 												/>
 											)}
 											<Button
+												data-testid={`PostCard.${name}.button`}
 												onClick={onClick}
 												invert={isPressed}
 												disabled={buttonDisabled}

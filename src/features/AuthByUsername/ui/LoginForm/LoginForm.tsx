@@ -91,7 +91,7 @@ export const LoginForm = memo(() => {
 			<Card
 				padding="16px"
 				border
-				width={!isSmallestScreen ? '570px' : '90%'}
+				width={!isSmallestScreen ? '570px' : '100%'}
 				minHeight={!isSmallestScreen ? '600px' : '412px'}
 			>
 				<Flex height="100%" justify="center" align="center">
@@ -134,14 +134,16 @@ export const LoginForm = memo(() => {
 								align="center"
 								width={isMediumScreen ? '500px' : '100%'}
 							>
-								<a href="#">
-									<Text
-										text={t('Forgot your password?')}
-										theme="primary-invert"
-									/>
-								</a>
+								<Flex width="40%" align="center">
+									<a href="#">
+										<Text
+											text={t('Forgot your password?')}
+											theme="primary-invert"
+										/>
+									</a>
+								</Flex>
 								<Button
-									width={isMediumScreen ? '180px' : '120px'}
+									width={isMediumScreen ? '180px' : '140px'}
 									height="50px"
 									disabled={isLoading}
 									theme="primary"

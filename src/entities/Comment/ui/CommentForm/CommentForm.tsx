@@ -18,10 +18,18 @@ interface ICommentFormProps {
 	}) => void;
 	addLoading: boolean;
 	isSuccess: boolean;
+	'data-testid'?: string;
 }
 
 export const CommentForm = memo((props: ICommentFormProps) => {
-	const { postId, userId, addLoading, isSuccess, onAddComment } = props;
+	const {
+		postId,
+		userId,
+		addLoading,
+		isSuccess,
+		onAddComment,
+		'data-testid': dataTestId,
+	} = props;
 	const { t } = useTranslation('profile');
 
 	const onSubmit = useCallback(
@@ -36,6 +44,7 @@ export const CommentForm = memo((props: ICommentFormProps) => {
 	return (
 		<DynamicModuleLoader reducerKey="comment" reducer={commentReducer}>
 			<FormWithImg
+				data-testid={`${dataTestId}.form`}
 				withImg={false}
 				textPlaceholder={t('Write your comment')}
 				isSuccess={isSuccess}

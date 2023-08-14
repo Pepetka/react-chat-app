@@ -29,9 +29,10 @@ export const PostComments = memo((props: IPostCommentsProps) => {
 		useAddCommentMutation();
 
 	return (
-		<Flex direction="column" gap="16">
+		<Flex data-testid="PostComments" direction="column" gap="16">
 			<Text title={t('Comments')} theme="primary-invert" size="l" />
 			<CommentForm
+				data-testid="PostComments"
 				postId={postId}
 				userId={userId}
 				onAddComment={onAddComment}

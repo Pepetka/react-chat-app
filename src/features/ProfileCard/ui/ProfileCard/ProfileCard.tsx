@@ -176,12 +176,14 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 						{profileId !== userId && (
 							<Flex justify={isBigScreen ? 'end' : 'center'} gap="24">
 								<Button
+									data-testid="ProfileCard.relations.button"
 									onClick={onAddFriendHandle}
 									width={isDesktopOrLaptop ? '180px' : '150px'}
 									height={isDesktopOrLaptop ? '50px' : '32px'}
 									invert
 								>
 									<Text
+										data-testid={`ProfileCard.relations.${relationsData?.relations}`}
 										textAlign="center"
 										size={isDesktopOrLaptop ? 'l' : 'm'}
 										text={t(

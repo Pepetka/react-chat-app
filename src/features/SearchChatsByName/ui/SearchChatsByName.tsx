@@ -24,7 +24,11 @@ export const SearchChatsByName = memo((props: ISearchChatsByNameProps) => {
 
 	return (
 		<Flex direction="column" gap="24">
-			<ChatForm userId={userId} fetchChats={onFetchChats} />
+			<ChatForm
+				data-testid="SearchChatsByName"
+				userId={userId}
+				fetchChats={onFetchChats}
+			/>
 			<ChatList
 				data-testid="SearchChatsByName"
 				isLoading={isLoading}

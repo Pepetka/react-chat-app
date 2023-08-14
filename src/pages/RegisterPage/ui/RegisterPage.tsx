@@ -9,7 +9,12 @@ const StyledRegisterPage = styled.div`
 
 const RegisterPage = memo(() => {
 	return (
-		<Flex justify="center" align="center" width="100%">
+		<Flex
+			data-testid="RegisterPage"
+			justify="center"
+			align="center"
+			width="100%"
+		>
 			<StyledRegisterPage>
 				<RegisterForm />
 			</StyledRegisterPage>

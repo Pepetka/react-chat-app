@@ -10,7 +10,12 @@ const GroupsListPage = memo(() => {
 	const params = useParams<{ id: string }>();
 
 	return (
-		<Card height="100%" width="100%" borderRadius={false}>
+		<Card
+			data-testid="GroupsListPage"
+			height="100%"
+			width="100%"
+			borderRadius={false}
+		>
 			<SearchGroupsByName
 				userId={authData?.id ?? ''}
 				profileId={params.id ?? ''}

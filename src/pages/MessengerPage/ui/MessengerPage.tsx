@@ -147,6 +147,7 @@ const MessengerPage = memo(() => {
 
 	return (
 		<Flex
+			data-testid="MessengerPage"
 			direction="column"
 			gap="16"
 			height={

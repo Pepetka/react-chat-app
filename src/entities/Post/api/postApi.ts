@@ -101,8 +101,8 @@ export const postApi = rtkApi.injectEndpoints({
 		>({
 			query: ({ postId, userId }) => ({
 				url: '/posts',
-				method: 'PUT',
-				params: {
+				method: 'DELETE',
+				body: {
 					postId,
 					userId,
 				},
@@ -124,6 +124,7 @@ export const postApi = rtkApi.injectEndpoints({
 					patchResult.undo();
 				}
 			},
+			invalidatesTags: ['post'],
 		}),
 		sharePost: build.mutation<UserPost, Omit<IPostApiProps, 'profileId'>>({
 			query: ({ postId, userId }) => ({

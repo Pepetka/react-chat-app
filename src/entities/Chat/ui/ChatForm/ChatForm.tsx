@@ -13,10 +13,11 @@ import { getChatSearch } from '../../model/selectors/chatSelectors';
 interface IChatFormProps {
 	userId: string;
 	fetchChats?: ({ userId, search }: { userId: string; search: string }) => void;
+	'data-testid'?: string;
 }
 
 export const ChatForm = memo((props: IChatFormProps) => {
-	const { fetchChats, userId } = props;
+	const { fetchChats, userId, 'data-testid': dataTestId } = props;
 	const { t } = useTranslation('chats');
 	const search = useSelector(getChatSearch);
 	const dispatch = useAppDispatch();
@@ -59,6 +60,7 @@ export const ChatForm = memo((props: IChatFormProps) => {
 	return (
 		<DynamicModuleLoader reducerKey="chat" reducer={chatReducer}>
 			<Input
+				data-testid={`${dataTestId}.input`}
 				paddingInline="20px"
 				theme="invert"
 				value={search}

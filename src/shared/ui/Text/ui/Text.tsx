@@ -105,6 +105,7 @@ export const Text = memo((props: ITextProps) => {
 		<TextWrapper width={width} data-testid={dataTestId}>
 			{title && (
 				<StyledTitle
+					data-testid={`${dataTestId}.title`}
 					size={size}
 					theme={theme}
 					titleAlign={titleAlign}
@@ -116,6 +117,7 @@ export const Text = memo((props: ITextProps) => {
 			{text &&
 				text.split('\n').map((line, index) => (
 					<StyledText
+						data-testid={`${dataTestId}.text${index}` || ''}
 						key={index}
 						nowrap={nowrap}
 						size={size}

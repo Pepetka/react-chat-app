@@ -20,10 +20,11 @@ interface IGroupFormProps {
 		userId: string;
 		search: string;
 	}) => void;
+	'data-testid'?: string;
 }
 
 export const GroupForm = memo((props: IGroupFormProps) => {
-	const { fetchGroups, profileId } = props;
+	const { fetchGroups, profileId, 'data-testid': dataTestId } = props;
 	const { t } = useTranslation('group');
 	const search = useSelector(getGroupSearch);
 	const dispatch = useAppDispatch();
@@ -66,6 +67,7 @@ export const GroupForm = memo((props: IGroupFormProps) => {
 	return (
 		<DynamicModuleLoader reducerKey="group" reducer={groupReducer}>
 			<Input
+				data-testid={`${dataTestId}.input`}
 				paddingInline="20px"
 				theme="invert"
 				value={search}

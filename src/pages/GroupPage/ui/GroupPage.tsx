@@ -18,7 +18,13 @@ const GroupPage = memo(() => {
 	const groupData = useSelector(getGroupData({ groupId: params.id ?? '' }));
 
 	return (
-		<Flex direction="column" width="100%" height="100%" gap="16">
+		<Flex
+			data-testid="GroupPage"
+			direction="column"
+			width="100%"
+			height="100%"
+			gap="16"
+		>
 			<GroupDataCard groupId={params?.id ?? ''} />
 			{(roleData?.role === 'admin' || roleData?.role === 'moderator') && (
 				<PostForm

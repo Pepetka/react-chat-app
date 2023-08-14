@@ -93,6 +93,7 @@ export const NavBar = memo((props: INavBarProps) => {
 					{authData && isDesktopOrLaptop && (
 						<Flex FlexTag="form" onSubmit={onSearch} width="auto">
 							<Input
+								data-testid="NavBar.input"
 								border={false}
 								paddingInline="20px"
 								value={search}
@@ -109,6 +110,7 @@ export const NavBar = memo((props: INavBarProps) => {
 				</Flex>
 				{authData ? (
 					<Button
+						data-testid="NavBar.logout"
 						onClick={onLogoutHandle}
 						theme={'outline'}
 						width={isSmallScreen ? '100px' : '140px'}

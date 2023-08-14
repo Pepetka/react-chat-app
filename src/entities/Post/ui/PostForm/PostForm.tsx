@@ -31,6 +31,7 @@ export const PostForm = memo((props: IPostFormProps) => {
 		<DynamicModuleLoader reducerKey="post" reducer={postReducer}>
 			<Card width="100%">
 				<FormWithImg
+					data-testid="PostForm.form"
 					withImg={true}
 					textPlaceholder={t('Share your news')}
 					isLoading={isLoading}

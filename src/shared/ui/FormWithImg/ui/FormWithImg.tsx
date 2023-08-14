@@ -69,6 +69,10 @@ interface ISendWithImgFormBase extends ISendWithImgFormControls {
 	 * Картинки, отображаемые по-умолчанию
 	 */
 	defaultImages?: Array<string>;
+	/**
+	 * Id для тестирования
+	 */
+	'data-testid'?: string;
 }
 
 interface ISendWithImgFormWithImg extends ISendWithImgFormBase {
@@ -176,6 +180,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 		withImg = false,
 		small = false,
 		modal = false,
+		'data-testid': dataTestId,
 	} = props;
 	const isSmallScreen = useMediaQuery({ maxWidth: 768 });
 	const isSmallScreenHeight = useMediaQuery({ maxHeight: 768 });
@@ -334,6 +339,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 						control={control}
 						render={({ field: { onBlur, ...field } }) => (
 							<StyledTextArea
+								data-testid={dataTestId}
 								modal={modal}
 								onFocus={onFocus}
 								onBlur={() => {

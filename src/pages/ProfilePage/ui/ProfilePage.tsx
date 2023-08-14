@@ -13,7 +13,13 @@ const ProfilePage = memo(() => {
 	const authData = useSelector(getUserAuthData);
 
 	return (
-		<Flex direction="column" width="100%" height="100%" gap="16">
+		<Flex
+			data-testid="ProfilePage"
+			direction="column"
+			width="100%"
+			height="100%"
+			gap="16"
+		>
 			<ProfileCard userId={authData?.id ?? ''} profileId={params?.id ?? ''} />
 			<SocialCard userId={authData?.id ?? ''} profileId={params?.id ?? ''} />
 			<PostForm userId={authData?.id ?? ''} profileId={params?.id ?? ''} />

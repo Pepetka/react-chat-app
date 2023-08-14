@@ -32,7 +32,7 @@ export const PostList = memo((props: IPostListProps) => {
 	const [page, setPage] = useState(0);
 	const [posts, setPosts] = useState<Array<Post>>([]);
 	const { t } = useTranslation('profile');
-	const [loadMore, { data: postsData, isFetching: isLoading, error }] =
+	const [loadMore, { data: postsData, isLoading, error }] =
 		useLazyFetchPostsDataQuery();
 	const [onDeletePost, { isLoading: deleteLoading }] = useDeletePostMutation();
 	const [onSharePost, { isLoading: shareLoading, isSuccess: shareSuccess }] =
@@ -40,6 +40,15 @@ export const PostList = memo((props: IPostListProps) => {
 	const [onLikePost, { isLoading: likeLoading }] = useLikePostMutation();
 	const [onDislikePost, { isLoading: dislikeLoading }] =
 		useDislikePostMutation();
+
+	const getOverScan = () => {
+		const vh = Math.max(
+			document.documentElement.clientHeight || 0,
+			window.innerHeight || 0,
+		);
+
+		return 2 * vh;
+	};
 
 	const onDeletePostHandle = useCallback(
 		(postId: string) => {
@@ -86,7 +95,7 @@ export const PostList = memo((props: IPostListProps) => {
 
 	useEffect(() => {
 		if (postsData?.posts) {
-			setPosts((posts) => [...posts, ...postsData.posts]);
+			setPosts(() => postsData?.posts);
 		}
 	}, [postsData?.posts]);
 
@@ -121,7 +130,7 @@ export const PostList = memo((props: IPostListProps) => {
 				document.querySelector('[data-scroll]') as HTMLElement
 			}
 			data={posts}
-			overscan={{ main: 10, reverse: 10 }}
+			overscan={{ main: getOverScan(), reverse: getOverScan() }}
 			endReached={onLoadMore}
 			components={{
 				Footer: () => (

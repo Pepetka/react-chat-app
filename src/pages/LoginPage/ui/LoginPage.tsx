@@ -9,7 +9,7 @@ const StyledLoginPage = styled.div`
 
 const LoginPage = memo(() => {
 	return (
-		<Flex justify="center" align="center" width="100%">
+		<Flex data-testid="LoginPage" justify="center" align="center" width="100%">
 			<StyledLoginPage>
 				<LoginForm />
 			</StyledLoginPage>

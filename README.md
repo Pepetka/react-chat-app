@@ -14,7 +14,10 @@
 ## Скрипты
 
 - `npm run dev` - запуск dev проекта
-- `npm run dev:local` - запуск dev проекта с 
+- `npm run dev:local` - запуск dev проекта в локальной сети
+- `npm run server` - запуск dev сервера
+- `npm run dev:server` - запуск dev проекта с dev сервером
+- `npm run dev:server:local` - запуск dev проекта с dev сервером в локальной сети
 - `npm run build` - сборка в prod режиме в папку dist
 - `npm run preview` - предпросмотр сборки
 - `npm run prettier` - форматирование файлов
@@ -57,7 +60,8 @@
 Тестирование состоит их 3 типов тестов:
 1) `npm run test:unit` - unit тестирование с jest
 2) `npm run test:unit` - тестирование компонентов с React testing library
-3) `npm run test:ui` - скриншотное тестирование ui с loki
+3) `npm run test:ui` - скриншотное тестирование ui с chromatic
+4) `npm run test:e2e` - end-to-end тестирование приложения с cypress
 
 [Подробнее о тестировании](./docs/test.md)
 

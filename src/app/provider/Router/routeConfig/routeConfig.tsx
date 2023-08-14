@@ -26,7 +26,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
 		path: getMainPagePath(),
 		element: <MainPage />,
-		authOnly: true,
 	},
 	[AppRoutes.PROFILE]: {
 		path: getProfilePagePath(':id'),
@@ -71,6 +70,5 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.NOT_FOUND]: {
 		path: '/*',
 		element: <NotFoundPage />,
-		authOnly: true,
 	},
 };

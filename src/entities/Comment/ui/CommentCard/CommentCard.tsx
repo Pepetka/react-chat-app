@@ -49,6 +49,7 @@ export const CommentCard = memo((props: ICommentCardProps) => {
 						trigger={<Icon SvgIcon={MoreIcon} invert />}
 					>
 						<Button
+							data-testid={'CommentCard.delete'}
 							onClick={onDeleteCommentHandle}
 							theme="clear"
 							width="100px"

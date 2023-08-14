@@ -1,5 +1,6 @@
 import {
 	ChangeEvent,
+	FocusEvent,
 	FC,
 	forwardRef,
 	InputHTMLAttributes,
@@ -184,6 +185,7 @@ export const Input = memo(
 			border = true,
 			onClick,
 			'data-testid': dataTestId,
+			onBlur,
 			...otherProps
 		} = props;
 		const [focused, setFocused] = useState(false);
@@ -197,13 +199,17 @@ export const Input = memo(
 			}
 		}, [focused, value]);
 
-		const onFocus = useCallback(() => {
+		const onFocusHandle = useCallback(() => {
 			setFocused(true);
 		}, []);
 
-		const onBlur = useCallback(() => {
-			setFocused(false);
-		}, []);
+		const onBlurHandle = useCallback(
+			(event: FocusEvent<HTMLInputElement>) => {
+				setFocused(false);
+				onBlur?.(event);
+			},
+			[onBlur],
+		);
 
 		const onHandleChange = useCallback(
 			(event: ChangeEvent<HTMLInputElement>) => {
@@ -222,8 +228,8 @@ export const Input = memo(
 					required={required}
 					theme={theme}
 					height={height}
-					onFocus={onFocus}
-					onBlur={onBlur}
+					onFocus={onFocusHandle}
+					onBlur={onBlurHandle}
 					onChange={onHandleChange}
 					value={value}
 					borderRadius={borderRadius}

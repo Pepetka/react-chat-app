@@ -20,10 +20,11 @@ interface IFriendFormProps {
 		userId: string;
 		search: string;
 	}) => void;
+	'data-testid'?: string;
 }
 
 export const FriendForm = memo((props: IFriendFormProps) => {
-	const { profileId, fetchFriends } = props;
+	const { profileId, fetchFriends, 'data-testid': dataTestId } = props;
 	const { t } = useTranslation('friends');
 	const dispatch = useAppDispatch();
 	const search = useSelector(getFriendSearch);
@@ -63,6 +64,7 @@ export const FriendForm = memo((props: IFriendFormProps) => {
 	return (
 		<DynamicModuleLoader reducerKey="friend" reducer={friendReducer}>
 			<Input
+				data-testid={`${dataTestId}.input`}
 				paddingInline="20px"
 				theme="invert"
 				value={search}

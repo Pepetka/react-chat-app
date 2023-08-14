@@ -22,6 +22,7 @@
 	--page-height: calc(100dvh - var(--navbar-height));
 	--navbar-height-mobile: 60px;
 	--page-height-mobile: calc(100dvh - var(--navbar-height-mobile) * 2);
+	--auth-page-height-mobile: calc(100dvh - var(--navbar-height-mobile));
 	--sidebar-width: 170px;
 
 	--popup-z: 1;

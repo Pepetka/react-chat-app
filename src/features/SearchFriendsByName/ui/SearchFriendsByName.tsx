@@ -30,6 +30,7 @@ export const SearchFriendsByName = memo((props: ISearchFriendsByNameProps) => {
 	return (
 		<Flex direction="column" gap="16">
 			<FriendForm
+				data-testid="SearchFriendsByName"
 				userId={userId}
 				profileId={profileId}
 				fetchFriends={onFetchFriends}

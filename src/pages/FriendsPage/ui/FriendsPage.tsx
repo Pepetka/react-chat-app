@@ -10,7 +10,12 @@ const FriendsPage = memo(() => {
 	const params = useParams<{ id: string }>();
 
 	return (
-		<Card height="100%" width="100%" borderRadius={false}>
+		<Card
+			data-testid="FriendsPage"
+			height="100%"
+			width="100%"
+			borderRadius={false}
+		>
 			<SearchFriendsByName
 				userId={authData?.id ?? ''}
 				profileId={params?.id ?? ''}

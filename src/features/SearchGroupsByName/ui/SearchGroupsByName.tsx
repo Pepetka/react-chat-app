@@ -26,6 +26,7 @@ export const SearchGroupsByName = memo((props: ISearchGroupsByNameProps) => {
 	return (
 		<Flex direction="column" gap="24">
 			<GroupForm
+				data-testid="SearchGroupsByName"
 				userId={userId}
 				profileId={profileId}
 				fetchGroups={onFetchGroups}

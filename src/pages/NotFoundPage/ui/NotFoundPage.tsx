@@ -7,7 +7,7 @@ const NotFoundPage = memo(() => {
 	const { t } = useTranslation();
 
 	return (
-		<Flex>
+		<Flex data-testid="NotFoundPage">
 			<Text title={t('Page not found')} titleAlign="center" />
 		</Flex>
 	);

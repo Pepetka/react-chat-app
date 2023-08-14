@@ -8,7 +8,12 @@ const ChatsPage = memo(() => {
 	const authData = useSelector(getUserAuthData);
 
 	return (
-		<Card height="100%" width="100%" borderRadius={false}>
+		<Card
+			data-testid="ChatsPage"
+			height="100%"
+			width="100%"
+			borderRadius={false}
+		>
 			<SearchChatsByName userId={authData?.id ?? ''} />
 		</Card>
 	);

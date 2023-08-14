@@ -69,17 +69,17 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 			() => [
 				{
 					link: getFriendsPagePath(profileId),
-					name: t('Followers'),
+					name: 'Followers',
 					num: socialData?.followersNum,
 				},
 				{
 					link: getFriendsPagePath(profileId),
-					name: t('Following'),
+					name: 'Following',
 					num: socialData?.followingNum,
 				},
 				{
 					link: getGroupsListPagePath(profileId),
-					name: t('Groups'),
+					name: 'Groups',
 					num: socialData?.groupsNum,
 				},
 			],
@@ -88,7 +88,6 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 				socialData?.followersNum,
 				socialData?.followingNum,
 				socialData?.groupsNum,
-				t,
 			],
 		);
 
@@ -123,7 +122,7 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 					<Grid isDesktopOrLaptop={!isDesktopOrLaptop}>
 						{cardsData.map(({ link, name, num }) => (
 							<AppLink
-								data-testid={`SocialCard.cards.${name}.${num}`}
+								data-testid={`SocialCard.cards.${name}`}
 								key={name}
 								to={link}
 							>
@@ -137,11 +136,12 @@ export const SocialCard = memo((props: ISocialCardProps) => {
 									>
 										<Text
 											theme="primary-invert"
-											text={name}
+											text={t(name)}
 											size="l"
 											textAlign="center"
 										/>
 										<Text
+											data-testid={`SocialCard.cards.${name}.number`}
 											theme="secondary-invert"
 											title={num}
 											size="xl"

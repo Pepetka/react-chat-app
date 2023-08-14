@@ -65,7 +65,11 @@ const FriendListBlock = memo((props: IFriendListBlockProps) => {
 	}
 
 	return (
-		<Flex direction="column" gap="8">
+		<Flex
+			data-testid={`${dataTestId}.group.${blockTitle}`}
+			direction="column"
+			gap="8"
+		>
 			<Flex direction="column">
 				<Text text={t(blockTitle)} theme="primary-invert" size="xl" />
 				<StyledHr />
