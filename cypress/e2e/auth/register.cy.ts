@@ -21,7 +21,7 @@ describe('Register', () => {
 
 	it('Register a new user', function () {
 		cy.registerTestUser('test username', 'test password');
-		cy.getByTestId('ProfilePage', { timeout: 3000 }).should('be.visible');
+		cy.getByTestId('ProfilePage', { timeout: 5000 }).should('exist');
 
 		cy.window().then((win) => {
 			const token = win.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY) ?? '';

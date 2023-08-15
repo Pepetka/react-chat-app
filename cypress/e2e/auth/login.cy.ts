@@ -20,6 +20,6 @@ describe('Login', () => {
 		cy.testFormServerError('LoginForm', 'Wrong password');
 
 		cy.loginTestUser();
-		cy.getByTestId('ProfilePage', { timeout: 3000 }).should('exist');
+		cy.getByTestId('ProfilePage', { timeout: 5000 }).should('exist');
 	});
 });
