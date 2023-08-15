@@ -33,6 +33,7 @@ interface ITitleControls extends IThemeProp, ISizeProp {
 
 interface ITextControls extends IThemeProp, ISizeProp {
 	textAlign?: 'left' | 'right' | 'center';
+	indent?: boolean;
 	nowrap?: boolean;
 }
 
@@ -85,6 +86,7 @@ const StyledText = styled.p<ITextControls>`
 	white-space: ${(props) => (props.nowrap ? 'nowrap' : undefined)};
 	overflow: hidden;
 	text-overflow: ellipsis;
+	text-indent: ${(props) => (props.indent ? '1em' : '0')};
 `;
 
 export const Text = memo((props: ITextProps) => {
@@ -98,6 +100,7 @@ export const Text = memo((props: ITextProps) => {
 		size = 'm',
 		width = '100%',
 		nowrap = false,
+		indent = false,
 		'data-testid': dataTestId,
 	} = props;
 
@@ -123,6 +126,7 @@ export const Text = memo((props: ITextProps) => {
 						size={size}
 						theme={theme}
 						textAlign={textAlign}
+						indent={indent}
 					>
 						{line}
 					</StyledText>

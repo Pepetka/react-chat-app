@@ -65,6 +65,8 @@ module.exports = {
 					'path',
 					'accept',
 					'data-testid',
+					'to',
+					'text'
 				],
 				ignore: ['ICE'],
 			},

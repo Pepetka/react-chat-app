@@ -34,6 +34,7 @@ const StyledPage = styled.div<{ noAuthPage: boolean }>`
 `;
 
 const ContentWrapper = styled.div<{ isMessengerPage: boolean }>`
+	position: relative;
 	width: 80%;
 	min-height: ${() =>
 		isMobile ? 'var(--page-height-mobile)' : 'var(--page-height)'};

@@ -44,7 +44,7 @@ interface IFlexProps extends IFlexControls {
 	/**
 	 * Содержимое компонента
 	 */
-	children: ReactNode;
+	children?: ReactNode;
 	/**
 	 * Тэг, оборачивающий содержимое
 	 */

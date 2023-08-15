@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Flex } from '@/shared/ui/Flex';
 import { LangSwitcher } from '@/features/LangSwitcher';
 import { ThemeSwitcher } from '@/features/ThemeSwitcher';
@@ -9,6 +9,7 @@ import { useTheme } from '@/shared/hooks/useTheme';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
 import GearIcon from '@/shared/assets/gear.svg';
+import { root } from '@/main';
 
 const StyledControlPanel = styled.div`
 	position: absolute;
@@ -54,6 +55,18 @@ export const ControlPanel = memo(() => {
 	const onSwitch = useCallback(() => {
 		setOpened((opened) => !opened);
 	}, []);
+
+	useEffect(() => {
+		if (opened) {
+			root.addEventListener('click', onSwitch);
+		} else {
+			root.removeEventListener('click', onSwitch);
+		}
+
+		return () => {
+			root.removeEventListener('click', onSwitch);
+		};
+	}, [onSwitch, opened]);
 
 	return (
 		<Portal>
