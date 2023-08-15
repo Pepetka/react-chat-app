@@ -9,9 +9,7 @@ import { PageLoader } from '@/widgets/PageLoader';
 import './app/styles/index.css';
 import './shared/config/i18next/i18n';
 
-export const root = document.getElementById('root') as HTMLElement;
-
-ReactDOM.createRoot(root).render(
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<StrictMode>
 		<ErrorBoundary>
 			<BrowserRouter>

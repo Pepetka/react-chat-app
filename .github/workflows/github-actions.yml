@@ -69,6 +69,7 @@ jobs:
           config: baseUrl=http://localhost:5173
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        if: always()
       - name: Setup Pages
         uses: actions/configure-pages@v2
         if: always()

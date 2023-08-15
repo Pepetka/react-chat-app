@@ -9,7 +9,6 @@ import { useTheme } from '@/shared/hooks/useTheme';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
 import GearIcon from '@/shared/assets/gear.svg';
-import { root } from '@/main';
 
 const StyledControlPanel = styled.div`
 	position: absolute;
@@ -57,14 +56,16 @@ export const ControlPanel = memo(() => {
 	}, []);
 
 	useEffect(() => {
+		const body = document.querySelector('body') as HTMLElement;
+
 		if (opened) {
-			root.addEventListener('click', onSwitch);
+			body.addEventListener('click', onSwitch);
 		} else {
-			root.removeEventListener('click', onSwitch);
+			body.removeEventListener('click', onSwitch);
 		}
 
 		return () => {
-			root.removeEventListener('click', onSwitch);
+			body.removeEventListener('click', onSwitch);
 		};
 	}, [onSwitch, opened]);
 
