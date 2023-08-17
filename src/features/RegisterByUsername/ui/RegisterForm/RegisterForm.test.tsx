@@ -19,7 +19,7 @@ describe('RegisterForm', () => {
 		await waitFor(() => {
 			expect(screen.getByText('Username is required')).toBeInTheDocument();
 			expect(screen.getByText('Password is required')).toBeInTheDocument();
-			expect(screen.getByText('Age must be over 10')).toBeInTheDocument();
+			expect(screen.getByText('Age must be over 14')).toBeInTheDocument();
 			expect(screen.getByText('Email is required')).toBeInTheDocument();
 			expect(screen.getByText('Firstname is required')).toBeInTheDocument();
 			expect(screen.getByText('Lastname is required')).toBeInTheDocument();

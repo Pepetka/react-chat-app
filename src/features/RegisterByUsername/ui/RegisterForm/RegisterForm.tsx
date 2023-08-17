@@ -48,7 +48,7 @@ export const RegisterForm = memo(() => {
 				.number()
 				.positive(t('Incorrect age'))
 				.integer()
-				.min(14, t('Age must be over 10'))
+				.min(14, t('Age must be over 14'))
 				.required(`${t('Age')} ${t('is required')}`),
 			email: yup
 				.string()

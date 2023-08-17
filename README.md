@@ -2,12 +2,16 @@
 
 **[ICE Chat App](https://remarkable-basbousa-d78cf9.netlify.app/)**
 
+- username: **user** / **admin**
+- password: **123**
+
 ## Репозиторий сервера
 **[react-chat-app-server](https://github.com/Pepetka/react-chat-app-server)**
 
 ## Запуск проекта
 
 - `npm install` - установка зависимостей
+- `npm run dev:server` - запуск dev проекта с dev сервером
 
 ---
 
@@ -25,6 +29,7 @@
 - `npm run lint:ts:fix` - исправление ts файлов линтером
 - `npm run test:unit` - запуск unit тесов с jest
 - `npm run test:ui` - запуск скриншотных тестов с chromatic
+- `npm run test:e2e` - end-to-end тестирование приложения с cypress
 - `npm run storybook` - запуск storybook
 - `npm run storybook:build` - сборка storybook
 - `npm run prepare` - прекоммит хуки с husky
@@ -153,6 +158,7 @@
 - [Group](./src/entities/Group/README.md)
 - [Message](./src/entities/Message/README.md)
 - [Post](./src/entities/Post/README.md)
+- [Profile](./src/entities/Profile/README.md)
 - [SocialData](./src/entities/SocialData/README.md)
 - [User](./src/entities/User/README.md)
 
@@ -161,6 +167,8 @@
 ## Фичи (features) по FSD
 
 - [AuthByUsername](./src/features/AuthByUsername/README.md)
+- [EditProfile](./src/features/EditProfile/README.md)
+- [EditProfileButton](./src/features/EditProfileButton/README.md)
 - [GroupDataCard](./src/features/GroupDataCard/README.md)
 - [LangSwitcher](./src/features/LangSwitcher/README.md)
 - [PostListWithComments](./src/features/PostListWithComments/README.md)

@@ -203,7 +203,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 	const onSubmitHandle: SubmitHandler<Inputs> = useCallback(
 		(data) => {
 			onSubmit?.(data);
-			reset({ text: '', files: undefined });
+			reset();
 			setImages([]);
 		},
 		[onSubmit, reset],

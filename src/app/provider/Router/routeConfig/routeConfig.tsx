@@ -1,6 +1,7 @@
 import {
 	AppRoutes,
 	getChatsPagePath,
+	getEditProfilePagePath,
 	getFriendsPagePath,
 	getGroupPagePath,
 	getGroupsListPagePath,
@@ -21,6 +22,7 @@ import { MessengerPage } from '@/pages/MessengerPage';
 import { GroupsListPage } from '@/pages/GroupsListPage';
 import { GroupPage } from '@/pages/GroupPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { EditProfilePage } from '@/pages/EditProfilePage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
@@ -30,6 +32,11 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.PROFILE]: {
 		path: getProfilePagePath(':id'),
 		element: <ProfilePage />,
+		authOnly: true,
+	},
+	[AppRoutes.EDIT_PROFILE]: {
+		path: getEditProfilePagePath(':id'),
+		element: <EditProfilePage />,
 		authOnly: true,
 	},
 	[AppRoutes.LOGIN]: {

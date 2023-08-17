@@ -8,6 +8,7 @@ import { Text } from '@/shared/ui/Text';
 import { Icon } from '@/shared/ui/Icon';
 import LinkOut from '@/shared/assets/link-out.svg';
 import { getUserAuthData } from '@/entities/User';
+import { getLoginPagePath, getRegisterPagePath } from '@/shared/const/router';
 
 const StyledList = styled.ul`
 	list-style: circle;
@@ -56,13 +57,13 @@ const MainPage = () => {
 				</StyledList>
 				{!isAuth && (
 					<Flex width="90%" gap="8" justify="space-between" wrap="wrap">
-						<AppLink to="/register">
+						<AppLink to={getRegisterPagePath()}>
 							<Flex align="center">
 								<Text size={isMobile ? 'm' : 'l'} text={t('Register')} />
 								<Icon size="s" SvgIcon={LinkOut} />
 							</Flex>
 						</AppLink>
-						<AppLink to="/login">
+						<AppLink to={getLoginPagePath()}>
 							<Flex align="center">
 								<Text size={isMobile ? 'm' : 'l'} text={t('Login')} />
 								<Icon size="s" SvgIcon={LinkOut} />

@@ -64,6 +64,8 @@ const profile = [
 	rest.get(`${__API__}profile`, async (req, res, ctx) => {
 		const profileId = req.url.searchParams.get('profileId') ?? undefined;
 
+		console.log(profileId);
+
 		if (profileId === 'loadingId') {
 			return successResponse(res, ctx, {}, 1000);
 		}
@@ -74,6 +76,8 @@ const profile = [
 
 		const data: DeepPartial<User> = {
 			id: profileId,
+			email: 'test@mail.ru',
+			age: 22,
 			avatar: 'image',
 			firstname: 'Name',
 			lastname: 'Lastname',

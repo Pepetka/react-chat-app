@@ -1,0 +1,20 @@
+{
+	"Enter firstname": "Enter firstname...",
+	"Enter lastname": "Enter lastname...",
+	"Enter email": "Enter email...",
+	"Enter status": "Enter status...",
+	"Enter age": "Enter age...",
+	"Age": "Age",
+	"Firstname": "Firstname",
+	"is required": "is required",
+	"Lastname": "Lastname",
+	"Status": "Status",
+	"Incorrect email": "Incorrect email",
+	"Email": "Email",
+	"Incorrect age": "Incorrect age",
+	"Age must be over 14": "Age must be over 14",
+	"Reset profile": "Reset profile",
+	"Edit profile": "Edit profile",
+	"Something went wrong": "Something went wrong",
+	"Loading": "Loading..."
+}

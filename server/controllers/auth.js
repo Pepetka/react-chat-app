@@ -6,6 +6,7 @@ import { UserModel } from '../models/user.js';
 class Auth {
 	async register(req, res) {
 		try {
+			const fullHostName = `${req.protocol || 'http'}://${req.get('host')}`;
 			const { username, password, firstname, lastname, age, email } = req.body;
 
 			await db.read();
@@ -39,16 +40,17 @@ class Auth {
 				{ id: newUser.id, username: newUser.username },
 				process.env.SECRET_KEY,
 			);
-
 			newUser.token = token;
 
 			users.push(newUser);
 
 			await db.write();
 
-			return res
-				.header('auth-token', token)
-				.json({ ...newUser, password: undefined });
+			return res.header('auth-token', token).json({
+				...newUser,
+				password: undefined,
+				avatar: `${fullHostName}/images/${newUser.avatar}`,
+			});
 		} catch (e) {
 			console.log(e);
 			return res.status(500).json({ message: e.message });
@@ -57,6 +59,7 @@ class Auth {
 
 	async login(req, res) {
 		try {
+			const fullHostName = `${req.protocol || 'http'}://${req.get('host')}`;
 			const { username, password } = req.body;
 
 			await db.read();
@@ -69,7 +72,6 @@ class Auth {
 			}
 
 			const validPassword = await bcrypt.compare(password, userFromBd.password);
-
 			if (!validPassword) {
 				return res.status(403).json({ message: 'Wrong password' });
 			}
@@ -78,14 +80,15 @@ class Auth {
 				{ id: userFromBd.id, username: userFromBd.username },
 				process.env.SECRET_KEY,
 			);
-
 			userFromBd.token = token;
 
 			await db.write();
 
-			return res
-				.header('auth-token', token)
-				.json({ ...userFromBd, password: undefined });
+			return res.header('auth-token', token).json({
+				...userFromBd,
+				password: undefined,
+				avatar: `${fullHostName}/images/${userFromBd.avatar}`,
+			});
 		} catch (e) {
 			console.log(e);
 			return res.status(500).json({ message: e.message });

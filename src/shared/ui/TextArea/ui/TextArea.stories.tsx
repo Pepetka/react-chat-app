@@ -1,15 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
 import { Card } from '@/shared/ui/Card';
-import { Input } from './Input';
+import { TextArea } from './TextArea';
 
 export default {
-	title: 'shared/Input',
-	component: Input,
-	decorators: [RouterDecorator()],
-} as Meta<typeof Input>;
+	title: 'shared/TextArea',
+	component: TextArea,
+} as Meta<typeof TextArea>;
 
-const Template: StoryFn<typeof Input> = (args) => <Input {...args} />;
+const Template: StoryFn<typeof TextArea> = (args) => <TextArea {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

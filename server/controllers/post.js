@@ -102,6 +102,7 @@ class Post {
 
 	async postPosts(req, res) {
 		try {
+			const fullHostName = `${req.protocol || 'http'}://${req.get('host')}`;
 			const { text, authorId, profileId } = req.body;
 			const files = req.files;
 
@@ -143,7 +144,10 @@ class Post {
 
 			await db.write();
 
-			return res.json(newPost);
+			return res.json({
+				...newPost,
+				img: `${fullHostName}/images/${newPost.img}`,
+			});
 		} catch (e) {
 			console.log(e);
 			return res.status(500).json({ message: e.message });

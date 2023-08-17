@@ -84,12 +84,17 @@ export const Avatar = memo((props: IAvatarProps) => {
 	const [isError, setIsError] = useState(false);
 
 	useLayoutEffect(() => {
+		setIsError(false);
+		setIsLoading(true);
+
 		const img = new Image();
 		img.src = src ?? '';
 		img.onload = () => {
+			setIsError(false);
 			setIsLoading(false);
 		};
 		img.onerror = () => {
+			setIsLoading(false);
 			setIsError(true);
 		};
 	}, [src]);

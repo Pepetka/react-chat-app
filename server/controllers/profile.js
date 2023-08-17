@@ -1,7 +1,10 @@
+import { join } from 'node:path';
+import sharp from 'sharp';
 import db from '../database/database.js';
 import { UserMiniModel } from '../models/user.js';
 import getContains from '../helpers/getContains.js';
 import { socketController } from '../app.js';
+import { filesDir } from '../storage/storage.js';
 
 class Profile {
 	constructor() {
@@ -26,6 +29,48 @@ class Profile {
 			return res.json({
 				...profile,
 				avatar: `${fullHostName}/images/${profile.avatar}`,
+			});
+		} catch (e) {
+			console.log(e);
+			return res.status(500).json({ message: e.message });
+		}
+	}
+
+	async editProfile(req, res) {
+		try {
+			const fullHostName = `${req.protocol || 'http'}://${req.get('host')}`;
+			const { status, email, firstname, lastname, age } = req.body;
+			const file = req.file;
+			const { id } = req.user;
+
+			let avatar;
+
+			if (file) {
+				const { buffer, originalname, fieldname } = file;
+				const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+				avatar = `${fieldname}-${uniqueSuffix}${originalname}.webp`;
+				await sharp(buffer)
+					.webp({ quality: 20 })
+					.toFile(join(filesDir, avatar));
+			}
+
+			await db.read();
+			const { users } = db.data;
+
+			const editableProfile = users.find((user) => user.id === id);
+
+			editableProfile.status = status;
+			if (email) editableProfile.email = email;
+			if (firstname) editableProfile.firstname = firstname;
+			if (lastname) editableProfile.lastname = lastname;
+			if (age) editableProfile.age = age;
+			if (avatar) editableProfile.avatar = avatar;
+
+			await db.write();
+
+			return res.json({
+				...editableProfile,
+				avatar: `${fullHostName}/images/${editableProfile.avatar}`,
 			});
 		} catch (e) {
 			console.log(e);

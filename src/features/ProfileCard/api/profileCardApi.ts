@@ -1,8 +1,8 @@
 import { StateSchema } from '@/app/provider/Store';
-import { User, UserMini } from '@/shared/types/userCard';
-import { rtkApi } from '@/shared/api/rtkApi';
+import { UserMini } from '@/shared/types/userCard';
 import { socialDataApi } from '@/entities/SocialData';
 import { getUserAuthData } from '@/entities/User';
+import { profileApi } from '@/entities/Profile';
 import { getSocket } from '@/shared/api/socketApi';
 import { socketError } from '@/shared/config/socket/socketError';
 import { getRelations } from '../model/selectors/profileCardSelectors';
@@ -14,19 +14,8 @@ interface IProfileCardApiProps {
 	userId: string;
 }
 
-export const profileCardApi = rtkApi.injectEndpoints({
+export const profileCardApi = profileApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchProfileData: build.query<
-			User,
-			Omit<IProfileCardApiProps, 'friendId' | 'userId'>
-		>({
-			query: ({ profileId }) => ({
-				url: '/profile',
-				params: {
-					profileId,
-				},
-			}),
-		}),
 		fetchChatId: build.query<string, Omit<IProfileCardApiProps, 'profileId'>>({
 			query: ({ userId, friendId }) => ({
 				url: '/getChatId',

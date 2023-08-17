@@ -1,0 +1,19 @@
+{
+	"Enter firstname": "Введите ваше имя...",
+	"Enter lastname": "Введите фамилию...",
+	"Enter email": "Введите почтовый адрес...",
+	"Enter status": "Введите статус...",
+	"Enter age": "Введите ваш возраст...",
+	"Age": "Поле 'возраст'",
+	"Firstname": "Поле 'имя'",
+	"Lastname": "Поле 'фамилия'",
+	"Email": "Поле 'email'",
+	"is required": "должно быть заполнено",
+	"Incorrect email": "Некорректный email",
+	"Incorrect age": "Некорректный возраст",
+	"Age must be over 14": "Вам должно быть больше 14",
+	"Reset profile": "Сбросить",
+	"Edit profile": "Изменить",
+	"Something went wrong": "Что-то пошло не так",
+	"Loading": "Загрузка..."
+}

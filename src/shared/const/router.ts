@@ -1,6 +1,7 @@
 export enum AppRoutes {
 	MAIN = 'Main',
 	PROFILE = 'Profile',
+	EDIT_PROFILE = 'Edit profile',
 	LOGIN = 'Login',
 	REGISTER = 'Register',
 	FRIENDS = 'Friends',
@@ -16,6 +17,9 @@ export const getMainPagePath = () => {
 };
 export const getProfilePagePath = (id: string) => {
 	return `/profile/${id}`;
+};
+export const getEditProfilePagePath = (id: string) => {
+	return `/profile/${id}/edit`;
 };
 export const getLoginPagePath = () => {
 	return '/login';
