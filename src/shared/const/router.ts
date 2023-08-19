@@ -8,7 +8,9 @@ export enum AppRoutes {
 	CHATS = 'Chats',
 	MESSENGER = 'Messenger',
 	GROUP = 'Group',
+	EDIT_GROUP = 'Edit group',
 	GROUPS_LIST = 'Groups',
+	CREATE_GROUP = 'Create group',
 	NOT_FOUND = 'NotFound',
 }
 
@@ -43,6 +45,12 @@ export const getMessengerPagePath = (id: string, query?: string) => {
 export const getGroupPagePath = (id: string) => {
 	return `/group/${id}`;
 };
+export const getEditGroupPagePath = (id: string) => {
+	return `/group/${id}/edit`;
+};
 export const getGroupsListPagePath = (id: string) => {
 	return `/groups/${id}`;
+};
+export const getCreateGroupPagePath = (id: string) => {
+	return `/groups/${id}/create`;
 };

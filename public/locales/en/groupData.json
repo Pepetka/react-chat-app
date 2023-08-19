@@ -1,0 +1,11 @@
+{
+	"Name": "Name",
+	"is required": "is required",
+	"Enter name": "Enter name",
+	"Enter description": "Enter description",
+	"Enter tags": "Enter tags",
+	"Loading": "Loading...",
+	"Something went wrong": "Something went wrong",
+	"Reset group": "Reset group",
+	"Send": "Send"
+}

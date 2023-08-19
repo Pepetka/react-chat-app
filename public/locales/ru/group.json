@@ -1,5 +1,7 @@
 {
 	"Something went wrong": "Что-то пошло не так",
 	"Group Avatar": "Аватар группы",
-	"Find your group": "Найти группу..."
+	"Find your group": "Найти группу...",
+	"userGroups": "Группы пользователя",
+	"otherGroups": "Другие группы"
 }

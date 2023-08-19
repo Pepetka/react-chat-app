@@ -1,7 +1,7 @@
 import { DefaultBodyType, ResponseComposition, rest, RestContext } from 'msw';
 import { User, UserMini } from '@/shared/types/userCard';
 import { Relations } from '@/features/ProfileCard/model/types/profileCardSchema';
-import { Group } from '@/entities/Group';
+import { Group, GroupsList } from '@/entities/Group';
 import { Chat } from '@/entities/Chat';
 import { UsersLists } from '@/entities/Friend';
 import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
@@ -157,6 +157,7 @@ const group = [
 			avatar: 'image',
 			name: 'Some group name',
 			description: 'Some description',
+			tags: [],
 		};
 
 		return successResponse(res, ctx, data);
@@ -220,15 +221,18 @@ const searchBy = [
 			return errorResponse(res, ctx, 'Some test error');
 		}
 
-		const data: Array<Group> = new Array(3).fill(0).map((_, index) => ({
-			id: `${index}`,
-			tags: ['it'],
-			avatar: 'image',
-			createdAt: '',
-			description: '',
-			name: 'Some name',
-			ownerId: '',
-		}));
+		const data: GroupsList = {
+			userGroups: new Array(3).fill(0).map((_, index) => ({
+				id: `${index}`,
+				tags: ['it'],
+				avatar: 'image',
+				createdAt: '',
+				description: '',
+				name: 'Some name',
+				ownerId: '',
+			})),
+			otherGroups: [],
+		};
 
 		return successResponse(res, ctx, data);
 	}),

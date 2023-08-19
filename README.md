@@ -167,8 +167,11 @@
 ## Фичи (features) по FSD
 
 - [AuthByUsername](./src/features/AuthByUsername/README.md)
+- [CreateButton](./src/features/CreateButton/README.md)
+- [CreateGroup](./src/features/CreateGroup/README.md)
+- [EditButton](src/features/EditButton/README.md)
+- [EditGroup](./src/features/EditGroup/README.md)
 - [EditProfile](./src/features/EditProfile/README.md)
-- [EditProfileButton](./src/features/EditProfileButton/README.md)
 - [GroupDataCard](./src/features/GroupDataCard/README.md)
 - [LangSwitcher](./src/features/LangSwitcher/README.md)
 - [PostListWithComments](./src/features/PostListWithComments/README.md)

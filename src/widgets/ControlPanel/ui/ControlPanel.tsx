@@ -11,9 +11,18 @@ import { useTheme } from '@/shared/hooks/useTheme';
 import { Button } from '@/shared/ui/Button';
 import { Icon } from '@/shared/ui/Icon';
 import GearIcon from '@/shared/assets/gear.svg';
-import { EditProfileButton } from '@/features/EditProfileButton';
-import { getProfilePagePath } from '@/shared/const/router';
 import { getUserAuthData } from '@/entities/User';
+import { EditButton } from '@/features/EditButton';
+import { CreateButton } from '@/features/CreateButton';
+import {
+	getCreateGroupPagePath,
+	getEditGroupPagePath,
+	getEditProfilePagePath,
+	getGroupPagePath,
+	getGroupsListPagePath,
+	getProfilePagePath,
+} from '@/shared/const/router';
+import { usePathParams } from '@/shared/hooks/usePathParams';
 
 const StyledControlPanel = styled.div`
 	position: absolute;
@@ -49,13 +58,29 @@ export const ControlPanel = memo(() => {
 	const [opened, setOpened] = useState(false);
 	const location = useLocation();
 	const authData = useSelector(getUserAuthData);
+	const { id: groupId } = usePathParams<{ id?: string }>(
+		getGroupPagePath(':id'),
+		location.pathname,
+	);
 
-	const getProfileCondition = () => {
-		return location.pathname === getProfilePagePath(authData?.id ?? '');
+	const isValidCommonPath = (path1: string) => {
+		const arr1 = path1.split('/');
+		const arr2 = location.pathname.split('/');
+
+		if (arr1.length !== arr2.length) return false;
+		return arr1[1] === arr2[1];
 	};
 
 	const buttonsArray = [
-		getProfileCondition() ? <EditProfileButton /> : null,
+		isValidCommonPath(getGroupPagePath(groupId ?? '')) ? (
+			<EditButton path={getEditGroupPagePath(groupId ?? '')} />
+		) : null,
+		isValidCommonPath(getProfilePagePath(authData?.id ?? '')) ? (
+			<EditButton path={getEditProfilePagePath(authData?.id ?? '')} />
+		) : null,
+		isValidCommonPath(getGroupsListPagePath(authData?.id ?? '')) ? (
+			<CreateButton path={getCreateGroupPagePath(authData?.id ?? '')} />
+		) : null,
 		<ThemeSwitcher />,
 		<LangSwitcher />,
 	];

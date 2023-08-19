@@ -26,19 +26,13 @@ import { TextArea } from '@/shared/ui/TextArea';
 import { getProfilePagePath } from '@/shared/const/router';
 import { Spinner } from '@/shared/ui/Spinner';
 import { getUserAuthData } from '@/entities/User';
+import { IEditProfileProps } from '@/entities/Profile';
 import {
 	useEditProfileMutation,
 	useFetchProfileDataQuery,
 } from '../../api/editProfileApi';
 
-export type Inputs = {
-	firstname: string;
-	lastname: string;
-	email: string;
-	status: string | undefined;
-	age: number;
-	avatar: any;
-};
+export type Inputs = IEditProfileProps;
 
 const StyledFileInput = styled.input`
 	display: none;

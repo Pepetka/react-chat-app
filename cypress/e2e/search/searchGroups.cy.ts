@@ -7,14 +7,8 @@ describe('searchGroups', () => {
 			.then(setUserDataToLocal)
 			.as('userData')
 			.then(() => {
-				cy.createGroup({
-					name: 'Group1',
-					userId: this.userData.id,
-				}).as('group1');
-				cy.createGroup({
-					name: 'Group2',
-					userId: this.userData.id,
-				}).as('group2');
+				cy.createGroup('Group1').as('group1');
+				cy.createGroup('Group2').as('group2');
 				cy.visitPage('GroupsListPage', getGroupsListPagePath(this.userData.id));
 			});
 	});

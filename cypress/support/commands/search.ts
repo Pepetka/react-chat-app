@@ -1,87 +1,4 @@
-import { LOCAL_STORAGE_AUTH_KEY } from '../../../src/shared/const/localstorage';
 import { Chat } from '../../../src/entities/Chat';
-import { Group } from '../../../src/entities/Group';
-
-export const createChat = (
-	{ userId, friendId }: { userId: string; friendId: string },
-	token?: string,
-) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
-
-	return cy
-		.request({
-			method: 'POST',
-			url: 'http://localhost:8000/chat',
-			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
-			},
-			body: {
-				userId,
-				friendId,
-				chatName: 'Test chat',
-			},
-		})
-		.then(({ body }) => {
-			return body;
-		});
-};
-
-export const deleteChat = (chatId: string, token?: string) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
-
-	return cy
-		.request({
-			method: 'DELETE',
-			url: 'http://localhost:8000/chat',
-			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
-			},
-			body: { chatId },
-		})
-		.then(({ body }) => {
-			return body;
-		});
-};
-
-export const createGroup = (
-	{ userId, name }: { userId: string; name: string },
-	token?: string,
-) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
-
-	return cy
-		.request({
-			method: 'POST',
-			url: 'http://localhost:8000/group',
-			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
-			},
-			body: {
-				userId,
-				name,
-			},
-		})
-		.then(({ body }) => {
-			return body;
-		});
-};
-
-export const deleteGroup = (groupId: string, token?: string) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
-
-	return cy
-		.request({
-			method: 'DELETE',
-			url: 'http://localhost:8000/group',
-			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
-			},
-			body: { groupId },
-		})
-		.then(({ body }) => {
-			return body;
-		});
-};
 
 export const searchData = (name: string, search: string) => {
 	const searchInput = cy.getByTestId(`${name}.input`);
@@ -134,11 +51,6 @@ declare global {
 				token?: string,
 			): Chainable<Chat>;
 			deleteChat(chatId: string, token?: string): Chainable<string>;
-			createGroup(
-				data: { userId: string; name: string },
-				token?: string,
-			): Chainable<Group>;
-			deleteGroup(groupId: string, token?: string): Chainable<string>;
 		}
 	}
 }

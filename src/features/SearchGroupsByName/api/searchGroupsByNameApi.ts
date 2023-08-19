@@ -1,14 +1,14 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { Group } from '@/entities/Group';
+import { GroupsList } from '@/entities/Group';
 
-interface ISearchChatsByNAmeApiProps {
+interface ISearchGroupsByNAmeApiProps {
 	userId: string;
 	search?: string;
 }
 
 export const searchGroupsByNameApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		fetchGroups: build.query<Array<Group>, ISearchChatsByNAmeApiProps>({
+		fetchGroups: build.query<GroupsList, ISearchGroupsByNAmeApiProps>({
 			query: ({ userId, search }) => ({
 				url: '/getGroups',
 				params: {

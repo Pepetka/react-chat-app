@@ -1,17 +1,60 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
 import { GroupCardSkeleton } from '../GroupCardSkeleton/GroupCardSkeleton';
 import { GroupCard } from '../GroupCard/GroupCard';
-import { Group } from '../../model/types/groupSchema';
+import { Group, GroupsList } from '../../model/types/groupSchema';
 
 interface IChatListProps {
-	groups?: Array<Group>;
+	groups?: GroupsList;
 	isLoading: boolean;
 	isError: boolean;
 	'data-testid'?: string;
 }
+
+const StyledHr = styled.div`
+	width: 200px;
+	height: 2px;
+	background: var(--invert-secondary-color);
+`;
+
+const GroupListBlock = memo(
+	(props: {
+		blockTitle: string;
+		groups: Array<Group>;
+		'data-testid'?: string;
+	}) => {
+		const { blockTitle, groups, 'data-testid': dataTestId } = props;
+		const { t } = useTranslation('group');
+
+		if (!groups?.length) {
+			return null;
+		}
+
+		return (
+			<Flex
+				data-testid={`${dataTestId}.group.${blockTitle}`}
+				direction="column"
+				gap="8"
+			>
+				<Flex direction="column">
+					<Text text={t(blockTitle)} theme="primary-invert" size="xl" />
+					<StyledHr />
+				</Flex>
+				{groups.map((group) => (
+					<Flex key={group.id} direction="column">
+						<GroupCard
+							data-testid={`${dataTestId}.card.${group.id}`}
+							group={group}
+						/>
+					</Flex>
+				))}
+			</Flex>
+		);
+	},
+);
 
 export const GroupList = memo((props: IChatListProps) => {
 	const { groups, isError, isLoading, 'data-testid': dataTestId } = props;
@@ -42,11 +85,12 @@ export const GroupList = memo((props: IChatListProps) => {
 
 	return (
 		<Flex direction="column" gap="24">
-			{groups.map((group) => (
-				<GroupCard
-					data-testid={`${dataTestId}.card.${group.id}`}
-					key={group.id}
-					group={group}
+			{Object.entries(groups).map(([blockTitle, groups]) => (
+				<GroupListBlock
+					data-testid={dataTestId}
+					key={blockTitle}
+					blockTitle={blockTitle}
+					groups={groups}
 				/>
 			))}
 		</Flex>

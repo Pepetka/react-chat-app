@@ -1,21 +1,5 @@
-import { Group } from '@/entities/Group';
-import { rtkApi } from '@/shared/api/rtkApi';
+import { groupApi } from '@/entities/Group';
 
-interface IGroupCardApiProps {
-	groupId: string;
-}
-
-export const groupCardApi = rtkApi.injectEndpoints({
-	endpoints: (build) => ({
-		fetchGroupData: build.query<Group, IGroupCardApiProps>({
-			query: ({ groupId }) => ({
-				url: '/group',
-				params: {
-					groupId,
-				},
-			}),
-		}),
-	}),
-});
+export const groupCardApi = groupApi;
 
 export const { useFetchGroupDataQuery } = groupCardApi;

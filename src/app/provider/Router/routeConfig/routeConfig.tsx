@@ -1,6 +1,8 @@
 import {
 	AppRoutes,
 	getChatsPagePath,
+	getCreateGroupPagePath,
+	getEditGroupPagePath,
 	getEditProfilePagePath,
 	getFriendsPagePath,
 	getGroupPagePath,
@@ -23,6 +25,8 @@ import { GroupsListPage } from '@/pages/GroupsListPage';
 import { GroupPage } from '@/pages/GroupPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { EditProfilePage } from '@/pages/EditProfilePage';
+import { CreateGroupPage } from '@/pages/CreateGroupPage';
+import { EditGroupPage } from '@/pages/EditGroupPage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.MAIN]: {
@@ -72,6 +76,16 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.GROUP]: {
 		path: getGroupPagePath(':id'),
 		element: <GroupPage />,
+		authOnly: true,
+	},
+	[AppRoutes.EDIT_GROUP]: {
+		path: getEditGroupPagePath(':id'),
+		element: <EditGroupPage />,
+		authOnly: true,
+	},
+	[AppRoutes.CREATE_GROUP]: {
+		path: getCreateGroupPagePath(':id'),
+		element: <CreateGroupPage />,
 		authOnly: true,
 	},
 	[AppRoutes.NOT_FOUND]: {

@@ -1,0 +1,11 @@
+{
+	"Name": "Поле 'название'",
+	"is required": "должно быть заполнено",
+	"Enter name": "Ведите название",
+	"Enter description": "Введите описание",
+	"Enter tags": "Введите теги",
+	"Loading": "Загрузка...",
+	"Something went wrong": "Что-то пошло не так",
+	"Reset group": "Сбросить",
+	"Send": "Отправить"
+}
