@@ -12,7 +12,7 @@
 		"build": "tsc && vite build --mode PROD",
 		"preview": "vite preview",
 		"test:unit": "jest --config=./test/config/jest.config.ts",
-		"test:ui": "npx chromatic --project-token=b8feaa236f57 --build-script-name=storybook:build",
+		"test:ui": "npx chromatic --project-token=chpt_2fb2dbe5dea90dc --build-script-name=storybook:build",
 		"test:e2e": "cypress open",
 		"storybook": "storybook dev -p 6006",
 		"storybook:build": "storybook build",

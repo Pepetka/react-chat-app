@@ -64,8 +64,6 @@ const profile = [
 	rest.get(`${__API__}profile`, async (req, res, ctx) => {
 		const profileId = req.url.searchParams.get('profileId') ?? undefined;
 
-		console.log(profileId);
-
 		if (profileId === 'loadingId') {
 			return successResponse(res, ctx, {}, 1000);
 		}

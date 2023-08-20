@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import image from '@/shared/assets/images/image.jpg';
 import { Card } from '@/shared/ui/Card';
 import { RouterDecorator } from '@/shared/config/storybook/decorators';
-import { Group } from '../../model/types/groupSchema';
+import { GroupsList } from '../../model/types/groupSchema';
 import { GroupList } from './GroupList';
 
 export default {
@@ -22,35 +22,66 @@ export default {
 
 const Template: StoryFn<typeof GroupList> = (args) => <GroupList {...args} />;
 
-const groups: Array<Group> = [
-	{
-		id: '0',
-		ownerId: '1',
-		tags: ['IT'],
-		createdAt: '14:21 13.02.2023',
-		description: 'Some group description',
-		name: 'Group name',
-		avatar: image,
-	},
-	{
-		id: '1',
-		ownerId: '1',
-		tags: ['IT'],
-		createdAt: '14:21 13.02.2023',
-		description: 'Some group description',
-		name: 'Group name',
-		avatar: image,
-	},
-	{
-		id: '2',
-		ownerId: '1',
-		tags: ['IT'],
-		createdAt: '14:21 13.02.2023',
-		description: 'Some group description',
-		name: 'Group name',
-		avatar: image,
-	},
-];
+const groups: GroupsList = {
+	userGroups: [
+		{
+			id: '0',
+			ownerId: '1',
+			tags: ['IT'],
+			createdAt: '14:21 13.02.2023',
+			description: 'Some group description',
+			name: 'Group name',
+			avatar: image,
+		},
+		{
+			id: '1',
+			ownerId: '1',
+			tags: ['IT'],
+			createdAt: '14:21 13.02.2023',
+			description: 'Some group description',
+			name: 'Group name',
+			avatar: image,
+		},
+		{
+			id: '2',
+			ownerId: '1',
+			tags: ['IT'],
+			createdAt: '14:21 13.02.2023',
+			description: 'Some group description',
+			name: 'Group name',
+			avatar: image,
+		},
+	],
+	otherGroups: [
+		{
+			id: '3',
+			ownerId: '1',
+			tags: ['IT'],
+			createdAt: '14:21 13.02.2023',
+			description: 'Some group description',
+			name: 'Group name',
+			avatar: image,
+		},
+		{
+			id: '4',
+			ownerId: '1',
+			tags: ['IT'],
+			createdAt: '14:21 13.02.2023',
+			description: 'Some group description',
+			name: 'Group name',
+			avatar: image,
+		},
+		{
+			id: '5',
+			ownerId: '1',
+			tags: ['IT'],
+			createdAt: '14:21 13.02.2023',
+			description: 'Some group description',
+			name: 'Group name',
+			avatar: image,
+		},
+	],
+};
 
 export const Normal = Template.bind({});
 Normal.args = {
