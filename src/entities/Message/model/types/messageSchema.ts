@@ -1,4 +1,5 @@
 export interface Message {
+	id: string;
 	authorId: string;
 	name: string;
 	text?: string;

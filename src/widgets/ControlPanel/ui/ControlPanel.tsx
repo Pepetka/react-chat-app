@@ -25,6 +25,7 @@ import {
 import { usePathParams } from '@/shared/hooks/usePathParams';
 
 const StyledControlPanel = styled.div`
+	z-index: var(--popup-z);
 	position: absolute;
 	right: ${() => (isMobile ? '10px' : '20px')};
 	bottom: ${() => (isMobile ? 'calc(100dvh / 2)' : '20px')};

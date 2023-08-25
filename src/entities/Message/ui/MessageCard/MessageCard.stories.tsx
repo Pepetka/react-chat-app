@@ -25,6 +25,7 @@ const Template: StoryFn<typeof MessageCard> = (args) => (
 );
 
 const message: Message = {
+	id: 'id',
 	text:
 		'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis delectus, dolore est fuga illum' +
 		' ipsum laborum natus nesciunt odit perferendis quam quas, quasi, quisquam tempora tempore tenetur vel veniam.',

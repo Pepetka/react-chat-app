@@ -1,4 +1,4 @@
-const sortByCreatedAt = (prevPost, nextPost) => {
+const sortByCreatedAt = (prevPost, nextPost, direction = 'dawn') => {
 	const prevDate = new Date(
 		`${prevPost.createdAt.split(' ')[0]} ${prevPost.createdAt
 			.split(' ')[1]
@@ -14,7 +14,9 @@ const sortByCreatedAt = (prevPost, nextPost) => {
 			.join('.')}`,
 	).getTime();
 
-	return nextDate - prevDate;
+	const coefficient = direction === 'dawn' ? 1 : -1;
+
+	return coefficient * (nextDate - prevDate);
 };
 
 export default sortByCreatedAt;

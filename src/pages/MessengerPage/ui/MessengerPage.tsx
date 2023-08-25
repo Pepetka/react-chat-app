@@ -23,7 +23,7 @@ import { Text } from '@/shared/ui/Text';
 import { MessageForm, MessageList } from '@/entities/Message';
 import { getUserAuthData } from '@/entities/User';
 import {
-	useFetchMessagesQuery,
+	useLazyFetchMessagesQuery,
 	useFetchOnlineQuery,
 	useFriendTypingQuery,
 	useJoinChatMutation,
@@ -40,21 +40,16 @@ const StyledContent = styled.div`
 
 const MessengerPage = memo(() => {
 	const { t } = useTranslation('chats');
-	const messengerRef = useRef<HTMLDivElement | null>(null);
+	const [messengerRef, setMessengerRef] = useState<HTMLDivElement>();
 	const params = useParams<{ id: string }>();
 	const [searchParams] = useSearchParams();
 	const authData = useSelector(getUserAuthData);
 	const [isTyping, setIsTyping] = useState(false);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const {
-		data: responseMessages,
-		isLoading,
-		isError,
-	} = useFetchMessagesQuery({
-		chatId: params.id ?? '',
-		friendId: searchParams.get('friendId') ?? '',
-		userId: authData?.id ?? '',
-	});
+	const [page, setPage] = useState(0);
+	const [limit, _] = useState(10);
+	const [onFetchMessages, { data: responseMessages, isLoading, isError }] =
+		useLazyFetchMessagesQuery();
 	const [onSendMessage, { isLoading: sendLoading, isSuccess }] =
 		useSendMessageMutation();
 	const { data: online } = useFetchOnlineQuery();
@@ -63,6 +58,29 @@ const MessengerPage = memo(() => {
 	const [onUserStartTyping] = useTypingMessageMutation();
 	const [onUserStopTyping] = useStopTypingMutation();
 	const { data: friendTyping } = useFriendTypingQuery();
+
+	const onFetchMessagesHandle = useCallback(() => {
+		if (responseMessages?.endReached || isLoading) return;
+
+		onFetchMessages({
+			chatId: params.id ?? '',
+			friendId: searchParams.get('friendId') ?? '',
+			userId: authData?.id ?? '',
+			page,
+			limit,
+		});
+
+		setPage((prev) => prev + 1);
+	}, [
+		authData?.id,
+		isLoading,
+		limit,
+		onFetchMessages,
+		page,
+		params.id,
+		responseMessages?.endReached,
+		searchParams,
+	]);
 
 	const onStopTyping = useCallback(() => {
 		onUserStopTyping(params.id ?? '');
@@ -79,9 +97,19 @@ const MessengerPage = memo(() => {
 				chatId: params.id ?? '',
 				userId: authData?.id ?? '',
 				friendId: searchParams.get('friendId') ?? '',
+				page: page - 1,
+				limit,
 			});
 		},
-		[authData?.id, onSendMessage, onStopTyping, params.id, searchParams],
+		[
+			authData?.id,
+			limit,
+			onSendMessage,
+			onStopTyping,
+			page,
+			params.id,
+			searchParams,
+		],
 	);
 
 	const onTyping = useCallback(
@@ -113,16 +141,13 @@ const MessengerPage = memo(() => {
 	}, [onJoinChat, onLeaveChat, params?.id]);
 
 	useEffect(() => {
-		if (responseMessages) {
-			messengerRef.current?.scrollTo(0, messengerRef.current?.scrollHeight);
-		}
+		onFetchMessagesHandle();
 
 		return () => {
-			if (timerRef.current) {
-				clearTimeout(timerRef.current);
-			}
+			setPage(0);
 		};
-	}, [responseMessages, friendTyping?.isTyping]);
+		// eslint-disable-next-line
+	}, []);
 
 	if (isError && !isLoading) {
 		return (
@@ -150,52 +175,40 @@ const MessengerPage = memo(() => {
 			data-testid="MessengerPage"
 			direction="column"
 			gap="16"
-			height={
-				isBrowser
-					? 'calc(var(--page-height) - var(--page-padding))'
-					: 'calc(var(--page-height-mobile))'
-			}
+			height={'var(--page-height-mobile)'}
 		>
 			<Card padding="10px" borderRadius={false}>
 				<Flex justify="space-between" align="center">
-					<UserCard
-						id={responseMessages.friend.id}
-						avatar={responseMessages.friend.avatar}
-						name={`${responseMessages.friend.name}`}
-						additionalText={t(
-							online?.includes(searchParams.get('friendId') ?? '')
-								? 'online'
-								: 'offline',
-						)}
-					/>
+					<Flex gap="16" align="center">
+						<UserCard
+							id={responseMessages.friend.id}
+							avatar={responseMessages.friend.avatar}
+							name={`${responseMessages.friend.name}`}
+							additionalText={t(
+								online?.includes(searchParams.get('friendId') ?? '')
+									? `${friendTyping?.isTyping ? 'typing' : 'online'}`
+									: 'offline',
+							)}
+						/>
+					</Flex>
 					<Button theme="clear">
 						<Icon SvgIcon={SettingsIcon} invert size="s" />
 					</Button>
 				</Flex>
 			</Card>
 			<Card borderRadius padding="10px" scrollContent>
-				<StyledContent ref={messengerRef}>
+				<StyledContent
+					ref={(ref) => {
+						setMessengerRef(ref ?? undefined);
+					}}
+				>
 					{responseMessages.messages && (
 						<MessageList
-							messages={
-								friendTyping?.isTyping
-									? [
-											...responseMessages.messages,
-											[
-												'',
-												[
-													{
-														authorId: `${responseMessages.friend.id}`,
-														name: responseMessages.friend.name,
-														text: '...',
-														time: '',
-													},
-												],
-											],
-									  ]
-									: responseMessages.messages
-							}
+							totalCount={responseMessages.totalCount}
+							scrollParent={messengerRef}
+							messages={responseMessages.messages}
 							userId={authData?.id ?? ''}
+							onStartReached={onFetchMessagesHandle}
 						/>
 					)}
 				</StyledContent>

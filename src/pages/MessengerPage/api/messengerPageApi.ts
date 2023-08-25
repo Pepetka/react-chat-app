@@ -10,17 +10,26 @@ interface IMessengerPageApiProps {
 	friendId: string;
 }
 
+interface IMessengerListProps {
+	page: number;
+	limit?: number;
+}
+
 export const messengerPageApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchMessages: build.query<
-			{ messages: Messages; friend: UserMini },
-			IMessengerPageApiProps
-		>({
-			queryFn: () => {
-				return {
-					data: { messages: [], friend: { avatar: '', id: '', name: '' } },
-				};
+			{
+				messages: Messages;
+				friend: UserMini;
+				endReached: boolean;
+				totalCount: number;
 			},
+			IMessengerPageApiProps & IMessengerListProps
+		>({
+			query: (params) => ({
+				url: '/messages',
+				params,
+			}),
 			async onCacheEntryAdded(
 				arg,
 				{
@@ -36,20 +45,21 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 
 					const socket = getSocket();
 
-					socket.emit('get_messages', arg);
+					socket.on('messages', (data: Messages[number]) => {
+						updateCachedData((draft) => {
+							const existedGroupIndex = draft.messages.findIndex(
+								([existedDate]) => existedDate === data[0],
+							);
 
-					socket.on(
-						'messages',
-						(data: {
-							messages: Messages;
-							chatMembers: Record<string, UserMini>;
-						}) => {
-							updateCachedData((draft) => {
-								draft.messages = data.messages;
-								draft.friend = data.chatMembers[arg.friendId];
-							});
-						},
-					);
+							if (existedGroupIndex >= 0) {
+								draft.messages[existedGroupIndex][1].push(...data[1]);
+								draft.totalCount++;
+							} else {
+								draft.messages.push(data);
+								draft.totalCount++;
+							}
+						});
+					});
 
 					await cacheEntryRemoved;
 
@@ -191,7 +201,10 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 		}),
 		sendMessage: build.mutation<
 			string,
-			IMessengerPageApiProps & { text?: string; files?: FileList }
+			IMessengerPageApiProps & {
+				text?: string;
+				files?: FileList;
+			} & IMessengerListProps
 		>({
 			queryFn: async (data) => {
 				const socket = getSocket();
@@ -261,7 +274,7 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 });
 
 export const {
-	useFetchMessagesQuery,
+	useLazyFetchMessagesQuery,
 	useSendMessageMutation,
 	useJoinChatMutation,
 	useLeaveChatMutation,

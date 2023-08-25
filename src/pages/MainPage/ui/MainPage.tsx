@@ -50,8 +50,8 @@ const MainPage = () => {
 				<Text size={isMobile ? 'l' : 'xl'} indent text={t('Features')} />
 				<StyledList>
 					{appFeatures.map((feature, index) => (
-						<li>
-							<Text key={index} text={t(feature)} size={isMobile ? 'm' : 'l'} />
+						<li key={index}>
+							<Text text={t(feature)} size={isMobile ? 'm' : 'l'} />
 						</li>
 					))}
 				</StyledList>

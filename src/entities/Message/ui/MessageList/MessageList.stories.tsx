@@ -37,18 +37,21 @@ const messages: Messages = [
 		'03.02.2023',
 		[
 			{
+				id: '0',
 				authorId: '0',
 				text: 'Hi',
 				name: 'Max Ivanov',
 				time: '12:48',
 			},
 			{
+				id: '1',
 				authorId: '1',
 				text: 'Hello',
 				name: 'Ivan Ivanov',
 				time: '12:49',
 			},
 			{
+				id: '2',
 				authorId: '0',
 				text: 'Hello',
 				name: 'Ivan Ivanov',
@@ -60,12 +63,14 @@ const messages: Messages = [
 		'04.02.2023',
 		[
 			{
+				id: '3',
 				authorId: '0',
 				text: 'Hi',
 				name: 'Max Ivanov',
 				time: '12:48',
 			},
 			{
+				id: '4',
 				authorId: '1',
 				text: 'Hello',
 				name: 'Ivan Ivanov',
@@ -77,12 +82,14 @@ const messages: Messages = [
 		'02.02.2023',
 		[
 			{
+				id: '5',
 				authorId: '0',
 				text: 'Hi',
 				name: 'Max Ivanov',
 				time: '12:48',
 			},
 			{
+				id: '6',
 				authorId: '1',
 				text: 'Hello',
 				name: 'Ivan Ivanov',
@@ -96,4 +103,7 @@ export const Normal = Template.bind({});
 Normal.args = {
 	userId: '1',
 	messages,
+	totalCount: 7,
+	onStartReached: () => {},
+	scrollParent: document.querySelector('body') as HTMLElement,
 };

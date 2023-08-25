@@ -1,4 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
@@ -17,7 +18,7 @@ export default {
 	component: MessengerPage,
 	decorators: [
 		RouterDecorator('/chats/0?friendId=1', '/chats/:id'),
-		PageDecorator(true),
+		PageDecorator(),
 	],
 } as Meta<typeof MessengerPage>;
 
@@ -32,45 +33,46 @@ const state: DeepPartial<StateSchema> = {
 	},
 };
 
-const response: { messages: Messages; chatMembers: Record<string, UserMini> } =
-	{
-		chatMembers: {
-			0: {
-				id: '0',
-				name: 'Vlad Kuznetsov',
-				avatar: image,
-			},
-			1: {
-				id: '1',
-				name: 'Ivan Ivanov',
-				avatar: image,
-			},
-		},
-		messages: [
+const response: {
+	messages: Messages;
+	friend: UserMini;
+	endReached: boolean;
+	totalCount: number;
+} = {
+	friend: {
+		id: '1',
+		name: 'Ivan Ivanov',
+		avatar: image,
+	},
+	messages: [
+		[
+			'30.01.2023',
 			[
-				'30.01.2023',
-				[
-					{
-						authorId: '0',
-						time: '13:11',
-						name: 'Ivan Ivanov',
-						text: 'Some message',
-					},
-				],
-			],
-			[
-				'31.01.2023',
-				[
-					{
-						authorId: '1',
-						time: '13:11',
-						name: 'Vlad Kuznetsov',
-						text: 'Some message',
-					},
-				],
+				{
+					id: '0',
+					authorId: '0',
+					time: '13:11',
+					name: 'Ivan Ivanov',
+					text: 'Some message',
+				},
 			],
 		],
-	};
+		[
+			'31.01.2023',
+			[
+				{
+					id: '1',
+					authorId: '1',
+					time: '13:11',
+					name: 'Vlad Kuznetsov',
+					text: 'Some message',
+				},
+			],
+		],
+	],
+	endReached: true,
+	totalCount: 2,
+};
 
 export const Normal = Template.bind({});
 Normal.decorators = [
@@ -79,12 +81,15 @@ Normal.decorators = [
 		mockServerSocket.on('online', () => {
 			mockServerSocket.emit('online', ['0', '1']);
 		});
-
-		mockServerSocket.on('get_messages', () => {
-			mockServerSocket.emit('messages', response);
-		});
 	}),
 ];
+Normal.parameters = {
+	msw: [
+		rest.get(`${__API__}messages`, (_req, res, ctx) => {
+			return res(ctx.json(response));
+		}),
+	],
+};
 
 export const Error = Template.bind({});
 Error.decorators = [
@@ -93,9 +98,12 @@ Error.decorators = [
 		mockServerSocket.on('online', () => {
 			mockServerSocket.emit('online', ['0', '1']);
 		});
-
-		mockServerSocket.on('get_messages', () => {
-			mockServerSocket.emit('messages', response, true);
-		});
 	}),
 ];
+Error.parameters = {
+	msw: [
+		rest.get(`${__API__}messages`, (_req, res, ctx) => {
+			return res(ctx.status(400));
+		}),
+	],
+};

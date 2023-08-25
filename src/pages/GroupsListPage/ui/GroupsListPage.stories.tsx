@@ -8,7 +8,7 @@ import {
 	RouterDecorator,
 	PageDecorator,
 } from '@/shared/config/storybook/decorators';
-import { Group } from '@/entities/Group';
+import { GroupsList } from '@/entities/Group';
 import GroupsListPage from './GroupsListPage';
 
 export default {
@@ -36,35 +36,38 @@ const state: DeepPartial<StateSchema> = {
 	},
 };
 
-const groupsList: Array<Group> = [
-	{
-		avatar: image,
-		name: 'Some group',
-		id: 'id',
-		description: 'Some description',
-		createdAt: '03.02.2023',
-		tags: [],
-		ownerId: '1',
-	},
-	{
-		avatar: image,
-		name: 'Some group',
-		id: 'id1',
-		description: 'Some description',
-		createdAt: '03.02.2023',
-		tags: [],
-		ownerId: '1',
-	},
-	{
-		avatar: image,
-		name: 'Some group',
-		id: 'id2',
-		description: 'Some description',
-		createdAt: '03.02.2023',
-		tags: [],
-		ownerId: '1',
-	},
-];
+const groupsList: GroupsList = {
+	userGroups: [
+		{
+			avatar: image,
+			name: 'Some group',
+			id: 'id',
+			description: 'Some description',
+			createdAt: '03.02.2023',
+			tags: [],
+			ownerId: '1',
+		},
+		{
+			avatar: image,
+			name: 'Some group',
+			id: 'id1',
+			description: 'Some description',
+			createdAt: '03.02.2023',
+			tags: [],
+			ownerId: '1',
+		},
+		{
+			avatar: image,
+			name: 'Some group',
+			id: 'id2',
+			description: 'Some description',
+			createdAt: '03.02.2023',
+			tags: [],
+			ownerId: '1',
+		},
+	],
+	otherGroups: [],
+};
 
 export const Normal = Template.bind({});
 Normal.decorators = [StoreDecorator(state as StateSchema)];

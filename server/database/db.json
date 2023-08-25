@@ -24,7 +24,7 @@
 			"age": 22,
 			"createdAt": "05.0.2023",
 			"avatar": "1_1WCjO1iYMo7J7Upp8KMfLA@2x.jpg",
-			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzk0IiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjkyMTgxNDEwfQ.39ZslG7bidP3teiyBMa8oNdETPTz5A1_mpBtzbYYPgE"
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzk0IiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjkyNzczNzIzfQ._k2TOcR2R4v91OvjOye1h9kJaB9YUu__eQnd1bi-wts"
 		},
 		{
 			"id": "6cbdb795",
@@ -1094,6 +1094,62 @@
 			"type": "text",
 			"text": "Hello",
 			"createdAt": "09:26:38 27.07.2023"
+		},
+		{
+			"id": "d9aa22e0-44b6-4b9f-ba83-6ac878e712e8",
+			"chatId": "0",
+			"userId": "6cbdb794",
+			"type": "text",
+			"text": "Hi",
+			"createdAt": "11:38:34 24.08.2023"
+		},
+		{
+			"id": "27d31333-7915-402b-ac10-48b77eff1759",
+			"chatId": "0",
+			"userId": "6cbdb793",
+			"type": "text",
+			"text": "Hello",
+			"createdAt": "11:42:33 24.08.2023"
+		},
+		{
+			"id": "451bfc44-5c61-424c-bfc9-072de9308f1f",
+			"chatId": "0",
+			"userId": "6cbdb794",
+			"type": "text",
+			"text": "Message",
+			"createdAt": "11:44:43 24.08.2023"
+		},
+		{
+			"id": "d936faed-e156-45ac-9c7e-0ddd922c2dcb",
+			"chatId": "0",
+			"userId": "6cbdb794",
+			"type": "text",
+			"text": "Testing",
+			"createdAt": "11:49:01 24.08.2023"
+		},
+		{
+			"id": "6abf720d-b580-419a-ba85-90d868cea6ef",
+			"chatId": "0",
+			"userId": "6cbdb793",
+			"type": "text",
+			"text": "Nice",
+			"createdAt": "11:52:53 24.08.2023"
+		},
+		{
+			"id": "ba6a9609-60d0-41d0-ab1a-0a963b4880e2",
+			"chatId": "0",
+			"userId": "6cbdb794",
+			"type": "text",
+			"text": "New message",
+			"createdAt": "09:34:39 25.08.2023"
+		},
+		{
+			"id": "62192814-e9aa-41bd-95d8-89ae37430d37",
+			"chatId": "0",
+			"userId": "6cbdb793",
+			"type": "text",
+			"text": "Msg",
+			"createdAt": "09:40:15 25.08.2023"
 		}
 	],
 	"chat-members": [

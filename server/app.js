@@ -133,10 +133,12 @@ io.on('connection', (socket) => {
 			chatData.files = undefined;
 			chatData.img = images.length ? images : undefined;
 
-			await socketController.postChatMessages(chatData);
+			const newMessage = await socketController.postChatMessages(
+				chatData,
+				fullHostName,
+			);
 
-			const messages = await socketController.getChatMessages(chatData);
-			io.to(`chat: ${chatData.chatId}`).emit('messages', messages);
+			io.to(`chat: ${chatData.chatId}`).emit('messages', newMessage);
 		} catch (e) {
 			console.log(e);
 			return new Error(e.message);

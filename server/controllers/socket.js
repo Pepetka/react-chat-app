@@ -1,10 +1,10 @@
 import db from '../database/database.js';
 import { UserMiniModel } from '../models/user.js';
-import sortByTime from '../helpers/sortByTime.js';
 import sortByDate from '../helpers/sortByDate.js';
 import MessageModel from '../models/message.js';
 import getCurrentDate from '../helpers/getCurrentDate.js';
 import CommentModel from '../models/comment.js';
+import sortByCreatedAt from '../helpers/sortByCreatedAt.js';
 
 class Socket {
 	#onlineUsers = new Set();
@@ -35,9 +35,12 @@ class Socket {
 		this.#connectedUsers[socketId] = undefined;
 	}
 
-	async getChatMessages({ chatId, userId, friendId }, fullHostName) {
+	async getChatMessages(
+		{ chatId, userId, friendId, page, limit },
+		fullHostName,
+	) {
 		await db.read();
-		const { users, messages, 'chat-members': chatMembers, chats } = db.data;
+		const { users, messages, chats } = db.data;
 
 		if (!chats.find((chat) => chat.id === chatId)) {
 			const friend = users.find((user) => user.id === friendId);
@@ -51,6 +54,8 @@ class Socket {
 			return {
 				friend: friendMini,
 				messages: [],
+				endReached: false,
+				totalCount: 0,
 			};
 		}
 
@@ -60,37 +65,48 @@ class Socket {
 
 		const messagesResponse = {};
 
-		messages.forEach((message) => {
-			if (message.chatId !== chatId) {
-				return;
-			}
+		const chatMessages = messages
+			.filter((message) => message.chatId === chatId)
+			.map((message) => {
+				const array = message.createdAt.split(' ')[0].split(':');
 
-			const array = message.createdAt.split(' ')[0].split(':');
+				const time = `${array[0]}:${array[1]}`;
+				const date = message.createdAt.split(' ')[1];
 
-			const time = `${array[0]}:${array[1]}`;
-			const date = message.createdAt.split(' ')[1];
+				const currentData = {
+					id: message.id,
+					authorId: message.userId,
+					name:
+						user.id === message.userId
+							? `${user.firstname} ${user.lastname}`
+							: `${friend.firstname} ${friend.lastname}`,
+					text: message.text,
+					img: message.img?.map((image) => `${fullHostName}/images/${image}`),
+					time,
+					date,
+					createdAt: message.createdAt,
+				};
 
-			const currentData = {
-				authorId: message.userId,
-				name:
-					user.id === message.userId
-						? `${user.firstname} ${user.lastname}`
-						: `${friend.firstname} ${friend.lastname}`,
-				text: message.text,
-				img: message.img?.map((image) => `${fullHostName}/images/${image}`),
-				time,
-			};
+				return currentData;
+			})
+			.sort((prev, current) => sortByCreatedAt(prev, current, 'up'));
 
-			if (messagesResponse[date]) {
-				messagesResponse[date] = [...messagesResponse[date], currentData];
-			} else {
-				messagesResponse[date] = [currentData];
-			}
-		});
+		const endIndex = chatMessages.length;
+		const startIndex = Math.max(
+			endIndex - (Number(page) * Number(limit) + Number(limit)),
+			0,
+		);
+		const endReached = startIndex === 0;
 
-		Object.values(messagesResponse).forEach((value) => {
-			value.sort((prev, current) => sortByTime(prev.time, current.time, 'up'));
-		});
+		chatMessages
+			.slice(startIndex, endIndex)
+			.forEach(({ date, ...currentData }) => {
+				if (messagesResponse[date]) {
+					messagesResponse[date] = [...messagesResponse[date], currentData];
+				} else {
+					messagesResponse[date] = [currentData];
+				}
+			});
 
 		const chatFriend = new UserMiniModel({
 			id: friend.id,
@@ -114,10 +130,18 @@ class Socket {
 			),
 		};
 
-		return response;
+		return {
+			friend: chatFriend,
+			messages: response.messages,
+			endReached,
+			totalCount: endIndex,
+		};
 	}
 
-	async postChatMessages({ chatId, userId, friendId, text, img }) {
+	async postChatMessages(
+		{ chatId, userId, friendId, text, img },
+		fullHostName,
+	) {
 		await db.read();
 		const { users, messages, chats, 'chat-members': chatMembers } = db.data;
 
@@ -149,7 +173,24 @@ class Socket {
 
 		await db.write();
 
-		return newMessage.id;
+		const user = users.find((user) => userId === user.id);
+
+		const array = newMessage.createdAt.split(' ')[0].split(':');
+
+		const time = `${array[0]}:${array[1]}`;
+		const date = newMessage.createdAt.split(' ')[1];
+
+		const currentData = {
+			id: newMessage.id,
+			authorId: newMessage.userId,
+			name: `${user.firstname} ${user.lastname}`,
+			text: newMessage.text,
+			img: newMessage.img?.map((image) => `${fullHostName}/images/${image}`),
+			time,
+			createdAt: newMessage.createdAt,
+		};
+
+		return [date, [currentData]];
 	}
 
 	async getComments(postId, fullHostName) {

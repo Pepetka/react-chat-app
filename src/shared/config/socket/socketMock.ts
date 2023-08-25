@@ -5,6 +5,7 @@ class SocketMock {
 
 	#clientOn = (ev: string, listener: (data: any) => void): any => {
 		if (this.#error[ev]) throw new Error('Mock Socket Error');
+		if (!this.#mockOn[ev]) return;
 		listener(this.#mockOn[ev]);
 	};
 
