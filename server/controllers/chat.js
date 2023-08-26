@@ -4,10 +4,12 @@ import getContains from '../helpers/getContains.js';
 import { UserMiniModel } from '../models/user.js';
 import sortByDate from '../helpers/sortByDate.js';
 import getCurrentDate from '../helpers/getCurrentDate.js';
-import MessageModel from '../models/message.js';
 import ChatModel from '../models/chat.js';
 import { getFullHostName } from '../helpers/getFullHostName.js';
-import { socketController } from '../app.js';
+import sortByCreatedAt from '../helpers/sortByCreatedAt.js';
+import SocketController from './socket.js';
+
+const socketController = new SocketController();
 
 class Chat {
 	constructor() {
@@ -197,14 +199,105 @@ class Chat {
 	async getMessages(req, res) {
 		try {
 			const fullHostName = getFullHostName(req);
-			const chatData = req.query;
+			const { chatId, userId, friendId, page, limit } = req.query;
 
-			const response = await socketController.getChatMessages(
-				chatData,
-				fullHostName,
+			await db.read();
+			const { users, messages, chats } = db.data;
+
+			if (!chats.find((chat) => chat.id === chatId)) {
+				const friend = users.find((user) => user.id === friendId);
+
+				const friendMini = new UserMiniModel({
+					id: friend.id,
+					avatar: friend.avatar,
+					name: `${friend.firstname} ${friend.lastname}`,
+				});
+
+				return {
+					friend: friendMini,
+					messages: [],
+					endReached: false,
+					totalCount: 0,
+				};
+			}
+
+			const friend = users.find((user) => friendId === user.id);
+
+			const user = users.find((user) => userId === user.id);
+
+			const messagesResponse = {};
+
+			const chatMessages = messages
+				.filter((message) => message.chatId === chatId)
+				.map((message) => {
+					const array = message.createdAt.split(' ')[0].split(':');
+
+					const time = `${array[0]}:${array[1]}`;
+					const date = message.createdAt.split(' ')[1];
+
+					const currentData = {
+						id: message.id,
+						authorId: message.userId,
+						name:
+							user.id === message.userId
+								? `${user.firstname} ${user.lastname}`
+								: `${friend.firstname} ${friend.lastname}`,
+						text: message.text,
+						img: message.img?.map((image) => `${fullHostName}/images/${image}`),
+						time,
+						date,
+						createdAt: message.createdAt,
+					};
+
+					return currentData;
+				})
+				.sort((prev, current) => sortByCreatedAt(prev, current, 'up'));
+
+			const endIndex = chatMessages.length;
+			const startIndex = Math.max(
+				endIndex - (Number(page) * Number(limit) + Number(limit)),
+				0,
 			);
+			const endReached = startIndex === 0;
 
-			return res.json(response);
+			chatMessages
+				.slice(startIndex, endIndex)
+				.forEach(({ date, ...currentData }) => {
+					if (messagesResponse[date]) {
+						messagesResponse[date] = [...messagesResponse[date], currentData];
+					} else {
+						messagesResponse[date] = [currentData];
+					}
+				});
+
+			const chatFriend = new UserMiniModel({
+				id: friend.id,
+				avatar: `${fullHostName}/images/${friend.avatar}`,
+				name: `${friend.firstname} ${friend.lastname}`,
+			});
+
+			const chatUser = new UserMiniModel({
+				id: user.id,
+				avatar: `${fullHostName}/images/${user.avatar}`,
+				name: `${user.firstname} ${user.lastname}`,
+			});
+
+			const response = {
+				chatMembers: {
+					[chatFriend.id]: chatFriend,
+					[chatUser.id]: chatUser,
+				},
+				messages: Object.entries(messagesResponse).sort((prev, current) =>
+					sortByDate(prev[0], current[0], 'up'),
+				),
+			};
+
+			return res.json({
+				friend: chatFriend,
+				messages: response.messages,
+				endReached,
+				totalCount: endIndex,
+			});
 		} catch (e) {
 			console.log(e);
 			return res.status(500).json({ message: e.message });
@@ -213,41 +306,15 @@ class Chat {
 
 	async postMessages(req, res) {
 		try {
-			const { chatId, userId, friendId, text, img } = req.body;
+			const fullHostName = getFullHostName(req);
+			const chatData = req.body;
 
-			await db.read();
-			const { users, messages, chats, 'chat-members': chatMembers } = db.data;
+			const newMessage = await socketController.postChatMessages(
+				chatData,
+				fullHostName,
+			);
 
-			const newMessage = new MessageModel({
-				chatId,
-				userId,
-				type: 'text',
-				text: text || undefined,
-				img,
-			});
-
-			messages.push(newMessage);
-
-			if (!chats.find((chat) => chat.id === chatId)) {
-				const friend = users.find((user) => user.id === userId);
-
-				const newChat = new ChatModel({
-					id: chatId,
-					name: `${friend.firstname} ${friend.lastname}`,
-					ownerId: userId,
-				});
-
-				chats.push(newChat);
-
-				chatMembers.push(
-					{ userId, chatId, createdAt: getCurrentDate() },
-					{ userId: friendId, chatId, createdAt: getCurrentDate() },
-				);
-			}
-
-			await db.write();
-
-			return res.json(newMessage.id);
+			return res.json(newMessage);
 		} catch (e) {
 			console.log(e);
 			return res.status(500).json({ message: e.message });

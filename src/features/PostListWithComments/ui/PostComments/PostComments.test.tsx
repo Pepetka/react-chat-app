@@ -2,11 +2,7 @@ import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { componentTestRender } from '@/shared/config/test';
-import {
-	mockServerSocket,
-	resetMockSocket,
-} from '@/shared/config/socket/socketMock';
-import { Comment } from '@/shared/types/comment';
+import { resetMockSocket } from '@/shared/config/socket/socketMock';
 import { PostComments } from './PostComments';
 
 describe('PostComments', () => {
@@ -15,13 +11,9 @@ describe('PostComments', () => {
 	});
 
 	test('Rejected', async () => {
-		mockServerSocket.on('comments', () => {
-			mockServerSocket.emit('comments', [] as Array<Comment>, true);
-		});
-
 		await act(() =>
 			componentTestRender(
-				<PostComments userId="userId" postId="postId" commentsNum={3} />,
+				<PostComments userId="userId" postId="errorId" commentsNum={3} />,
 			),
 		);
 
@@ -30,24 +22,19 @@ describe('PostComments', () => {
 		);
 	});
 
-	test('Fulfilled', async () => {
-		mockServerSocket.on('comments', () => {
-			mockServerSocket.emit('comments', {
-				postId: 'postId',
-				comments: new Array(3).fill(1).map((_, index) => ({
-					id: `${index}`,
-					createdAt: '',
-					text: 'Some comment',
-					author: {
-						id: 'userId',
-						name: 'Name',
-						avatar: 'image',
-					},
-					postId: 'postId',
-				})),
-			} as { postId: string; comments: Array<Comment> });
-		});
+	test('Pending', async () => {
+		await act(() =>
+			componentTestRender(
+				<PostComments userId="userId" postId="LoadingId" commentsNum={3} />,
+			),
+		);
 
+		await waitFor(() =>
+			expect(screen.getByTestId('PostComments.skeleton')).toBeInTheDocument(),
+		);
+	});
+
+	test('Fulfilled', async () => {
 		await act(() =>
 			componentTestRender(
 				<PostComments userId="userId" postId="postId" commentsNum={3} />,

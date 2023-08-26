@@ -102,8 +102,8 @@
 
 Конфиг vite - [vite.config.ts](./vite.config.ts)
 
-- [config/jest](./test/config/) - конфигурация jest
-- [config/storybook](./.storybook/) - конфигурация storybook
+- [test/config](./test/config/) - конфигурация jest
+- [.storybook](./.storybook/) - конфигурация storybook
 
 ---
 
@@ -174,6 +174,7 @@
 - [EditProfile](./src/features/EditProfile/README.md)
 - [GroupDataCard](./src/features/GroupDataCard/README.md)
 - [LangSwitcher](./src/features/LangSwitcher/README.md)
+- [Messenger](./src/features/Messenger/README.md)
 - [PostListWithComments](./src/features/PostListWithComments/README.md)
 - [ProfileCard](./src/features/ProfileCard/README.md)
 - [RegisterByUsername](./src/features/RegisterByUsername/README.md)

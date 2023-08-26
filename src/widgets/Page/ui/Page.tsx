@@ -43,6 +43,12 @@ const ContentWrapper = styled.div<{ isMessengerPage: boolean }>`
 		props.isMessengerPage && isMobile ? '0' : 'var(--page-padding)'};
 	display: flex;
 	gap: 8px;
+	height: ${(props) =>
+		props.isMessengerPage
+			? isMobile
+				? 'var(--page-height-mobile)'
+				: 'var(--page-height)'
+			: 'auto'};
 
 	@media (max-width: 900px) {
 		width: 100%;

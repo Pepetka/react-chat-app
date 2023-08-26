@@ -149,6 +149,66 @@ FollowingProfile.decorators = [
 	}),
 ];
 
+export const UserLoading = Template.bind({});
+UserLoading.args = {
+	profileId: '6cbdb793',
+	userId: '6cbdb793',
+};
+UserLoading.parameters = {
+	msw: [
+		rest.get(`${__API__}profile`, (_req, res, ctx) => {
+			return res(ctx.json(user), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}getChatId`, (_req, res, ctx) => {
+			return res(ctx.json(''), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}relations`, (_req, res, ctx) => {
+			const relations: Relations = {
+				relations: 'nobody',
+			};
+
+			return res(ctx.json(relations), ctx.delay('infinite'));
+		}),
+	],
+};
+UserLoading.decorators = [
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('online', () => {
+			mockServerSocket.emit('online', ['6cbdb793']);
+		});
+	}),
+];
+
+export const Loading = Template.bind({});
+Loading.args = {
+	profileId: '6cbdb793',
+	userId: '6cbdb794',
+};
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}profile`, (_req, res, ctx) => {
+			return res(ctx.json(user), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}getChatId`, (_req, res, ctx) => {
+			return res(ctx.json(''), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}relations`, (_req, res, ctx) => {
+			const relations: Relations = {
+				relations: 'following',
+			};
+
+			return res(ctx.json(relations), ctx.delay('infinite'));
+		}),
+	],
+};
+Loading.decorators = [
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('online', () => {
+			mockServerSocket.emit('online', ['6cbdb793']);
+		});
+	}),
+];
+
 export const Error = Template.bind({});
 Error.args = {
 	profileId: '6cbdb793',

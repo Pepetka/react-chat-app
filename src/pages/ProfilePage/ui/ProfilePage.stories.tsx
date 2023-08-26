@@ -143,6 +143,50 @@ Normal.parameters = {
 	],
 };
 
+export const Loading = Template.bind({});
+Loading.args = {};
+Loading.decorators = [
+	StoreDecorator(state as StateSchema),
+	WithCallbackDecorator(() => {
+		mockServerSocket.on('online', () => {
+			mockServerSocket.emit('online', ['6cbdb793']);
+		});
+	}),
+];
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}profile`, (_req, res, ctx) => {
+			return res(ctx.json(user), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}relations`, (_req, res, ctx) => {
+			const relations: Relations = { relations: 'nobody' };
+
+			return res(ctx.json(relations), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}social`, (_req, res, ctx) => {
+			const social: Social = {
+				followersNum: '101',
+				followingNum: '202',
+				groupsNum: '303',
+			};
+
+			return res(ctx.json(social), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}friends`, (_req, res, ctx) => {
+			return res(ctx.json(friends), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
+			return res(ctx.json({ posts, endReached: true }), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}getChatId`, (_req, res, ctx) => {
+			return res(ctx.json(''), ctx.delay('infinite'));
+		}),
+	],
+};
+
 export const Error = Template.bind({});
 Error.args = {};
 Error.decorators = [

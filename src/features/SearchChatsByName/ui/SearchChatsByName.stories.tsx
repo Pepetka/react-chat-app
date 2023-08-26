@@ -70,6 +70,18 @@ Normal.parameters = {
 	],
 };
 
+export const Loading = Template.bind({});
+Loading.args = {
+	userId: '1',
+};
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}getChats`, (_req, res, ctx) => {
+			return res(ctx.json(chatsList), ctx.delay('infinite'));
+		}),
+	],
+};
+
 export const Error = Template.bind({});
 Error.args = {
 	userId: '1',

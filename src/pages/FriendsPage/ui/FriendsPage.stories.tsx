@@ -70,6 +70,24 @@ Normal.parameters = {
 	],
 };
 
+export const Loading = Template.bind({});
+Loading.decorators = [StoreDecorator(state as StateSchema)];
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}getUsers`, (_req, res, ctx) => {
+			return res(
+				ctx.json({
+					Followers: usersList,
+					Following: usersList,
+					Friends: usersList,
+					Others: usersList,
+				}),
+				ctx.delay('infinite'),
+			);
+		}),
+	],
+};
+
 export const Error = Template.bind({});
 Error.decorators = [StoreDecorator(state as StateSchema)];
 Error.parameters = {

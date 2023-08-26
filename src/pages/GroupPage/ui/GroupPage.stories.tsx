@@ -114,3 +114,41 @@ Normal.parameters = {
 		}),
 	],
 };
+
+export const Loading = Template.bind({});
+Loading.decorators = [StoreDecorator(state as StateSchema)];
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}group`, (_req, res, ctx) => {
+			return res(ctx.json(group), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}group-members`, (_req, res, ctx) => {
+			return res(ctx.json(groupRole), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
+			return res(ctx.json({ posts, endReached: true }), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats), ctx.delay('infinite'));
+		}),
+	],
+};
+
+export const Error = Template.bind({});
+Error.decorators = [StoreDecorator(state as StateSchema)];
+Error.parameters = {
+	msw: [
+		rest.get(`${__API__}group`, (_req, res, ctx) => {
+			return res(ctx.status(400));
+		}),
+		rest.get(`${__API__}group-members`, (_req, res, ctx) => {
+			return res(ctx.status(400));
+		}),
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
+			return res(ctx.status(400));
+		}),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.status(400));
+		}),
+	],
+};

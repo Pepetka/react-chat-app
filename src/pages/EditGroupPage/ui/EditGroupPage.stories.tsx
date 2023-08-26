@@ -29,6 +29,15 @@ Normal.parameters = {
 	],
 };
 
+export const Loading = Template.bind({});
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}group`, (_req, res, ctx) => {
+			return res(ctx.json(group), ctx.delay('infinite'));
+		}),
+	],
+};
+
 export const Error = Template.bind({});
 Error.parameters = {
 	msw: [

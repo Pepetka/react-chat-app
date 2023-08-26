@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Flex } from '@/shared/ui/Flex';
 import { Text } from '@/shared/ui/Text';
+import { Skeleton } from '@/shared/ui/Skeleton';
 import { GroupCardSkeleton } from '../GroupCardSkeleton/GroupCardSkeleton';
 import { GroupCard } from '../GroupCard/GroupCard';
 import { Group, GroupsList } from '../../model/types/groupSchema';
@@ -76,9 +77,15 @@ export const GroupList = memo((props: IChatListProps) => {
 	if (isLoading || !groups) {
 		return (
 			<Flex data-testid={`${dataTestId}.skeleton`} direction="column" gap="24">
-				<GroupCardSkeleton />
-				<GroupCardSkeleton />
-				<GroupCardSkeleton />
+				<Flex direction="column" gap="8">
+					<Flex direction="column">
+						<Skeleton height="32px" margin="4px" width="220px" />
+						<StyledHr />
+					</Flex>
+					<GroupCardSkeleton />
+					<GroupCardSkeleton />
+					<GroupCardSkeleton />
+				</Flex>
 			</Flex>
 		);
 	}

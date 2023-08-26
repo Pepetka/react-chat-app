@@ -1,28 +1,32 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { rest } from 'msw';
 import { StateSchema } from '@/app/provider/Store';
+import { Messages } from '@/entities/Message';
 import { UserMini } from '@/shared/types/userCard';
 import image from '@/shared/assets/images/image.jpg';
-import { Messages } from '@/entities/Message';
-import { mockServerSocket } from '@/shared/config/socket/socketMock';
 import {
-	PageDecorator,
 	RouterDecorator,
 	StoreDecorator,
 	WithCallbackDecorator,
 } from '@/shared/config/storybook/decorators';
-import MessengerPage from './MessengerPage';
+import { mockServerSocket } from '@/shared/config/socket/socketMock';
+import { Flex } from '@/shared/ui/Flex';
+import { Messenger } from './Messenger';
 
 export default {
-	title: 'pages/MessengerPage',
-	component: MessengerPage,
+	title: 'features/Messenger',
+	component: Messenger,
 	decorators: [
-		RouterDecorator('/chats/0?friendId=1', '/chats/:id'),
-		PageDecorator(true),
+		RouterDecorator(),
+		(StoriesComponent) => (
+			<Flex height="100vh" width="80%">
+				<StoriesComponent />
+			</Flex>
+		),
 	],
-} as Meta<typeof MessengerPage>;
+} as Meta<typeof Messenger>;
 
-const Template: StoryFn<typeof MessengerPage> = (args) => <MessengerPage />;
+const Template: StoryFn<typeof Messenger> = (args) => <Messenger {...args} />;
 
 const state: DeepPartial<StateSchema> = {
 	user: {
@@ -75,6 +79,11 @@ const response: {
 };
 
 export const Normal = Template.bind({});
+Normal.args = {
+	chatId: 'id',
+	friendId: '1',
+	userId: '0',
+};
 Normal.decorators = [
 	StoreDecorator(state as StateSchema),
 	WithCallbackDecorator(() => {
@@ -92,6 +101,11 @@ Normal.parameters = {
 };
 
 export const Loading = Template.bind({});
+Loading.args = {
+	chatId: 'id',
+	friendId: '1',
+	userId: '0',
+};
 Loading.decorators = [
 	StoreDecorator(state as StateSchema),
 	WithCallbackDecorator(() => {
@@ -109,6 +123,11 @@ Loading.parameters = {
 };
 
 export const Error = Template.bind({});
+Error.args = {
+	chatId: 'id',
+	friendId: '1',
+	userId: '0',
+};
 Error.decorators = [
 	StoreDecorator(state as StateSchema),
 	WithCallbackDecorator(() => {

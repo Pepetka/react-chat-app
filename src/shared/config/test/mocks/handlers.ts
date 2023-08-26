@@ -6,6 +6,7 @@ import { Chat } from '@/entities/Chat';
 import { UsersLists } from '@/entities/Friend';
 import { Social } from '@/entities/SocialData/model/types/socialDataSchema';
 import { Post, PostStats } from '@/entities/Post';
+import { Comment } from '@/shared/types/comment';
 
 const successResponse = <T extends object | string>(
 	res: ResponseComposition<DefaultBodyType>,
@@ -290,6 +291,34 @@ const posts = [
 	}),
 ];
 
+const comments = [
+	rest.get(`${__API__}comments`, (req, res, ctx) => {
+		const postId = req.url.searchParams.get('postId') ?? undefined;
+
+		if (postId === 'loadingId') {
+			return successResponse(res, ctx, {}, 1000);
+		}
+
+		if (postId === 'errorId') {
+			return errorResponse(res, ctx, 'Some test error');
+		}
+
+		const data: Array<Comment> = new Array(3).fill(1).map((_, index) => ({
+			id: `${index}`,
+			createdAt: '',
+			text: 'Some comment',
+			author: {
+				id: 'userId',
+				name: 'Name',
+				avatar: 'image',
+			},
+			postId: 'postId',
+		}));
+
+		return successResponse(res, ctx, data);
+	}),
+];
+
 export const handlers = [
 	...auth,
 	...profile,
@@ -297,4 +326,5 @@ export const handlers = [
 	...searchBy,
 	...socialData,
 	...posts,
+	...comments,
 ];

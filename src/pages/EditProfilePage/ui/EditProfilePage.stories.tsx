@@ -31,6 +31,15 @@ Normal.parameters = {
 	],
 };
 
+export const Loading = Template.bind({});
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}profile`, (_req, res, ctx) => {
+			return res(ctx.json(profile), ctx.delay('infinite'));
+		}),
+	],
+};
+
 export const Error = Template.bind({});
 Error.parameters = {
 	msw: [

@@ -88,6 +88,22 @@ Normal.parameters = {
 	],
 };
 
+export const Loading = Template.bind({});
+Loading.args = {
+	profileId: '6cbdb793',
+	userId: '6cbdb794',
+};
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}posts`, (_req, res, ctx) => {
+			return res(ctx.json({ posts, endReached: true }), ctx.delay('infinite'));
+		}),
+		rest.get(`${__API__}postStats`, (_req, res, ctx) => {
+			return res(ctx.json(postStats), ctx.delay('infinite'));
+		}),
+	],
+};
+
 export const Error = Template.bind({});
 Error.args = {
 	profileId: '6cbdb793',

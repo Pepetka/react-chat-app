@@ -1,12 +1,13 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Card } from '@/shared/ui/Card';
-import { RouterDecorator } from '@/shared/config/storybook/decorators/RouterDecorator/RouterDecorator';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { Modal } from './Modal';
 
 export default {
 	title: 'shared/Modal',
 	component: Modal,
 	decorators: [RouterDecorator()],
+	parameters: { chromatic: { pauseAnimationAtEnd: true } },
 } as Meta<typeof Modal>;
 
 const Template: StoryFn<typeof Modal> = (args) => <Modal {...args} />;

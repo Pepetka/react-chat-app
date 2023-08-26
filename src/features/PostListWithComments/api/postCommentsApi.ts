@@ -10,9 +10,12 @@ interface ICommentApiProps {
 const postCommentsApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchComments: build.query<Array<Comment>, ICommentApiProps>({
-			queryFn: () => {
-				return { data: [] };
-			},
+			query: ({ postId }) => ({
+				url: '/comments',
+				params: {
+					postId,
+				},
+			}),
 			async onCacheEntryAdded(
 				arg,
 				{ cacheDataLoaded, cacheEntryRemoved, requestId, dispatch },
@@ -22,17 +25,15 @@ const postCommentsApi = rtkApi.injectEndpoints({
 
 					const socket = getSocket();
 
-					socket.emit('comments', arg.postId);
-
 					socket.on(
 						'comments',
-						(data: { postId: string; comments: Array<Comment> }) => {
+						(data: { postId: string; comment: Comment }) => {
 							dispatch(
 								postCommentsApi.util.updateQueryData(
 									'fetchComments',
 									{ postId: data.postId },
-									() => {
-										return data.comments;
+									(draft) => {
+										draft.unshift(data.comment);
 									},
 								),
 							);

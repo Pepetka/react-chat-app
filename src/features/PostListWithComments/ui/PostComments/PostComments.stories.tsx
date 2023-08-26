@@ -1,13 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { rest } from 'msw';
 import { UserMini } from '@/shared/types/userCard';
 import { Comment } from '@/shared/types/comment';
 import { Card } from '@/shared/ui/Card';
 import image from '@/shared/assets/images/image.jpg';
-import { mockServerSocket } from '@/shared/config/socket/socketMock';
-import {
-	WithCallbackDecorator,
-	RouterDecorator,
-} from '@/shared/config/storybook/decorators';
+import { RouterDecorator } from '@/shared/config/storybook/decorators';
 import { PostComments } from './PostComments';
 
 export default {
@@ -65,16 +62,27 @@ Normal.args = {
 	userId: '1',
 	postId: '2',
 };
-Normal.decorators = [
-	WithCallbackDecorator(() => {
-		mockServerSocket.on('comments', () => {
-			mockServerSocket.emit('comments', {
-				postId: '2',
-				comments: comments('2'),
-			});
-		});
-	}),
-];
+Normal.parameters = {
+	msw: [
+		rest.get(`${__API__}comments`, (_req, res, ctx) => {
+			return res(ctx.json(comments('2')));
+		}),
+	],
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+	commentsNum: 3,
+	userId: '1',
+	postId: '2',
+};
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}comments`, (_req, res, ctx) => {
+			return res(ctx.json(comments('2')), ctx.delay('infinite'));
+		}),
+	],
+};
 
 export const Error = Template.bind({});
 Error.args = {
@@ -82,17 +90,10 @@ Error.args = {
 	userId: '1',
 	postId: '2',
 };
-Error.decorators = [
-	WithCallbackDecorator(() => {
-		mockServerSocket.on('comments', () => {
-			mockServerSocket.emit(
-				'comments',
-				{
-					postId: '2',
-					comments: comments('2'),
-				},
-				true,
-			);
-		});
-	}),
-];
+Error.parameters = {
+	msw: [
+		rest.get(`${__API__}comments`, (_req, res, ctx) => {
+			return res(ctx.status(400));
+		}),
+	],
+};

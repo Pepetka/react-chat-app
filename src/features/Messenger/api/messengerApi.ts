@@ -1,10 +1,10 @@
 import { rtkApi } from '@/shared/api/rtkApi';
-import { UserMini } from '@/shared/types/userCard';
 import { Messages } from '@/entities/Message';
+import { UserMini } from '@/shared/types/userCard';
 import { getSocket } from '@/shared/api/socketApi';
 import { socketError } from '@/shared/config/socket/socketError';
 
-interface IMessengerPageApiProps {
+interface IMessengerApiProps {
 	chatId: string;
 	userId: string;
 	friendId: string;
@@ -15,7 +15,7 @@ interface IMessengerListProps {
 	limit?: number;
 }
 
-export const messengerPageApi = rtkApi.injectEndpoints({
+export const messengerApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		fetchMessages: build.query<
 			{
@@ -24,7 +24,7 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 				endReached: boolean;
 				totalCount: number;
 			},
-			IMessengerPageApiProps & IMessengerListProps
+			IMessengerApiProps & IMessengerListProps
 		>({
 			query: (params) => ({
 				url: '/messages',
@@ -200,8 +200,8 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 			},
 		}),
 		sendMessage: build.mutation<
-			string,
-			IMessengerPageApiProps & {
+			void,
+			IMessengerApiProps & {
 				text?: string;
 				files?: FileList;
 			} & IMessengerListProps
@@ -217,7 +217,7 @@ export const messengerPageApi = rtkApi.injectEndpoints({
 				}
 				socket.emit('new_message', { ...data, files: filesArray });
 
-				return { data: '' };
+				return { data: undefined };
 			},
 			// async onQueryStarted(
 			// 	{ chatId, userId, text, img, friendId },
@@ -282,4 +282,4 @@ export const {
 	useTypingMessageMutation,
 	useStopTypingMutation,
 	useFriendTypingQuery,
-} = messengerPageApi;
+} = messengerApi;

@@ -71,6 +71,27 @@ Normal.parameters = {
 	],
 };
 
+export const Loading = Template.bind({});
+Loading.args = {
+	profileId: '2',
+	userId: '1',
+};
+Loading.parameters = {
+	msw: [
+		rest.get(`${__API__}getUsers`, (_req, res, ctx) => {
+			return res(
+				ctx.json({
+					Followers: usersList,
+					Following: usersList,
+					Friends: usersList,
+					Others: usersList,
+				}),
+				ctx.delay('infinite'),
+			);
+		}),
+	],
+};
+
 export const Error = Template.bind({});
 Error.args = {
 	profileId: '2',

@@ -13,6 +13,7 @@ const StyledPage = styled.div`
 const ContentWrapper = styled.div<{ isMessengerPage: boolean }>`
 	width: 80%;
 	min-height: 100vh;
+	height: ${(props) => (props.isMessengerPage ? '100vh' : 'auto')};
 	margin-inline: auto;
 	padding-bottom: ${(props) =>
 		props.isMessengerPage && isMobile ? '0' : 'var(--page-padding)'};

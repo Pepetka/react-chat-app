@@ -11,7 +11,7 @@
 			"age": "22",
 			"createdAt": "05.06.2022",
 			"avatar": "3100405.png",
-			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5MjE4MDc3Nn0.Od-__2D5KJQZtE9Y16azIi7brEVs9LFdM1kO5TfjJqs"
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5MzA0MDI0M30.LTXjFzSGlPMJzPYk9JIXxGt2VGrTGxlLb_vbbDr1mnQ"
 		},
 		{
 			"id": "6cbdb794",
@@ -198,11 +198,6 @@
 		{
 			"userId": "6cbdb796",
 			"followerId": "6cbdb802",
-			"createdAt": "03.02.2023"
-		},
-		{
-			"userId": "6cbdb800",
-			"followerId": "6cbdb793",
 			"createdAt": "03.02.2023"
 		},
 		{
@@ -533,7 +528,12 @@
 			"postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c"
 		}
 	],
-	"post-likes": [],
+	"post-likes": [
+		{
+			"userId": "6cbdb793",
+			"postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c"
+		}
+	],
 	"post-dislikes": [],
 	"comments": [
 		{
@@ -689,6 +689,48 @@
 			"authorId": "6cbdb793",
 			"postId": "42e896d8-91a0-4e53-97a8-a9aeadebe42a",
 			"createdAt": "11:24:01 26.07.2023"
+		},
+		{
+			"id": "57e3bdc6-fa9b-425e-a03b-2d0a67f70f35",
+			"text": "Comment",
+			"authorId": "6cbdb794",
+			"postId": "fa999cdf-d236-4c21-b1c6-86ac327a2bdb",
+			"createdAt": "10:57:45 26.08.2023"
+		},
+		{
+			"id": "57b6d2dc-c8ec-4359-93c3-537a8f1ea065",
+			"text": "1",
+			"authorId": "6cbdb793",
+			"postId": "fa999cdf-d236-4c21-b1c6-86ac327a2bdb",
+			"createdAt": "10:59:40 26.08.2023"
+		},
+		{
+			"id": "1220430a-62e1-4341-a2e8-9aae12c7734d",
+			"text": "Nice",
+			"authorId": "6cbdb794",
+			"postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c",
+			"createdAt": "11:02:34 26.08.2023"
+		},
+		{
+			"id": "1a09868d-d2e9-4fa7-b624-e1a0fd9bdb1b",
+			"text": "Comment",
+			"authorId": "6cbdb793",
+			"postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c",
+			"createdAt": "11:05:47 26.08.2023"
+		},
+		{
+			"id": "46870048-fa8c-4489-acaf-0ca0a17107cf",
+			"text": "1",
+			"authorId": "6cbdb794",
+			"postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c",
+			"createdAt": "11:06:09 26.08.2023"
+		},
+		{
+			"id": "4d03f445-0f7b-478a-a47b-fe66c7117b81",
+			"text": "Comment",
+			"authorId": "6cbdb793",
+			"postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c",
+			"createdAt": "11:55:37 26.08.2023"
 		}
 	],
 	"chats": [
@@ -1150,6 +1192,14 @@
 			"type": "text",
 			"text": "Msg",
 			"createdAt": "09:40:15 25.08.2023"
+		},
+		{
+			"id": "4d07c4ff-dc3f-480e-8b45-59f3b846fa89",
+			"chatId": "1",
+			"userId": "6cbdb793",
+			"type": "text",
+			"text": "Hello",
+			"createdAt": "11:57:45 26.08.2023"
 		}
 	],
 	"chat-members": [
@@ -1229,7 +1279,7 @@
 			"ownerId": "6cbdb793",
 			"name": "JavaScript group",
 			"tags": ["js", "code"],
-			"description": "Some test description",
+			"description": "New group description",
 			"createdAt": "11:38 18.08.2023",
 			"avatar": "avatar-1692434534936-213716990bbb79637fa352254fe93ba9aacad1407.png.webp"
 		}
