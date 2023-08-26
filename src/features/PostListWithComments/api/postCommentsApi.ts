@@ -27,13 +27,13 @@ const postCommentsApi = rtkApi.injectEndpoints({
 
 					socket.on(
 						'comments',
-						(data: { postId: string; comment: Comment }) => {
+						(data: { postId: string; comments: Array<Comment> }) => {
 							dispatch(
 								postCommentsApi.util.updateQueryData(
 									'fetchComments',
 									{ postId: data.postId },
-									(draft) => {
-										draft.unshift(data.comment);
+									() => {
+										return data.comments;
 									},
 								),
 							);
@@ -126,14 +126,14 @@ const postCommentsApi = rtkApi.injectEndpoints({
 			// invalidatesTags: ['comment', 'postStats'],
 		}),
 		deleteComment: build.mutation<
-			string,
+			Array<Comment>,
 			{ commentId: string; postId: string }
 		>({
 			queryFn: async (props) => {
 				const socket = getSocket();
 
-				const data: string = await new Promise((resolve) => {
-					socket.emit('delete_comment', props, (data: string) => {
+				const data: Array<Comment> = await new Promise((resolve) => {
+					socket.emit('delete_comment', props, (data: Array<Comment>) => {
 						resolve(data);
 					});
 				});
