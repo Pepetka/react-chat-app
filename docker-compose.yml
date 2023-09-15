@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/app/chat-app/src
+      - ./public:/app/chat-app/public
+    ports:
+      - '8080:8080'
