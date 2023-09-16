@@ -2,24 +2,25 @@ import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { GenerateSWOptions } from 'workbox-build/src/types';
-import dts from 'vite-plugin-dts';
 import svgr from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
 
 const getCache = ({
 	name,
 	pattern,
+	handler = 'NetworkFirst',
 }: {
 	name: string;
 	pattern: RegExp;
+	handler?: GenerateSWOptions['runtimeCaching'][number]['handler'];
 }): GenerateSWOptions['runtimeCaching'][number] => ({
 	urlPattern: pattern,
-	handler: 'NetworkFirst',
+	handler,
 	options: {
 		cacheName: name,
 		expiration: {
 			maxEntries: 500,
-			maxAgeSeconds: 60 * 60 * 24, // 1 day
+			maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
 		},
 		cacheableResponse: {
 			statuses: [200],
@@ -45,29 +46,27 @@ export default defineConfig(({ mode }) => {
 					runtimeCaching: [
 						getCache({
 							name: 'main-request-cache',
-							pattern:
-								/^https:\/\/react-chat-app-server\.vercel\.app\/profile.+/,
+							pattern: /^https:\/\/vlad-is-love\.ru\/profile.+/,
 						}),
 						getCache({
 							name: 'main-request-cache',
-							pattern:
-								/^https:\/\/react-chat-app-server\.vercel\.app\/relations.+/,
+							pattern: /^https:\/\/vlad-is-love\.ru\/relations.+/,
 						}),
 						getCache({
 							name: 'main-request-cache',
-							pattern:
-								/^https:\/\/react-chat-app-server\.vercel\.app\/social.+/,
+							pattern: /^https:\/\/vlad-is-love\.ru\/social.+/,
 						}),
 						getCache({
 							name: 'main-request-cache',
-							pattern:
-								/^https:\/\/react-chat-app-server\.vercel\.app\/friends.+/,
+							pattern: /^https:\/\/vlad-is-love\.ru\/friends.+/,
+						}),
+						getCache({
+							name: 'images',
+							pattern: /\.(?:png|jpg|webp|svg)$/,
+							handler: 'CacheFirst',
 						}),
 					],
 				},
-			}),
-			dts({
-				insertTypesEntry: true,
 			}),
 		],
 		server: {
