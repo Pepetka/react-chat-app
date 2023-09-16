@@ -14,7 +14,7 @@ export const findByTestId = (
 
 export const visitPage = (name: string, path: string) => {
 	cy.visit(path);
-	cy.getByTestId(name, { timeout: 3000 }).should('exist');
+	cy.getByTestId(name).should('exist');
 };
 
 export const setUserLocal = (body: User) => {

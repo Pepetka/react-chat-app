@@ -1,18 +1,20 @@
-import { LOCAL_STORAGE_AUTH_KEY } from '../../../src/shared/const/localstorage';
+import { LOCAL_STORAGE_AUTH_ACCESS_KEY } from '../../../src/shared/const/localstorage';
 import { Chat } from '../../../src/entities/Chat';
 
 export const createChat = (
 	{ userId, friendId }: { userId: string; friendId: string },
-	token?: string,
+	accessToken?: string,
 ) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 
 	return cy
 		.request({
 			method: 'POST',
 			url: 'http://localhost:8000/chat',
 			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
+				Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 			},
 			body: {
 				userId,
@@ -25,15 +27,17 @@ export const createChat = (
 		});
 };
 
-export const deleteChat = (chatId: string, token?: string) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+export const deleteChat = (chatId: string, accessToken?: string) => {
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 
 	return cy
 		.request({
 			method: 'DELETE',
 			url: 'http://localhost:8000/chat',
 			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
+				Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 			},
 			body: { chatId },
 		})
@@ -47,9 +51,9 @@ declare global {
 		interface Chainable {
 			createChat(
 				data: { userId: string; friendId: string },
-				token?: string,
+				accessToken?: string,
 			): Chainable<Chat>;
-			deleteChat(chatId: string, token?: string): Chainable<string>;
+			deleteChat(chatId: string, accessToken?: string): Chainable<string>;
 		}
 	}
 }

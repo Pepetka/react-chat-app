@@ -1,5 +1,5 @@
 import { getRegisterPagePath } from '../../../src/shared/const/router';
-import { LOCAL_STORAGE_AUTH_KEY } from '../../../src/shared/const/localstorage';
+import { LOCAL_STORAGE_AUTH_ACCESS_KEY } from '../../../src/shared/const/localstorage';
 
 describe('Register', () => {
 	beforeEach(function () {
@@ -8,7 +8,7 @@ describe('Register', () => {
 	});
 
 	afterEach(function () {
-		cy.deleteUser(this.userData.token);
+		cy.deleteUser(this.userData.accessToken);
 	});
 
 	it('Register an existing user', function () {
@@ -24,9 +24,10 @@ describe('Register', () => {
 		cy.getByTestId('ProfilePage', { timeout: 5000 }).should('exist');
 
 		cy.window().then((win) => {
-			const token = win.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY) ?? '';
+			const accessToken =
+				win.localStorage.getItem(LOCAL_STORAGE_AUTH_ACCESS_KEY) ?? '';
 
-			cy.deleteUser(token, 'test username', 'test password');
+			cy.deleteUser(accessToken, 'test username', 'test password');
 		});
 	});
 });

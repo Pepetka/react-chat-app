@@ -19,7 +19,7 @@ describe('createGroup', () => {
 	});
 
 	afterEach(function () {
-		cy.deleteUser(this.userData.token);
+		cy.deleteUser(this.userData.accessToken);
 	});
 
 	it('Edit group', function () {
@@ -30,7 +30,7 @@ describe('createGroup', () => {
 				getGroupPagePath(':id'),
 				pathname,
 			);
-			cy.deleteGroup(id, this.userData.token);
+			cy.deleteGroup(id, this.userData.accessToken);
 		});
 	});
 });

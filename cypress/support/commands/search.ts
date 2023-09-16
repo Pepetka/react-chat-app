@@ -48,9 +48,9 @@ declare global {
 			): Chainable<void>;
 			createChat(
 				data: { userId: string; friendId: string },
-				token?: string,
+				accessToken?: string,
 			): Chainable<Chat>;
-			deleteChat(chatId: string, token?: string): Chainable<string>;
+			deleteChat(chatId: string, accessToken?: string): Chainable<string>;
 		}
 	}
 }

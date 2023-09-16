@@ -14,7 +14,7 @@ describe('searchGroups', () => {
 	});
 
 	afterEach(function () {
-		cy.deleteUser(this.userData.token);
+		cy.deleteUser(this.userData.accessToken);
 
 		cy.deleteGroup(this.group1.id);
 		cy.deleteGroup(this.group2.id);

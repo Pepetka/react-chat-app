@@ -23,9 +23,9 @@ describe('searchChats', () => {
 	});
 
 	afterEach(function () {
-		cy.deleteUser(this.userData.token, this.userData.username);
-		cy.deleteUser(this.friend1Data.token, this.friend1Data.username);
-		cy.deleteUser(this.friend2Data.token, this.friend2Data.username);
+		cy.deleteUser(this.userData.accessToken, this.userData.username);
+		cy.deleteUser(this.friend1Data.accessToken, this.friend1Data.username);
+		cy.deleteUser(this.friend2Data.accessToken, this.friend2Data.username);
 
 		cy.deleteChat(this.chat1.id);
 		cy.deleteChat(this.chat2.id);

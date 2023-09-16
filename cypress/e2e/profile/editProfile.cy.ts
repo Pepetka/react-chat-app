@@ -15,7 +15,7 @@ describe('editProfile', () => {
 	});
 
 	afterEach(function () {
-		cy.deleteUser(this.userData.token);
+		cy.deleteUser(this.userData.accessToken);
 	});
 
 	it('Edit profile', function () {

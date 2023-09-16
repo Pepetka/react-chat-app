@@ -18,7 +18,7 @@ export const login = (username = 'testUser') =>
 		.then(({ body }) => body);
 
 export const deleteUser = (
-	token: string,
+	accessToken: string,
 	username = 'testUser',
 	password = 'TestPassword',
 ) =>
@@ -26,7 +26,7 @@ export const deleteUser = (
 		method: 'DELETE',
 		url: 'http://localhost:8000/user',
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${accessToken}`,
 		},
 		body: {
 			username,
@@ -39,7 +39,7 @@ declare global {
 		interface Chainable {
 			login(username?: string): Chainable<User>;
 			deleteUser(
-				token: string,
+				accessToken: string,
 				username?: string,
 				password?: string,
 			): Chainable<void>;

@@ -1,15 +1,17 @@
 import { Group } from '@/entities/Group';
-import { LOCAL_STORAGE_AUTH_KEY } from '../../../src/shared/const/localstorage';
+import { LOCAL_STORAGE_AUTH_ACCESS_KEY } from '../../../src/shared/const/localstorage';
 
-export const createGroup = (name: string, token?: string) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+export const createGroup = (name: string, accessToken?: string) => {
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 
 	return cy
 		.request({
 			method: 'POST',
 			url: 'http://localhost:8000/group',
 			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
+				Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 			},
 			body: {
 				name,
@@ -20,15 +22,17 @@ export const createGroup = (name: string, token?: string) => {
 		});
 };
 
-export const deleteGroup = (groupId: string, token?: string) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+export const deleteGroup = (groupId: string, accessToken?: string) => {
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 
 	return cy
 		.request({
 			method: 'DELETE',
 			url: 'http://localhost:8000/group',
 			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
+				Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 			},
 			body: { groupId },
 		})
@@ -55,8 +59,8 @@ export const testGroupForm = (
 declare global {
 	namespace Cypress {
 		interface Chainable {
-			createGroup(name: string, token?: string): Chainable<Group>;
-			deleteGroup(groupId: string, token?: string): Chainable<string>;
+			createGroup(name: string, accessToken?: string): Chainable<Group>;
+			deleteGroup(groupId: string, accessToken?: string): Chainable<string>;
 			testGroupForm(
 				name: string,
 				groupName: string,

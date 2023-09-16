@@ -536,12 +536,7 @@
       "postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c"
     }
   ],
-  "post-likes": [
-    {
-      "userId": "6cbdb793",
-      "postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c"
-    }
-  ],
+  "post-likes": [],
   "post-dislikes": [],
   "comments": [
     {
