@@ -11,7 +11,8 @@
       "age": "22",
       "createdAt": "05.06.2022",
       "avatar": "3100405.png",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5MzA0MDI0M30.LTXjFzSGlPMJzPYk9JIXxGt2VGrTGxlLb_vbbDr1mnQ"
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5NDg1NTIwNiwiZXhwIjoxNjk0ODU1MjM2fQ.Xe8GQVx6Sb6VrI2ATUfRNQNkqfSoP5uK50-nurEKeAk",
+      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5NDg1NTIwNiwiZXhwIjoxNjk0ODU1MjM2fQ.Xe8GQVx6Sb6VrI2ATUfRNQNkqfSoP5uK50-nurEKeAk"
     },
     {
       "id": "6cbdb794",
@@ -23,8 +24,7 @@
       "lastname": "Ivanov",
       "age": 22,
       "createdAt": "05.0.2023",
-      "avatar": "1_1WCjO1iYMo7J7Upp8KMfLA@2x.jpg",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzk0IiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjkyNzczNzIzfQ._k2TOcR2R4v91OvjOye1h9kJaB9YUu__eQnd1bi-wts"
+      "avatar": "1_1WCjO1iYMo7J7Upp8KMfLA@2x.jpg"
     },
     {
       "id": "6cbdb795",

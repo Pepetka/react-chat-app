@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-	LOCAL_STORAGE_AUTH_KEY,
+	LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	LOCAL_STORAGE_AUTH_REFRESH_KEY,
 	LOCAL_STORAGE_USER_KEY,
 } from '@/shared/const/localstorage';
 import { User } from '@/shared/types/userCard';
@@ -28,13 +29,21 @@ export const userSlice = createSlice({
 			state.authData = payload;
 
 			localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(payload));
-			localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, `${payload.token}`);
+			localStorage.setItem(
+				LOCAL_STORAGE_AUTH_ACCESS_KEY,
+				`${payload.accessToken}`,
+			);
+			localStorage.setItem(
+				LOCAL_STORAGE_AUTH_REFRESH_KEY,
+				`${payload.refreshToken}`,
+			);
 		},
 		removeUser: (state) => {
 			state.authData = undefined;
 
 			localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
-			localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
+			localStorage.removeItem(LOCAL_STORAGE_AUTH_ACCESS_KEY);
+			localStorage.removeItem(LOCAL_STORAGE_AUTH_REFRESH_KEY);
 		},
 	},
 });

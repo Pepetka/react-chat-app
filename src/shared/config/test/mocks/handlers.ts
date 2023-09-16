@@ -81,7 +81,7 @@ const profile = [
 			firstname: 'Name',
 			lastname: 'Lastname',
 			status: 'Some profile status',
-			token: 'some token 123',
+			accessToken: 'some token 123',
 		};
 
 		return successResponse(res, ctx, data);

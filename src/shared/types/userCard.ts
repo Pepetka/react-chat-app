@@ -8,7 +8,8 @@ export interface User {
 	createdAt: string;
 	avatar: string;
 	status?: string;
-	token?: string;
+	accessToken?: string;
+	refreshToken?: string;
 }
 
 export type UserMini = Pick<User, 'id' | 'avatar'> & { name: string };

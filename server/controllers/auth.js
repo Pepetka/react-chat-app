@@ -37,21 +37,32 @@ class Auth {
 				avatar: '3100405.png',
 			});
 
-			const token = jwt.sign(
+			const accessToken = jwt.sign(
 				{ id: newUser.id, username: newUser.username },
 				process.env.SECRET_KEY,
+				{ expiresIn: '1d' },
 			);
-			newUser.token = token;
+			newUser.accessToken = accessToken;
+
+			const refreshToken = jwt.sign(
+				{ id: newUser.id, username: newUser.username },
+				process.env.SECRET_KEY,
+				{ expiresIn: '30d' },
+			);
+			newUser.refreshToken = refreshToken;
 
 			users.push(newUser);
 
 			await db.write();
 
-			return res.header('auth-token', token).json({
-				...newUser,
-				password: undefined,
-				avatar: `${fullHostName}/images/${newUser.avatar}`,
-			});
+			return res
+				.header('access-token', accessToken)
+				.header('refresh-token', refreshToken)
+				.json({
+					...newUser,
+					password: undefined,
+					avatar: `${fullHostName}/images/${newUser.avatar}`,
+				});
 		} catch (e) {
 			console.log(e);
 			return res.status(500).json({ message: e.message });
@@ -77,19 +88,77 @@ class Auth {
 				return res.status(403).json({ message: 'Wrong password' });
 			}
 
-			const token = jwt.sign(
+			const accessToken = jwt.sign(
 				{ id: userFromBd.id, username: userFromBd.username },
 				process.env.SECRET_KEY,
+				{ expiresIn: '1d' },
 			);
-			userFromBd.token = token;
+			userFromBd.accessToken = accessToken;
+
+			const refreshToken = jwt.sign(
+				{ id: userFromBd.id, username: userFromBd.username },
+				process.env.SECRET_KEY,
+				{ expiresIn: '30d' },
+			);
+			userFromBd.refreshToken = refreshToken;
 
 			await db.write();
 
-			return res.header('auth-token', token).json({
-				...userFromBd,
-				password: undefined,
-				avatar: `${fullHostName}/images/${userFromBd.avatar}`,
+			return res
+				.header('access-token', accessToken)
+				.header('refresh-token', refreshToken)
+				.json({
+					...userFromBd,
+					password: undefined,
+					avatar: `${fullHostName}/images/${userFromBd.avatar}`,
+				});
+		} catch (e) {
+			console.log(e);
+			return res.status(500).json({ message: e.message });
+		}
+	}
+
+	async relogin(req, res) {
+		try {
+			const fullHostName = getFullHostName(req);
+			const { refreshToken } = req.body;
+
+			if (!refreshToken) {
+				return res.status(401).json({ message: 'Access Denied / AUTH ERROR' });
+			}
+
+			const verifiedUser = jwt.verify(refreshToken, process.env.SECRET_KEY);
+
+			if (!verifiedUser) {
+				return res.status(401).json({ message: 'Unauthorized request' });
+			}
+
+			req.user = verifiedUser;
+
+			await db.read();
+			const { users } = db.data;
+
+			const userFromDb = users.find((user) => {
+				return user.id === req.user.id;
 			});
+
+			const accessToken = jwt.sign(
+				{ id: userFromDb.id, username: userFromDb.username },
+				process.env.SECRET_KEY,
+				{ expiresIn: '1d' },
+			);
+			userFromDb.accessToken = accessToken;
+
+			await db.write();
+
+			return res
+				.header('access-token', accessToken)
+				.header('refresh-token', refreshToken)
+				.json({
+					...userFromDb,
+					password: undefined,
+					avatar: `${fullHostName}/images/${userFromDb.avatar}`,
+				});
 		} catch (e) {
 			console.log(e);
 			return res.status(500).json({ message: e.message });
