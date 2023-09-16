@@ -22,6 +22,7 @@ export const EditButton = memo((props: IEditProfileButtonProps) => {
 	return (
 		<Button
 			data-testid="EditButton"
+			aria-label="Edit button"
 			width="50px"
 			height="50px"
 			circle

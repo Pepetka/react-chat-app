@@ -20,6 +20,7 @@ export const LangSwitcher = memo((props: ILangSwitcherProps) => {
 	return (
 		<Button
 			data-testid="LangSwitcher.button"
+			aria-label="Switch language"
 			width="50px"
 			height="50px"
 			circle

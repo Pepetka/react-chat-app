@@ -26,7 +26,12 @@ export const PageError = memo(() => {
 		<StyledWrapper className={`App ${theme}`}>
 			<Flex direction="column" gap="16" align="center">
 				<Text title={t('Something went wrong')} titleAlign="center" />
-				<Button onClick={onReloadPage} height="50px" padding>
+				<Button
+					aria-label="Reload page"
+					onClick={onReloadPage}
+					height="50px"
+					padding
+				>
 					<Text text={t('Reload page')} theme="primary-invert" />
 				</Button>
 			</Flex>

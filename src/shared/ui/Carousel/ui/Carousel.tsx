@@ -70,7 +70,7 @@ const imgPaging =
 	(imgArray: Array<string>): Settings['customPaging'] =>
 	(i: number) =>
 		(
-			<Button theme="clear">
+			<Button aria-label="Carousel pagination" theme="clear">
 				<AppImg src={imgArray[i]} width="auto" height="70px" />
 			</Button>
 		);

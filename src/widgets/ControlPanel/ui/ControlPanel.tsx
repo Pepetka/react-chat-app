@@ -116,7 +116,13 @@ export const ControlPanel = memo(() => {
 							</AnimatedButton>
 						))}
 					<AnimatedGear opened={opened}>
-						<Button width="50px" height="50px" circle onClick={onSwitch}>
+						<Button
+							aria-label="Open controls"
+							width="50px"
+							height="50px"
+							circle
+							onClick={onSwitch}
+						>
 							<AnimatedSvg opened={opened}>
 								<Flex height="100%" justify="center" align="center">
 									<Icon SvgIcon={GearIcon} invert={true} size="s" />

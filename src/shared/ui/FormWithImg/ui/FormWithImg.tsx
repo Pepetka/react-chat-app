@@ -360,6 +360,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 								notification={images?.length > 0 ? images.length : undefined}
 							>
 								<Button
+									aria-label="Add image"
 									onClick={modal ? onOpenModalForm : onAddImg}
 									invert
 									width={isSmallScreen || isSmallScreenHeight ? '40px' : '64px'}
@@ -375,6 +376,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 							direction="top_left"
 							trigger={
 								<Button
+									aria-label="Submit"
 									invert
 									width={isSmallScreen || isSmallScreenHeight ? '40px' : '64px'}
 									height={
@@ -407,6 +409,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 									notification={images?.length > 0 ? images.length : undefined}
 								>
 									<Button
+										aria-label="Add image"
 										onClick={onAddImg}
 										invert
 										width={

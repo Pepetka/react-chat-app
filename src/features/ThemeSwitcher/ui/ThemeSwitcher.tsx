@@ -23,6 +23,7 @@ export const ThemeSwitcher = memo((props: ILangSwitcherProps) => {
 	return (
 		<Button
 			data-testid="ThemeSwitcher.button"
+			aria-label="Switch theme"
 			width="50px"
 			height="50px"
 			circle

@@ -273,6 +273,7 @@ export const EditProfileForm = memo(() => {
 				/>
 				<Flex justify="space-between" wrap="wrap" gap="8">
 					<Button
+						aria-label="Reset"
 						theme="primary"
 						invert
 						width="160px"
@@ -283,6 +284,7 @@ export const EditProfileForm = memo(() => {
 						<Text textAlign="center" text={t('Reset profile')} />
 					</Button>
 					<Button
+						aria-label="Submit"
 						theme="primary"
 						invert
 						width="160px"

@@ -177,6 +177,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 							<Flex justify={isBigScreen ? 'end' : 'center'} gap="24">
 								<Button
 									data-testid="ProfileCard.relations.button"
+									aria-label="Add/remove friend"
 									onClick={onAddFriendHandle}
 									width={isDesktopOrLaptop ? '180px' : '150px'}
 									height={isDesktopOrLaptop ? '50px' : '32px'}
@@ -192,6 +193,7 @@ export const ProfileCard = memo((props: IProfileCardProps) => {
 									/>
 								</Button>
 								<Button
+									aria-label="Move to chat"
 									onClick={onSendMessage}
 									width={isDesktopOrLaptop ? '180px' : '150px'}
 									height={isDesktopOrLaptop ? '50px' : '32px'}

@@ -111,6 +111,7 @@ export const NavBar = memo((props: INavBarProps) => {
 				{authData ? (
 					<Button
 						data-testid="NavBar.logout"
+						aria-label="Logout"
 						onClick={onLogoutHandle}
 						theme={'outline'}
 						width={isSmallScreen ? '100px' : '140px'}
@@ -127,6 +128,7 @@ export const NavBar = memo((props: INavBarProps) => {
 				) : (
 					<Flex width="auto">
 						<Button
+							aria-label="Login"
 							onClick={onLogin}
 							theme={currentPagePath === '/login' ? 'outline' : 'clear'}
 							width={isSmallScreen ? '100px' : '140px'}
@@ -141,6 +143,7 @@ export const NavBar = memo((props: INavBarProps) => {
 							/>
 						</Button>
 						<Button
+							aria-label="Signup"
 							onClick={onRegister}
 							theme={currentPagePath === '/register' ? 'outline' : 'clear'}
 							width={isSmallScreen ? '100px' : '140px'}

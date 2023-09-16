@@ -223,6 +223,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 							>
 								<Button
 									data-testid="PostCard.delete"
+									aria-label="Delete post"
 									onClick={onDeletePostHandle}
 									theme="clear"
 									width="100px"
@@ -307,6 +308,7 @@ export const PostCard = memo((props: IPostCardProps) => {
 											)}
 											<Button
 												data-testid={`PostCard.${name}.button`}
+												aria-label={`Post ${name} button`}
 												onClick={onClick}
 												invert={isPressed}
 												disabled={buttonDisabled}
