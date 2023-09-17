@@ -94,6 +94,7 @@ export const NavBar = memo((props: INavBarProps) => {
 						<Flex FlexTag="form" onSubmit={onSearch} width="auto">
 							<Input
 								data-testid="NavBar.input"
+								aria-label="Search friends"
 								border={false}
 								paddingInline="20px"
 								value={search}

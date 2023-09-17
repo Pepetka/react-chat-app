@@ -350,6 +350,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 								placeholder={textPlaceholder}
 								onKeyDown={onTyping}
 								small={small}
+								aria-label="Text area"
 								{...field}
 							/>
 						)}
@@ -444,6 +445,7 @@ export const FormWithImg = memo((props: SendWithImgFormPropsType) => {
 						type="file"
 						accept="image/*"
 						multiple
+						aria-label="Add image"
 						{...field}
 					/>
 				)}

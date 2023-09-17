@@ -185,6 +185,7 @@ export const Input = memo(
 			border = true,
 			onClick,
 			'data-testid': dataTestId,
+			'aria-label': ariaLabel,
 			onBlur,
 			...otherProps
 		} = props;
@@ -237,6 +238,7 @@ export const Input = memo(
 					border={border}
 					SvgIcon={SvgIcon}
 					data-testid={dataTestId}
+					aria-label={ariaLabel}
 					{...otherProps}
 				/>
 				{SvgIcon && (
