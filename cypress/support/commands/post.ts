@@ -1,5 +1,5 @@
 import {
-	LOCAL_STORAGE_AUTH_KEY,
+	LOCAL_STORAGE_AUTH_ACCESS_KEY,
 	LOCAL_STORAGE_USER_KEY,
 } from '../../../src/shared/const/localstorage';
 import { User } from '../../../src/shared/types/userCard';
@@ -7,8 +7,10 @@ import { Post } from '../../../src/entities/Post';
 import { Comment } from '../../../src/shared/types/comment';
 import { Relations } from '../../../src/features/ProfileCard/model/types/profileCardSchema';
 
-export const addPost = (token?: string, authData?: User) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+export const addPost = (accessToken?: string, authData?: User) => {
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 	const authDataLS = JSON.parse(
 		window.localStorage.getItem(LOCAL_STORAGE_USER_KEY) ?? '{}',
 	) as User;
@@ -23,7 +25,7 @@ export const addPost = (token?: string, authData?: User) => {
 			method: 'POST',
 			url: 'http://localhost:8000/posts',
 			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
+				Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 			},
 			body: formData,
 		})
@@ -34,8 +36,14 @@ export const addPost = (token?: string, authData?: User) => {
 		});
 };
 
-export const deletePost = (id: string, token?: string, authData?: User) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+export const deletePost = (
+	id: string,
+	accessToken?: string,
+	authData?: User,
+) => {
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 	const authDataLS = JSON.parse(
 		window.localStorage.getItem(LOCAL_STORAGE_USER_KEY) ?? '{}',
 	) as User;
@@ -44,7 +52,7 @@ export const deletePost = (id: string, token?: string, authData?: User) => {
 		method: 'DELETE',
 		url: 'http://localhost:8000/posts',
 		headers: {
-			Authorization: `Bearer ${token ?? tokenLS}`,
+			Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 		},
 		body: {
 			postId: id,
@@ -53,8 +61,14 @@ export const deletePost = (id: string, token?: string, authData?: User) => {
 	});
 };
 
-export const addComment = (postId: string, token?: string, authData?: User) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+export const addComment = (
+	postId: string,
+	accessToken?: string,
+	authData?: User,
+) => {
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 	const authDataLS = JSON.parse(
 		window.localStorage.getItem(LOCAL_STORAGE_USER_KEY) ?? '{}',
 	) as User;
@@ -64,7 +78,7 @@ export const addComment = (postId: string, token?: string, authData?: User) => {
 			method: 'POST',
 			url: 'http://localhost:8000/comments',
 			headers: {
-				Authorization: `Bearer ${token ?? tokenLS}`,
+				Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 			},
 			body: {
 				authorId: (authData ?? authDataLS).id,
@@ -77,14 +91,16 @@ export const addComment = (postId: string, token?: string, authData?: User) => {
 		});
 };
 
-export const deleteComment = (id: string, token?: string) => {
-	const tokenLS = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+export const deleteComment = (id: string, accessToken?: string) => {
+	const accessTokenLS = window.localStorage.getItem(
+		LOCAL_STORAGE_AUTH_ACCESS_KEY,
+	);
 
 	return cy.request({
 		method: 'DELETE',
 		url: 'http://localhost:8000/comments',
 		headers: {
-			Authorization: `Bearer ${token ?? tokenLS}`,
+			Authorization: `Bearer ${accessToken ?? accessTokenLS}`,
 		},
 		body: {
 			commentId: id,
@@ -93,7 +109,7 @@ export const deleteComment = (id: string, token?: string) => {
 };
 
 export const testPostCardsNum = (number: number) => {
-	if (number) cy.getByTestId('PostList.card').last().scrollIntoView();
+	cy.getByTestId('Page').scrollTo('bottom').wait(500).scrollTo('bottom');
 	cy.getByTestId('PostList.card').should('have.length', number);
 };
 
@@ -134,15 +150,19 @@ export const addNewCard = (formName: string, text: string) => {
 declare global {
 	namespace Cypress {
 		interface Chainable {
-			addPost(token?: string, authData?: User): Chainable<Post>;
-			deletePost(id: string, token?: string, authData?: User): Chainable<void>;
+			addPost(accessToken?: string, authData?: User): Chainable<Post>;
+			deletePost(
+				id: string,
+				accessToken?: string,
+				authData?: User,
+			): Chainable<void>;
 			addNewCard(formName: string, text: string): Chainable<void>;
 			addComment(
 				postId: string,
-				token?: string,
+				accessToken?: string,
 				authData?: User,
 			): Chainable<Comment>;
-			deleteComment(id: string, token?: string): Chainable<void>;
+			deleteComment(id: string, accessToken?: string): Chainable<void>;
 			testPostCardsNum(number: number): Chainable<void>;
 			testCommentsCardNum(number: number): Chainable<void>;
 			testStatClick(

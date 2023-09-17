@@ -181,7 +181,7 @@ export const Messenger = memo((props: IMessengerProps) => {
 							)}
 						/>
 					</Flex>
-					<Button theme="clear">
+					<Button aria-label="Messenger settings" theme="clear">
 						<Icon SvgIcon={SettingsIcon} invert size="s" />
 					</Button>
 				</Flex>

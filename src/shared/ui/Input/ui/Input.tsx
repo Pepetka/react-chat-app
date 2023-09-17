@@ -241,7 +241,7 @@ export const Input = memo(
 				/>
 				{SvgIcon && (
 					<StyledBtnWrapper label={label}>
-						<Button onClick={onClick} theme="clear">
+						<Button aria-label="Click icon" onClick={onClick} theme="clear">
 							<Icon invert={theme === 'invert'} SvgIcon={SvgIcon} />
 						</Button>
 					</StyledBtnWrapper>

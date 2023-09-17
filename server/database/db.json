@@ -11,7 +11,8 @@
       "age": "22",
       "createdAt": "05.06.2022",
       "avatar": "3100405.png",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5MzA0MDI0M30.LTXjFzSGlPMJzPYk9JIXxGt2VGrTGxlLb_vbbDr1mnQ"
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5NDg2MTIwOSwiZXhwIjoxNjk0OTQ3NjA5fQ.KlmTm2DxTu99i7RRguxi2zLM0SdToZ4akxMObc4lGoM",
+      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzkzIiwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTY5NDg2MTIwOSwiZXhwIjoxNjk3NDUzMjA5fQ.RXCgqLsVfRIe-zyA38Fv9aoFp4DU0gB0OBZ7IMRajuM"
     },
     {
       "id": "6cbdb794",
@@ -23,8 +24,7 @@
       "lastname": "Ivanov",
       "age": 22,
       "createdAt": "05.0.2023",
-      "avatar": "1_1WCjO1iYMo7J7Upp8KMfLA@2x.jpg",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjYmRiNzk0IiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjkyNzczNzIzfQ._k2TOcR2R4v91OvjOye1h9kJaB9YUu__eQnd1bi-wts"
+      "avatar": "1_1WCjO1iYMo7J7Upp8KMfLA@2x.jpg"
     },
     {
       "id": "6cbdb795",
@@ -536,12 +536,7 @@
       "postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c"
     }
   ],
-  "post-likes": [
-    {
-      "userId": "6cbdb793",
-      "postId": "188e1feb-9d72-47d5-bb5f-e8882256a68c"
-    }
-  ],
+  "post-likes": [],
   "post-dislikes": [],
   "comments": [
     {

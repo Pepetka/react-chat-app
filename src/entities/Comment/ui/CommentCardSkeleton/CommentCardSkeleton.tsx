@@ -25,7 +25,12 @@ export const CommentCardSkeleton = memo((props: ICommentCardSkeletonProps) => {
 					</Flex>
 				</Flex>
 				{admin && (
-					<Button theme="clear" width="48px" height="48px">
+					<Button
+						aria-label="Comment settings"
+						theme="clear"
+						width="48px"
+						height="48px"
+					>
 						<Icon SvgIcon={MoreIcon} invert />
 					</Button>
 				)}

@@ -55,6 +55,7 @@ export const FriendCard = memo((props: IFriendProps) => {
 				/>
 				{hover && withBtn && (
 					<Button
+						aria-label="Add friend"
 						onClick={onAddFriendHandle}
 						theme="outline"
 						invert

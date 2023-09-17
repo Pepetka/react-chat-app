@@ -80,6 +80,7 @@ export const PostCardSkeleton = memo((props: IPostCardSkeletonProps) => {
 					</Flex>
 					{admin && (
 						<Button
+							aria-label="Post settings"
 							theme="clear"
 							width={isSmallScreen ? '40px' : '64px'}
 							height={isSmallScreen ? '40px' : '64px'}
@@ -126,6 +127,7 @@ export const PostCardSkeleton = memo((props: IPostCardSkeletonProps) => {
 									>
 										<Skeleton height="24px" width="50px" margin="4px" />
 										<Button
+											aria-label={`Post ${name} button`}
 											width={isSmallScreen ? '40px' : '64px'}
 											height={isSmallScreen ? '40px' : '64px'}
 										>

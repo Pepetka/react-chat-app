@@ -152,6 +152,7 @@ export const Menu = memo((props: IMenuProps) => {
 		<Flex width={width} height={height}>
 			<Button
 				data-testid="Menu.trigger"
+				aria-label="Open menu"
 				onClick={onToggleMenu}
 				theme="clear"
 				width={width}

@@ -39,16 +39,17 @@ export const BottomBar = memo((props: IBottomBarProps) => {
 	const authData = useSelector(getUserAuthData);
 	const navigate = useNavigate();
 
-	const pathObject: Record<string, FC<SVGProps<SVGSVGElement>>> = useMemo(
-		() => ({
-			[getMainPagePath()]: HomeIcon,
-			[getProfilePagePath(authData?.id ?? '')]: ProfileIcon,
-			[getFriendsPagePath(authData?.id ?? '')]: FriendsIcon,
-			[getChatsPagePath()]: ChatsIcon,
-			[getGroupsListPagePath(authData?.id ?? '')]: GroupsIcon,
-		}),
-		[authData?.id],
-	);
+	const pathObject: Record<string, [string, FC<SVGProps<SVGSVGElement>>]> =
+		useMemo(
+			() => ({
+				Main: [getMainPagePath(), HomeIcon],
+				Profile: [getProfilePagePath(authData?.id ?? ''), ProfileIcon],
+				Friends: [getFriendsPagePath(authData?.id ?? ''), FriendsIcon],
+				Chats: [getChatsPagePath(), ChatsIcon],
+				Groups: [getGroupsListPagePath(authData?.id ?? ''), GroupsIcon],
+			}),
+			[authData?.id],
+		);
 
 	const onClick = useCallback(
 		(path: string) => {
@@ -61,9 +62,10 @@ export const BottomBar = memo((props: IBottomBarProps) => {
 		<StyledBottomBar>
 			<Flex justify="center" align="center" height="100%">
 				<Flex width="auto" gap="24">
-					{Object.entries(pathObject).map(([path, SvgIcon]) => (
+					{Object.entries(pathObject).map(([name, [path, SvgIcon]]) => (
 						<Button
-							key={path}
+							aria-label={`Move to ${name}`}
+							key={name}
 							onClick={onClick(path)}
 							theme={currentPagePath !== path ? 'primary' : 'outline'}
 							invert={currentPagePath === path}

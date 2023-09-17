@@ -67,6 +67,7 @@ module.exports = {
 					'data-testid',
 					'to',
 					'xCord',
+					'aria-label'
 				],
 				ignore: ['ICE'],
 			},

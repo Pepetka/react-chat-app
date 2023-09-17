@@ -22,6 +22,7 @@ export const CreateButton = memo((props: ICreateGroupButtonProps) => {
 	return (
 		<Button
 			data-testid="CreateButton"
+			aria-label="Create button"
 			width="50px"
 			height="50px"
 			circle

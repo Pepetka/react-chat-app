@@ -7,7 +7,7 @@ describe('editGroup', () => {
 			.then(setUserDataToLocal)
 			.as('userData')
 			.then(() => {
-				cy.createGroup('Test group', this.userData.token)
+				cy.createGroup('Test group', this.userData.accessToken)
 					.as('groupData')
 					.then(() => {
 						cy.visitPage(
@@ -19,8 +19,8 @@ describe('editGroup', () => {
 	});
 
 	afterEach(function () {
-		cy.deleteGroup(this.groupData.id, this.userData.token);
-		cy.deleteUser(this.userData.token);
+		cy.deleteGroup(this.groupData.id, this.userData.accessToken);
+		cy.deleteUser(this.userData.accessToken);
 	});
 
 	it('Edit group', function () {

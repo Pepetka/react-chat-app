@@ -280,6 +280,7 @@ export const GroupDataForm = memo((props: IGroupDataFormProps) => {
 				<Flex justify={withReset ? 'space-between' : 'end'} wrap="wrap" gap="8">
 					{withReset && (
 						<Button
+							aria-label="Reset form"
 							theme="primary"
 							invert
 							width="160px"
@@ -291,6 +292,7 @@ export const GroupDataForm = memo((props: IGroupDataFormProps) => {
 						</Button>
 					)}
 					<Button
+						aria-label="Submit"
 						theme="primary"
 						invert
 						width="160px"

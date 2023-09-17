@@ -18,9 +18,9 @@ describe('searchFriends', () => {
 	});
 
 	afterEach(function () {
-		cy.deleteUser(this.userData.token, this.userData.username);
-		cy.deleteUser(this.friendData.token, this.friendData.username);
-		cy.deleteUser(this.otherData.token, this.otherData.username);
+		cy.deleteUser(this.userData.accessToken, this.userData.username);
+		cy.deleteUser(this.friendData.accessToken, this.friendData.username);
+		cy.deleteUser(this.otherData.accessToken, this.otherData.username);
 	});
 
 	it('Add friend', function () {

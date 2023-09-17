@@ -30,7 +30,7 @@ describe('Router', () => {
 		});
 
 		afterEach(function () {
-			cy.deleteUser(this.userData.token);
+			cy.deleteUser(this.userData.accessToken);
 		});
 
 		it('For all users', function () {

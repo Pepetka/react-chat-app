@@ -190,6 +190,7 @@ export const RegisterForm = memo(() => {
 									/>
 								</Flex>
 								<Button
+									aria-label="Signup"
 									width={isMediumScreen ? '180px' : '140px'}
 									height="50px"
 									disabled={isLoading}

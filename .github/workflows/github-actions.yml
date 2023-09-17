@@ -31,8 +31,7 @@ jobs:
       - name: linting typescript
         run: npm run lint:ts
 
-  testing:
-    needs: linting
+  unit-testing:
     runs-on: ubuntu-latest
     concurrency: ci-${{ github.ref }}
     environment:
@@ -51,24 +50,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install modules
         run: npm ci
-      - name: screenshot testing
-        uses: chromaui/action@v1
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: 'storybook:build'
       - name: unit testing
         run: npm run test:unit
-        if: always()
-      - name: e2e testing
-        uses: cypress-io/github-action@v5
-        with:
-          install: false
-          record: true
-          start: npm run dev:server
-          wait-on: 'http://localhost:5173'
-          config: baseUrl=http://localhost:5173
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         if: always()
       - name: Setup Pages
         uses: actions/configure-pages@v2
@@ -83,8 +66,53 @@ jobs:
         uses: actions/deploy-pages@v1
         if: always()
 
+  ui-testing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: npm ci
+      - name: screenshot testing
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: 'storybook:build'
+
+  end-to-end-testing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: npm ci
+      - name: e2e testing
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          record: true
+          start: npm run dev:server
+          wait-on: 'http://localhost:5173'
+          config: baseUrl=http://localhost:5173
+          browser: chrome
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
   building:
-    needs: testing
     runs-on: ubuntu-latest
     strategy:
       matrix:

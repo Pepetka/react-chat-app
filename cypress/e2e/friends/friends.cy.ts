@@ -6,7 +6,7 @@ describe('friends', () => {
 		cy.login('friendUser')
 			.as('friendData')
 			.then(() => {
-				cy.addPost(this.friendData.token, this.friendData).as('post1');
+				cy.addPost(this.friendData.accessToken, this.friendData).as('post1');
 			});
 
 		cy.login('testUser')
@@ -20,8 +20,8 @@ describe('friends', () => {
 	afterEach(function () {
 		cy.deletePost(this.post1.id);
 
-		cy.deleteUser(this.friendData.token, this.friendData.username);
-		cy.deleteUser(this.userData.token, this.userData.username);
+		cy.deleteUser(this.friendData.accessToken, this.friendData.username);
+		cy.deleteUser(this.userData.accessToken, this.userData.username);
 	});
 
 	it("Like/Dislike a friend's post", function () {

@@ -1,6 +1,6 @@
 import { StorybookConfig } from '@storybook/react-vite';
-import svgr from 'vite-plugin-svgr';
-import { mergeConfig } from 'vite';
+import { withoutVitePlugins } from '@storybook/builder-vite';
+
 const config: StorybookConfig = {
 	stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
@@ -17,18 +17,19 @@ const config: StorybookConfig = {
 		storyStoreV7: true,
 	},
 	async viteFinal(config) {
-		return mergeConfig(config, {
-			plugins: [
-				svgr({
-					exportAsDefault: true,
-				}),
-			],
-			define: {
-				__API__: JSON.stringify('https://api/'),
-				__API_SOCKET__: JSON.stringify('wss://api/'),
-				__MOCK_SOCKET__: true,
-			},
-		});
+		config.define = {
+			__API__: JSON.stringify('https://api/'),
+			__API_SOCKET__: JSON.stringify('wss://api/'),
+			__MOCK_SOCKET__: true,
+		};
+		config.plugins = await withoutVitePlugins(config.plugins, [
+			'vite-plugin-pwa',
+			'vite-plugin-pwa:info',
+			'vite-plugin-pwa:build',
+			'vite-plugin-pwa:dev-sw',
+		]);
+
+		return config;
 	},
 	docs: {
 		autodocs: false,

@@ -30,7 +30,7 @@ describe('profile', () => {
 		cy.deleteComment(this.comment1.id);
 		cy.deleteComment(this.comment1.id);
 
-		cy.deleteUser(this.userData.token);
+		cy.deleteUser(this.userData.accessToken);
 	});
 
 	it('Get posts', function () {

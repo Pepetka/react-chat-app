@@ -143,6 +143,7 @@ export const LoginForm = memo(() => {
 									</a>
 								</Flex>
 								<Button
+									aria-label="Login"
 									width={isMediumScreen ? '180px' : '140px'}
 									height="50px"
 									disabled={isLoading}

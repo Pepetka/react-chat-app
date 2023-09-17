@@ -15,7 +15,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			<BrowserRouter>
 				<StoreProvider>
 					<ThemeProvider>
-						<Suspense fallback={<PageLoader />}>
+						<Suspense
+							fallback={
+								<div style={{ width: '100vw', height: '100vh' }}>
+									<PageLoader theme="invert" />
+								</div>
+							}
+						>
 							<App />
 						</Suspense>
 					</ThemeProvider>
